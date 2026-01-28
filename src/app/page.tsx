@@ -1,0 +1,397 @@
+import Image from "next/image";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  CircuitBoard,
+  Github,
+  Globe,
+  HeartHandshake,
+  Orbit,
+  Sparkles,
+  Trophy,
+  Users,
+  Wrench,
+} from "lucide-react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+const team = [
+  {
+    name: "Member One",
+    role: "Lead Builder",
+    focus: "Chassis, attachments, and drive train",
+  },
+  {
+    name: "Member Two",
+    role: "Program Lead",
+    focus: "Autonomous runs and precision tuning",
+  },
+  {
+    name: "Member Three",
+    role: "Research Lead",
+    focus: "Innovation project and storytelling",
+  },
+  {
+    name: "Member Four",
+    role: "Strategy",
+    focus: "Mission planning and points optimization",
+  },
+  {
+    name: "Member Five",
+    role: "Systems",
+    focus: "Sensors, wiring, and reliability checks",
+  },
+  {
+    name: "Member Six",
+    role: "Design",
+    focus: "Prototype testing and CAD sketches",
+  },
+  {
+    name: "Member Seven",
+    role: "Driver",
+    focus: "Field practice and timing control",
+  },
+  {
+    name: "Member Eight",
+    role: "Outreach",
+    focus: "Community demos and team spirit",
+  },
+];
+
+const values = [
+  {
+    title: "Build",
+    description: "We turn ideas into mechanisms that can survive competition day.",
+    icon: Wrench,
+  },
+  {
+    title: "Code",
+    description: "We program with precision so our robot moves like a teammate.",
+    icon: CircuitBoard,
+  },
+  {
+    title: "Explore",
+    description: "We research, iterate, and learn from every prototype.",
+    icon: Orbit,
+  },
+  {
+    title: "Share",
+    description: "We show up for the community and inspire new builders.",
+    icon: Globe,
+  },
+];
+
+const milestones = [
+  {
+    title: "Discover",
+    detail: "Study the mission model and imagine our best run.",
+  },
+  {
+    title: "Design",
+    detail: "Prototype attachments, refine the drive base, repeat.",
+  },
+  {
+    title: "Program",
+    detail: "Automate missions and tune for consistency.",
+  },
+  {
+    title: "Present",
+    detail: "Share our innovation story and teamwork journey.",
+  },
+];
+
+export default function Home() {
+  return (
+    <div className="min-h-screen">
+      <main className="relative overflow-hidden">
+        <section className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-16 sm:px-10 lg:flex-row lg:items-center lg:gap-16">
+          <div className="absolute -left-32 top-10 h-72 w-72 rounded-full bg-emerald-500/20 blur-[140px] animate-float" />
+          <div className="absolute -right-32 top-20 h-72 w-72 rounded-full bg-sky-400/20 blur-[140px] animate-float delay-3" />
+
+          <div className="relative z-10 flex flex-1 flex-col gap-6">
+            <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
+              FLL Robotics Team -- 8 Members
+            </Badge>
+            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
+              We are <span className="text-emerald-300">Lebob</span> -- builders,
+              coders, and storytellers shaping the future of robotics.
+            </h1>
+            <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
+              Lebob is a FIRST LEGO League team that thrives on creative
+              engineering, teamwork, and curiosity. We design robots, develop
+              innovative solutions, and support each other to deliver our best
+              competition runs.
+            </p>
+            <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
+              <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
+                <a
+                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  Explore our GitHub
+                </a>
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                asChild
+              >
+                <a href="#team">
+                  Meet the team
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
+              {[
+                { label: "Members", value: "8" },
+                { label: "Core Values", value: "6" },
+                { label: "Mission Focus", value: "One team" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+                >
+                  <p className="text-2xl font-semibold text-white">{stat.value}</p>
+                  <p className="text-sm text-slate-300">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
+            <Card className="border-white/10 bg-white/5 text-white animate-fade-in">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <Sparkles className="h-5 w-5 text-emerald-300" />
+                  About Lebob
+                </CardTitle>
+                <CardDescription className="text-slate-300">
+                  Our team blends engineering, research, and storytelling to
+                  build robots that can think.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src="/lebob.png"
+                    alt="Lebob team logo"
+                    width={72}
+                    height={72}
+                    className="rounded-2xl border border-white/10 bg-white/5"
+                  />
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.2em] text-emerald-200">
+                      Team Name
+                    </p>
+                    <p className="text-2xl font-semibold">Lebob</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Trophy className="mt-1 h-5 w-5 text-emerald-300" />
+                  <p className="text-sm text-slate-200">
+                    We prepare for competition with repeatable builds, reliable
+                    code, and a story we love to share.
+                  </p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <HeartHandshake className="mt-1 h-5 w-5 text-emerald-300" />
+                  <p className="text-sm text-slate-200">
+                    Teamwork is our advantage -- we listen, brainstorm, and solve
+                    problems together.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-white/10 bg-gradient-to-br from-white/10 via-transparent to-emerald-500/10 text-white animate-fade-in delay-2">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <BadgeCheck className="h-5 w-5 text-sky-300" />
+                  Core Values in action
+                </CardTitle>
+                <CardDescription className="text-slate-300">
+                  Innovation, impact, inclusion, discovery, teamwork, and fun.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                What we do
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
+                Building robots is only half the story.
+              </h2>
+              <p className="mt-4 text-base text-slate-300">
+                Our season is about turning wild ideas into reliable systems,
+                then sharing how we got there. We design, iterate, and present as
+                a single unit -- every win is a team win.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {values.map((value) => (
+                <Card
+                  key={value.title}
+                  className="border-white/10 bg-white/5 text-white animate-fade-in"
+                >
+                  <CardHeader className="space-y-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-400/20">
+                      <value.icon className="h-5 w-5 text-emerald-300" />
+                    </div>
+                    <CardTitle>{value.title}</CardTitle>
+                    <CardDescription className="text-slate-300">
+                      {value.description}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 animate-fade-in">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-sky-200">
+                  Our flow
+                </p>
+                <h2 className="mt-3 text-3xl font-semibold text-white">
+                  From mission model to match day.
+                </h2>
+              </div>
+              <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-200">
+                <Users className="h-4 w-4 text-emerald-200" />
+                All 8 members contribute at every stage.
+              </div>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {milestones.map((milestone, index) => (
+                <div
+                  key={milestone.title}
+                  className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 via-transparent to-transparent p-4 animate-fade-in"
+                >
+                  <p className="text-sm font-semibold text-emerald-200">
+                    {String(index + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-white">
+                    {milestone.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-300">
+                    {milestone.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="team" className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                Team Lebob
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-white">
+                Eight builders, one mission.
+              </h2>
+            </div>
+            <Badge className="w-fit bg-white/10 text-white">2026 Season</Badge>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {team.map((member) => (
+              <Card
+                key={member.name}
+                className="border-white/10 bg-white/5 text-white animate-fade-in"
+              >
+                <CardHeader className="space-y-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-400/15">
+                    <Users className="h-5 w-5 text-sky-300" />
+                  </div>
+                  <CardTitle className="text-lg">{member.name}</CardTitle>
+                  <CardDescription className="text-slate-200">
+                    {member.role}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="text-sm text-slate-300">
+                  {member.focus}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
+          <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white animate-fade-in">
+            <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                  Follow our build
+                </p>
+                <h2 className="mt-3 text-3xl font-semibold">Our GitHub lab</h2>
+                <p className="mt-2 max-w-xl text-sm text-slate-200">
+                  Code, notes, and project updates live in our repo. Explore
+                  what we are building this season and see how Lebob grows with
+                  each iteration.
+                </p>
+              </div>
+              <Button
+                size="lg"
+                asChild
+                className="bg-white text-slate-950 hover:bg-slate-200"
+              >
+                <a
+                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Github className="mr-2 h-5 w-5" />
+                  Visit GitHub
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/10 bg-black/30 animate-fade-in delay-2">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-emerald-300" />
+            Lebob FLL Robotics Team
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-2">
+              <HeartHandshake className="h-4 w-4 text-emerald-300" />
+              Built with teamwork
+            </span>
+            <span className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+              <a
+                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
