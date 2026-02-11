@@ -121,13 +121,6 @@ export default async function MediaPage() {
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl animate-fade-up delay-1">
             Lebob Media Hub
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-            Add photos and videos to{" "}
-            <code className="rounded bg-black/30 px-2 py-1 text-base">
-              public/media
-            </code>{" "}
-            and they will show up here automatically.
-          </p>
 
           {mediaItems.length > 0 ? (
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade-up delay-3">
