@@ -121,7 +121,8 @@ export default function Home() {
             <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
               We mix engineering, coding, and research to build reliable robots
               and tell the story behind every mission. Every run is a
-              collaboration, every win a shared moment.
+              collaboration, every win a shared moment, and every season a push
+              to be the best in the state.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
