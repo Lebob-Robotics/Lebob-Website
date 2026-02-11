@@ -14,7 +14,7 @@ type MediaGridProps = {
 };
 
 function mediaSrc(fileName: string): string {
-  return `./${encodeURIComponent(fileName)}`;
+  return `../media/${encodeURIComponent(fileName)}`;
 }
 
 export function MediaGrid({ items }: MediaGridProps) {

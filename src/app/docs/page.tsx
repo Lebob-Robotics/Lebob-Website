@@ -1,48 +1,73 @@
 import type { Metadata } from "next";
+import { readdir } from "node:fs/promises";
+import path from "node:path";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  BookOpen,
-  ClipboardList,
-  FileText,
-  Sparkles,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
+import { DocumentGrid, type DocumentItem } from "@/components/document-grid";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Team Documentation | Lebob",
-  description: "Placeholder documentation page for Team Lebob.",
+  description: "Team documentation and file previews for Lebob.",
 };
 
-const docSections = [
-  {
-    title: "Build Notes",
-    description: "Placeholder logs for robot design decisions and iterations.",
-    icon: FileText,
-  },
-  {
-    title: "Practice Plans",
-    description: "Placeholder schedules, checklists, and role assignments.",
-    icon: ClipboardList,
-  },
-  {
-    title: "Season Handbook",
-    description: "Placeholder reference docs for team standards and processes.",
-    icon: BookOpen,
-  },
-];
+function fileLabel(fileName: string): string {
+  return fileName
+    .replace(/\.[^.]+$/, "")
+    .replace(/[-_]+/g, " ")
+    .trim();
+}
 
-export default function DocsPage() {
+function fileExtension(fileName: string): string {
+  const extension = path.extname(fileName).toLowerCase();
+  return extension.startsWith(".") ? extension.slice(1) : "";
+}
+
+async function getDocumentItems(): Promise<DocumentItem[]> {
+  const documentsDir = path.join(process.cwd(), "public", "documents");
+
+  try {
+    const entries = await readdir(documentsDir, { withFileTypes: true });
+    const items: DocumentItem[] = [];
+
+    for (const entry of entries) {
+      if (!entry.isFile()) {
+        continue;
+      }
+
+      items.push({
+        fileName: entry.name,
+        label: fileLabel(entry.name),
+        extension: fileExtension(entry.name),
+      });
+    }
+
+    return items.sort((a, b) =>
+      a.fileName.localeCompare(b.fileName, undefined, {
+        numeric: true,
+        sensitivity: "base",
+      }),
+    );
+  } catch (error) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
+export default async function DocsPage() {
+  const documentItems = await getDocumentItems();
+
   return (
     <div className="min-h-screen">
       <main className="relative overflow-hidden">
@@ -57,8 +82,8 @@ export default function DocsPage() {
             className="border-white/30 bg-transparent text-white hover:bg-white/10"
           >
             <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Home
+              <ArrowUpRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
           <ThemeToggle />
@@ -66,44 +91,30 @@ export default function DocsPage() {
 
         <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-16 sm:px-10">
           <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-            Team Documentation
+            Team Documentation ({documentItems.length})
           </Badge>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl animate-fade-up delay-1">
             Lebob Docs Center
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-            This page is a placeholder for team documentation. Structured docs,
-            templates, and searchable references will be added next.
-          </p>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade-up delay-3">
-            {docSections.map((section) => (
-              <Card
-                key={section.title}
-                className="border-white/10 bg-white/5 text-white card-hover"
-              >
-                <CardHeader className="space-y-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-400/20">
-                    <section.icon className="h-5 w-5 text-sky-300" />
-                  </div>
-                  <CardTitle>{section.title}</CardTitle>
-                  <CardDescription className="text-slate-300">
-                    {section.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-
-          <Card className="mt-8 border-white/10 bg-gradient-to-r from-sky-500/20 via-emerald-500/10 to-transparent text-white card-hover animate-fade-up delay-4">
-            <CardContent className="flex items-center gap-3 p-6">
-              <Sparkles className="h-5 w-5 text-sky-200" />
-              <p className="text-sm text-slate-200">
-                Placeholder mode active. Documentation index, links, and file
-                previews will be added here.
+          {documentItems.length > 0 ? (
+            <div className="mt-10 animate-fade-up delay-3">
+              <DocumentGrid items={documentItems} />
+            </div>
+          ) : (
+            <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 animate-fade-up delay-3">
+              <p className="text-xl font-semibold text-white">
+                No documents found yet.
               </p>
-            </CardContent>
-          </Card>
+              <p className="mt-2 text-sm text-slate-300">
+                Add files to{" "}
+                <code className="rounded bg-black/30 px-2 py-1">
+                  public/documents
+                </code>{" "}
+                and refresh this page.
+              </p>
+            </div>
+          )}
         </section>
       </main>
     </div>

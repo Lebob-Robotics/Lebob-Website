@@ -31,10 +31,6 @@ function fileLabel(fileName: string): string {
     .trim();
 }
 
-function mediaSrc(fileName: string): string {
-  return `./${encodeURIComponent(fileName)}`;
-}
-
 async function getMediaItems(): Promise<MediaItem[]> {
   const mediaDir = path.join(process.cwd(), "public", "media");
 
