@@ -21,6 +21,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const team = [
   {
@@ -100,6 +101,9 @@ export default function Home() {
     <div className="min-h-screen">
       <main className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 opacity-70 bg-grid" />
+        <div className="relative z-20 mx-auto flex w-full max-w-6xl justify-end px-6 pt-6 sm:px-10">
+          <ThemeToggle />
+        </div>
         <section className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-16 sm:px-10 lg:flex-row lg:items-center lg:gap-16">
           <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-emerald-500/20 blur-[160px] animate-float" />
           <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-sky-400/20 blur-[160px] animate-float delay-3" />
@@ -361,7 +365,7 @@ export default function Home() {
               <Button
                 size="lg"
                 asChild
-                className="bg-white text-slate-950 hover:bg-slate-200"
+                className="github-cta-button"
               >
                 <a
                   href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
@@ -394,6 +398,7 @@ export default function Home() {
                 href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                 target="_blank"
                 rel="noreferrer"
+                className="footer-github-link"
               >
                 GitHub
               </a>
