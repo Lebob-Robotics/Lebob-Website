@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -148,14 +149,14 @@ export default function Home() {
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <a href="/media">Team media</a>
+                <Link href="/media">Team media</Link>
               </Button>
               <Button
                 variant="outline"
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <a href="/docs">Team docs</a>
+                <Link href="/docs">Team docs</Link>
               </Button>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
