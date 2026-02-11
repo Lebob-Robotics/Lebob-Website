@@ -369,6 +369,39 @@ export default function Home() {
             <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                  Follow our solution
+                </p>
+                <h2 className="mt-3 text-3xl font-semibold">Our Innovations Design</h2>
+                <p className="mt-2 max-w-xl text-sm text-slate-200">
+                  Explore our 3D models and CAD files for SoftSense. See our design evolution, from early concepts to field-worthy products. Feel free to comment on our project on our forms!
+                </p>
+              </div>
+              <Button
+                size="lg"
+                asChild
+                className="github-cta-button"
+              >
+                <a
+                  href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    src="/onshape.svg"
+                    alt="Onshape"
+                    className="mr-2 h-5 w-5"
+                  />
+                  Visit Onshape
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
+        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
+          <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white card-hover">
+            <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
                   Follow our build
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold">Our GitHub lab</h2>
@@ -414,9 +447,20 @@ export default function Home() {
                 href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                 target="_blank"
                 rel="noreferrer"
-                className="footer-github-link"
+                className="footer-link"
               >
                 GitHub
+              </a>
+            </span>
+            <span className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+              <a
+                href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+                target="_blank"
+                rel="noreferrer"
+                className="footer-link"
+              >
+                Onshape
               </a>
             </span>
           </div>
