@@ -38,6 +38,11 @@ async function getDocumentItems(): Promise<DocumentItem[]> {
         continue;
       }
 
+      // Ignore hidden helper files such as .gitkeep
+      if (entry.name.startsWith(".")) {
+        continue;
+      }
+
       items.push({
         fileName: entry.name,
         label: fileLabel(entry.name),
