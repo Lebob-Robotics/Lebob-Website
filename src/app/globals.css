@@ -257,14 +257,14 @@ a {
   background-color: var(--github-cta-hover) !important;
 }
 
-.footer-github-link {
+.footer-link {
   color: var(--foreground);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.footer-github-link:hover {
+.footer-link:hover {
   color: var(--accent-2);
 }
 
