@@ -31,6 +31,7 @@ const team = [
   },
   {
     name: "Andre N",
+    image: "members/andre.jpeg",
   },
   {
     name: "Sean C",
