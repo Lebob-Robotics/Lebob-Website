@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Download,
   ExternalLink,
@@ -7,6 +9,7 @@ import {
   Film,
   Music2,
 } from "lucide-react";
+import { addBasePath } from "next/dist/client/add-base-path";
 
 export type DocumentItem = {
   fileName: string;
@@ -24,7 +27,7 @@ type DocumentGridProps = {
 };
 
 function documentSrc(fileName: string): string {
-  return `../documents/${encodeURIComponent(fileName)}`;
+  return addBasePath(`/documents/${encodeURIComponent(fileName)}`);
 }
 
 function extensionBadge(extension: string): string {

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, FileImage, Film, X } from "lucide-react";
+import { addBasePath } from "next/dist/client/add-base-path";
 
 export type MediaItem = {
   fileName: string;
@@ -14,7 +15,7 @@ type MediaGridProps = {
 };
 
 function mediaSrc(fileName: string): string {
-  return `../media/${encodeURIComponent(fileName)}`;
+  return addBasePath(`/media/${encodeURIComponent(fileName)}`);
 }
 
 export function MediaGrid({ items }: MediaGridProps) {
