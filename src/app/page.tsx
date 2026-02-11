@@ -106,7 +106,7 @@ export default function Home() {
 
           <div className="relative z-10 flex flex-1 flex-col gap-6">
             <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-              FLL Robotics Team -- 8 Members
+              FLL Team #3236 - 8 Members
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
               Lebob is a
