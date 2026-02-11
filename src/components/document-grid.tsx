@@ -23,8 +23,9 @@ export type DocumentItem = {
 const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp", "gif", "avif"]);
 const VIDEO_EXTENSIONS = new Set(["mp4", "webm", "mov", "m4v", "ogg"]);
 const AUDIO_EXTENSIONS = new Set(["mp3", "wav", "m4a", "aac", "ogg", "flac"]);
+const WORD_EXTENSIONS = new Set(["doc", "docx"]);
 
-type PreviewKind = "image" | "video" | "audio" | "embedded";
+type PreviewKind = "image" | "video" | "audio" | "word" | "embedded";
 
 type DocumentGridProps = {
   items: DocumentItem[];
@@ -53,6 +54,10 @@ function previewKind(extension: string): PreviewKind {
     return "audio";
   }
 
+  if (WORD_EXTENSIONS.has(ext)) {
+    return "word";
+  }
+
   return "embedded";
 }
 
@@ -78,9 +83,25 @@ function fileIcon(extension: string) {
   return <File className="h-3.5 w-3.5" />;
 }
 
+function wordPreviewSrc(fileName: string): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const absoluteDocumentUrl = new URL(documentSrc(fileName), window.location.href).href;
+  return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+    absoluteDocumentUrl,
+  )}`;
+}
+
 export function DocumentGrid({ items }: DocumentGridProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeItem = activeIndex === null ? null : items[activeIndex];
+  const activePreviewKind = activeItem ? previewKind(activeItem.extension) : null;
+  const activeWordSrc =
+    activeItem && activePreviewKind === "word"
+      ? wordPreviewSrc(activeItem.fileName)
+      : null;
 
   useEffect(() => {
     if (activeIndex === null) {
@@ -164,20 +185,20 @@ export function DocumentGrid({ items }: DocumentGridProps) {
             </button>
 
             <div className="overflow-hidden rounded-2xl border border-white/15 bg-black/70 p-2 sm:p-4">
-              {previewKind(activeItem.extension) === "image" ? (
+              {activePreviewKind === "image" ? (
                 <img
                   src={documentSrc(activeItem.fileName)}
                   alt={activeItem.label}
                   className="max-h-[78vh] w-full object-contain"
                 />
-              ) : previewKind(activeItem.extension) === "video" ? (
+              ) : activePreviewKind === "video" ? (
                 <video
                   src={documentSrc(activeItem.fileName)}
                   className="max-h-[78vh] w-full object-contain"
                   controls
                   autoPlay
                 />
-              ) : previewKind(activeItem.extension) === "audio" ? (
+              ) : activePreviewKind === "audio" ? (
                 <div className="flex min-h-[40vh] items-center justify-center">
                   <audio
                     src={documentSrc(activeItem.fileName)}
@@ -185,6 +206,18 @@ export function DocumentGrid({ items }: DocumentGridProps) {
                     autoPlay
                     className="w-full max-w-xl"
                   />
+                </div>
+              ) : activePreviewKind === "word" ? (
+                <div className="space-y-2">
+                  <iframe
+                    src={activeWordSrc ?? documentSrc(activeItem.fileName)}
+                    title={activeItem.label}
+                    className="h-[78vh] w-full rounded-lg border border-white/10 bg-white"
+                  />
+                  <p className="text-xs text-slate-300">
+                    Word preview uses Microsoft Office viewer and works best on
+                    the deployed site.
+                  </p>
                 </div>
               ) : (
                 <iframe
