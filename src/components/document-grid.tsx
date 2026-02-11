@@ -172,7 +172,7 @@ export function DocumentGrid({ items }: DocumentGridProps) {
           onClick={() => setActiveIndex(null)}
         >
           <div
-            className="relative w-full max-w-6xl"
+            className="relative flex h-full w-full max-w-6xl flex-col"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -184,48 +184,52 @@ export function DocumentGrid({ items }: DocumentGridProps) {
               <X className="h-4 w-4" />
             </button>
 
-            <div className="overflow-hidden rounded-2xl border border-white/15 bg-black/70 p-2 sm:p-4">
-              {activePreviewKind === "image" ? (
-                <img
-                  src={documentSrc(activeItem.fileName)}
-                  alt={activeItem.label}
-                  className="max-h-[78vh] w-full object-contain"
-                />
-              ) : activePreviewKind === "video" ? (
-                <video
-                  src={documentSrc(activeItem.fileName)}
-                  className="max-h-[78vh] w-full object-contain"
-                  controls
-                  autoPlay
-                />
-              ) : activePreviewKind === "audio" ? (
-                <div className="flex min-h-[40vh] items-center justify-center">
-                  <audio
+            <div className="flex min-h-0 flex-1 items-center">
+              <div className="w-full overflow-hidden rounded-2xl border border-white/15 bg-black/70 p-2 sm:p-4">
+                <div className="flex justify-center">
+                {activePreviewKind === "image" ? (
+                  <img
                     src={documentSrc(activeItem.fileName)}
+                    alt={activeItem.label}
+                    className="max-h-[78vh] w-full object-contain"
+                  />
+                ) : activePreviewKind === "video" ? (
+                  <video
+                    src={documentSrc(activeItem.fileName)}
+                    className="max-h-[78vh] w-full object-contain"
                     controls
                     autoPlay
-                    className="w-full max-w-xl"
                   />
-                </div>
-              ) : activePreviewKind === "word" ? (
-                <div className="space-y-2">
-                  <iframe
-                    src={activeWordSrc ?? documentSrc(activeItem.fileName)}
-                    title={activeItem.label}
-                    className="h-[78vh] w-full rounded-lg border border-white/10 bg-white"
-                  />
-                  <p className="text-xs text-slate-300">
-                    Word preview uses Microsoft Office viewer and works best on
-                    the deployed site.
-                  </p>
-                </div>
-              ) : (
+                ) : activePreviewKind === "audio" ? (
+                  <div className="flex min-h-[40vh] w-full items-center justify-center">
+                    <audio
+                      src={documentSrc(activeItem.fileName)}
+                      controls
+                      autoPlay
+                      className="w-full max-w-xl"
+                    />
+                  </div>
+                ) : activePreviewKind === "word" ? (
+                  <div className="flex w-full flex-col items-center space-y-2">
+                    <iframe
+                      src={activeWordSrc ?? documentSrc(activeItem.fileName)}
+                      title={activeItem.label}
+                      className="h-[78vh] w-full max-w-5xl rounded-lg border border-white/10 bg-white"
+                    />
+                    <p className="text-center text-xs text-slate-300">
+                      Word preview uses Microsoft Office viewer and works best on
+                      the deployed site.
+                    </p>
+                  </div>
+                ) : (
                 <iframe
                   src={documentSrc(activeItem.fileName)}
                   title={activeItem.label}
-                  className="h-[78vh] w-full rounded-lg border border-white/10 bg-white"
+                  className="h-[78vh] w-full max-w-5xl rounded-lg border border-white/10 bg-white"
                 />
               )}
+                </div>
+              </div>
             </div>
 
             <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
