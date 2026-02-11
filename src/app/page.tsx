@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -197,12 +196,12 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                   <div className="relative h-16 w-16">
                     <div className="absolute inset-0 rounded-2xl bg-emerald-400/20 blur-sm" />
-                    <Image
-                      src="/lebob.png"
+                    <img
+                      src="lebob.png"
                       alt="Lebob team logo"
                       width={64}
                       height={64}
-                      sizes="64px"
+                      loading="lazy"
                       className="relative rounded-2xl border border-white/10 bg-white/5"
                     />
                   </div>
