@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
-import { ArrowUpRight, FileImage, Film } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
+import { MediaGrid, type MediaItem } from "@/components/media-grid";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,12 +23,6 @@ const IMAGE_EXTENSIONS = new Set([
   ".avif",
 ]);
 const VIDEO_EXTENSIONS = new Set([".mp4", ".webm", ".mov", ".m4v", ".ogg"]);
-
-type MediaItem = {
-  fileName: string;
-  label: string;
-  type: "image" | "video";
-};
 
 function fileLabel(fileName: string): string {
   return fileName
@@ -123,44 +118,8 @@ export default async function MediaPage() {
           </h1>
 
           {mediaItems.length > 0 ? (
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade-up delay-3">
-              {mediaItems.map((item) => (
-                <article
-                  key={item.fileName}
-                  className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 card-hover"
-                >
-                  <div className="aspect-[4/3] bg-black/30">
-                    {item.type === "image" ? (
-                      <img
-                        src={mediaSrc(item.fileName)}
-                        alt={item.label}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <video
-                        src={mediaSrc(item.fileName)}
-                        className="h-full w-full object-cover"
-                        controls
-                        preload="metadata"
-                      />
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between border-t border-white/10 px-4 py-3">
-                    <p className="truncate text-sm font-medium text-white">
-                      {item.label}
-                    </p>
-                    <span className="ml-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-xs text-slate-200">
-                      {item.type === "image" ? (
-                        <FileImage className="h-3.5 w-3.5" />
-                      ) : (
-                        <Film className="h-3.5 w-3.5" />
-                      )}
-                      {item.type === "image" ? "Photo" : "Video"}
-                    </span>
-                  </div>
-                </article>
-              ))}
+            <div className="mt-10 animate-fade-up delay-3">
+              <MediaGrid items={mediaItems} />
             </div>
           ) : (
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 animate-fade-up delay-3">
