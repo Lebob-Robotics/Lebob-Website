@@ -105,81 +105,76 @@ export function MediaGrid({ items }: MediaGridProps) {
 
       {activeItem ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+          className="fixed inset-0 z-50 bg-black"
           role="dialog"
           aria-modal="true"
           aria-label={activeItem.label}
           onClick={() => setActiveIndex(null)}
         >
-          <div
-            className="relative w-full max-w-6xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              onClick={() => setActiveIndex(null)}
-              className="absolute right-0 top-0 z-10 rounded-full border border-white/20 bg-black/50 p-2 text-white hover:bg-black/70"
-              aria-label="Close fullscreen media"
-            >
-              <X className="h-4 w-4" />
-            </button>
-
-            <div className="overflow-hidden rounded-2xl border border-white/15 bg-black/70 p-2 sm:p-4">
+          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+            <div className="h-[100dvh] w-screen" onClick={(event) => event.stopPropagation()}>
               {activeItem.type === "image" ? (
                 <img
                   src={mediaSrc(activeItem.fileName)}
                   alt={activeItem.label}
-                  className="max-h-[82vh] w-full object-contain"
+                  className="h-full w-full object-contain"
                 />
               ) : (
                 <video
                   src={mediaSrc(activeItem.fileName)}
-                  className="max-h-[82vh] w-full object-contain"
+                  className="h-full w-full object-contain"
                   controls
                   autoPlay
                 />
               )}
             </div>
+          </div>
 
-            <div className="mt-3 flex items-center justify-between">
-              {showNavigation ? (
-                <button
-                  type="button"
-                  onClick={() =>
-                    setActiveIndex((index) =>
-                      index === null
-                        ? index
-                        : (index - 1 + items.length) % items.length,
-                    )
-                  }
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-sm text-white hover:bg-black/60"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  Prev
-                </button>
-              ) : (
-                <span />
-              )}
+          <button
+            type="button"
+            onClick={() => setActiveIndex(null)}
+            className="absolute right-3 top-3 z-20 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:right-4 sm:top-4"
+            aria-label="Close fullscreen media"
+          >
+            <X className="h-4 w-4" />
+          </button>
 
-              <p className="px-3 text-center text-sm text-slate-200">{activeItem.label}</p>
+          {showNavigation ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setActiveIndex((index) =>
+                  index === null ? index : (index - 1 + items.length) % items.length,
+                );
+              }}
+              className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:left-4"
+              aria-label="Previous media"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          ) : null}
 
-              {showNavigation ? (
-                <button
-                  type="button"
-                  onClick={() =>
-                    setActiveIndex((index) =>
-                      index === null ? index : (index + 1) % items.length,
-                    )
-                  }
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-sm text-white hover:bg-black/60"
-                >
-                  Next
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              ) : (
-                <span />
-              )}
-            </div>
+          {showNavigation ? (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setActiveIndex((index) =>
+                  index === null ? index : (index + 1) % items.length,
+                );
+              }}
+              className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:right-4"
+              aria-label="Next media"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          ) : null}
+
+          <div className="pointer-events-none absolute inset-x-0 bottom-3 z-20 flex justify-center px-3 sm:bottom-4">
+            <p className="max-w-[92vw] truncate rounded-full border border-white/20 bg-black/60 px-3 py-1 text-center text-sm text-slate-100">
+              {activeItem.label}
+            </p>
           </div>
         </div>
       ) : null}
