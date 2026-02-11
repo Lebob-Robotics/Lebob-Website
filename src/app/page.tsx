@@ -143,6 +143,20 @@ export default function Home() {
                   <ArrowUpRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
+              <Button
+                variant="outline"
+                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                asChild
+              >
+                <a href="/media">Team media</a>
+              </Button>
+              <Button
+                variant="outline"
+                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                asChild
+              >
+                <a href="/docs">Team docs</a>
+              </Button>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
               {[
