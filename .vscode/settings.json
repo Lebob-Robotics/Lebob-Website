@@ -1,5 +1,7 @@
 {
     "conventionalCommits.scopes": [
-        "readme"
+        "readme",
+        "text",
+        "visuals"
     ]
 }
