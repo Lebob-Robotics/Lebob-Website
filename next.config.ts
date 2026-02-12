@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
-const repoName = "Lebob-Site";
 const isGitHubActions = process.env.GITHUB_ACTIONS === "true";
+const repository = process.env.GITHUB_REPOSITORY ?? "";
+const repoName = repository.split("/")[1] ?? "";
+const shouldUseRepoBasePath =
+  isGitHubActions && repoName !== "" && !repoName.endsWith(".github.io");
+const basePath = shouldUseRepoBasePath ? `/${repoName}` : "";
 
 const nextConfig: NextConfig = {
   output: "export",
@@ -9,8 +13,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: isGitHubActions ? `/${repoName}` : "",
-  assetPrefix: isGitHubActions ? `/${repoName}` : "",
+  basePath,
+  assetPrefix: basePath,
 };
 
 export default nextConfig;

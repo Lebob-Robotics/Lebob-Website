@@ -188,7 +188,7 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
-            <div className="animate-fade-up delay-3">
+            <div className="animate-fade-up delay-3 flex flex-wrap gap-3">
               <Button
                 variant="outline"
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
@@ -508,6 +508,12 @@ export default function Home() {
               >
                 Onshape
               </a>
+            </span>
+            <span className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+              <Link href="/sponsor" className="footer-link">
+                Sponsor Us
+              </Link>
             </span>
           </div>
         </div>
