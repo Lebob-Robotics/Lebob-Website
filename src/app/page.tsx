@@ -159,6 +159,13 @@ export default function Home() {
               >
                 <Link href="/docs">Team docs</Link>
               </Button>
+              <Button
+                variant="outline"
+                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                asChild
+              >
+                <Link href="/robot">Robot Game</Link>
+              </Button>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
               {[
