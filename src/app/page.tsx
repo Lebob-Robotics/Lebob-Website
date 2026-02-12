@@ -4,20 +4,15 @@ import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
   BadgeCheck,
-  Brain,
   CircuitBoard,
-  GitFork,
+  Github,
   Globe,
-  UserSearch,
-  ImageIcon,
   HeartHandshake,
   Orbit,
   Sparkles,
   Trophy,
   Users,
   Wrench,
-  WrenchIcon,
-  Newspaper,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -113,21 +108,6 @@ const milestones = [
   },
 ];
 
-const aboutUsInfo = [
-  {
-    text: "Won national and state competitions in First Lego League.",
-    icon: Trophy,
-  },
-  {
-    text: "Built and coded a robot to complete various missions reliably.",
-    icon: WrenchIcon,
-  },
-  {
-    text: "Made the SoftSense manipulator arm for innovations.",
-    icon: Brain,
-  },
-]
-
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -142,19 +122,18 @@ export default function Home() {
 
           <div className="relative z-10 flex flex-1 flex-col gap-6">
             <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-              Lebob - FLL Team #3236
+              FLL Team #3236 - 8 Members
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
-              Robots that compete and ideas that inspire. 
-              <span className="text-gradient"> Welcome to Lebob.</span>
+              Lebob is a
+              <span className="text-gradient"> fearless FLL team</span> building
+              robots and ideas that compete and inspire.
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-              We are a team competing in the
-              <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>. <br/>
-              We <b>engineer</b> robots to complete missions, 
-              <b> research</b> and <b>innovate</b> to design impactful mechanisms,
-              and make it possible through <b>collboration</b>. <br />
-              This is our official website.
+              We mix engineering, coding, and research to build reliable robots
+              and tell the story behind every mission. Every run is a
+              collaboration, every win a shared moment, and every season a push
+              to be the best in the state.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
@@ -163,18 +142,18 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <GitFork/>
+                  <Github className="mr-2 h-4 w-4" />
                   Explore our GitHub
                 </a>
               </Button>
               <Button
                 variant="outline"
-                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
+                className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
                 <a href="#team">
-                  <UserSearch/>
                   Meet the team
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
               <Button
@@ -182,22 +161,16 @@ export default function Home() {
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <Link href="/media">
-                  <ImageIcon/>
-                  Team media
-                </Link>
+                <Link href="/media">Team media</Link>
               </Button>
             </div>
             <div className="animate-fade-up delay-3 flex flex-wrap gap-3">
               <Button
                 variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
                 asChild
               >
-                <Link href="/docs">
-                  <Newspaper/>
-                  Team docs
-                </Link>
+                <Link href="/docs">Team docs</Link>
               </Button>
               <Button
                 variant="outline"
@@ -207,20 +180,37 @@ export default function Home() {
                 <Link href="/sponsor">How to sponsor us</Link>
               </Button>
             </div>
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
+              {[
+                { label: "Members", value: "8" },
+                { label: "Core Values", value: "6" },
+                { label: "Mission Focus", value: "One team" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur"
+                >
+                  <p className="text-2xl font-semibold text-white">{stat.value}</p>
+                  <p className="text-sm text-slate-300">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
             <Card className="glass text-white card-hover">
               <CardHeader className="space-y-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2 text-xl">
                     <Sparkles className="h-5 w-5 text-emerald-300" />
-                    About Us
+                    Mission Console
                   </CardTitle>
                   <Badge className="bg-emerald-400/20 text-emerald-200">
-                    Info
+                    Active
                   </Badge>
                 </div>
                 <CardDescription className="text-slate-300">
-                  First Lego League international team.
+                  A quick look at how we operate together.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-5">
@@ -243,7 +233,20 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="grid gap-3">
-                  {aboutUsInfo.map((item) => (
+                  {[
+                    {
+                      icon: Trophy,
+                      text: "Practice cycles that maximize consistency.",
+                    },
+                    {
+                      icon: HeartHandshake,
+                      text: "Collaboration keeps our ideas sharp.",
+                    },
+                    {
+                      icon: BadgeCheck,
+                      text: "Core values guide every build decision.",
+                    },
+                  ].map((item) => (
                     <div key={item.text} className="flex items-start gap-3">
                       <item.icon className="mt-1 h-5 w-5 text-emerald-300" />
                       <p className="text-sm text-slate-200">{item.text}</p>
@@ -473,7 +476,7 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <GitFork className="mr-2 h-5 w-5" />
+                  <Github className="mr-2 h-5 w-5" />
                   Visit GitHub
                 </a>
               </Button>
