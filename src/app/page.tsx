@@ -127,18 +127,19 @@ export default function Home() {
 
           <div className="relative z-10 flex flex-1 flex-col gap-6">
             <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-              FLL Team #3236 - 8 Members
+              Lebob - FLL Team #3236
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
-              Lebob is a
-              <span className="text-gradient"> fearless FLL team</span> building
-              robots and ideas that compete and inspire.
+              Robots that compete and ideas that inspire. 
+              <span className="text-gradient"> Welcome to Lebob.</span>
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-              We mix engineering, coding, and research to build reliable robots
-              and tell the story behind every mission. Every run is a
-              collaboration, every win a shared moment, and every season a push
-              to be the best in the state.
+              We are a team competing in the
+              <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>. <br/>
+              We <b>engineer</b> robots to complete missions, 
+              <b> research</b> and <b>innovate</b> to design impactful mechanisms,
+              and make it possible through <b>collboration</b>. <br />
+              This is our official website.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
