@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -107,12 +108,6 @@ const milestones = [
   },
 ];
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-
-function withBasePath(path: string): string {
-  return `${basePath}${path}`;
-}
-
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -214,7 +209,7 @@ export default function Home() {
                   <div className="relative h-16 w-16">
                     <div className="absolute inset-0 rounded-2xl bg-emerald-400/20 blur-sm" />
                     <Image
-                      src={withBasePath("/lebob.png")}
+                      src={addBasePath("/lebob.png")}
                       alt="Lebob team logo"
                       width={64}
                       height={64}
@@ -361,7 +356,7 @@ export default function Home() {
                   {member.image ? (
                     <div className="h-12 w-12 overflow-hidden rounded-full border border-white/15">
                       <Image
-                        src={withBasePath(member.image)}
+                        src={addBasePath(member.image)}
                         alt={`${member.name} profile`}
                         width={48}
                         height={48}
@@ -396,7 +391,7 @@ export default function Home() {
             <div className="w-full bg-gradient-to-br from-slate-900/35 via-black/20 to-emerald-500/10 p-3 sm:p-5">
               <div className="relative mx-auto aspect-square w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10">
                 <Image
-                  src={withBasePath(mentors.image)}
+                  src={addBasePath(mentors.image)}
                   alt="Kaelie and Jade"
                   fill
                   sizes="(max-width: 1024px) 100vw, 768px"
@@ -436,7 +431,7 @@ export default function Home() {
                   rel="noreferrer"
                 >
                   <Image
-                    src={withBasePath("/onshape.svg")}
+                    src={addBasePath("/onshape.svg")}
                     alt="Onshape"
                     width={20}
                     height={20}
