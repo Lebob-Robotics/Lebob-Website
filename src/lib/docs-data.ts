@@ -14,19 +14,19 @@ export const DOCS_SECTIONS = [
     tabLabel: "Robot",
     title: "Robot Documentation",
     description:
-      "Design notes, match strategy, and build resources for our robot journey.",
+      "Everything we use to design, build, test, and improve our robot.",
     highlights: [
-      "Mechanical and programming updates for each major iteration.",
-      "Competition prep checklists and match-day references.",
-      "Robot-focused galleries, files, and linked resources.",
+      "Build logs and code notes from each major version.",
+      "Practice checklists and run-planning notes for competition day.",
+      "Robot photos, files, and links in one organized place.",
     ],
     links: [
       {
-        label: "Robot Code Repository",
+        label: "Robot Code (GitHub)",
         href: "https://github.com/prawny-boy/FLL-Lebob-Unearthed",
       },
       {
-        label: "Onshape CAD Workspace",
+        label: "CAD Workspace (Onshape)",
         href: "https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9",
       },
       {
@@ -40,15 +40,15 @@ export const DOCS_SECTIONS = [
     tabLabel: "Innovation",
     title: "Innovation Documentation",
     description:
-      "Research, presentation material, and impact storytelling for our innovation project.",
+      "Research notes, presentation files, and impact material for our project.",
     highlights: [
-      "Problem research and source-backed project insights.",
-      "Pitch development, presentation structure, and judging prep.",
-      "Innovation galleries, documents, and helpful references.",
+      "Research findings and source-backed project notes.",
+      "Pitch drafts, presentation flow, and judging prep material.",
+      "Innovation docs, media, and quick references for review.",
     ],
     links: [
       {
-        label: "Innovation Journey",
+        label: "Innovation Section on Home",
         href: "/#values",
       },
       {
@@ -65,7 +65,11 @@ export const DOCS_SECTIONS = [
 
 export type DocsSectionSlug = (typeof DOCS_SECTIONS)[number]["slug"];
 export type DocsSection = (typeof DOCS_SECTIONS)[number];
-export type DocsTabKey = DocsSectionSlug | "all";
+export type DocsTab = {
+  href: string;
+  label: string;
+  count: number;
+};
 
 const DOCUMENTS_ROOT_DIR = path.join(process.cwd(), "public", "documents");
 
@@ -83,6 +87,13 @@ function fileExtension(fileName: string): string {
 
 function documentsSectionDir(sectionSlug: DocsSectionSlug): string {
   return path.join(DOCUMENTS_ROOT_DIR, sectionSlug);
+}
+
+function sortByFileName(a: DocumentItem, b: DocumentItem): number {
+  return a.fileName.localeCompare(b.fileName, undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
 }
 
 export function getDocsSection(sectionSlug: DocsSectionSlug): DocsSection {
@@ -121,12 +132,7 @@ export async function getSectionDocumentItems(
       });
     }
 
-    return items.sort((a, b) =>
-      a.fileName.localeCompare(b.fileName, undefined, {
-        numeric: true,
-        sensitivity: "base",
-      }),
-    );
+    return items.sort(sortByFileName);
   } catch (error) {
     if (
       typeof error === "object" &&
@@ -145,4 +151,43 @@ export async function getSectionDocumentCount(
   sectionSlug: DocsSectionSlug,
 ): Promise<number> {
   return (await getSectionDocumentItems(sectionSlug)).length;
+}
+
+export async function getAllSectionDocumentItems(): Promise<DocumentItem[]> {
+  const sectionItems = await Promise.all(
+    DOCS_SECTIONS.map((section) => getSectionDocumentItems(section.slug)),
+  );
+
+  return sectionItems.flat().sort(sortByFileName);
+}
+
+export async function getDocsTabs(): Promise<{
+  tabs: DocsTab[];
+  totalCount: number;
+}> {
+  const sectionCounts = await Promise.all(
+    DOCS_SECTIONS.map(async (section) => ({
+      section,
+      count: await getSectionDocumentCount(section.slug),
+    })),
+  );
+
+  const totalCount = sectionCounts.reduce((sum, item) => sum + item.count, 0);
+  const tabs: DocsTab[] = [
+    {
+      href: "/docs",
+      label: "All",
+      count: totalCount,
+    },
+    ...sectionCounts.map(({ section, count }) => ({
+      href: `/docs/${section.slug}`,
+      label: section.tabLabel,
+      count,
+    })),
+  ];
+
+  return {
+    tabs,
+    totalCount,
+  };
 }

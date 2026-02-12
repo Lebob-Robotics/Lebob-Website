@@ -10,8 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DOCS_SECTIONS,
+  getDocsTabs,
   getDocsSection,
-  getSectionDocumentCount,
   getSectionDocumentItems,
   isDocsSectionSlug,
   type DocsSectionSlug,
@@ -55,30 +55,10 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
   const sectionSlug: DocsSectionSlug = section;
   const sectionInfo = getDocsSection(sectionSlug);
 
-  const [documentItems, tabCounts] = await Promise.all([
+  const [documentItems, { tabs }] = await Promise.all([
     getSectionDocumentItems(sectionSlug),
-    Promise.all(
-      DOCS_SECTIONS.map(async (entry) => ({
-        slug: entry.slug,
-        count: await getSectionDocumentCount(entry.slug),
-      })),
-    ),
+    getDocsTabs(),
   ]);
-
-  const countBySlug = new Map(tabCounts.map((entry) => [entry.slug, entry.count]));
-  const totalCount = Array.from(countBySlug.values()).reduce(
-    (sum, count) => sum + count,
-    0,
-  );
-
-  const tabs = [
-    { href: "/docs", label: "All", count: totalCount },
-    ...DOCS_SECTIONS.map((entry) => ({
-      href: `/docs/${entry.slug}`,
-      label: entry.tabLabel,
-      count: countBySlug.get(entry.slug) ?? 0,
-    })),
-  ];
 
   return (
     <div className="min-h-screen">
@@ -135,7 +115,7 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
             </div>
 
             <aside className="rounded-2xl border border-white/10 bg-white/5 p-6 animate-fade-up delay-3">
-              <h2 className="text-xl font-semibold text-white">More Information</h2>
+              <h2 className="text-xl font-semibold text-white">Section Notes</h2>
               <ul className="mt-4 space-y-2 text-sm text-slate-200">
                 {sectionInfo.highlights.map((item) => (
                   <li key={item} className="leading-relaxed">
@@ -145,7 +125,7 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
               </ul>
 
               <h3 className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">
-                Helpful Links
+                Quick Links
               </h3>
               <div className="mt-3 flex flex-col gap-2">
                 {sectionInfo.links.map((link) => {
