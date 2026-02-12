@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -60,6 +61,11 @@ const team = [
   },
 ];
 
+const mentors = {
+  names: ["Kaelie", "Jade"],
+  image: "/members/mentors.jpg",
+};
+
 const values = [
   {
     title: "Build",
@@ -101,12 +107,6 @@ const milestones = [
     detail: "Share our innovation story and teamwork journey.",
   },
 ];
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-
-function withBasePath(path: string): string {
-  return `${basePath}${path}`;
-}
 
 export default function Home() {
   return (
@@ -209,7 +209,7 @@ export default function Home() {
                   <div className="relative h-16 w-16">
                     <div className="absolute inset-0 rounded-2xl bg-emerald-400/20 blur-sm" />
                     <Image
-                      src={withBasePath("/lebob.png")}
+                      src={addBasePath("/lebob.png")}
                       alt="Lebob team logo"
                       width={64}
                       height={64}
@@ -356,7 +356,7 @@ export default function Home() {
                   {member.image ? (
                     <div className="h-12 w-12 overflow-hidden rounded-full border border-white/15">
                       <Image
-                        src={withBasePath(member.image)}
+                        src={addBasePath(member.image)}
                         alt={`${member.name} profile`}
                         width={48}
                         height={48}
@@ -373,6 +373,39 @@ export default function Home() {
               </Card>
             ))}
           </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-6 pb-14 pt-0 sm:px-10 animate-fade-up delay-2">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                Mentors
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-white">
+                Guidance behind the scenes.
+              </h2>
+            </div>
+            <Badge className="w-fit bg-white/10 text-white">Support Team</Badge>
+          </div>
+          <Card className="mt-8 overflow-hidden border-white/10 bg-white/5 text-white card-hover">
+            <div className="w-full bg-gradient-to-br from-slate-900/35 via-black/20 to-emerald-500/10 p-3 sm:p-5">
+              <div className="relative mx-auto aspect-square w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10">
+                <Image
+                  src={addBasePath(mentors.image)}
+                  alt="Kaelie and Jade"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 768px"
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            <CardHeader className="space-y-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/15">
+                <HeartHandshake className="h-5 w-5 text-emerald-200" />
+              </div>
+              <CardTitle className="text-2xl">{mentors.names.join(" & ")}</CardTitle>
+            </CardHeader>
+          </Card>
         </section>
 
         <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
@@ -398,7 +431,7 @@ export default function Home() {
                   rel="noreferrer"
                 >
                   <Image
-                    src={withBasePath("/onshape.svg")}
+                    src={addBasePath("/onshape.svg")}
                     alt="Onshape"
                     width={20}
                     height={20}
