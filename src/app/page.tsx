@@ -60,7 +60,10 @@ const team = [
   },
 ];
 
-const mentors = ["Kaelie", "Jade"];
+const mentors = {
+  names: ["Kaelie", "Jade"],
+  image: "/members/mentors.jpg",
+};
 
 const values = [
   {
@@ -389,21 +392,25 @@ export default function Home() {
             </div>
             <Badge className="w-fit bg-white/10 text-white">Support Team</Badge>
           </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {mentors.map((mentor) => (
-              <Card
-                key={mentor}
-                className="border-white/10 bg-white/5 text-white card-hover"
-              >
-                <CardHeader className="space-y-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/15">
-                    <HeartHandshake className="h-5 w-5 text-emerald-200" />
-                  </div>
-                  <CardTitle className="text-lg">{mentor}</CardTitle>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
+          <Card className="mt-8 overflow-hidden border-white/10 bg-white/5 text-white card-hover">
+            <div className="w-full bg-gradient-to-br from-slate-900/35 via-black/20 to-emerald-500/10 p-3 sm:p-5">
+              <div className="relative mx-auto aspect-square w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10">
+                <Image
+                  src={withBasePath(mentors.image)}
+                  alt="Kaelie and Jade"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 768px"
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            <CardHeader className="space-y-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/15">
+                <HeartHandshake className="h-5 w-5 text-emerald-200" />
+              </div>
+              <CardTitle className="text-2xl">{mentors.names.join(" & ")}</CardTitle>
+            </CardHeader>
+          </Card>
         </section>
 
         <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
