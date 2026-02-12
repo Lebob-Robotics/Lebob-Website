@@ -428,7 +428,7 @@ export default function Home() {
                 className="github-cta-button"
               >
                 <a
-                  href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+                  href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/793fd03cca6a9aae00502f1e?renderMode=0&uiState=698d47d5c4abc76ba4755a4e"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -503,7 +503,7 @@ export default function Home() {
             <span className="flex items-center gap-2">
               <ArrowUpRight className="h-4 w-4 text-sky-300" />
               <a
-                href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+                href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/793fd03cca6a9aae00502f1e?renderMode=0&uiState=698d47d5c4abc76ba4755a4e"
                 target="_blank"
                 rel="noreferrer"
                 className="footer-link"
