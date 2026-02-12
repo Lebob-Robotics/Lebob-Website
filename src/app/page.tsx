@@ -62,7 +62,7 @@ const team = [
 ];
 
 const mentors = {
-  names: ["Kaelie", "Jade"],
+  names: ["Jade", "Kaelie"],
   image: "/members/mentors.jpg",
 };
 
