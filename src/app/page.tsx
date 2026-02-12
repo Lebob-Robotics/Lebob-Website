@@ -60,6 +60,8 @@ const team = [
   },
 ];
 
+const mentors = ["Kaelie", "Jade"];
+
 const values = [
   {
     title: "Build",
@@ -369,6 +371,35 @@ export default function Home() {
                     </div>
                   )}
                   <CardTitle className="text-lg">{member.name}</CardTitle>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-6 pb-14 pt-0 sm:px-10 animate-fade-up delay-2">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                Mentors
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-white">
+                Guidance behind the scenes.
+              </h2>
+            </div>
+            <Badge className="w-fit bg-white/10 text-white">Support Team</Badge>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {mentors.map((mentor) => (
+              <Card
+                key={mentor}
+                className="border-white/10 bg-white/5 text-white card-hover"
+              >
+                <CardHeader className="space-y-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/15">
+                    <HeartHandshake className="h-5 w-5 text-emerald-200" />
+                  </div>
+                  <CardTitle className="text-lg">{mentor}</CardTitle>
                 </CardHeader>
               </Card>
             ))}
