@@ -42,4 +42,4 @@ yarn-error.log*
 next-env.d.ts
 
 # local settings
-./.vscode/settings.json
+.vscode/settings.json
