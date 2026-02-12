@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -27,32 +28,35 @@ import { ThemeToggle } from "@/components/theme-toggle";
 const team = [
   {
     name: "Kingsley W",
-    image: "members/kingsley.png",
+    image: "/members/kingsley.png",
   },
   {
     name: "Andre N",
-    image: "members/andre.jpeg",
+    image: "/members/andre.jpeg",
   },
   {
     name: "Sean C",
-    image: "members/sean.jpg",
+    image: "/members/sean.jpg",
   },
   {
     name: "Oliver L",
-    image: "members/oliver.png",
+    image: "/members/oliver.png",
   },
   {
     name: "Subesh S",
-    image: "members/subesh.png",
+    image: "/members/subesh.png",
   },
   {
     name: "Chris W",
+    image: "/members/chris.png",
   },
   {
     name: "Aaron Z",
+    image: "/members/aaron.png",
   },
   {
     name: "Leven S",
+    image: "/members/leven.png",
   },
 ];
 
@@ -97,6 +101,12 @@ const milestones = [
     detail: "Share our innovation story and teamwork journey.",
   },
 ];
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+function withBasePath(path: string): string {
+  return `${basePath}${path}`;
+}
 
 export default function Home() {
   return (
@@ -198,12 +208,11 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                   <div className="relative h-16 w-16">
                     <div className="absolute inset-0 rounded-2xl bg-emerald-400/20 blur-sm" />
-                    <img
-                      src="lebob.png"
+                    <Image
+                      src={withBasePath("/lebob.png")}
                       alt="Lebob team logo"
                       width={64}
                       height={64}
-                      loading="lazy"
                       className="relative rounded-2xl border border-white/10 bg-white/5"
                     />
                   </div>
@@ -346,11 +355,12 @@ export default function Home() {
                 <CardHeader className="space-y-3">
                   {member.image ? (
                     <div className="h-12 w-12 overflow-hidden rounded-full border border-white/15">
-                      <img
-                        src={member.image}
+                      <Image
+                        src={withBasePath(member.image)}
                         alt={`${member.name} profile`}
+                        width={48}
+                        height={48}
                         className="h-full w-full object-cover"
-                        loading="lazy"
                       />
                     </div>
                   ) : (
@@ -387,9 +397,11 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img
-                    src="/onshape.svg"
+                  <Image
+                    src={withBasePath("/onshape.svg")}
                     alt="Onshape"
+                    width={20}
+                    height={20}
                     className="mr-2 h-5 w-5 onshape-icon"
                   />
                   Go to our Onshape
