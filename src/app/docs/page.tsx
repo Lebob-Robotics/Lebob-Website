@@ -1,77 +1,54 @@
 import type { Metadata } from "next";
-import { readdir } from "node:fs/promises";
-import path from "node:path";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { DocumentGrid, type DocumentItem } from "@/components/document-grid";
+import { DocsTabs } from "@/components/docs-tabs";
+import { DocumentGrid } from "@/components/document-grid";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  DOCS_SECTIONS,
+  getSectionDocumentItems,
+  getSectionDocumentCount,
+} from "@/lib/docs-data";
 
 export const metadata: Metadata = {
   title: "Team Documentation | Lebob",
-  description: "Team documentation and file previews for Lebob.",
+  description: "Unified team documentation hub with Robot and Innovation tabs.",
 };
 
-function fileLabel(fileName: string): string {
-  return fileName
-    .replace(/\.[^.]+$/, "")
-    .replace(/[-_]+/g, " ")
-    .trim();
-}
-
-function fileExtension(fileName: string): string {
-  const extension = path.extname(fileName).toLowerCase();
-  return extension.startsWith(".") ? extension.slice(1) : "";
-}
-
-async function getDocumentItems(): Promise<DocumentItem[]> {
-  const documentsDir = path.join(process.cwd(), "public", "documents");
-
-  try {
-    const entries = await readdir(documentsDir, { withFileTypes: true });
-    const items: DocumentItem[] = [];
-
-    for (const entry of entries) {
-      if (!entry.isFile()) {
-        continue;
-      }
-
-      // Ignore hidden helper files such as .gitkeep
-      if (entry.name.startsWith(".")) {
-        continue;
-      }
-
-      items.push({
-        fileName: entry.name,
-        label: fileLabel(entry.name),
-        extension: fileExtension(entry.name),
-      });
-    }
-
-    return items.sort((a, b) =>
-      a.fileName.localeCompare(b.fileName, undefined, {
-        numeric: true,
-        sensitivity: "base",
-      }),
-    );
-  } catch (error) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      error.code === "ENOENT"
-    ) {
-      return [];
-    }
-
-    throw error;
-  }
-}
-
 export default async function DocsPage() {
-  const documentItems = await getDocumentItems();
+  const [robotItems, innovationItems] = await Promise.all([
+    getSectionDocumentItems("robot"),
+    getSectionDocumentItems("innovation"),
+  ]);
+
+  const documentItems = [...robotItems, ...innovationItems].sort((a, b) =>
+    a.fileName.localeCompare(b.fileName, undefined, {
+      numeric: true,
+      sensitivity: "base",
+    }),
+  );
+
+  const tabCounts = await Promise.all(
+    DOCS_SECTIONS.map(async (section) => ({
+      slug: section.slug,
+      count: await getSectionDocumentCount(section.slug),
+    })),
+  );
+
+  const countBySlug = new Map(tabCounts.map((entry) => [entry.slug, entry.count]));
+  const totalCount = documentItems.length;
+
+  const tabs = [
+    { href: "/docs", label: "All", count: totalCount },
+    ...DOCS_SECTIONS.map((section) => ({
+      href: `/docs/${section.slug}`,
+      label: section.tabLabel,
+      count: countBySlug.get(section.slug) ?? 0,
+    })),
+  ];
 
   return (
     <div className="min-h-screen">
@@ -101,6 +78,12 @@ export default async function DocsPage() {
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl animate-fade-up delay-1">
             Lebob Docs Center
           </h1>
+          <p className="mt-4 max-w-3xl text-base text-slate-200 animate-fade-up delay-2">
+            Unified docs live here. Use Robot and Innovation tabs for focused
+            galleries, extra information, and key links.
+          </p>
+
+          <DocsTabs tabs={tabs} />
 
           {documentItems.length > 0 ? (
             <div className="mt-10 animate-fade-up delay-3">
@@ -112,9 +95,13 @@ export default async function DocsPage() {
                 No documents found yet.
               </p>
               <p className="mt-2 text-sm text-slate-300">
-                Add files to{" "}
+                Add files to section folders like{" "}
                 <code className="rounded bg-black/30 px-2 py-1">
-                  public/documents
+                  public/documents/robot
+                </code>{" "}
+                or{" "}
+                <code className="rounded bg-black/30 px-2 py-1">
+                  public/documents/innovation
                 </code>{" "}
                 and refresh this page.
               </p>
