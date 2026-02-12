@@ -390,9 +390,9 @@ export default function Home() {
                   <img
                     src="/onshape.svg"
                     alt="Onshape"
-                    className="mr-2 h-5 w-5"
+                    className="mr-2 h-5 w-5 onshape-icon"
                   />
-                  Visit Onshape
+                  Go to our Onshape
                 </a>
               </Button>
             </CardContent>
