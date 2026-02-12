@@ -15,6 +15,7 @@ export type DocumentItem = {
   fileName: string;
   label: string;
   extension: string;
+  relativePath: string;
 };
 
 const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp", "gif", "avif"]);
@@ -26,8 +27,13 @@ type DocumentGridProps = {
   items: DocumentItem[];
 };
 
-function documentSrc(fileName: string): string {
-  return addBasePath(`/documents/${encodeURIComponent(fileName)}`);
+function documentSrc(relativePath: string): string {
+  const encodedPath = relativePath
+    .split("/")
+    .map((part) => encodeURIComponent(part))
+    .join("/");
+
+  return addBasePath(`/documents/${encodedPath}`);
 }
 
 function extensionBadge(extension: string): string {
@@ -65,11 +71,11 @@ export function DocumentGrid({ items }: DocumentGridProps) {
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => {
         const isWord = isWordDocument(item.extension);
-        const src = documentSrc(item.fileName);
+        const src = documentSrc(item.relativePath);
 
         return (
           <article
-            key={item.fileName}
+            key={item.relativePath}
             className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 card-hover"
           >
             <a

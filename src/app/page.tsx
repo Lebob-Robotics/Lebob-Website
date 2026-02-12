@@ -163,9 +163,11 @@ export default function Home() {
               >
                 <Link href="/media">Team media</Link>
               </Button>
+            </div>
+            <div className="animate-fade-up delay-3">
               <Button
                 variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
                 asChild
               >
                 <Link href="/docs">Team docs</Link>
