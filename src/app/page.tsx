@@ -164,13 +164,20 @@ export default function Home() {
                 <Link href="/media">Team media</Link>
               </Button>
             </div>
-            <div className="animate-fade-up delay-3">
+            <div className="animate-fade-up delay-3 flex flex-wrap gap-3">
               <Button
                 variant="outline"
                 className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
                 asChild
               >
                 <Link href="/docs">Team docs</Link>
+              </Button>
+              <Button
+                variant="outline"
+                className="border-sky-300/70 bg-sky-400/10 text-sky-100 hover:bg-sky-400/20"
+                asChild
+              >
+                <Link href="/sponsor">How to sponsor us</Link>
               </Button>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
@@ -510,6 +517,12 @@ export default function Home() {
               >
                 Onshape
               </a>
+            </span>
+            <span className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+              <Link href="/sponsor" className="footer-link">
+                Sponsor Us
+              </Link>
             </span>
           </div>
         </div>
