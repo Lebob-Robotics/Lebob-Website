@@ -113,6 +113,21 @@ const milestones = [
   },
 ];
 
+const aboutUsInfo = [
+  {
+    text: "Won national and state competitions in First Lego League.",
+    icon: Trophy,
+  },
+  {
+    text: "Built and coded a robot to complete various missions reliably.",
+    icon: WrenchIcon,
+  },
+  {
+    text: "Made the SoftSense manipulator arm for innovations.",
+    icon: Brain,
+  },
+]
+
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -208,14 +223,14 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2 text-xl">
                     <Sparkles className="h-5 w-5 text-emerald-300" />
-                    Mission Console
+                    About Us
                   </CardTitle>
                   <Badge className="bg-emerald-400/20 text-emerald-200">
-                    Active
+                    Info
                   </Badge>
                 </div>
                 <CardDescription className="text-slate-300">
-                  A quick look at how we operate together.
+                  First Lego League international team.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-5">
@@ -238,20 +253,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="grid gap-3">
-                  {[
-                    {
-                      icon: Trophy,
-                      text: "Practice cycles that maximize consistency.",
-                    },
-                    {
-                      icon: HeartHandshake,
-                      text: "Collaboration keeps our ideas sharp.",
-                    },
-                    {
-                      icon: BadgeCheck,
-                      text: "Core values guide every build decision.",
-                    },
-                  ].map((item) => (
+                  {aboutUsInfo.map((item) => (
                     <div key={item.text} className="flex items-start gap-3">
                       <item.icon className="mt-1 h-5 w-5 text-emerald-300" />
                       <p className="text-sm text-slate-200">{item.text}</p>
