@@ -1,4 +1,4 @@
 Lebob FLL Robotics Team website.
 
 ## Running
-pnpm run dev
+```npm run dev```
