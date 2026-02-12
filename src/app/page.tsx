@@ -4,15 +4,20 @@ import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
   BadgeCheck,
+  Brain,
   CircuitBoard,
-  Github,
+  GitFork,
   Globe,
+  UserSearch,
+  ImageIcon,
   HeartHandshake,
   Orbit,
   Sparkles,
   Trophy,
   Users,
   Wrench,
+  WrenchIcon,
+  Newspaper,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -142,7 +147,7 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Github className="mr-2 h-4 w-4" />
+                  <GitFork/>
                   Explore our GitHub
                 </a>
               </Button>
@@ -152,8 +157,8 @@ export default function Home() {
                 asChild
               >
                 <a href="#team">
+                  <UserSearch/>
                   Meet the team
-                  <ArrowUpRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
               <Button
@@ -161,7 +166,10 @@ export default function Home() {
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <Link href="/media">Team media</Link>
+                <Link href="/media">
+                  <ImageIcon/>
+                  Team media
+                </Link>
               </Button>
             </div>
             <div className="animate-fade-up delay-3">
@@ -170,7 +178,10 @@ export default function Home() {
                 className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
                 asChild
               >
-                <Link href="/docs">Team docs</Link>
+                <Link href="/docs">
+                  <Newspaper/>
+                  Team docs
+                </Link>
               </Button>
             </div>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
@@ -469,7 +480,7 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Github className="mr-2 h-5 w-5" />
+                  <GitFork className="mr-2 h-5 w-5" />
                   Visit GitHub
                 </a>
               </Button>
