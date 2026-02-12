@@ -200,6 +200,7 @@ export default function Home() {
                 </Link>
               </Button>
             </div>
+          </div>
           <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
             <Card className="glass text-white card-hover">
               <CardHeader className="space-y-4">
