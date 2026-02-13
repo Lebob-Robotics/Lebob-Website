@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -27,34 +29,42 @@ import { ThemeToggle } from "@/components/theme-toggle";
 const team = [
   {
     name: "Kingsley W",
-    image: "members/kingsley.png",
+    image: "/members/kingsley.png",
   },
   {
     name: "Andre N",
-    image: "members/andre.jpeg",
+    image: "/members/andre.jpeg",
   },
   {
     name: "Sean C",
-    image: "members/sean.jpg",
+    image: "/members/sean.jpg",
   },
   {
     name: "Oliver L",
-    image: "members/oliver.png",
+    image: "/members/oliver.png",
   },
   {
     name: "Subesh S",
-    image: "members/subesh.png",
+    image: "/members/subesh.png",
   },
   {
     name: "Chris W",
+    image: "/members/chris.png",
   },
   {
     name: "Aaron Z",
+    image: "/members/aaron.png",
   },
   {
     name: "Leven S",
+    image: "/members/leven.png",
   },
 ];
+
+const mentors = {
+  names: ["Jade", "Kaelie"],
+  image: "/members/mentors.jpg",
+};
 
 const values = [
   {
@@ -122,12 +132,13 @@ export default function Home() {
             <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
               We mix engineering, coding, and research to build reliable robots
               and tell the story behind every mission. Every run is a
-              collaboration, every win a shared moment.
+              collaboration, every win a shared moment, and every season a push
+              to be the best in the state.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
                 <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  href="https://github.com/Lebob-Robotics"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -152,9 +163,11 @@ export default function Home() {
               >
                 <Link href="/media">Team media</Link>
               </Button>
+            </div>
+            <div className="animate-fade-up delay-3 flex flex-wrap gap-3">
               <Button
                 variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
                 asChild
               >
                 <Link href="/docs">Team docs</Link>
@@ -167,23 +180,7 @@ export default function Home() {
                 <Link href="/robot">Robot Game</Link>
               </Button>
             </div>
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
-              {[
-                { label: "Members", value: "8" },
-                { label: "Core Values", value: "6" },
-                { label: "Mission Focus", value: "One team" },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur"
-                >
-                  <p className="text-2xl font-semibold text-white">{stat.value}</p>
-                  <p className="text-sm text-slate-300">{stat.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
-
           <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
             <Card className="glass text-white card-hover">
               <CardHeader className="space-y-4">
@@ -204,12 +201,11 @@ export default function Home() {
                 <div className="flex items-center gap-3">
                   <div className="relative h-16 w-16">
                     <div className="absolute inset-0 rounded-2xl bg-emerald-400/20 blur-sm" />
-                    <img
-                      src="lebob.png"
+                    <Image
+                      src={addBasePath("/lebob.png")}
                       alt="Lebob team logo"
                       width={64}
                       height={64}
-                      loading="lazy"
                       className="relative rounded-2xl border border-white/10 bg-white/5"
                     />
                   </div>
@@ -352,11 +348,12 @@ export default function Home() {
                 <CardHeader className="space-y-3">
                   {member.image ? (
                     <div className="h-12 w-12 overflow-hidden rounded-full border border-white/15">
-                      <img
-                        src={member.image}
+                      <Image
+                        src={addBasePath(member.image)}
                         alt={`${member.name} profile`}
+                        width={48}
+                        height={48}
                         className="h-full w-full object-cover"
-                        loading="lazy"
                       />
                     </div>
                   ) : (
@@ -369,6 +366,39 @@ export default function Home() {
               </Card>
             ))}
           </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-6 pb-14 pt-0 sm:px-10 animate-fade-up delay-2">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                Mentors
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold text-white">
+                Guidance behind the scenes.
+              </h2>
+            </div>
+            <Badge className="w-fit bg-white/10 text-white">Support Team</Badge>
+          </div>
+          <Card className="mt-8 overflow-hidden border-white/10 bg-white/5 text-white card-hover">
+            <div className="w-full bg-gradient-to-br from-slate-900/35 via-black/20 to-emerald-500/10 p-3 sm:p-5">
+              <div className="relative mx-auto aspect-square w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10">
+                <Image
+                  src={addBasePath(mentors.image)}
+                  alt="Kaelie and Jade"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 768px"
+                  className="object-contain"
+                />
+              </div>
+            </div>
+            <CardHeader className="space-y-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/15">
+                <HeartHandshake className="h-5 w-5 text-emerald-200" />
+              </div>
+              <CardTitle className="text-2xl">{mentors.names.join(" & ")}</CardTitle>
+            </CardHeader>
+          </Card>
         </section>
 
         <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
@@ -389,16 +419,18 @@ export default function Home() {
                 className="github-cta-button"
               >
                 <a
-                  href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+                  href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/793fd03cca6a9aae00502f1e?renderMode=0&uiState=698d47d5c4abc76ba4755a4e"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img
-                    src="/onshape.svg"
+                  <Image
+                    src={addBasePath("/onshape.svg")}
                     alt="Onshape"
-                    className="mr-2 h-5 w-5"
+                    width={20}
+                    height={20}
+                    className="mr-2 h-5 w-5 onshape-icon"
                   />
-                  Visit Onshape
+                  Go to our Onshape
                 </a>
               </Button>
             </CardContent>
@@ -424,7 +456,7 @@ export default function Home() {
                 className="github-cta-button"
               >
                 <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  href="https://github.com/Lebob-Robotics"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -451,7 +483,7 @@ export default function Home() {
             <span className="flex items-center gap-2">
               <ArrowUpRight className="h-4 w-4 text-sky-300" />
               <a
-                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                href="https://github.com/Lebob-Robotics"
                 target="_blank"
                 rel="noreferrer"
                 className="footer-link"
@@ -462,13 +494,19 @@ export default function Home() {
             <span className="flex items-center gap-2">
               <ArrowUpRight className="h-4 w-4 text-sky-300" />
               <a
-                href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+                href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/793fd03cca6a9aae00502f1e?renderMode=0&uiState=698d47d5c4abc76ba4755a4e"
                 target="_blank"
                 rel="noreferrer"
                 className="footer-link"
               >
                 Onshape
               </a>
+            </span>
+            <span className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+              <Link href="/sponsor" className="footer-link">
+                Sponsor Us
+              </Link>
             </span>
           </div>
         </div>
