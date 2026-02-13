@@ -138,7 +138,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
                 <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  href="https://github.com/Lebob-Robotics"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -164,7 +164,7 @@ export default function Home() {
                 <Link href="/media">Team media</Link>
               </Button>
             </div>
-            <div className="animate-fade-up delay-3">
+            <div className="animate-fade-up delay-3 flex flex-wrap gap-3">
               <Button
                 variant="outline"
                 className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
@@ -173,23 +173,7 @@ export default function Home() {
                 <Link href="/docs">Team docs</Link>
               </Button>
             </div>
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
-              {[
-                { label: "Members", value: "8" },
-                { label: "Core Values", value: "6" },
-                { label: "Mission Focus", value: "One team" },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur"
-                >
-                  <p className="text-2xl font-semibold text-white">{stat.value}</p>
-                  <p className="text-sm text-slate-300">{stat.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
-
           <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
             <Card className="glass text-white card-hover">
               <CardHeader className="space-y-4">
@@ -465,7 +449,7 @@ export default function Home() {
                 className="github-cta-button"
               >
                 <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  href="https://github.com/Lebob-Robotics"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -492,7 +476,7 @@ export default function Home() {
             <span className="flex items-center gap-2">
               <ArrowUpRight className="h-4 w-4 text-sky-300" />
               <a
-                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                href="https://github.com/Lebob-Robotics"
                 target="_blank"
                 rel="noreferrer"
                 className="footer-link"
@@ -510,6 +494,12 @@ export default function Home() {
               >
                 Onshape
               </a>
+            </span>
+            <span className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+              <Link href="/sponsor" className="footer-link">
+                Sponsor Us
+              </Link>
             </span>
           </div>
         </div>
