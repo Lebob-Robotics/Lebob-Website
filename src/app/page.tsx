@@ -172,31 +172,8 @@ export default function Home() {
               >
                 <Link href="/docs">Team docs</Link>
               </Button>
-              <Button
-                variant="outline"
-                className="border-sky-300/70 bg-sky-400/10 text-sky-100 hover:bg-sky-400/20"
-                asChild
-              >
-                <Link href="/sponsor">How to sponsor us</Link>
-              </Button>
-            </div>
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 animate-fade-up delay-4">
-              {[
-                { label: "Members", value: "8" },
-                { label: "Core Values", value: "6" },
-                { label: "Mission Focus", value: "One team" },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur"
-                >
-                  <p className="text-2xl font-semibold text-white">{stat.value}</p>
-                  <p className="text-sm text-slate-300">{stat.label}</p>
-                </div>
-              ))}
             </div>
           </div>
-
           <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
             <Card className="glass text-white card-hover">
               <CardHeader className="space-y-4">
