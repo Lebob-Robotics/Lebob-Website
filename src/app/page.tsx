@@ -138,7 +138,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
                 <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  href="https://github.com/Lebob-Robotics"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -449,7 +449,7 @@ export default function Home() {
                 className="github-cta-button"
               >
                 <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                  href="https://github.com/Lebob-Robotics"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -476,7 +476,7 @@ export default function Home() {
             <span className="flex items-center gap-2">
               <ArrowUpRight className="h-4 w-4 text-sky-300" />
               <a
-                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                href="https://github.com/Lebob-Robotics"
                 target="_blank"
                 rel="noreferrer"
                 className="footer-link"
