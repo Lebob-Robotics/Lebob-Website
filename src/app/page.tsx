@@ -4,15 +4,20 @@ import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
   BadgeCheck,
+  Brain,
   CircuitBoard,
-  Github,
+  GitFork,
   Globe,
+  UserSearch,
+  ImageIcon,
   HeartHandshake,
   Orbit,
   Sparkles,
   Trophy,
   Users,
   Wrench,
+  WrenchIcon,
+  Newspaper,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -108,6 +113,21 @@ const milestones = [
   },
 ];
 
+const aboutUsInfo = [
+  {
+    text: "Won national and state competitions in First Lego League.",
+    icon: Trophy,
+  },
+  {
+    text: "Built and coded a robot to complete various missions reliably.",
+    icon: WrenchIcon,
+  },
+  {
+    text: "Made the SoftSense manipulator arm for innovations.",
+    icon: Brain,
+  },
+]
+
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -122,38 +142,39 @@ export default function Home() {
 
           <div className="relative z-10 flex flex-1 flex-col gap-6">
             <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-              FLL Team #3236 - 8 Members
+              Lebob - FLL Team #3236
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
-              Lebob is a
-              <span className="text-gradient"> fearless FLL team</span> building
-              robots and ideas that compete and inspire.
+              Robots that compete and ideas that inspire. 
+              <span className="text-gradient"> Welcome to Lebob.</span>
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-              We mix engineering, coding, and research to build reliable robots
-              and tell the story behind every mission. Every run is a
-              collaboration, every win a shared moment, and every season a push
-              to be the best in the state.
+              We are a team competing in the
+              <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>. <br/>
+              We <b>engineer</b> robots to complete missions, 
+              <b> research</b> and <b>innovate</b> to design impactful mechanisms,
+              and make it possible through <b>collboration</b>. <br />
+              This is our official website.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
                 <a
-                  href="https://github.com/Lebob-Robotics"
+                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Github className="mr-2 h-4 w-4" />
+                  <GitFork/>
                   Explore our GitHub
                 </a>
               </Button>
               <Button
                 variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
                 asChild
               >
                 <a href="#team">
+                  <UserSearch/>
                   Meet the team
-                  <ArrowUpRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
               <Button
@@ -161,16 +182,22 @@ export default function Home() {
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <Link href="/media">Team media</Link>
+                <Link href="/media">
+                  <ImageIcon/>
+                  Team media
+                </Link>
               </Button>
             </div>
-            <div className="animate-fade-up delay-3 flex flex-wrap gap-3">
+            <div className="animate-fade-up delay-3">
               <Button
                 variant="outline"
-                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
+                className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <Link href="/docs">Team docs</Link>
+                <Link href="/docs">
+                  <Newspaper/>
+                  Team docs
+                </Link>
               </Button>
             </div>
           </div>
@@ -180,14 +207,14 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2 text-xl">
                     <Sparkles className="h-5 w-5 text-emerald-300" />
-                    Mission Console
+                    About Us
                   </CardTitle>
                   <Badge className="bg-emerald-400/20 text-emerald-200">
-                    Active
+                    Info
                   </Badge>
                 </div>
                 <CardDescription className="text-slate-300">
-                  A quick look at how we operate together.
+                  First Lego League international team.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-5">
@@ -210,20 +237,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="grid gap-3">
-                  {[
-                    {
-                      icon: Trophy,
-                      text: "Practice cycles that maximize consistency.",
-                    },
-                    {
-                      icon: HeartHandshake,
-                      text: "Collaboration keeps our ideas sharp.",
-                    },
-                    {
-                      icon: BadgeCheck,
-                      text: "Core values guide every build decision.",
-                    },
-                  ].map((item) => (
+                  {aboutUsInfo.map((item) => (
                     <div key={item.text} className="flex items-start gap-3">
                       <item.icon className="mt-1 h-5 w-5 text-emerald-300" />
                       <p className="text-sm text-slate-200">{item.text}</p>
@@ -259,7 +273,7 @@ export default function Home() {
               <p className="mt-4 text-base text-slate-300">
                 Our season is about turning wild ideas into reliable systems,
                 then sharing how we got there. We design, iterate, and present as
-                a single unit - every win is a team win.
+                a single unit -- every win is a team win.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -449,11 +463,11 @@ export default function Home() {
                 className="github-cta-button"
               >
                 <a
-                  href="https://github.com/Lebob-Robotics"
+                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Github className="mr-2 h-5 w-5" />
+                  <GitFork className="mr-2 h-5 w-5" />
                   Visit GitHub
                 </a>
               </Button>
@@ -475,14 +489,8 @@ export default function Home() {
             </span>
             <span className="flex items-center gap-2">
               <ArrowUpRight className="h-4 w-4 text-sky-300" />
-              <Link href="/sponsor" className="footer-link">
-                Brendon
-              </Link>
-            </span>
-            <span className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-sky-300" />
               <a
-                href="https://github.com/Lebob-Robotics"
+                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                 target="_blank"
                 rel="noreferrer"
                 className="footer-link"
@@ -500,12 +508,6 @@ export default function Home() {
               >
                 Onshape
               </a>
-            </span>
-            <span className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-sky-300" />
-              <Link href="/sponsor" className="footer-link">
-                Sponsor Us
-              </Link>
             </span>
           </div>
         </div>
