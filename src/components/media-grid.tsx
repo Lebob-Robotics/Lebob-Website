@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { addBasePath } from "next/dist/client/add-base-path";
 import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
+import { createPortal } from "react-dom";
 
 import { cn } from "@/lib/utils";
 
@@ -63,6 +64,111 @@ export function MediaGrid({ photos }: MediaGridProps) {
     };
   }, [activeIndex, albumPhotos.length]);
 
+  const lightbox = activePhoto ? (
+    <div
+      className="media-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label={activePhoto.label}
+      onClick={() => setActiveIndex(null)}
+    >
+      <div className="media-lightbox-bar">
+        <p className="media-lightbox-title">
+          {activeIndex! + 1} / {albumPhotos.length} · {activePhoto.label}
+        </p>
+        <button
+          type="button"
+          onClick={() => setActiveIndex(null)}
+          className="media-close"
+          aria-label="Close fullscreen media"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+
+      <div className="media-stage">
+        {hasNavigation ? (
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setActiveIndex((index) =>
+                index === null ? index : (index - 1 + albumPhotos.length) % albumPhotos.length,
+              );
+            }}
+            className="media-nav media-nav-left"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+        ) : null}
+
+        <div className="media-frame" onClick={(event) => event.stopPropagation()}>
+          <Image
+            src={activePhoto.fullSrc ?? activePhoto.src}
+            alt={activePhoto.alt ?? activePhoto.label}
+            width={activePhoto.width}
+            height={activePhoto.height}
+            sizes="(max-width: 640px) 92vw, 90vw"
+            className="media-stage-image"
+            priority
+          />
+        </div>
+
+        {hasNavigation ? (
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setActiveIndex((index) =>
+                index === null ? index : (index + 1) % albumPhotos.length,
+              );
+            }}
+            className="media-nav media-nav-right"
+            aria-label="Next image"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        ) : null}
+      </div>
+
+      <div className="media-foot">
+        <p className="media-tip">
+          Tip: use Left/Right arrow keys to move through the wall
+        </p>
+        <div className="media-thumbs">
+          {albumPhotos.map((photo, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <button
+                key={photo.src}
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setActiveIndex(index);
+                }}
+                className={cn(
+                  "media-thumb",
+                  isActive ? "is-active" : "",
+                )}
+                aria-label={`View ${photo.label}`}
+                aria-current={isActive ? "true" : undefined}
+              >
+                <Image
+                  src={photo.thumbSrc ?? photo.src}
+                  alt={photo.alt ?? photo.label}
+                  fill
+                  sizes="80px"
+                  className="object-cover"
+                />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <>
       <section className="media-shell">
@@ -101,109 +207,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
         />
       </section>
 
-      {activePhoto ? (
-        <div
-          className="media-lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label={activePhoto.label}
-          onClick={() => setActiveIndex(null)}
-        >
-          <div className="media-lightbox-bar">
-            <p className="media-lightbox-title">
-              {activeIndex! + 1} / {albumPhotos.length} · {activePhoto.label}
-            </p>
-            <button
-              type="button"
-              onClick={() => setActiveIndex(null)}
-              className="media-close"
-              aria-label="Close fullscreen media"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div className="media-stage">
-            <div className="media-frame" onClick={(event) => event.stopPropagation()}>
-              <Image
-                src={activePhoto.fullSrc ?? activePhoto.src}
-                alt={activePhoto.alt ?? activePhoto.label}
-                fill
-                sizes="100vw"
-                className="media-stage-image"
-                priority
-              />
-            </div>
-          </div>
-
-          {hasNavigation ? (
-            <button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                setActiveIndex((index) =>
-                  index === null ? index : (index - 1 + albumPhotos.length) % albumPhotos.length,
-                );
-              }}
-              className="media-nav media-nav-left"
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-          ) : null}
-
-          {hasNavigation ? (
-            <button
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                setActiveIndex((index) =>
-                  index === null ? index : (index + 1) % albumPhotos.length,
-                );
-              }}
-              className="media-nav media-nav-right"
-              aria-label="Next image"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          ) : null}
-
-          <div className="media-foot">
-            <p className="media-tip">
-              Tip: use Left/Right arrow keys to move through the wall
-            </p>
-            <div className="media-thumbs">
-              {albumPhotos.map((photo, index) => {
-                const isActive = index === activeIndex;
-                return (
-                  <button
-                    key={photo.src}
-                    type="button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      setActiveIndex(index);
-                    }}
-                    className={cn(
-                      "media-thumb",
-                      isActive ? "is-active" : "",
-                    )}
-                    aria-label={`View ${photo.label}`}
-                    aria-current={isActive ? "true" : undefined}
-                  >
-                    <Image
-                      src={photo.thumbSrc ?? photo.src}
-                      alt={photo.alt ?? photo.label}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {lightbox ? createPortal(lightbox, document.body) : null}
     </>
   );
 }
