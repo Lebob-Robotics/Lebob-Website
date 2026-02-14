@@ -1416,12 +1416,13 @@ a {
 .wares-mentor-image {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
-  max-height: 620px;
+  aspect-ratio: 16 / 10;
+  min-height: clamp(220px, 38vw, 420px);
 }
 
 .wares-mentor-image img {
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 30%;
 }
 
 .wares-mentor-copy {
