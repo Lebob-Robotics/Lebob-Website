@@ -224,6 +224,7 @@ export default function Home() {
                 <Link href="/docs" className="lb-btn lb-btn-ghost">
                   <Newspaper />
                   Documentation
+                  Documentation
                 </Link>
               </div>
             </div>
@@ -304,6 +305,8 @@ export default function Home() {
             <div className="lb-flow-panel">
               <div className="lb-flow-header">
                 <div>
+                  <p>Our Process</p>
+                  <h2>Persistance and teamwork to create success.</h2>
                   <p>Our Process</p>
                   <h2>Guidelines for our success.</h2>
                 </div>
@@ -391,6 +394,34 @@ export default function Home() {
 
         <section className="lb-section lb-reveal lb-section-tight-y">
           <div className="lb-container">
+            <article className="lb-cta-card">
+              <div>
+                <p>Innovations</p>
+                <h2>Our Innovations Design</h2>
+                <p>
+                  Our CAD files and designs for SoftSense in Onshape.
+                </p>
+              </div>
+              <a
+                href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+                target="_blank"
+                rel="noreferrer"
+                className="lb-btn lb-btn-solid"
+              >
+                <img
+                  src={addBasePath("/onshape.svg")}
+                  alt="Onshape"
+                  width={20}
+                  height={20}
+                  className="onshape-icon"
+                  loading="lazy"
+                  decoding="async"
+                />
+                Onshape
+              </a>
+            </article>
+          </div>
+        </section>
             <div className="lb-cta-grid">
               <article className="lb-cta-card">
                 <div>
@@ -405,6 +436,26 @@ export default function Home() {
                 </Link>
               </article>
 
+        <section className="lb-section lb-reveal lb-section-tight-top">
+          <div className="lb-container">
+            <article className="lb-cta-card">
+              <div>
+                <p>Programming</p>
+                <h2>Our GitHub</h2>
+                <p>
+                  Our github repository for robot and innovations code.
+                </p>
+              </div>
+              <a
+                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                target="_blank"
+                rel="noreferrer"
+                className="lb-btn lb-btn-solid"
+              >
+                <GitFork />
+                GitHub
+              </a>
+            </article>
               <article className="lb-cta-card">
                 <div>
                   <p>Programming</p>
