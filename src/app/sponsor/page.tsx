@@ -9,7 +9,6 @@ import {
   Wrench,
 } from "lucide-react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -82,7 +81,6 @@ export default function SponsorPage() {
               <ArrowUpRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <ThemeToggle />
         </div>
 
         <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-12 pt-16 sm:px-10">

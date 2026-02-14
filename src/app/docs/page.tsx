@@ -4,7 +4,6 @@ import { ArrowUpRight } from "lucide-react";
 
 import { DocsTabs } from "@/components/docs-tabs";
 import { DocumentGrid } from "@/components/document-grid";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,7 +40,6 @@ export default async function DocsPage() {
               <ArrowUpRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <ThemeToggle />
         </div>
 
         <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-16 sm:px-10">

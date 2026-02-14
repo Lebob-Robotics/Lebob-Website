@@ -27,8 +27,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { ThemeToggle } from "@/components/theme-toggle";
-
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/media", label: "Media" },
@@ -229,7 +227,6 @@ export default function Home() {
             <Link href="/media" className="wares-icon-button wares-icon-link" aria-label="Go to media page">
               <ImageIcon />
             </Link>
-            <ThemeToggle compact className="wares-theme-toggle" />
           </div>
         </div>
       </header>

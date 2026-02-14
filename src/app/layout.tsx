@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter, Poppins, Space_Grotesk } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -39,24 +38,6 @@ export const metadata: Metadata = {
   },
 };
 
-const themeInitScript = `
-(() => {
-  try {
-    const savedTheme = window.localStorage.getItem("lebob-theme");
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    const theme = savedTheme === "dark" || savedTheme === "light"
-      ? savedTheme
-      : systemTheme;
-
-    document.documentElement.setAttribute("data-theme", theme);
-  } catch {
-    document.documentElement.setAttribute("data-theme", "dark");
-  }
-})();
-`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -67,9 +48,6 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${plexMono.variable} ${poppins.variable} ${inter.variable} antialiased`}
       >
-        <Script id="theme-init" strategy="beforeInteractive">
-          {themeInitScript}
-        </Script>
         {children}
       </body>
     </html>

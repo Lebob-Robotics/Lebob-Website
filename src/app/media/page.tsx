@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { MediaGrid, type MediaItem } from "@/components/media-grid";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -102,7 +101,6 @@ export default async function MediaPage() {
               <ArrowUpRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <ThemeToggle />
         </div>
 
         <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-16 sm:px-10">
