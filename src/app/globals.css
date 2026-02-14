@@ -1,44 +1,44 @@
 @import "tailwindcss";
 
 :root {
-  --background: #13060a;
-  --foreground: #f8ecee;
-  --card: #1f0a10;
-  --card-foreground: #fdeef0;
-  --muted: #d2abb3;
-  --accent: #dd3049;
-  --accent-2: #f1be7d;
+  --background: #071824;
+  --foreground: #e5f4ff;
+  --card: #0f2638;
+  --card-foreground: #f5fbff;
+  --muted: #9ab7cb;
+  --accent: #27c7b8;
+  --accent-2: #ffb65b;
 
-  --body-grad-1: #4b1523;
-  --body-grad-2: #250b14;
-  --grid-line: rgba(248, 236, 238, 0.08);
+  --body-grad-1: #114564;
+  --body-grad-2: #22375b;
+  --grid-line: rgba(186, 224, 255, 0.11);
 
-  --glass-top: #31141c;
-  --glass-bottom: #251017;
-  --glass-border: #6f424d;
+  --glass-top: #173a52;
+  --glass-bottom: #102d41;
+  --glass-border: #4b7a91;
 
-  --surface-soft: #291018;
-  --surface-strong: #35141d;
-  --surface-border: #60323d;
-  --surface-border-strong: #72434f;
-  --surface-border-emphasis: #93616d;
+  --surface-soft: #132f43;
+  --surface-strong: #1a3c53;
+  --surface-border: #3f6980;
+  --surface-border-strong: #4d7d95;
+  --surface-border-emphasis: #679bb2;
 
-  --footer-background: #16070b;
-  --footer-border: #5f313d;
-  --footer-text: #d6b0b8;
+  --footer-background: #07131d;
+  --footer-border: #345e75;
+  --footer-text: #95b2c7;
 
-  --card-hover-shadow: rgba(8, 1, 3, 0.55);
-  --card-hover-border: rgba(255, 255, 255, 0.45);
+  --card-hover-shadow: rgba(1, 10, 17, 0.55);
+  --card-hover-border: rgba(134, 208, 255, 0.48);
 
-  --selection-bg: rgba(221, 48, 73, 0.4);
-  --selection-fg: #fff5f6;
+  --selection-bg: rgba(39, 199, 184, 0.4);
+  --selection-fg: #e9fffc;
 
-  --github-cta-bg: #f8f0eb;
-  --github-cta-fg: #7a000e;
-  --github-cta-hover: #fff8f2;
+  --github-cta-bg: #3ed9cc;
+  --github-cta-fg: #042126;
+  --github-cta-hover: #62e6da;
 
-  --shadow-glow-1: rgba(221, 48, 73, 0.22);
-  --shadow-glow-2: rgba(241, 190, 125, 0.14);
+  --shadow-glow-1: rgba(39, 199, 184, 0.24);
+  --shadow-glow-2: rgba(255, 182, 91, 0.2);
 }
 
 @theme inline {
@@ -181,7 +181,7 @@ a {
 }
 
 .text-gradient {
-  background: linear-gradient(120deg, #f0ba77, #dd3049);
+  background: linear-gradient(120deg, var(--accent-2), var(--accent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -214,6 +214,149 @@ a {
 
 .footer-link:hover {
   color: var(--accent-2);
+}
+
+/* Recolor existing Tailwind utility classes to the Lebob palette. */
+.text-white {
+  color: var(--foreground) !important;
+}
+
+.text-slate-400 {
+  color: color-mix(in srgb, var(--foreground) 68%, transparent) !important;
+}
+
+.text-slate-300,
+.text-slate-200,
+.text-slate-200\/90 {
+  color: color-mix(in srgb, var(--foreground) 82%, transparent) !important;
+}
+
+.text-slate-100 {
+  color: color-mix(in srgb, var(--foreground) 90%, transparent) !important;
+}
+
+.text-slate-950 {
+  color: #042126 !important;
+}
+
+.text-emerald-100,
+.text-emerald-200,
+.text-emerald-300 {
+  color: color-mix(in srgb, var(--accent) 78%, white) !important;
+}
+
+.text-sky-200,
+.text-sky-300 {
+  color: color-mix(in srgb, var(--accent-2) 72%, white) !important;
+}
+
+.bg-white\/5 {
+  background-color: color-mix(in srgb, var(--surface-soft) 76%, transparent) !important;
+}
+
+.bg-white\/10 {
+  background-color: color-mix(in srgb, var(--surface-strong) 82%, transparent) !important;
+}
+
+.hover\:bg-white\/10:hover {
+  background-color: color-mix(in srgb, var(--surface-strong) 92%, transparent) !important;
+}
+
+.hover\:bg-white\/20:hover {
+  background-color: color-mix(in srgb, var(--surface-strong) 98%, transparent) !important;
+}
+
+.bg-black\/30 {
+  background-color: color-mix(in srgb, var(--background) 82%, #030d14) !important;
+}
+
+.bg-black\/40 {
+  background-color: color-mix(in srgb, var(--background) 86%, #030d14) !important;
+}
+
+.bg-black\/60 {
+  background-color: color-mix(in srgb, var(--background) 90%, #020a10) !important;
+}
+
+.hover\:bg-black\/50:hover {
+  background-color: color-mix(in srgb, var(--background) 88%, #020a10) !important;
+}
+
+.hover\:bg-black\/60:hover {
+  background-color: color-mix(in srgb, var(--background) 92%, #02080d) !important;
+}
+
+.hover\:bg-black\/80:hover {
+  background-color: color-mix(in srgb, var(--background) 96%, #010509) !important;
+}
+
+.border-white\/10 {
+  border-color: color-mix(in srgb, var(--surface-border) 74%, transparent) !important;
+}
+
+.border-white\/15 {
+  border-color: color-mix(in srgb, var(--surface-border-strong) 76%, transparent) !important;
+}
+
+.border-white\/20 {
+  border-color: color-mix(in srgb, var(--surface-border-strong) 90%, transparent) !important;
+}
+
+.border-white\/25 {
+  border-color: color-mix(in srgb, var(--surface-border-emphasis) 78%, transparent) !important;
+}
+
+.border-white\/30 {
+  border-color: color-mix(in srgb, var(--surface-border-emphasis) 92%, transparent) !important;
+}
+
+.bg-emerald-500\/20,
+.bg-emerald-400\/20,
+.bg-emerald-300\/20 {
+  background-color: color-mix(in srgb, var(--accent) 24%, transparent) !important;
+}
+
+.bg-sky-500\/10,
+.bg-sky-400\/20 {
+  background-color: color-mix(in srgb, var(--accent-2) 20%, transparent) !important;
+}
+
+.bg-emerald-400 {
+  background-color: var(--github-cta-bg) !important;
+}
+
+.hover\:bg-emerald-300:hover {
+  background-color: var(--github-cta-hover) !important;
+}
+
+.border-emerald-300\/80 {
+  border-color: color-mix(in srgb, var(--accent) 78%, white) !important;
+}
+
+.from-emerald-500\/20 {
+  --tw-gradient-from: color-mix(in srgb, var(--accent) 28%, transparent) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(39 199 184 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-emerald-500\/10 {
+  --tw-gradient-to: color-mix(in srgb, var(--accent) 18%, transparent) var(--tw-gradient-to-position) !important;
+}
+
+.from-sky-500\/20 {
+  --tw-gradient-from: color-mix(in srgb, var(--accent-2) 26%, transparent) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(255 182 91 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.via-sky-500\/10 {
+  --tw-gradient-via: color-mix(in srgb, var(--accent-2) 20%, transparent) var(--tw-gradient-via-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to) !important;
+}
+
+.via-white\/5 {
+  --tw-gradient-via: color-mix(in srgb, var(--surface-soft) 80%, transparent) var(--tw-gradient-via-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to) !important;
 }
 
 .warble-main-header {
@@ -1001,7 +1144,7 @@ a {
 }
 
 .wares-hero-copy h1 span {
-  background: linear-gradient(120deg, #f0ba77, #dd3049);
+  background: linear-gradient(120deg, var(--accent-2), var(--accent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
