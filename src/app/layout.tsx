@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Inter, Poppins, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
@@ -13,6 +13,20 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
+  display: "swap",
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "900"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -50,7 +64,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} ${plexMono.variable} antialiased`}>
+      <body
+        className={`${spaceGrotesk.variable} ${plexMono.variable} ${poppins.variable} ${inter.variable} antialiased`}
+      >
         <Script id="theme-init" strategy="beforeInteractive">
           {themeInitScript}
         </Script>

@@ -4,6 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type Theme = "dark" | "light";
 
@@ -98,7 +99,12 @@ function setTheme(theme: Theme) {
   window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
 }
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  compact?: boolean;
+  className?: string;
+};
+
+export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
   const theme = useSyncExternalStore(
     subscribe,
     getClientSnapshot,
@@ -117,7 +123,11 @@ export function ThemeToggle() {
       variant="outline"
       size="sm"
       onClick={handleToggle}
-      className="theme-toggle-button"
+      className={cn(
+        "theme-toggle-button",
+        compact && "theme-toggle-button-compact",
+        className,
+      )}
       aria-label={`Switch to ${nextTheme} mode`}
     >
       {isDarkMode ? (
@@ -125,7 +135,11 @@ export function ThemeToggle() {
       ) : (
         <Moon className="h-4 w-4" />
       )}
-      {isDarkMode ? "Light mode" : "Dark mode"}
+      {compact ? (
+        <span className="sr-only">{isDarkMode ? "Light mode" : "Dark mode"}</span>
+      ) : (
+        isDarkMode ? "Light mode" : "Dark mode"
+      )}
     </Button>
   );
 }

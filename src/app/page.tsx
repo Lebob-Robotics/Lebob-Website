@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { addBasePath } from "next/dist/client/add-base-path";
@@ -18,7 +20,12 @@ import {
   Wrench,
   WrenchIcon,
   Newspaper,
+  Menu,
+  Search,
+  X,
+  House,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -30,6 +37,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/media", label: "Media" },
+  { href: "/docs", label: "Docs" },
+  { href: "/sponsor", label: "Sponsors" },
+];
 
 const team = [
   {
@@ -126,32 +140,245 @@ const aboutUsInfo = [
     text: "Made the SoftSense manipulator arm for innovations.",
     icon: Brain,
   },
-]
+];
 
 export default function Home() {
+  const [isHeroVisible, setIsHeroVisible] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsHeroVisible(true);
+    }, 200);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    const transitionNodes = document.querySelectorAll<HTMLElement>(".warble-transition");
+    if (transitionNodes.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.16 },
+    );
+
+    transitionNodes.forEach((node) => observer.observe(node));
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isSearchOpen || isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+      return;
+    }
+
+    document.body.style.overflow = "";
+  }, [isSearchOpen, isMobileMenuOpen]);
+
+  useEffect(() => {
+    const syncDockPadding = () => {
+      const dock = document.querySelector<HTMLElement>(".warble-mobile-dock");
+
+      if (window.innerWidth <= 782 && dock) {
+        document.body.style.paddingBottom = `${dock.offsetHeight}px`;
+        return;
+      }
+
+      document.body.style.paddingBottom = "";
+    };
+
+    syncDockPadding();
+    window.addEventListener("resize", syncDockPadding);
+
+    return () => {
+      window.removeEventListener("resize", syncDockPadding);
+      document.body.style.paddingBottom = "";
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  const closeOverlays = () => {
+    setIsSearchOpen(false);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleSearchToggle = () => {
+    setIsSearchOpen((state) => !state);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen((state) => !state);
+    setIsSearchOpen(false);
+  };
+
   return (
     <div className="min-h-screen">
-      <main className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-70 bg-grid" />
-        <div className="relative z-20 mx-auto flex w-full max-w-6xl justify-end px-6 pt-6 sm:px-10">
-          <ThemeToggle />
+      <header className="warble-main-header header-transparent">
+        <div className="warble-main-header-inner">
+          <Link href="/" className="warble-brand">
+            <Image
+              src={addBasePath("/lebob.png")}
+              alt="Lebob logo"
+              width={40}
+              height={40}
+            />
+            <span className="warble-brand-text">Lebob</span>
+          </Link>
+
+          <button
+            type="button"
+            className="warble-menu-toggle"
+            onClick={handleMobileMenuToggle}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+
+          <nav
+            className={`warble-main-nav ${isMobileMenuOpen ? "is-open" : ""}`}
+            aria-label="Main navigation"
+          >
+            <ul className="warble-main-nav-list">
+              {navLinks.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="warble-main-nav-link" onClick={closeOverlays}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="warble-header-actions">
+            <button
+              type="button"
+              className={`warble-icon-action ${isSearchOpen ? "is-active" : ""}`}
+              onClick={handleSearchToggle}
+              aria-label="Open search panel"
+            >
+              <Search className="h-5 w-5" />
+            </button>
+            <Link href="/media" className="warble-icon-action warble-icon-action-link" aria-label="Team media">
+              <ImageIcon className="h-5 w-5" />
+            </Link>
+            <ThemeToggle compact className="warble-header-theme-toggle" />
+          </div>
         </div>
-        <section className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-16 sm:px-10 lg:flex-row lg:items-center lg:gap-16">
-          <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-emerald-500/20 blur-[160px] animate-float" />
-          <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-sky-400/20 blur-[160px] animate-float delay-3" />
+      </header>
+
+      {isMobileMenuOpen ? (
+        <button
+          type="button"
+          className="warble-backdrop"
+          onClick={closeOverlays}
+          aria-label="Close navigation menu"
+        />
+      ) : null}
+
+      {isSearchOpen ? (
+        <button
+          type="button"
+          className="warble-search-backdrop"
+          onClick={() => setIsSearchOpen(false)}
+          aria-label="Close search panel"
+        />
+      ) : null}
+
+      <div className={`warble-search-panel ${isSearchOpen ? "is-open" : ""}`}>
+        <form className="warble-search-form" onSubmit={(event) => event.preventDefault()}>
+          <label htmlFor="warble-search-input" className="warble-search-label">
+            Quick access
+          </label>
+          <div className="warble-search-row">
+            <input
+              id="warble-search-input"
+              className="warble-search-input"
+              placeholder="Search team pages..."
+              type="search"
+            />
+            <button type="submit" className="warble-search-submit">
+              <Search className="h-4 w-4" />
+              Search
+            </button>
+          </div>
+          <div className="warble-search-links">
+            <Link href="/docs" className="warble-search-chip" onClick={closeOverlays}>
+              Team docs
+            </Link>
+            <Link href="/media" className="warble-search-chip" onClick={closeOverlays}>
+              Team media
+            </Link>
+            <a
+              href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+              target="_blank"
+              rel="noreferrer"
+              className="warble-search-chip"
+              onClick={closeOverlays}
+            >
+              GitHub
+            </a>
+            <a
+              href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+              target="_blank"
+              rel="noreferrer"
+              className="warble-search-chip"
+              onClick={closeOverlays}
+            >
+              Onshape
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <main className="relative overflow-hidden warble-main-content">
+        <div className="pointer-events-none absolute inset-0 opacity-70 bg-grid" />
+        <section
+          className={`relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-16 sm:px-10 lg:flex-row lg:items-center lg:gap-16 warble-hero-shell ${
+            isHeroVisible ? "show" : ""
+          }`}
+        >
+          <Image
+            src={addBasePath("/media/5Z9A0947.JPG")}
+            alt=""
+            fill
+            sizes="100vw"
+            className="absolute inset-0 -z-10 warble-hero-background"
+          />
+          <div className="warble-hero-tint" />
+
+          <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-rose-500/25 blur-[160px] animate-float" />
+          <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-amber-300/25 blur-[160px] animate-float delay-3" />
 
           <div className="relative z-10 flex flex-1 flex-col gap-6">
             <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
               Lebob - FLL Team #3236
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
-              Robots that compete and ideas that inspire. 
+              Robots that compete and ideas that inspire.
               <span className="text-gradient"> Welcome to Lebob.</span>
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
               We are a team competing in the
-              <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>. <br/>
-              We <b>engineer</b> robots to complete missions, 
+              <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>. <br />
+              We <b>engineer</b> robots to complete missions,
               <b> research</b> and <b>innovate</b> to design impactful mechanisms,
               and make it possible through <b>collboration</b>. <br />
               This is our official website.
@@ -163,7 +390,7 @@ export default function Home() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <GitFork/>
+                  <GitFork />
                   Explore our GitHub
                 </a>
               </Button>
@@ -173,7 +400,7 @@ export default function Home() {
                 asChild
               >
                 <a href="#team">
-                  <UserSearch/>
+                  <UserSearch />
                   Meet the team
                 </a>
               </Button>
@@ -183,7 +410,7 @@ export default function Home() {
                 asChild
               >
                 <Link href="/media">
-                  <ImageIcon/>
+                  <ImageIcon />
                   Team media
                 </Link>
               </Button>
@@ -195,7 +422,7 @@ export default function Home() {
                 asChild
               >
                 <Link href="/docs">
-                  <Newspaper/>
+                  <Newspaper />
                   Team docs
                 </Link>
               </Button>
@@ -261,7 +488,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up">
+        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up warble-transition">
           <div className="grid gap-6 lg:grid-cols-2">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
@@ -297,7 +524,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1">
+        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1 warble-transition">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-glow">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div>
@@ -334,7 +561,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="team" className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1">
+        <section id="team" className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1 warble-transition">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
@@ -375,7 +602,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 pb-14 pt-0 sm:px-10 animate-fade-up delay-2">
+        <section className="mx-auto w-full max-w-6xl px-6 pb-14 pt-0 sm:px-10 animate-fade-up delay-2 warble-transition">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
@@ -408,7 +635,7 @@ export default function Home() {
           </Card>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
+        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2 warble-transition">
           <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white card-hover">
             <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
               <div>
@@ -443,7 +670,7 @@ export default function Home() {
             </CardContent>
           </Card>
         </section>
-        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
+        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2 warble-transition">
           <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white card-hover">
             <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
               <div>
@@ -476,7 +703,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10 bg-black/30">
+      <footer className="border-t border-white/10 bg-black/30 warble-transition">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-10">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-emerald-300" />
@@ -512,6 +739,26 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <div className="warble-mobile-dock">
+        <Link href="/" className="warble-mobile-dock-button" aria-label="Home">
+          <House />
+        </Link>
+        <Link href="/media" className="warble-mobile-dock-button" aria-label="Media">
+          <ImageIcon />
+        </Link>
+        <Link href="/docs" className="warble-mobile-dock-button" aria-label="Docs">
+          <Newspaper />
+        </Link>
+        <button
+          type="button"
+          className="warble-mobile-dock-button"
+          onClick={handleSearchToggle}
+          aria-label="Search"
+        >
+          <Search />
+        </button>
+      </div>
     </div>
   );
 }
