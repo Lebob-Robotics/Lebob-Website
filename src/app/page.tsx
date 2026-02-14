@@ -44,19 +44,24 @@ const values = [
   {
     title: "Build",
     description: "We first build our robot to our best specifications.",
+    description: "We first build our robot to our best specifications.",
     icon: Wrench,
   },
   {
     title: "Code",
+    description: "We then program our robot to achieve our goals.",
     description: "We then program our robot to achieve our goals.",
     icon: CircuitBoard,
   },
   {
     title: "Iterate",
     description: "We continue researching and iterating to improve our standard.",
+    title: "Iterate",
+    description: "We continue researching and iterating to improve our standard.",
     icon: Orbit,
   },
   {
+    title: "Inspire",
     title: "Inspire",
     description: "We show up for the community and inspire new builders.",
     icon: Globe,
@@ -64,6 +69,22 @@ const values = [
 ];
 
 const milestones = [
+  {
+    title: "Plan",
+    detail: "Study the game and imagine our best run.",
+  },
+  {
+    title: "Design",
+    detail: "Prototype and iterate on many attachments to achieve our strategy.",
+  },
+  {
+    title: "Program",
+    detail: "Automate missions to enable the robot to carry out runs.",
+  },
+  {
+    title: "Present",
+    detail: "Share our innovation and teamwork journey.",
+  },
   {
     title: "Plan",
     detail: "Study the game and imagine our best run.",
@@ -188,22 +209,21 @@ export default function Home() {
                 >
                   <GitFork />
                   Github
+                  Github
                 </a>
                 <a href="#team" className="lb-btn lb-btn-outline">
                   <Users />
+                  Our Team
                   Our Team
                 </a>
                 <Link href="/media" className="lb-btn lb-btn-ghost">
                   <ImageIcon />
                   Media
+                  Media
                 </Link>
                 <Link href="/docs" className="lb-btn lb-btn-ghost">
                   <Newspaper />
                   Documentation
-                </Link>
-                <Link href="/sponsor" className="lb-btn lb-btn-ghost">
-                  <HeartHandshake />
-                  Sponsors
                 </Link>
               </div>
             </div>
@@ -257,7 +277,10 @@ export default function Home() {
             <div className="lb-section-copy">
               <p>What we do</p>
               <h2>Building robots is only part of our goal.</h2>
+              <h2>Building robots is only part of our goal.</h2>
               <p className="lb-copy-body">
+                Our goal is about turning our ideas into real, working 
+                prototypes through teamwork, then sharing how we got there.
                 Our goal is about turning our ideas into real, working 
                 prototypes through teamwork, then sharing how we got there.
               </p>
@@ -281,6 +304,8 @@ export default function Home() {
             <div className="lb-flow-panel">
               <div className="lb-flow-header">
                 <div>
+                  <p>Our Process</p>
+                  <h2>Persistance and teamwork to create success.</h2>
                   <p>Our Process</p>
                   <h2>Persistance and teamwork to create success.</h2>
                 </div>
@@ -307,6 +332,7 @@ export default function Home() {
             <div className="lb-section-head">
               <div>
                 <p>Team Lebob</p>
+                <h2>Our team members.</h2>
                 <h2>Our team members.</h2>
               </div>
               <span className="lb-tag">2026 Season</span>
@@ -370,8 +396,10 @@ export default function Home() {
             <article className="lb-cta-card">
               <div>
                 <p>Innovations</p>
+                <p>Innovations</p>
                 <h2>Our Innovations Design</h2>
                 <p>
+                  Our CAD files and designs for SoftSense in Onshape.
                   Our CAD files and designs for SoftSense in Onshape.
                 </p>
               </div>
@@ -391,6 +419,7 @@ export default function Home() {
                   decoding="async"
                 />
                 Onshape
+                Onshape
               </a>
             </article>
           </div>
@@ -401,8 +430,10 @@ export default function Home() {
             <article className="lb-cta-card">
               <div>
                 <p>Programming</p>
+                <p>Programming</p>
                 <h2>Our GitHub</h2>
                 <p>
+                  Our github repository for robot and innovations code.
                   Our github repository for robot and innovations code.
                 </p>
               </div>
@@ -413,6 +444,7 @@ export default function Home() {
                 className="lb-btn lb-btn-solid"
               >
                 <GitFork />
+                GitHub
                 GitHub
               </a>
             </article>
