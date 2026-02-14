@@ -102,7 +102,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const revealNodes = document.querySelectorAll<HTMLElement>(".wares-reveal");
+    const revealNodes = document.querySelectorAll<HTMLElement>(".lb-reveal");
     if (revealNodes.length === 0) {
       return;
     }
@@ -137,7 +137,7 @@ export default function Home() {
 
   useEffect(() => {
     const syncDockPadding = () => {
-      const dock = document.querySelector<HTMLElement>(".wares-mobile-dock");
+      const dock = document.querySelector<HTMLElement>(".lb-mobile-dock");
 
       if (window.innerWidth <= 782 && dock) {
         document.body.style.paddingBottom = `${dock.offsetHeight}px`;
@@ -173,18 +173,18 @@ export default function Home() {
   };
 
   return (
-    <div className="wares-page">
-      <header className="wares-header">
-        <div className="wares-container wares-header-inner">
-          <Link href="/" className="wares-brand" onClick={closeOverlays}>
+    <div className="lb-page">
+      <header className="lb-header">
+        <div className="lb-container lb-header-inner">
+          <Link href="/" className="lb-brand" onClick={closeOverlays}>
             <Image
               src={addBasePath("/lebob.png")}
               alt="Lebob logo"
               width={48}
               height={48}
-              className="wares-brand-image"
+              className="lb-brand-image"
             />
-            <span className="wares-brand-copy">
+            <span className="lb-brand-copy">
               <strong>Lebob</strong>
               <small>FLL Team #3236</small>
             </span>
@@ -192,7 +192,7 @@ export default function Home() {
 
           <button
             type="button"
-            className="wares-menu-toggle"
+            className="lb-menu-toggle"
             onClick={toggleMobileMenu}
             aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isMobileMenuOpen}
@@ -201,13 +201,13 @@ export default function Home() {
           </button>
 
           <nav
-            className={`wares-nav ${isMobileMenuOpen ? "is-open" : ""}`}
+            className={`lb-nav ${isMobileMenuOpen ? "is-open" : ""}`}
             aria-label="Main navigation"
           >
-            <ul className="wares-nav-list">
+            <ul className="lb-nav-list">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="wares-nav-link" onClick={closeOverlays}>
+                  <Link href={link.href} className="lb-nav-link" onClick={closeOverlays}>
                     {link.label}
                   </Link>
                 </li>
@@ -215,16 +215,16 @@ export default function Home() {
             </ul>
           </nav>
 
-          <div className="wares-header-actions">
+          <div className="lb-header-actions">
             <button
               type="button"
-              className={`wares-icon-button ${isSearchOpen ? "is-active" : ""}`}
+              className={`lb-icon-button ${isSearchOpen ? "is-active" : ""}`}
               onClick={toggleSearch}
               aria-label="Open search overlay"
             >
               <Search />
             </button>
-            <Link href="/media" className="wares-icon-button wares-icon-link" aria-label="Go to media page">
+            <Link href="/media" className="lb-icon-button lb-icon-link" aria-label="Go to media page">
               <ImageIcon />
             </Link>
           </div>
@@ -234,7 +234,7 @@ export default function Home() {
       {isMobileMenuOpen ? (
         <button
           type="button"
-          className="wares-backdrop"
+          className="lb-backdrop"
           onClick={closeOverlays}
           aria-label="Close menu backdrop"
         />
@@ -243,41 +243,41 @@ export default function Home() {
       {isSearchOpen ? (
         <button
           type="button"
-          className="wares-search-backdrop"
+          className="lb-search-backdrop"
           onClick={() => setIsSearchOpen(false)}
           aria-label="Close search backdrop"
         />
       ) : null}
 
-      <div className={`wares-search-overlay ${isSearchOpen ? "is-open" : ""}`}>
-        <form className="wares-search-panel" onSubmit={(event) => event.preventDefault()}>
-          <label htmlFor="wares-search-input" className="wares-search-label">
+      <div className={`lb-search-overlay ${isSearchOpen ? "is-open" : ""}`}>
+        <form className="lb-search-panel" onSubmit={(event) => event.preventDefault()}>
+          <label htmlFor="lb-search-input" className="lb-search-label">
             Quick access
           </label>
-          <div className="wares-search-row">
+          <div className="lb-search-row">
             <input
-              id="wares-search-input"
+              id="lb-search-input"
               type="search"
-              className="wares-search-input"
+              className="lb-search-input"
               placeholder="Search team pages..."
             />
-            <button type="submit" className="wares-search-submit">
+            <button type="submit" className="lb-search-submit">
               <Search />
               Search
             </button>
           </div>
-          <div className="wares-search-links">
-            <Link href="/docs" className="wares-chip" onClick={closeOverlays}>
+          <div className="lb-search-links">
+            <Link href="/docs" className="lb-chip" onClick={closeOverlays}>
               Team docs
             </Link>
-            <Link href="/media" className="wares-chip" onClick={closeOverlays}>
+            <Link href="/media" className="lb-chip" onClick={closeOverlays}>
               Team media
             </Link>
             <a
               href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
               target="_blank"
               rel="noreferrer"
-              className="wares-chip"
+              className="lb-chip"
               onClick={closeOverlays}
             >
               GitHub
@@ -286,7 +286,7 @@ export default function Home() {
               href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
               target="_blank"
               rel="noreferrer"
-              className="wares-chip"
+              className="lb-chip"
               onClick={closeOverlays}
             >
               Onshape
@@ -295,65 +295,65 @@ export default function Home() {
         </form>
       </div>
 
-      <main className="wares-main">
-        <section className={`wares-hero ${isHeroVisible ? "show" : ""}`}>
+      <main className="lb-main">
+        <section className={`lb-hero ${isHeroVisible ? "show" : ""}`}>
           <Image
             src={addBasePath("/media/5Z9A0947.JPG")}
             alt=""
             fill
             sizes="100vw"
-            className="wares-hero-background"
+            className="lb-hero-background"
           />
-          <div className="wares-hero-overlay" />
-          <div className="wares-container wares-hero-inner">
-            <div className="wares-hero-copy">
-              <p className="wares-kicker">Lebob - FLL Team #3236</p>
+          <div className="lb-hero-overlay" />
+          <div className="lb-container lb-hero-inner">
+            <div className="lb-hero-copy">
+              <p className="lb-kicker">Lebob - FLL Team #3236</p>
               <h1>
                 Robots that compete and ideas that inspire.
                 <span> Welcome to Lebob.</span>
               </h1>
-              <p className="wares-hero-text">
+              <p className="lb-hero-text">
                 We are a team competing in the
                 <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>.
                 We <b>engineer</b> robots to complete missions, <b>research</b> and <b>innovate</b> to
                 design impactful mechanisms, and make it possible through <b>collaboration</b>.
                 This is our official website.
               </p>
-              <div className="wares-action-row">
+              <div className="lb-action-row">
                 <a
                   href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                   target="_blank"
                   rel="noreferrer"
-                  className="wares-btn wares-btn-primary"
+                  className="lb-btn lb-btn-primary"
                 >
                   <GitFork />
                   Explore our GitHub
                 </a>
-                <a href="#team" className="wares-btn wares-btn-outline">
+                <a href="#team" className="lb-btn lb-btn-outline">
                   <UserSearch />
                   Meet the team
                 </a>
-                <Link href="/media" className="wares-btn wares-btn-ghost">
+                <Link href="/media" className="lb-btn lb-btn-ghost">
                   <ImageIcon />
                   Team media
                 </Link>
-                <Link href="/docs" className="wares-btn wares-btn-ghost">
+                <Link href="/docs" className="lb-btn lb-btn-ghost">
                   <Newspaper />
                   Team docs
                 </Link>
               </div>
             </div>
 
-            <aside className="wares-about-card">
-              <div className="wares-about-header">
+            <aside className="lb-about-card">
+              <div className="lb-about-header">
                 <h2>
                   <Sparkles />
                   About Us
                 </h2>
                 <span>Info</span>
               </div>
-              <p className="wares-about-description">First Lego League international team.</p>
-              <div className="wares-team-name">
+              <p className="lb-about-description">First Lego League international team.</p>
+              <div className="lb-team-name">
                 <Image
                   src={addBasePath("/lebob.png")}
                   alt="Lebob team logo"
@@ -365,7 +365,7 @@ export default function Home() {
                   <strong>Lebob</strong>
                 </div>
               </div>
-              <ul className="wares-about-list">
+              <ul className="lb-about-list">
                 {aboutUsInfo.map((item) => (
                   <li key={item.text}>
                     <item.icon />
@@ -373,7 +373,7 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <div className="wares-core-values">
+              <div className="lb-core-values">
                 <h3>
                   <BadgeCheck />
                   Core Values in action
@@ -384,21 +384,21 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wares-section wares-reveal">
-          <div className="wares-container wares-values-layout">
-            <div className="wares-section-copy">
+        <section className="lb-section lb-reveal">
+          <div className="lb-container lb-values-layout">
+            <div className="lb-section-copy">
               <p>What we do</p>
               <h2>Building robots is only half the story.</h2>
-              <p className="wares-copy-body">
+              <p className="lb-copy-body">
                 Our season is about turning wild ideas into reliable systems, then sharing how we
                 got there. We design, iterate, and present as a single unit. Every win is a team
                 win.
               </p>
             </div>
-            <div className="wares-values-grid">
+            <div className="lb-values-grid">
               {values.map((value) => (
-                <article key={value.title} className="wares-panel">
-                  <div className="wares-icon-wrap">
+                <article key={value.title} className="lb-panel">
+                  <div className="lb-icon-wrap">
                     <value.icon />
                   </div>
                   <h3>{value.title}</h3>
@@ -409,21 +409,21 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wares-section wares-reveal">
-          <div className="wares-container wares-flow-panel">
-            <div className="wares-flow-header">
+        <section className="lb-section lb-reveal">
+          <div className="lb-container lb-flow-panel">
+            <div className="lb-flow-header">
               <div>
                 <p>Our flow</p>
                 <h2>From mission model to match day.</h2>
               </div>
-              <div className="wares-pill">
+              <div className="lb-pill">
                 <Users />
                 All 8 members contribute at every stage.
               </div>
             </div>
-            <div className="wares-flow-grid">
+            <div className="lb-flow-grid">
               {milestones.map((milestone, index) => (
-                <article key={milestone.title} className="wares-step-card">
+                <article key={milestone.title} className="lb-step-card">
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <h3>{milestone.title}</h3>
                   <p>{milestone.detail}</p>
@@ -433,19 +433,19 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="team" className="wares-section wares-reveal">
-          <div className="wares-container">
-            <div className="wares-section-head">
+        <section id="team" className="lb-section lb-reveal">
+          <div className="lb-container">
+            <div className="lb-section-head">
               <div>
                 <p>Team Lebob</p>
                 <h2>Eight builders, one mission.</h2>
               </div>
-              <span className="wares-tag">2026 Season</span>
+              <span className="lb-tag">2026 Season</span>
             </div>
-            <div className="wares-team-grid">
+            <div className="lb-team-grid">
               {team.map((member) => (
-                <article key={member.name} className="wares-member-card">
-                  <div className="wares-member-avatar">
+                <article key={member.name} className="lb-member-card">
+                  <div className="lb-member-avatar">
                     <Image
                       src={addBasePath(member.image)}
                       alt={`${member.name} profile`}
@@ -460,17 +460,17 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wares-section wares-reveal">
-          <div className="wares-container">
-            <div className="wares-section-head">
+        <section className="lb-section lb-reveal">
+          <div className="lb-container">
+            <div className="lb-section-head">
               <div>
                 <p>Mentors</p>
                 <h2>Guidance behind the scenes.</h2>
               </div>
-              <span className="wares-tag">Support Team</span>
+              <span className="lb-tag">Support Team</span>
             </div>
-            <article className="wares-mentor-card">
-              <div className="wares-mentor-image">
+            <article className="lb-mentor-card">
+              <div className="lb-mentor-image">
                 <Image
                   src={addBasePath(mentors.image)}
                   alt="Kaelie and Jade"
@@ -478,7 +478,7 @@ export default function Home() {
                   sizes="(max-width: 1024px) 100vw, 760px"
                 />
               </div>
-              <div className="wares-mentor-copy">
+              <div className="lb-mentor-copy">
                 <HeartHandshake />
                 <h3>{mentors.names.join(" & ")}</h3>
               </div>
@@ -486,9 +486,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wares-section wares-reveal">
-          <div className="wares-container">
-            <article className="wares-cta-card">
+        <section className="lb-section lb-reveal">
+          <div className="lb-container">
+            <article className="lb-cta-card">
               <div>
                 <p>Follow our solution</p>
                 <h2>Our Innovations Design</h2>
@@ -501,7 +501,7 @@ export default function Home() {
                 href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
                 target="_blank"
                 rel="noreferrer"
-                className="wares-btn wares-btn-solid"
+                className="lb-btn lb-btn-solid"
               >
                 <Image
                   src={addBasePath("/onshape.svg")}
@@ -516,9 +516,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wares-section wares-reveal">
-          <div className="wares-container">
-            <article className="wares-cta-card">
+        <section className="lb-section lb-reveal">
+          <div className="lb-container">
+            <article className="lb-cta-card">
               <div>
                 <p>Follow our build</p>
                 <h2>Our GitHub</h2>
@@ -531,7 +531,7 @@ export default function Home() {
                 href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                 target="_blank"
                 rel="noreferrer"
-                className="wares-btn wares-btn-solid"
+                className="lb-btn lb-btn-solid"
               >
                 <GitFork />
                 Visit GitHub
@@ -541,13 +541,13 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="wares-footer wares-reveal">
-        <div className="wares-container wares-footer-inner">
-          <div className="wares-footer-branding">
+      <footer className="lb-footer lb-reveal">
+        <div className="lb-container lb-footer-inner">
+          <div className="lb-footer-branding">
             <Sparkles />
             Lebob FLL Robotics Team
           </div>
-          <div className="wares-footer-links">
+          <div className="lb-footer-links">
             <span>
               <HeartHandshake />
               Built with teamwork
@@ -568,17 +568,17 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="wares-mobile-dock">
-        <Link href="/" className="wares-mobile-dock-button" aria-label="Home">
+      <div className="lb-mobile-dock">
+        <Link href="/" className="lb-mobile-dock-button" aria-label="Home">
           <House />
         </Link>
-        <Link href="/media" className="wares-mobile-dock-button" aria-label="Media">
+        <Link href="/media" className="lb-mobile-dock-button" aria-label="Media">
           <ImageIcon />
         </Link>
-        <Link href="/docs" className="wares-mobile-dock-button" aria-label="Docs">
+        <Link href="/docs" className="lb-mobile-dock-button" aria-label="Docs">
           <Newspaper />
         </Link>
-        <button type="button" className="wares-mobile-dock-button" onClick={toggleSearch} aria-label="Search">
+        <button type="button" className="lb-mobile-dock-button" onClick={toggleSearch} aria-label="Search">
           <Search />
         </button>
       </div>

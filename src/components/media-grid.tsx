@@ -47,7 +47,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
 
   return (
     <>
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
+      <section className="media-shell">
         <MasonryPhotoAlbum
           photos={photos}
           defaultContainerWidth={1200}
@@ -67,17 +67,16 @@ export function MediaGrid({ photos }: MediaGridProps) {
           onClick={({ index }) => setActiveIndex(index)}
           componentsProps={{
             button: {
-              className:
-                "group block w-full cursor-zoom-in overflow-hidden rounded-2xl border border-white/10 bg-white/5 card-hover",
+              className: "media-tile card-hover",
             },
             image: {
-              className: "transition-transform duration-500 group-hover:scale-[1.03]",
+              className: "media-tile-image",
             },
           }}
           render={{
             extras: (_, { photo }) => (
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent p-3">
-                <p className="truncate text-sm font-medium text-white">{(photo as WallPhoto).label}</p>
+              <div className="media-cap">
+                <p>{(photo as WallPhoto).label}</p>
               </div>
             ),
           }}
@@ -86,34 +85,34 @@ export function MediaGrid({ photos }: MediaGridProps) {
 
       {activePhoto ? (
         <div
-          className="fixed inset-0 z-50 bg-black/95"
+          className="media-lightbox"
           role="dialog"
           aria-modal="true"
           aria-label={activePhoto.label}
           onClick={() => setActiveIndex(null)}
         >
-          <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between border-b border-white/15 bg-black/50 px-3 py-2 sm:px-5">
-            <p className="truncate pr-3 text-sm text-slate-100">
+          <div className="media-lightbox-bar">
+            <p className="media-lightbox-title">
               {activeIndex! + 1} / {photos.length} · {activePhoto.label}
             </p>
             <button
               type="button"
               onClick={() => setActiveIndex(null)}
-              className="rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80"
+              className="media-close"
               aria-label="Close fullscreen media"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
 
-          <div className="absolute inset-0 flex items-center justify-center px-3 pb-24 pt-14 sm:px-8 sm:pb-32 sm:pt-16">
-            <div className="relative h-full w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
+          <div className="media-stage">
+            <div className="media-frame" onClick={(event) => event.stopPropagation()}>
               <Image
                 src={activePhoto.src}
                 alt={activePhoto.alt ?? activePhoto.label}
                 fill
                 sizes="100vw"
-                className="h-full w-full object-contain"
+                className="media-stage-image"
                 priority
               />
             </div>
@@ -128,7 +127,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
                   index === null ? index : (index - 1 + photos.length) % photos.length,
                 );
               }}
-              className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:left-5"
+              className="media-nav media-nav-left"
               aria-label="Previous image"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -144,18 +143,18 @@ export function MediaGrid({ photos }: MediaGridProps) {
                   index === null ? index : (index + 1) % photos.length,
                 );
               }}
-              className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:right-5"
+              className="media-nav media-nav-right"
               aria-label="Next image"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
           ) : null}
 
-          <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/15 bg-black/55 px-3 py-3 sm:px-5">
-            <p className="truncate text-center text-xs text-slate-200 sm:text-sm">
+          <div className="media-foot">
+            <p className="media-tip">
               Tip: use Left/Right arrow keys to move through the wall
             </p>
-            <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
+            <div className="media-thumbs">
               {photos.map((photo, index) => {
                 const isActive = index === activeIndex;
                 return (
@@ -167,8 +166,8 @@ export function MediaGrid({ photos }: MediaGridProps) {
                       setActiveIndex(index);
                     }}
                     className={cn(
-                      "relative h-14 w-20 shrink-0 overflow-hidden rounded-md border",
-                      isActive ? "border-emerald-300/80" : "border-white/20",
+                      "media-thumb",
+                      isActive ? "is-active" : "",
                     )}
                     aria-label={`View ${photo.label}`}
                     aria-current={isActive ? "true" : undefined}

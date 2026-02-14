@@ -38,6 +38,14 @@ export const metadata: Metadata = {
   },
 };
 
+const bodyClasses = [
+  spaceGrotesk.variable,
+  plexMono.variable,
+  poppins.variable,
+  inter.variable,
+  "antialiased",
+].join(" ");
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,9 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
-      <body
-        className={`${spaceGrotesk.variable} ${plexMono.variable} ${poppins.variable} ${inter.variable} antialiased`}
-      >
+      <body className={bodyClasses}>
         {children}
       </body>
     </html>
