@@ -259,7 +259,7 @@ export default function Home() {
               <p className="mt-4 text-base text-slate-300">
                 Our season is about turning wild ideas into reliable systems,
                 then sharing how we got there. We design, iterate, and present as
-                a single unit -- every win is a team win.
+                a single unit - every win is a team win.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
