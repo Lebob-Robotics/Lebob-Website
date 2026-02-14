@@ -69,21 +69,21 @@ const mentors = {
 const values = [
   {
     title: "Build",
-    description: "We turn ideas into mechanisms that can survive competition day.",
+    description: "We first build our robot to our best specifications.",
     icon: Wrench,
   },
   {
     title: "Code",
-    description: "We program with precision so our robot moves like a teammate.",
+    description: "We then program our robot to achieve our goals.",
     icon: CircuitBoard,
   },
   {
-    title: "Explore",
-    description: "We research, iterate, and learn from every prototype.",
+    title: "Iterate",
+    description: "We continue researching and iterating to improve our standard.",
     icon: Orbit,
   },
   {
-    title: "Share",
+    title: "Inspire",
     description: "We show up for the community and inspire new builders.",
     icon: Globe,
   },
@@ -91,20 +91,20 @@ const values = [
 
 const milestones = [
   {
-    title: "Discover",
+    title: "Plan",
     detail: "Study the mission model and imagine our best run.",
   },
   {
     title: "Design",
-    detail: "Prototype attachments, refine the drive base, repeat.",
+    detail: "Prototype and iterate on many attachments to achieve our strategy.",
   },
   {
     title: "Program",
-    detail: "Automate missions and tune for consistency.",
+    detail: "Automate missions to enable the robot to carry out runs.",
   },
   {
     title: "Present",
-    detail: "Share our innovation story and teamwork journey.",
+    detail: "Share our innovation and teamwork journey.",
   },
 ];
 
@@ -122,7 +122,7 @@ export default function Home() {
 
           <div className="relative z-10 flex flex-1 flex-col gap-6">
             <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-              FLL Team #3236 - 8 Members
+              FLL Team Lebob #3236 
             </Badge>
             <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
               Lebob is a
@@ -130,20 +130,17 @@ export default function Home() {
               robots and ideas that compete and inspire.
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-              We mix engineering, coding, and research to build reliable robots
-              and tell the story behind every mission. Every run is a
-              collaboration, every win a shared moment, and every season a push
-              to be the best in the state.
+              We combine engineering, coding and research to create and improve
+              our robot and inspire many others.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
               <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
                 <a
                   href="https://github.com/Lebob-Robotics"
                   target="_blank"
-                  rel="noreferrer"
-                >
+                  rel="noreferrer" >
                   <Github className="mr-2 h-4 w-4" />
-                  Explore our GitHub
+                  Github
                 </a>
               </Button>
               <Button
@@ -152,16 +149,15 @@ export default function Home() {
                 asChild
               >
                 <a href="#team">
-                  Meet the team
-                  <ArrowUpRight className="ml-2 h-4 w-4" />
-                </a>
+                  Team
+                  <ArrowUpRight className="ml-2 h-4 w-4" /> </a>
               </Button>
               <Button
                 variant="outline"
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <Link href="/media">Team media</Link>
+                <Link href="/media">Media</Link>
               </Button>
             </div>
             <div className="animate-fade-up delay-3 flex flex-wrap gap-3">
@@ -170,7 +166,7 @@ export default function Home() {
                 className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
                 asChild
               >
-                <Link href="/docs">Team docs</Link>
+                <Link href="/docs">Documentation</Link>
               </Button>
             </div>
           </div>
@@ -180,14 +176,14 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2 text-xl">
                     <Sparkles className="h-5 w-5 text-emerald-300" />
-                    Mission Console
+                    Summary
                   </CardTitle>
                   <Badge className="bg-emerald-400/20 text-emerald-200">
-                    Active
+                    Teamwork
                   </Badge>
                 </div>
                 <CardDescription className="text-slate-300">
-                  A quick look at how we operate together.
+                  A quick look at our team.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-5">
@@ -213,15 +209,15 @@ export default function Home() {
                   {[
                     {
                       icon: Trophy,
-                      text: "Practice cycles that maximize consistency.",
+                      text: "Practice runs until 100% consistency.",
                     },
                     {
                       icon: HeartHandshake,
-                      text: "Collaboration keeps our ideas sharp.",
+                      text: "Collaboration keeps our team strong and competitive.",
                     },
                     {
                       icon: BadgeCheck,
-                      text: "Core values guide every build decision.",
+                      text: "Core values guide all our decisions.",
                     },
                   ].map((item) => (
                     <div key={item.text} className="flex items-start gap-3">
@@ -237,7 +233,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl">
                   <BadgeCheck className="h-5 w-5 text-sky-300" />
-                  Core Values in action
+                  Core Values
                 </CardTitle>
                 <CardDescription className="text-slate-300">
                   Innovation, impact, inclusion, discovery, teamwork, and fun.
@@ -254,12 +250,11 @@ export default function Home() {
                 What we do
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
-                Building robots is only half the story.
+                Building robots is only part of our goal.
               </h2>
               <p className="mt-4 text-base text-slate-300">
-                Our season is about turning wild ideas into reliable systems,
-                then sharing how we got there. We design, iterate, and present as
-                a single unit -- every win is a team win.
+                Our goal is about turning our ideas into real, working 
+                prototypes through teamwork, then sharing how we got there.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -288,15 +283,15 @@ export default function Home() {
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] text-sky-200">
-                  Our flow
+                  Our Process
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold text-white">
-                  From mission model to match day.
+                  Hard work and teamwork to success.
                 </h2>
               </div>
               <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-200">
                 <Users className="h-4 w-4 text-emerald-200" />
-                All 8 members contribute at every stage.
+                All 8 members working together as a team.
               </div>
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -327,7 +322,7 @@ export default function Home() {
                 Team Lebob
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-white">
-                Eight builders, one mission.
+                Our members.
               </h2>
             </div>
             <Badge className="w-fit bg-white/10 text-white">2026 Season</Badge>
@@ -368,17 +363,17 @@ export default function Home() {
                 Mentors
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-white">
-                Guidance behind the scenes.
+                The helpers along the way.
               </h2>
             </div>
-            <Badge className="w-fit bg-white/10 text-white">Support Team</Badge>
+            <Badge className="w-fit bg-white/10 text-white">Our Mentors</Badge>
           </div>
           <Card className="mt-8 overflow-hidden border-white/10 bg-white/5 text-white card-hover">
             <div className="w-full bg-gradient-to-br from-slate-900/35 via-black/20 to-emerald-500/10 p-3 sm:p-5">
               <div className="relative mx-auto aspect-square w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10">
                 <Image
                   src={addBasePath(mentors.image)}
-                  alt="Kaelie and Jade"
+                  alt="Kaelie O and Jade T"
                   fill
                   sizes="(max-width: 1024px) 100vw, 768px"
                   className="object-contain"
@@ -399,11 +394,11 @@ export default function Home() {
             <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                  Follow our solution
+                  Innovations 
                 </p>
-                <h2 className="mt-3 text-3xl font-semibold">Our Innovations Design</h2>
+                <h2 className="mt-3 text-3xl font-semibold">Our Design</h2>
                 <p className="mt-2 max-w-xl text-sm text-slate-200">
-                  Explore our 3D models and CAD files for SoftSense. See our design evolution, from early concepts to field-worthy products. Feel free to comment on our project on our forms!
+                  Our 3D modelling for innovations in Onshape.
                 </p>
               </div>
               <Button
@@ -434,13 +429,11 @@ export default function Home() {
             <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                  Follow our build
+                  Programming 
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold">Our GitHub lab</h2>
                 <p className="mt-2 max-w-xl text-sm text-slate-200">
-                  Code, notes, and project updates live in our repo. Explore
-                  what we are building this season and see how Lebob grows with
-                  each iteration.
+                  Our github repository for robot and innovations code.
                 </p>
               </div>
               <Button
