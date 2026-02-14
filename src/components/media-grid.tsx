@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, FileImage, Film, X } from "lucide-react";
 import { addBasePath } from "next/dist/client/add-base-path";
+import Image from "next/image";
 
 export type MediaItem = {
   fileName: string;
@@ -69,11 +70,12 @@ export function MediaGrid({ items }: MediaGridProps) {
             >
               <div className="relative aspect-[4/3] bg-black/30">
                 {item.type === "image" ? (
-                  <img
+                  <Image
                     src={mediaSrc(item.fileName)}
                     alt={item.label}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="h-full w-full object-cover"
-                    loading="lazy"
                   />
                 ) : (
                   <>
@@ -113,11 +115,13 @@ export function MediaGrid({ items }: MediaGridProps) {
           onClick={() => setActiveIndex(null)}
         >
           <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-            <div className="h-[100dvh] w-screen" onClick={(event) => event.stopPropagation()}>
+            <div className="relative h-[100dvh] w-screen" onClick={(event) => event.stopPropagation()}>
               {activeItem.type === "image" ? (
-                <img
+                <Image
                   src={mediaSrc(activeItem.fileName)}
                   alt={activeItem.label}
+                  fill
+                  sizes="100vw"
                   className="h-full w-full object-contain"
                 />
               ) : (
