@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "react-photo-album/masonry.css";
 
 :root {
   --background: #1a0f09;
