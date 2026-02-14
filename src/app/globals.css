@@ -71,6 +71,16 @@ body {
   min-height: 100vh;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-space-grotesk), var(--font-poppins), system-ui, sans-serif;
+  letter-spacing: -0.015em;
+}
+
 ::selection {
   background: var(--selection-bg);
   color: var(--selection-fg);

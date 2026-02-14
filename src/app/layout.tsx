@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Inter, Poppins, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -15,17 +15,17 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-const poppins = Poppins({
+const poppins = Sora({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "900"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-const inter = Inter({
+const inter = Manrope({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
