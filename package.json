@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "images:build": "node scripts/generate-image-variants.mjs",
+    "predev": "pnpm images:build",
+    "prebuild": "pnpm images:build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -18,6 +21,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-photo-album": "^3.5.0",
+    "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

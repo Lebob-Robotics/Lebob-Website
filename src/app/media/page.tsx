@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { imageSizeFromFile } from "image-size/fromFile";
 
 import { MediaGrid, type WallPhoto } from "@/components/media-grid";
+import { getVariantDimensions, getVariantList, pickVariantForWidth } from "@/lib/image-variants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -56,46 +57,65 @@ async function getMediaWallData(): Promise<{ photos: WallPhoto[]; videoCount: nu
       (entry) => entry.isFile() && VIDEO_EXTENSIONS.has(path.extname(entry.name).toLowerCase()),
     ).length;
 
-    const photos = await Promise.all(
+    const photoItems = await Promise.all(
       imageEntries.map(async (entry) => {
         const absolutePath = path.join(mediaDir, entry.name);
         const label = fileLabel(entry.name);
+        const sourcePath = `/media/${encodeURIComponent(entry.name)}`;
+        const variants = getVariantList(sourcePath);
+        const previewVariant = pickVariantForWidth(sourcePath, 1200);
+        const lightboxVariant = pickVariantForWidth(sourcePath, 2048);
+        const thumbVariant = pickVariantForWidth(sourcePath, 240);
+        const variantDimensions = getVariantDimensions(sourcePath);
 
-        let width = 1600;
-        let height = 1000;
+        let width = variantDimensions?.width ?? 1600;
+        let height = variantDimensions?.height ?? 1000;
 
-        try {
-          const dimensions = await imageSizeFromFile(absolutePath);
-          if (dimensions.width && dimensions.height) {
-            const normalized = normalizeDimensions(
-              dimensions.width,
-              dimensions.height,
-              dimensions.orientation,
-            );
-            width = normalized.width;
-            height = normalized.height;
+        if (!variantDimensions) {
+          try {
+            const dimensions = await imageSizeFromFile(absolutePath);
+            if (dimensions.width && dimensions.height) {
+              const normalized = normalizeDimensions(
+                dimensions.width,
+                dimensions.height,
+                dimensions.orientation,
+              );
+              width = normalized.width;
+              height = normalized.height;
+            }
+          } catch {
+            // Fallback dimensions keep the wall rendering even if metadata lookup fails.
           }
-        } catch {
-          // Fallback dimensions keep the wall rendering even if metadata lookup fails.
         }
 
+        const layoutWidth = previewVariant?.width ?? width;
+        const layoutHeight = previewVariant?.height ?? height;
+
         return {
-          src: `/media/${encodeURIComponent(entry.name)}`,
-          width,
-          height,
-          alt: label,
-          title: label,
-          label,
-        } satisfies WallPhoto;
+          sortKey: sourcePath,
+          photo: {
+            src: previewVariant?.src ?? sourcePath,
+            srcSet: variants.length > 0 ? variants : undefined,
+            width: layoutWidth,
+            height: layoutHeight,
+            alt: label,
+            title: label,
+            label,
+            fullSrc: lightboxVariant?.src ?? sourcePath,
+            thumbSrc: thumbVariant?.src ?? sourcePath,
+          } satisfies WallPhoto,
+        };
       }),
     );
 
-    photos.sort((a, b) =>
-      a.src.localeCompare(b.src, undefined, {
+    photoItems.sort((a, b) =>
+      a.sortKey.localeCompare(b.sortKey, undefined, {
         numeric: true,
         sensitivity: "base",
       }),
     );
+
+    const photos = photoItems.map((item) => item.photo);
 
     return { photos, videoCount };
   } catch (error) {

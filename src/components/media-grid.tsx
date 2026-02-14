@@ -1,24 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
+import { addBasePath } from "next/dist/client/add-base-path";
 import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
 
 import { cn } from "@/lib/utils";
 
 export type WallPhoto = Photo & {
   label: string;
+  fullSrc?: string;
+  thumbSrc?: string;
 };
 
 type MediaGridProps = {
   photos: WallPhoto[];
 };
 
+function withBasePath(path: string): string {
+  return path.startsWith("/") ? addBasePath(path) : path;
+}
+
+function withBasePathPhoto(photo: WallPhoto): WallPhoto {
+  return {
+    ...photo,
+    src: withBasePath(photo.src),
+    srcSet: photo.srcSet?.map((variant) => ({ ...variant, src: withBasePath(variant.src) })),
+    fullSrc: photo.fullSrc ? withBasePath(photo.fullSrc) : undefined,
+    thumbSrc: photo.thumbSrc ? withBasePath(photo.thumbSrc) : undefined,
+  };
+}
+
 export function MediaGrid({ photos }: MediaGridProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const activePhoto = activeIndex === null ? null : photos[activeIndex];
-  const hasNavigation = photos.length > 1;
+  const albumPhotos = useMemo(() => photos.map(withBasePathPhoto), [photos]);
+  const activePhoto = activeIndex === null ? null : albumPhotos[activeIndex];
+  const hasNavigation = albumPhotos.length > 1;
 
   useEffect(() => {
     if (activeIndex === null) {
@@ -29,9 +47,9 @@ export function MediaGrid({ photos }: MediaGridProps) {
       if (event.key === "Escape") {
         setActiveIndex(null);
       } else if (event.key === "ArrowRight") {
-        setActiveIndex((index) => (index === null ? index : (index + 1) % photos.length));
+        setActiveIndex((index) => (index === null ? index : (index + 1) % albumPhotos.length));
       } else if (event.key === "ArrowLeft") {
-        setActiveIndex((index) => (index === null ? index : (index - 1 + photos.length) % photos.length));
+        setActiveIndex((index) => (index === null ? index : (index - 1 + albumPhotos.length) % albumPhotos.length));
       }
     };
 
@@ -43,13 +61,13 @@ export function MediaGrid({ photos }: MediaGridProps) {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [activeIndex, photos.length]);
+  }, [activeIndex, albumPhotos.length]);
 
   return (
     <>
       <section className="media-shell">
         <MasonryPhotoAlbum
-          photos={photos}
+          photos={albumPhotos}
           defaultContainerWidth={1200}
           columns={(containerWidth) => {
             if (containerWidth < 640) {
@@ -93,7 +111,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
         >
           <div className="media-lightbox-bar">
             <p className="media-lightbox-title">
-              {activeIndex! + 1} / {photos.length} · {activePhoto.label}
+              {activeIndex! + 1} / {albumPhotos.length} · {activePhoto.label}
             </p>
             <button
               type="button"
@@ -108,7 +126,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
           <div className="media-stage">
             <div className="media-frame" onClick={(event) => event.stopPropagation()}>
               <Image
-                src={activePhoto.src}
+                src={activePhoto.fullSrc ?? activePhoto.src}
                 alt={activePhoto.alt ?? activePhoto.label}
                 fill
                 sizes="100vw"
@@ -124,7 +142,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
               onClick={(event) => {
                 event.stopPropagation();
                 setActiveIndex((index) =>
-                  index === null ? index : (index - 1 + photos.length) % photos.length,
+                  index === null ? index : (index - 1 + albumPhotos.length) % albumPhotos.length,
                 );
               }}
               className="media-nav media-nav-left"
@@ -140,7 +158,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
               onClick={(event) => {
                 event.stopPropagation();
                 setActiveIndex((index) =>
-                  index === null ? index : (index + 1) % photos.length,
+                  index === null ? index : (index + 1) % albumPhotos.length,
                 );
               }}
               className="media-nav media-nav-right"
@@ -155,7 +173,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
               Tip: use Left/Right arrow keys to move through the wall
             </p>
             <div className="media-thumbs">
-              {photos.map((photo, index) => {
+              {albumPhotos.map((photo, index) => {
                 const isActive = index === activeIndex;
                 return (
                   <button
@@ -173,7 +191,7 @@ export function MediaGrid({ photos }: MediaGridProps) {
                     aria-current={isActive ? "true" : undefined}
                   >
                     <Image
-                      src={photo.src}
+                      src={photo.thumbSrc ?? photo.src}
                       alt={photo.alt ?? photo.label}
                       fill
                       sizes="80px"

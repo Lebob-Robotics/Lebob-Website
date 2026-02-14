@@ -1,6 +1,6 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
-import Image from "next/image";
 import Link from "next/link";
 import { addBasePath } from "next/dist/client/add-base-path";
 import {
@@ -26,6 +26,8 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+
+import { getVariantList, pickVariantForWidth } from "@/lib/image-variants";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -86,10 +88,35 @@ const aboutUsInfo = [
   { text: "Made the SoftSense manipulator arm for innovations.", icon: Brain },
 ];
 
+function withBasePath(path: string): string {
+  return path.startsWith("/") ? addBasePath(path) : path;
+}
+
+function buildResponsiveImage(
+  sourcePath: string,
+  targetWidth: number,
+  maxWidth: number,
+): { src: string; srcSet?: string } {
+  const preferredVariant = pickVariantForWidth(sourcePath, targetWidth);
+  const variants = getVariantList(sourcePath).filter((variant) => variant.width <= maxWidth);
+  const srcSet =
+    variants.length > 0
+      ? variants.map((variant) => `${withBasePath(variant.src)} ${variant.width}w`).join(", ")
+      : undefined;
+
+  return {
+    src: withBasePath(preferredVariant?.src ?? sourcePath),
+    srcSet,
+  };
+}
+
 export default function Home() {
   const [isHeroVisible, setIsHeroVisible] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const logoImage = buildResponsiveImage("/lebob.png", 96, 160);
+  const heroImage = buildResponsiveImage("/media/5Z9A0947.JPG", 1600, 2048);
+  const mentorImage = buildResponsiveImage(mentors.image, 1400, 2048);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -177,12 +204,16 @@ export default function Home() {
       <header className="lb-header">
         <div className="lb-container lb-header-inner">
           <Link href="/" className="lb-brand" onClick={closeOverlays}>
-            <Image
-              src={addBasePath("/lebob.png")}
+            <img
+              src={logoImage.src}
+              srcSet={logoImage.srcSet}
+              sizes="48px"
               alt="Lebob logo"
               width={48}
               height={48}
               className="lb-brand-image"
+              loading="eager"
+              decoding="async"
             />
             <span className="lb-brand-copy">
               <strong>Lebob</strong>
@@ -297,12 +328,15 @@ export default function Home() {
 
       <main className="lb-main">
         <section className={`lb-hero ${isHeroVisible ? "show" : ""}`}>
-          <Image
-            src={addBasePath("/media/5Z9A0947.JPG")}
-            alt=""
-            fill
+          <img
+            src={heroImage.src}
+            srcSet={heroImage.srcSet}
             sizes="100vw"
+            alt=""
             className="lb-hero-background"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="lb-hero-overlay" />
           <div className="lb-container lb-hero-inner">
@@ -354,11 +388,15 @@ export default function Home() {
               </div>
               <p className="lb-about-description">First Lego League international team.</p>
               <div className="lb-team-name">
-                <Image
-                  src={addBasePath("/lebob.png")}
+                <img
+                  src={logoImage.src}
+                  srcSet={logoImage.srcSet}
+                  sizes="64px"
                   alt="Lebob team logo"
                   width={64}
                   height={64}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div>
                   <small>Team Name</small>
@@ -443,19 +481,27 @@ export default function Home() {
               <span className="lb-tag">2026 Season</span>
             </div>
             <div className="lb-team-grid">
-              {team.map((member) => (
-                <article key={member.name} className="lb-member-card">
-                  <div className="lb-member-avatar">
-                    <Image
-                      src={addBasePath(member.image)}
-                      alt={`${member.name} profile`}
-                      width={56}
-                      height={56}
-                    />
-                  </div>
-                  <h3>{member.name}</h3>
-                </article>
-              ))}
+              {team.map((member) => {
+                const memberImage = buildResponsiveImage(member.image, 160, 320);
+
+                return (
+                  <article key={member.name} className="lb-member-card">
+                    <div className="lb-member-avatar">
+                      <img
+                        src={memberImage.src}
+                        srcSet={memberImage.srcSet}
+                        sizes="56px"
+                        alt={`${member.name} profile`}
+                        width={56}
+                        height={56}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <h3>{member.name}</h3>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -471,11 +517,13 @@ export default function Home() {
             </div>
             <article className="lb-mentor-card">
               <div className="lb-mentor-image">
-                <Image
-                  src={addBasePath(mentors.image)}
-                  alt="Kaelie and Jade"
-                  fill
+                <img
+                  src={mentorImage.src}
+                  srcSet={mentorImage.srcSet}
                   sizes="(max-width: 1024px) 100vw, 760px"
+                  alt="Kaelie and Jade"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div className="lb-mentor-copy">
@@ -503,12 +551,14 @@ export default function Home() {
                 rel="noreferrer"
                 className="lb-btn lb-btn-solid"
               >
-                <Image
+                <img
                   src={addBasePath("/onshape.svg")}
                   alt="Onshape"
                   width={20}
                   height={20}
                   className="onshape-icon"
+                  loading="lazy"
+                  decoding="async"
                 />
                 Go to our Onshape
               </a>
