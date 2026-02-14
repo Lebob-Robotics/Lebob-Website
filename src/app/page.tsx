@@ -475,6 +475,12 @@ export default function Home() {
             </span>
             <span className="flex items-center gap-2">
               <ArrowUpRight className="h-4 w-4 text-sky-300" />
+              <Link href="/sponsor" className="footer-link">
+                Brendon
+              </Link>
+            </span>
+            <span className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4 text-sky-300" />
               <a
                 href="https://github.com/Lebob-Robotics"
                 target="_blank"
