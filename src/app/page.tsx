@@ -521,7 +521,7 @@ export default function Home() {
             <article className="wares-cta-card">
               <div>
                 <p>Follow our build</p>
-                <h2>Our GitHub lab</h2>
+                <h2>Our GitHub</h2>
                 <p>
                   Code, notes, and project updates live in our repo. Explore what we are building
                   this season and see how Lebob grows with each iteration.

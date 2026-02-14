@@ -658,8 +658,6 @@ a {
 
 .wares-brand-image {
   border-radius: 11px;
-  border: 1px solid var(--surface-border-strong);
-  background: var(--surface-soft);
 }
 
 .wares-brand-copy {
@@ -894,8 +892,8 @@ a {
 }
 
 .wares-section {
-  padding-top: clamp(44px, 7vw, 110px);
-  padding-bottom: clamp(44px, 7vw, 110px);
+  padding-top: clamp(24px, 4vw, 56px);
+  padding-bottom: clamp(24px, 4vw, 56px);
 }
 
 .wares-reveal {
@@ -914,7 +912,7 @@ a {
   min-height: 100vh;
   overflow: clip;
   padding-top: clamp(130px, 16vw, 176px);
-  padding-bottom: clamp(72px, 8vw, 108px);
+  padding-bottom: clamp(36px, 5vw, 64px);
 }
 
 .wares-hero::before {
@@ -1146,8 +1144,6 @@ a {
 
 .wares-team-name img {
   border-radius: 14px;
-  border: 1px solid var(--surface-border-strong);
-  background: var(--surface-soft);
 }
 
 .wares-team-name small {
