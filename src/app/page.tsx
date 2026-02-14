@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
@@ -10,32 +10,23 @@ import {
   CircuitBoard,
   GitFork,
   Globe,
-  UserSearch,
-  ImageIcon,
   HeartHandshake,
+  House,
+  ImageIcon,
+  Menu,
+  Newspaper,
   Orbit,
+  Search,
   Sparkles,
   Trophy,
+  UserSearch,
   Users,
   Wrench,
   WrenchIcon,
-  Newspaper,
-  Menu,
-  Search,
   X,
-  House,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
@@ -46,38 +37,14 @@ const navLinks = [
 ];
 
 const team = [
-  {
-    name: "Kingsley W",
-    image: "/members/kingsley.png",
-  },
-  {
-    name: "Andre N",
-    image: "/members/andre.jpeg",
-  },
-  {
-    name: "Sean C",
-    image: "/members/sean.jpg",
-  },
-  {
-    name: "Oliver L",
-    image: "/members/oliver.png",
-  },
-  {
-    name: "Subesh S",
-    image: "/members/subesh.png",
-  },
-  {
-    name: "Chris W",
-    image: "/members/chris.png",
-  },
-  {
-    name: "Aaron Z",
-    image: "/members/aaron.png",
-  },
-  {
-    name: "Leven S",
-    image: "/members/leven.png",
-  },
+  { name: "Kingsley W", image: "/members/kingsley.png" },
+  { name: "Andre N", image: "/members/andre.jpeg" },
+  { name: "Sean C", image: "/members/sean.jpg" },
+  { name: "Oliver L", image: "/members/oliver.png" },
+  { name: "Subesh S", image: "/members/subesh.png" },
+  { name: "Chris W", image: "/members/chris.png" },
+  { name: "Aaron Z", image: "/members/aaron.png" },
+  { name: "Leven S", image: "/members/leven.png" },
 ];
 
 const mentors = {
@@ -109,37 +76,16 @@ const values = [
 ];
 
 const milestones = [
-  {
-    title: "Discover",
-    detail: "Study the mission model and imagine our best run.",
-  },
-  {
-    title: "Design",
-    detail: "Prototype attachments, refine the drive base, repeat.",
-  },
-  {
-    title: "Program",
-    detail: "Automate missions and tune for consistency.",
-  },
-  {
-    title: "Present",
-    detail: "Share our innovation story and teamwork journey.",
-  },
+  { title: "Discover", detail: "Study the mission model and imagine our best run." },
+  { title: "Design", detail: "Prototype attachments, refine the drive base, repeat." },
+  { title: "Program", detail: "Automate missions and tune for consistency." },
+  { title: "Present", detail: "Share our innovation story and teamwork journey." },
 ];
 
 const aboutUsInfo = [
-  {
-    text: "Won national and state competitions in First Lego League.",
-    icon: Trophy,
-  },
-  {
-    text: "Built and coded a robot to complete various missions reliably.",
-    icon: WrenchIcon,
-  },
-  {
-    text: "Made the SoftSense manipulator arm for innovations.",
-    icon: Brain,
-  },
+  { text: "Won national and state competitions in First Lego League.", icon: Trophy },
+  { text: "Built and coded a robot to complete various missions reliably.", icon: WrenchIcon },
+  { text: "Made the SoftSense manipulator arm for innovations.", icon: Brain },
 ];
 
 export default function Home() {
@@ -150,7 +96,7 @@ export default function Home() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setIsHeroVisible(true);
-    }, 200);
+    }, 220);
 
     return () => {
       window.clearTimeout(timer);
@@ -158,8 +104,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const transitionNodes = document.querySelectorAll<HTMLElement>(".warble-transition");
-    if (transitionNodes.length === 0) {
+    const revealNodes = document.querySelectorAll<HTMLElement>(".wares-reveal");
+    if (revealNodes.length === 0) {
       return;
     }
 
@@ -177,7 +123,7 @@ export default function Home() {
       { threshold: 0.16 },
     );
 
-    transitionNodes.forEach((node) => observer.observe(node));
+    revealNodes.forEach((node) => observer.observe(node));
 
     return () => observer.disconnect();
   }, []);
@@ -193,7 +139,7 @@ export default function Home() {
 
   useEffect(() => {
     const syncDockPadding = () => {
-      const dock = document.querySelector<HTMLElement>(".warble-mobile-dock");
+      const dock = document.querySelector<HTMLElement>(".wares-mobile-dock");
 
       if (window.innerWidth <= 782 && dock) {
         document.body.style.paddingBottom = `${dock.offsetHeight}px`;
@@ -218,68 +164,72 @@ export default function Home() {
     setIsMobileMenuOpen(false);
   };
 
-  const handleSearchToggle = () => {
+  const toggleSearch = () => {
     setIsSearchOpen((state) => !state);
     setIsMobileMenuOpen(false);
   };
 
-  const handleMobileMenuToggle = () => {
+  const toggleMobileMenu = () => {
     setIsMobileMenuOpen((state) => !state);
     setIsSearchOpen(false);
   };
 
   return (
-    <div className="min-h-screen">
-      <header className="warble-main-header header-transparent">
-        <div className="warble-main-header-inner">
-          <Link href="/" className="warble-brand">
+    <div className="wares-page">
+      <header className="wares-header">
+        <div className="wares-container wares-header-inner">
+          <Link href="/" className="wares-brand" onClick={closeOverlays}>
             <Image
               src={addBasePath("/lebob.png")}
               alt="Lebob logo"
-              width={40}
-              height={40}
+              width={48}
+              height={48}
+              className="wares-brand-image"
             />
-            <span className="warble-brand-text">Lebob</span>
+            <span className="wares-brand-copy">
+              <strong>Lebob</strong>
+              <small>FLL Team #3236</small>
+            </span>
           </Link>
 
           <button
             type="button"
-            className="warble-menu-toggle"
-            onClick={handleMobileMenuToggle}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            className="wares-menu-toggle"
+            onClick={toggleMobileMenu}
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMobileMenuOpen ? <X /> : <Menu />}
           </button>
 
           <nav
-            className={`warble-main-nav ${isMobileMenuOpen ? "is-open" : ""}`}
+            className={`wares-nav ${isMobileMenuOpen ? "is-open" : ""}`}
             aria-label="Main navigation"
           >
-            <ul className="warble-main-nav-list">
-              {navLinks.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="warble-main-nav-link" onClick={closeOverlays}>
-                    {item.label}
+            <ul className="wares-nav-list">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="wares-nav-link" onClick={closeOverlays}>
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
-          <div className="warble-header-actions">
+          <div className="wares-header-actions">
             <button
               type="button"
-              className={`warble-icon-action ${isSearchOpen ? "is-active" : ""}`}
-              onClick={handleSearchToggle}
-              aria-label="Open search panel"
+              className={`wares-icon-button ${isSearchOpen ? "is-active" : ""}`}
+              onClick={toggleSearch}
+              aria-label="Open search overlay"
             >
-              <Search className="h-5 w-5" />
+              <Search />
             </button>
-            <Link href="/media" className="warble-icon-action warble-icon-action-link" aria-label="Team media">
-              <ImageIcon className="h-5 w-5" />
+            <Link href="/media" className="wares-icon-button wares-icon-link" aria-label="Go to media page">
+              <ImageIcon />
             </Link>
-            <ThemeToggle compact className="warble-header-theme-toggle" />
+            <ThemeToggle compact className="wares-theme-toggle" />
           </div>
         </div>
       </header>
@@ -287,50 +237,50 @@ export default function Home() {
       {isMobileMenuOpen ? (
         <button
           type="button"
-          className="warble-backdrop"
+          className="wares-backdrop"
           onClick={closeOverlays}
-          aria-label="Close navigation menu"
+          aria-label="Close menu backdrop"
         />
       ) : null}
 
       {isSearchOpen ? (
         <button
           type="button"
-          className="warble-search-backdrop"
+          className="wares-search-backdrop"
           onClick={() => setIsSearchOpen(false)}
-          aria-label="Close search panel"
+          aria-label="Close search backdrop"
         />
       ) : null}
 
-      <div className={`warble-search-panel ${isSearchOpen ? "is-open" : ""}`}>
-        <form className="warble-search-form" onSubmit={(event) => event.preventDefault()}>
-          <label htmlFor="warble-search-input" className="warble-search-label">
+      <div className={`wares-search-overlay ${isSearchOpen ? "is-open" : ""}`}>
+        <form className="wares-search-panel" onSubmit={(event) => event.preventDefault()}>
+          <label htmlFor="wares-search-input" className="wares-search-label">
             Quick access
           </label>
-          <div className="warble-search-row">
+          <div className="wares-search-row">
             <input
-              id="warble-search-input"
-              className="warble-search-input"
-              placeholder="Search team pages..."
+              id="wares-search-input"
               type="search"
+              className="wares-search-input"
+              placeholder="Search team pages..."
             />
-            <button type="submit" className="warble-search-submit">
-              <Search className="h-4 w-4" />
+            <button type="submit" className="wares-search-submit">
+              <Search />
               Search
             </button>
           </div>
-          <div className="warble-search-links">
-            <Link href="/docs" className="warble-search-chip" onClick={closeOverlays}>
+          <div className="wares-search-links">
+            <Link href="/docs" className="wares-chip" onClick={closeOverlays}>
               Team docs
             </Link>
-            <Link href="/media" className="warble-search-chip" onClick={closeOverlays}>
+            <Link href="/media" className="wares-chip" onClick={closeOverlays}>
               Team media
             </Link>
             <a
               href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
               target="_blank"
               rel="noreferrer"
-              className="warble-search-chip"
+              className="wares-chip"
               onClick={closeOverlays}
             >
               GitHub
@@ -339,7 +289,7 @@ export default function Home() {
               href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
               target="_blank"
               rel="noreferrer"
-              className="warble-search-chip"
+              className="wares-chip"
               onClick={closeOverlays}
             >
               Onshape
@@ -348,414 +298,290 @@ export default function Home() {
         </form>
       </div>
 
-      <main className="relative overflow-hidden warble-main-content">
-        <div className="pointer-events-none absolute inset-0 opacity-70 bg-grid" />
-        <section
-          className={`relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-16 sm:px-10 lg:flex-row lg:items-center lg:gap-16 warble-hero-shell ${
-            isHeroVisible ? "show" : ""
-          }`}
-        >
+      <main className="wares-main">
+        <section className={`wares-hero ${isHeroVisible ? "show" : ""}`}>
           <Image
             src={addBasePath("/media/5Z9A0947.JPG")}
             alt=""
             fill
             sizes="100vw"
-            className="absolute inset-0 -z-10 warble-hero-background"
+            className="wares-hero-background"
           />
-          <div className="warble-hero-tint" />
-
-          <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-rose-500/25 blur-[160px] animate-float" />
-          <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-amber-300/25 blur-[160px] animate-float delay-3" />
-
-          <div className="relative z-10 flex flex-1 flex-col gap-6">
-            <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-              Lebob - FLL Team #3236
-            </Badge>
-            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
-              Robots that compete and ideas that inspire.
-              <span className="text-gradient"> Welcome to Lebob.</span>
-            </h1>
-            <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-              We are a team competing in the
-              <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>. <br />
-              We <b>engineer</b> robots to complete missions,
-              <b> research</b> and <b>innovate</b> to design impactful mechanisms,
-              and make it possible through <b>collboration</b>. <br />
-              This is our official website.
-            </p>
-            <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
-              <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
+          <div className="wares-hero-overlay" />
+          <div className="wares-container wares-hero-inner">
+            <div className="wares-hero-copy">
+              <p className="wares-kicker">Lebob - FLL Team #3236</p>
+              <h1>
+                Robots that compete and ideas that inspire.
+                <span> Welcome to Lebob.</span>
+              </h1>
+              <p className="wares-hero-text">
+                We are a team competing in the
+                <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>.
+                We <b>engineer</b> robots to complete missions, <b>research</b> and <b>innovate</b> to
+                design impactful mechanisms, and make it possible through <b>collaboration</b>.
+                This is our official website.
+              </p>
+              <div className="wares-action-row">
                 <a
                   href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                   target="_blank"
                   rel="noreferrer"
+                  className="wares-btn wares-btn-primary"
                 >
                   <GitFork />
                   Explore our GitHub
                 </a>
-              </Button>
-              <Button
-                variant="outline"
-                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
-                asChild
-              >
-                <a href="#team">
+                <a href="#team" className="wares-btn wares-btn-outline">
                   <UserSearch />
                   Meet the team
                 </a>
-              </Button>
-              <Button
-                variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
-                asChild
-              >
-                <Link href="/media">
+                <Link href="/media" className="wares-btn wares-btn-ghost">
                   <ImageIcon />
                   Team media
                 </Link>
-              </Button>
-            </div>
-            <div className="animate-fade-up delay-3">
-              <Button
-                variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
-                asChild
-              >
-                <Link href="/docs">
+                <Link href="/docs" className="wares-btn wares-btn-ghost">
                   <Newspaper />
                   Team docs
                 </Link>
-              </Button>
+              </div>
             </div>
-          </div>
-          <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
-            <Card className="glass text-white card-hover">
-              <CardHeader className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2 text-xl">
-                    <Sparkles className="h-5 w-5 text-emerald-300" />
-                    About Us
-                  </CardTitle>
-                  <Badge className="bg-emerald-400/20 text-emerald-200">
-                    Info
-                  </Badge>
-                </div>
-                <CardDescription className="text-slate-300">
-                  First Lego League international team.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <div className="relative h-16 w-16">
-                    <div className="absolute inset-0 rounded-2xl bg-emerald-400/20 blur-sm" />
-                    <Image
-                      src={addBasePath("/lebob.png")}
-                      alt="Lebob team logo"
-                      width={64}
-                      height={64}
-                      className="relative rounded-2xl border border-white/10 bg-white/5"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-emerald-200">
-                      Team Name
-                    </p>
-                    <p className="text-2xl font-semibold">Lebob</p>
-                  </div>
-                </div>
-                <div className="grid gap-3">
-                  {aboutUsInfo.map((item) => (
-                    <div key={item.text} className="flex items-start gap-3">
-                      <item.icon className="mt-1 h-5 w-5 text-emerald-300" />
-                      <p className="text-sm text-slate-200">{item.text}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
 
-            <Card className="border-white/10 bg-gradient-to-br from-white/10 via-transparent to-emerald-500/10 text-white card-hover">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <BadgeCheck className="h-5 w-5 text-sky-300" />
+            <aside className="wares-about-card">
+              <div className="wares-about-header">
+                <h2>
+                  <Sparkles />
+                  About Us
+                </h2>
+                <span>Info</span>
+              </div>
+              <p className="wares-about-description">First Lego League international team.</p>
+              <div className="wares-team-name">
+                <Image
+                  src={addBasePath("/lebob.png")}
+                  alt="Lebob team logo"
+                  width={64}
+                  height={64}
+                />
+                <div>
+                  <small>Team Name</small>
+                  <strong>Lebob</strong>
+                </div>
+              </div>
+              <ul className="wares-about-list">
+                {aboutUsInfo.map((item) => (
+                  <li key={item.text}>
+                    <item.icon />
+                    <span>{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="wares-core-values">
+                <h3>
+                  <BadgeCheck />
                   Core Values in action
-                </CardTitle>
-                <CardDescription className="text-slate-300">
-                  Innovation, impact, inclusion, discovery, teamwork, and fun.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </h3>
+                <p>Innovation, impact, inclusion, discovery, teamwork, and fun.</p>
+              </div>
+            </aside>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up warble-transition">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                What we do
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
-                Building robots is only half the story.
-              </h2>
-              <p className="mt-4 text-base text-slate-300">
-                Our season is about turning wild ideas into reliable systems,
-                then sharing how we got there. We design, iterate, and present as
-                a single unit -- every win is a team win.
+        <section className="wares-section wares-reveal">
+          <div className="wares-container wares-values-layout">
+            <div className="wares-section-copy">
+              <p>What we do</p>
+              <h2>Building robots is only half the story.</h2>
+              <p className="wares-copy-body">
+                Our season is about turning wild ideas into reliable systems, then sharing how we
+                got there. We design, iterate, and present as a single unit. Every win is a team
+                win.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="wares-values-grid">
               {values.map((value) => (
-                <Card
-                  key={value.title}
-                  className="border-white/10 bg-white/5 text-white card-hover"
-                >
-                  <CardHeader className="space-y-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-400/20">
-                      <value.icon className="h-5 w-5 text-emerald-300" />
-                    </div>
-                    <CardTitle>{value.title}</CardTitle>
-                    <CardDescription className="text-slate-300">
-                      {value.description}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <article key={value.title} className="wares-panel">
+                  <div className="wares-icon-wrap">
+                    <value.icon />
+                  </div>
+                  <h3>{value.title}</h3>
+                  <p>{value.description}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1 warble-transition">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-glow">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <section className="wares-section wares-reveal">
+          <div className="wares-container wares-flow-panel">
+            <div className="wares-flow-header">
               <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-sky-200">
-                  Our flow
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">
-                  From mission model to match day.
-                </h2>
+                <p>Our flow</p>
+                <h2>From mission model to match day.</h2>
               </div>
-              <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-200">
-                <Users className="h-4 w-4 text-emerald-200" />
+              <div className="wares-pill">
+                <Users />
                 All 8 members contribute at every stage.
               </div>
             </div>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="wares-flow-grid">
               {milestones.map((milestone, index) => (
-                <div
-                  key={milestone.title}
-                  className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 via-transparent to-transparent p-4 card-hover"
-                >
-                  <p className="text-sm font-semibold text-emerald-200">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-2 text-lg font-semibold text-white">
-                    {milestone.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-300">
-                    {milestone.detail}
-                  </p>
-                </div>
+                <article key={milestone.title} className="wares-step-card">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{milestone.title}</h3>
+                  <p>{milestone.detail}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="team" className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1 warble-transition">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                Team Lebob
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white">
-                Eight builders, one mission.
-              </h2>
+        <section id="team" className="wares-section wares-reveal">
+          <div className="wares-container">
+            <div className="wares-section-head">
+              <div>
+                <p>Team Lebob</p>
+                <h2>Eight builders, one mission.</h2>
+              </div>
+              <span className="wares-tag">2026 Season</span>
             </div>
-            <Badge className="w-fit bg-white/10 text-white">2026 Season</Badge>
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((member) => (
-              <Card
-                key={member.name}
-                className="border-white/10 bg-white/5 text-white card-hover"
-              >
-                <CardHeader className="space-y-3">
-                  {member.image ? (
-                    <div className="h-12 w-12 overflow-hidden rounded-full border border-white/15">
-                      <Image
-                        src={addBasePath(member.image)}
-                        alt={`${member.name} profile`}
-                        width={48}
-                        height={48}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-400/15">
-                      <Users className="h-5 w-5 text-sky-300" />
-                    </div>
-                  )}
-                  <CardTitle className="text-lg">{member.name}</CardTitle>
-                </CardHeader>
-              </Card>
-            ))}
+            <div className="wares-team-grid">
+              {team.map((member) => (
+                <article key={member.name} className="wares-member-card">
+                  <div className="wares-member-avatar">
+                    <Image
+                      src={addBasePath(member.image)}
+                      alt={`${member.name} profile`}
+                      width={56}
+                      height={56}
+                    />
+                  </div>
+                  <h3>{member.name}</h3>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 pb-14 pt-0 sm:px-10 animate-fade-up delay-2 warble-transition">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                Mentors
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white">
-                Guidance behind the scenes.
-              </h2>
+        <section className="wares-section wares-reveal">
+          <div className="wares-container">
+            <div className="wares-section-head">
+              <div>
+                <p>Mentors</p>
+                <h2>Guidance behind the scenes.</h2>
+              </div>
+              <span className="wares-tag">Support Team</span>
             </div>
-            <Badge className="w-fit bg-white/10 text-white">Support Team</Badge>
-          </div>
-          <Card className="mt-8 overflow-hidden border-white/10 bg-white/5 text-white card-hover">
-            <div className="w-full bg-gradient-to-br from-slate-900/35 via-black/20 to-emerald-500/10 p-3 sm:p-5">
-              <div className="relative mx-auto aspect-square w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10">
+            <article className="wares-mentor-card">
+              <div className="wares-mentor-image">
                 <Image
                   src={addBasePath(mentors.image)}
                   alt="Kaelie and Jade"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 768px"
-                  className="object-contain"
+                  sizes="(max-width: 1024px) 100vw, 760px"
                 />
               </div>
-            </div>
-            <CardHeader className="space-y-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/15">
-                <HeartHandshake className="h-5 w-5 text-emerald-200" />
+              <div className="wares-mentor-copy">
+                <HeartHandshake />
+                <h3>{mentors.names.join(" & ")}</h3>
               </div>
-              <CardTitle className="text-2xl">{mentors.names.join(" & ")}</CardTitle>
-            </CardHeader>
-          </Card>
-        </section>
-
-        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2 warble-transition">
-          <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white card-hover">
-            <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                  Follow our solution
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold">Our Innovations Design</h2>
-                <p className="mt-2 max-w-xl text-sm text-slate-200">
-                  Explore our 3D models and CAD files for SoftSense. See our design evolution, from early concepts to field-worthy products. Feel free to comment on our project on our forms!
-                </p>
-              </div>
-              <Button
-                size="lg"
-                asChild
-                className="github-cta-button"
-              >
-                <a
-                  href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Image
-                    src={addBasePath("/onshape.svg")}
-                    alt="Onshape"
-                    width={20}
-                    height={20}
-                    className="mr-2 h-5 w-5 onshape-icon"
-                  />
-                  Go to our Onshape
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
-        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2 warble-transition">
-          <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white card-hover">
-            <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                  Follow our build
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold">Our GitHub lab</h2>
-                <p className="mt-2 max-w-xl text-sm text-slate-200">
-                  Code, notes, and project updates live in our repo. Explore
-                  what we are building this season and see how Lebob grows with
-                  each iteration.
-                </p>
-              </div>
-              <Button
-                size="lg"
-                asChild
-                className="github-cta-button"
-              >
-                <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <GitFork className="mr-2 h-5 w-5" />
-                  Visit GitHub
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
-      </main>
-
-      <footer className="border-t border-white/10 bg-black/30 warble-transition">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-10">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-emerald-300" />
-            Lebob FLL Robotics Team
+            </article>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-2">
-              <HeartHandshake className="h-4 w-4 text-emerald-300" />
-              Built with teamwork
-            </span>
-            <span className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-sky-300" />
-              <a
-                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
-                target="_blank"
-                rel="noreferrer"
-                className="footer-link"
-              >
-                GitHub
-              </a>
-            </span>
-            <span className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+        </section>
+
+        <section className="wares-section wares-reveal">
+          <div className="wares-container">
+            <article className="wares-cta-card">
+              <div>
+                <p>Follow our solution</p>
+                <h2>Our Innovations Design</h2>
+                <p>
+                  Explore our 3D models and CAD files for SoftSense. See our design evolution, from
+                  early concepts to field-worthy products.
+                </p>
+              </div>
               <a
                 href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
                 target="_blank"
                 rel="noreferrer"
-                className="footer-link"
+                className="wares-btn wares-btn-solid"
               >
-                Onshape
+                <Image
+                  src={addBasePath("/onshape.svg")}
+                  alt="Onshape"
+                  width={20}
+                  height={20}
+                  className="onshape-icon"
+                />
+                Go to our Onshape
               </a>
+            </article>
+          </div>
+        </section>
+
+        <section className="wares-section wares-reveal">
+          <div className="wares-container">
+            <article className="wares-cta-card">
+              <div>
+                <p>Follow our build</p>
+                <h2>Our GitHub lab</h2>
+                <p>
+                  Code, notes, and project updates live in our repo. Explore what we are building
+                  this season and see how Lebob grows with each iteration.
+                </p>
+              </div>
+              <a
+                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                target="_blank"
+                rel="noreferrer"
+                className="wares-btn wares-btn-solid"
+              >
+                <GitFork />
+                Visit GitHub
+              </a>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer className="wares-footer wares-reveal">
+        <div className="wares-container wares-footer-inner">
+          <div className="wares-footer-branding">
+            <Sparkles />
+            Lebob FLL Robotics Team
+          </div>
+          <div className="wares-footer-links">
+            <span>
+              <HeartHandshake />
+              Built with teamwork
             </span>
+            <a href="https://github.com/prawny-boy/FLL-Lebob-Unearthed" target="_blank" rel="noreferrer">
+              <ArrowUpRight />
+              GitHub
+            </a>
+            <a
+              href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <ArrowUpRight />
+              Onshape
+            </a>
           </div>
         </div>
       </footer>
 
-      <div className="warble-mobile-dock">
-        <Link href="/" className="warble-mobile-dock-button" aria-label="Home">
+      <div className="wares-mobile-dock">
+        <Link href="/" className="wares-mobile-dock-button" aria-label="Home">
           <House />
         </Link>
-        <Link href="/media" className="warble-mobile-dock-button" aria-label="Media">
+        <Link href="/media" className="wares-mobile-dock-button" aria-label="Media">
           <ImageIcon />
         </Link>
-        <Link href="/docs" className="warble-mobile-dock-button" aria-label="Docs">
+        <Link href="/docs" className="wares-mobile-dock-button" aria-label="Docs">
           <Newspaper />
         </Link>
-        <button
-          type="button"
-          className="warble-mobile-dock-button"
-          onClick={handleSearchToggle}
-          aria-label="Search"
-        >
+        <button type="button" className="wares-mobile-dock-button" onClick={toggleSearch} aria-label="Search">
           <Search />
         </button>
       </div>
