@@ -1,44 +1,44 @@
 @import "tailwindcss";
 
 :root {
-  --background: #071824;
-  --foreground: #e5f4ff;
-  --card: #0f2638;
-  --card-foreground: #f5fbff;
-  --muted: #9ab7cb;
-  --accent: #27c7b8;
-  --accent-2: #ffb65b;
+  --background: #1a0f09;
+  --foreground: #ffe7d4;
+  --card: #2a150d;
+  --card-foreground: #fff2e7;
+  --muted: #d2a78e;
+  --accent: #ff5a2a;
+  --accent-2: #ff9c2f;
 
-  --body-grad-1: #114564;
-  --body-grad-2: #22375b;
-  --grid-line: rgba(186, 224, 255, 0.11);
+  --body-grad-1: #5c2316;
+  --body-grad-2: #3a1a12;
+  --grid-line: rgba(255, 202, 170, 0.11);
 
-  --glass-top: #173a52;
-  --glass-bottom: #102d41;
-  --glass-border: #4b7a91;
+  --glass-top: #442016;
+  --glass-bottom: #32170f;
+  --glass-border: #9b5c46;
 
-  --surface-soft: #132f43;
-  --surface-strong: #1a3c53;
-  --surface-border: #3f6980;
-  --surface-border-strong: #4d7d95;
-  --surface-border-emphasis: #679bb2;
+  --surface-soft: #2b1710;
+  --surface-strong: #3a1e14;
+  --surface-border: #804933;
+  --surface-border-strong: #97563d;
+  --surface-border-emphasis: #bc7558;
 
-  --footer-background: #07131d;
-  --footer-border: #345e75;
-  --footer-text: #95b2c7;
+  --footer-background: #140a06;
+  --footer-border: #7a4431;
+  --footer-text: #d0a18a;
 
-  --card-hover-shadow: rgba(1, 10, 17, 0.55);
-  --card-hover-border: rgba(134, 208, 255, 0.48);
+  --card-hover-shadow: rgba(16, 4, 1, 0.58);
+  --card-hover-border: rgba(255, 161, 118, 0.5);
 
-  --selection-bg: rgba(39, 199, 184, 0.4);
-  --selection-fg: #e9fffc;
+  --selection-bg: rgba(255, 90, 42, 0.4);
+  --selection-fg: #fff5ed;
 
-  --github-cta-bg: #3ed9cc;
-  --github-cta-fg: #042126;
-  --github-cta-hover: #62e6da;
+  --github-cta-bg: #ff8b3d;
+  --github-cta-fg: #2f0f00;
+  --github-cta-hover: #ffa451;
 
-  --shadow-glow-1: rgba(39, 199, 184, 0.24);
-  --shadow-glow-2: rgba(255, 182, 91, 0.2);
+  --shadow-glow-1: rgba(255, 90, 42, 0.24);
+  --shadow-glow-2: rgba(255, 156, 47, 0.2);
 }
 
 @theme inline {
@@ -236,7 +236,7 @@ a {
 }
 
 .text-slate-950 {
-  color: #042126 !important;
+  color: #2f0f00 !important;
 }
 
 .text-emerald-100,
@@ -335,7 +335,7 @@ a {
 
 .from-emerald-500\/20 {
   --tw-gradient-from: color-mix(in srgb, var(--accent) 28%, transparent) var(--tw-gradient-from-position) !important;
-  --tw-gradient-to: rgb(39 199 184 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-to: rgb(255 90 42 / 0) var(--tw-gradient-to-position) !important;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
 }
 
@@ -345,7 +345,7 @@ a {
 
 .from-sky-500\/20 {
   --tw-gradient-from: color-mix(in srgb, var(--accent-2) 26%, transparent) var(--tw-gradient-from-position) !important;
-  --tw-gradient-to: rgb(255 182 91 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-to: rgb(255 156 47 / 0) var(--tw-gradient-to-position) !important;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
 }
 
