@@ -68,7 +68,7 @@ function fileIcon(extension: string) {
 
 export function DocumentGrid({ items }: DocumentGridProps) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="doc-grid">
       {items.map((item) => {
         const isWord = isWordDocument(item.extension);
         const src = documentSrc(item.relativePath);
@@ -76,34 +76,34 @@ export function DocumentGrid({ items }: DocumentGridProps) {
         return (
           <article
             key={item.relativePath}
-            className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 card-hover"
+            className="doc-card card-hover"
           >
             <a
               href={src}
               {...(isWord ? { download: item.fileName } : { target: "_blank", rel: "noreferrer" })}
-              className="block text-left"
+              className="doc-link"
               aria-label={`${isWord ? "Download" : "Open"} ${item.label}`}
             >
-              <div className="flex h-36 items-center justify-center bg-gradient-to-br from-sky-500/20 via-white/5 to-emerald-500/10 px-4">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-3 py-1 text-xs text-slate-100">
+              <div className="doc-head">
+                <div className="doc-ext">
                   {fileIcon(item.extension)}
                   {extensionBadge(item.extension)}
                 </div>
               </div>
-              <div className="border-t border-white/10 px-4 py-3">
-                <p className="truncate text-sm font-medium text-white">{item.label}</p>
-                <p className="mt-1 truncate text-xs text-slate-300">{item.fileName}</p>
+              <div className="doc-meta">
+                <p className="doc-title">{item.label}</p>
+                <p className="doc-file">{item.fileName}</p>
               </div>
             </a>
 
-            <div className="border-t border-white/10 px-4 py-3">
-              <div className="flex items-center gap-2">
+            <div className="doc-actions">
+              <div className="doc-action-row">
                 {!isWord ? (
                   <a
                     href={src}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-sm text-white hover:bg-black/60"
+                    className="doc-action"
                   >
                     Open
                     <ExternalLink className="h-4 w-4" />
@@ -112,7 +112,7 @@ export function DocumentGrid({ items }: DocumentGridProps) {
                 <a
                   href={src}
                   download={item.fileName}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-sm text-white hover:bg-black/60"
+                  className="doc-action"
                 >
                   Download
                   <Download className="h-4 w-4" />

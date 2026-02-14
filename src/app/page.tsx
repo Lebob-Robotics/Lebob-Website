@@ -1,5 +1,7 @@
-import Link from "next/link";
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 import { addBasePath } from "next/dist/client/add-base-path";
 import {
   ArrowUpRight,
@@ -8,62 +10,39 @@ import {
   CircuitBoard,
   GitFork,
   Globe,
-  UserSearch,
-  ImageIcon,
   HeartHandshake,
+  House,
+  ImageIcon,
+  Menu,
+  Newspaper,
   Orbit,
+  Search,
   Sparkles,
   Trophy,
+  UserSearch,
   Users,
   Wrench,
   WrenchIcon,
-  Newspaper,
+  X,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ThemeToggle } from "@/components/theme-toggle";
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/media", label: "Media" },
+  { href: "/docs", label: "Docs" },
+  { href: "/sponsor", label: "Sponsors" },
+];
 
 const team = [
-  {
-    name: "Kingsley W",
-    image: "/members/kingsley.png",
-  },
-  {
-    name: "Andre N",
-    image: "/members/andre.jpeg",
-  },
-  {
-    name: "Sean C",
-    image: "/members/sean.jpg",
-  },
-  {
-    name: "Oliver L",
-    image: "/members/oliver.png",
-  },
-  {
-    name: "Subesh S",
-    image: "/members/subesh.png",
-  },
-  {
-    name: "Chris W",
-    image: "/members/chris.png",
-  },
-  {
-    name: "Aaron Z",
-    image: "/members/aaron.png",
-  },
-  {
-    name: "Leven S",
-    image: "/members/leven.png",
-  },
+  { name: "Kingsley W", image: "/members/kingsley.png" },
+  { name: "Andre N", image: "/members/andre.jpeg" },
+  { name: "Sean C", image: "/members/sean.jpg" },
+  { name: "Oliver L", image: "/members/oliver.png" },
+  { name: "Subesh S", image: "/members/subesh.png" },
+  { name: "Chris W", image: "/members/chris.png" },
+  { name: "Aaron Z", image: "/members/aaron.png" },
+  { name: "Leven S", image: "/members/leven.png" },
 ];
 
 const mentors = {
@@ -95,423 +74,514 @@ const values = [
 ];
 
 const milestones = [
-  {
-    title: "Discover",
-    detail: "Study the mission model and imagine our best run.",
-  },
-  {
-    title: "Design",
-    detail: "Prototype attachments, refine the drive base, repeat.",
-  },
-  {
-    title: "Program",
-    detail: "Automate missions and tune for consistency.",
-  },
-  {
-    title: "Present",
-    detail: "Share our innovation story and teamwork journey.",
-  },
+  { title: "Discover", detail: "Study the mission model and imagine our best run." },
+  { title: "Design", detail: "Prototype attachments, refine the drive base, repeat." },
+  { title: "Program", detail: "Automate missions and tune for consistency." },
+  { title: "Present", detail: "Share our innovation story and teamwork journey." },
 ];
 
 const aboutUsInfo = [
-  {
-    text: "Won national and state competitions in First Lego League.",
-    icon: Trophy,
-  },
-  {
-    text: "Built and coded a robot to complete various missions reliably.",
-    icon: WrenchIcon,
-  },
-  {
-    text: "Made the SoftSense manipulator arm for innovations.",
-    icon: Brain,
-  },
-]
+  { text: "Won national and state competitions in First Lego League.", icon: Trophy },
+  { text: "Built and coded a robot to complete various missions reliably.", icon: WrenchIcon },
+  { text: "Made the SoftSense manipulator arm for innovations.", icon: Brain },
+];
 
 export default function Home() {
-  return (
-    <div className="min-h-screen">
-      <main className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-70 bg-grid" />
-        <div className="relative z-20 mx-auto flex w-full max-w-6xl justify-end px-6 pt-6 sm:px-10">
-          <ThemeToggle />
-        </div>
-        <section className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-16 pt-16 sm:px-10 lg:flex-row lg:items-center lg:gap-16">
-          <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-emerald-500/20 blur-[160px] animate-float" />
-          <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-sky-400/20 blur-[160px] animate-float delay-3" />
+  const [isHeroVisible, setIsHeroVisible] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-          <div className="relative z-10 flex flex-1 flex-col gap-6">
-            <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-              Lebob - FLL Team #3236
-            </Badge>
-            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-up delay-1">
-              Robots that compete and ideas that inspire. 
-              <span className="text-gradient"> Welcome to Lebob.</span>
-            </h1>
-            <p className="max-w-2xl text-lg leading-relaxed text-slate-200/90 animate-fade-up delay-2">
-              We are a team competing in the
-              <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>. <br/>
-              We <b>engineer</b> robots to complete missions, 
-              <b> research</b> and <b>innovate</b> to design impactful mechanisms,
-              and make it possible through <b>collboration</b>. <br />
-              This is our official website.
-            </p>
-            <div className="flex flex-wrap gap-3 animate-fade-up delay-3">
-              <Button asChild className="bg-emerald-400 text-slate-950 hover:bg-emerald-300">
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsHeroVisible(true);
+    }, 220);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    const revealNodes = document.querySelectorAll<HTMLElement>(".lb-reveal");
+    if (revealNodes.length === 0) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.16 },
+    );
+
+    revealNodes.forEach((node) => observer.observe(node));
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isSearchOpen || isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+      return;
+    }
+
+    document.body.style.overflow = "";
+  }, [isSearchOpen, isMobileMenuOpen]);
+
+  useEffect(() => {
+    const syncDockPadding = () => {
+      const dock = document.querySelector<HTMLElement>(".lb-mobile-dock");
+
+      if (window.innerWidth <= 782 && dock) {
+        document.body.style.paddingBottom = `${dock.offsetHeight}px`;
+        return;
+      }
+
+      document.body.style.paddingBottom = "";
+    };
+
+    syncDockPadding();
+    window.addEventListener("resize", syncDockPadding);
+
+    return () => {
+      window.removeEventListener("resize", syncDockPadding);
+      document.body.style.paddingBottom = "";
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  const closeOverlays = () => {
+    setIsSearchOpen(false);
+    setIsMobileMenuOpen(false);
+  };
+
+  const toggleSearch = () => {
+    setIsSearchOpen((state) => !state);
+    setIsMobileMenuOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((state) => !state);
+    setIsSearchOpen(false);
+  };
+
+  return (
+    <div className="lb-page">
+      <header className="lb-header">
+        <div className="lb-container lb-header-inner">
+          <Link href="/" className="lb-brand" onClick={closeOverlays}>
+            <Image
+              src={addBasePath("/lebob.png")}
+              alt="Lebob logo"
+              width={48}
+              height={48}
+              className="lb-brand-image"
+            />
+            <span className="lb-brand-copy">
+              <strong>Lebob</strong>
+              <small>FLL Team #3236</small>
+            </span>
+          </Link>
+
+          <button
+            type="button"
+            className="lb-menu-toggle"
+            onClick={toggleMobileMenu}
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X /> : <Menu />}
+          </button>
+
+          <nav
+            className={`lb-nav ${isMobileMenuOpen ? "is-open" : ""}`}
+            aria-label="Main navigation"
+          >
+            <ul className="lb-nav-list">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="lb-nav-link" onClick={closeOverlays}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="lb-header-actions">
+            <button
+              type="button"
+              className={`lb-icon-button ${isSearchOpen ? "is-active" : ""}`}
+              onClick={toggleSearch}
+              aria-label="Open search overlay"
+            >
+              <Search />
+            </button>
+            <Link href="/media" className="lb-icon-button lb-icon-link" aria-label="Go to media page">
+              <ImageIcon />
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {isMobileMenuOpen ? (
+        <button
+          type="button"
+          className="lb-backdrop"
+          onClick={closeOverlays}
+          aria-label="Close menu backdrop"
+        />
+      ) : null}
+
+      {isSearchOpen ? (
+        <button
+          type="button"
+          className="lb-search-backdrop"
+          onClick={() => setIsSearchOpen(false)}
+          aria-label="Close search backdrop"
+        />
+      ) : null}
+
+      <div className={`lb-search-overlay ${isSearchOpen ? "is-open" : ""}`}>
+        <form className="lb-search-panel" onSubmit={(event) => event.preventDefault()}>
+          <label htmlFor="lb-search-input" className="lb-search-label">
+            Quick access
+          </label>
+          <div className="lb-search-row">
+            <input
+              id="lb-search-input"
+              type="search"
+              className="lb-search-input"
+              placeholder="Search team pages..."
+            />
+            <button type="submit" className="lb-search-submit">
+              <Search />
+              Search
+            </button>
+          </div>
+          <div className="lb-search-links">
+            <Link href="/docs" className="lb-chip" onClick={closeOverlays}>
+              Team docs
+            </Link>
+            <Link href="/media" className="lb-chip" onClick={closeOverlays}>
+              Team media
+            </Link>
+            <a
+              href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+              target="_blank"
+              rel="noreferrer"
+              className="lb-chip"
+              onClick={closeOverlays}
+            >
+              GitHub
+            </a>
+            <a
+              href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+              target="_blank"
+              rel="noreferrer"
+              className="lb-chip"
+              onClick={closeOverlays}
+            >
+              Onshape
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <main className="lb-main">
+        <section className={`lb-hero ${isHeroVisible ? "show" : ""}`}>
+          <Image
+            src={addBasePath("/media/5Z9A0947.JPG")}
+            alt=""
+            fill
+            sizes="100vw"
+            className="lb-hero-background"
+          />
+          <div className="lb-hero-overlay" />
+          <div className="lb-container lb-hero-inner">
+            <div className="lb-hero-copy">
+              <p className="lb-kicker">Lebob - FLL Team #3236</p>
+              <h1>
+                Robots that compete and ideas that inspire.
+                <span> Welcome to Lebob.</span>
+              </h1>
+              <p className="lb-hero-text">
+                We are a team competing in the
+                <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>.
+                We <b>engineer</b> robots to complete missions, <b>research</b> and <b>innovate</b> to
+                design impactful mechanisms, and make it possible through <b>collaboration</b>.
+                This is our official website.
+              </p>
+              <div className="lb-action-row">
                 <a
                   href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
                   target="_blank"
                   rel="noreferrer"
+                  className="lb-btn lb-btn-primary"
                 >
-                  <GitFork/>
+                  <GitFork />
                   Explore our GitHub
                 </a>
-              </Button>
-              <Button
-                variant="outline"
-                className="border-emerald-300/70 bg-emerald-400/10 text-emerald-100 hover:bg-emerald-400/20"
-                asChild
-              >
-                <a href="#team">
-                  <UserSearch/>
+                <a href="#team" className="lb-btn lb-btn-outline">
+                  <UserSearch />
                   Meet the team
                 </a>
-              </Button>
-              <Button
-                variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
-                asChild
-              >
-                <Link href="/media">
-                  <ImageIcon/>
+                <Link href="/media" className="lb-btn lb-btn-ghost">
+                  <ImageIcon />
                   Team media
                 </Link>
-              </Button>
-            </div>
-            <div className="animate-fade-up delay-3">
-              <Button
-                variant="outline"
-                className="border-white/30 bg-transparent text-white hover:bg-white/10"
-                asChild
-              >
-                <Link href="/docs">
-                  <Newspaper/>
+                <Link href="/docs" className="lb-btn lb-btn-ghost">
+                  <Newspaper />
                   Team docs
                 </Link>
-              </Button>
+              </div>
             </div>
-          </div>
-          <div className="relative z-10 flex w-full max-w-md flex-col gap-6 animate-fade-up delay-2">
-            <Card className="glass text-white card-hover">
-              <CardHeader className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2 text-xl">
-                    <Sparkles className="h-5 w-5 text-emerald-300" />
-                    About Us
-                  </CardTitle>
-                  <Badge className="bg-emerald-400/20 text-emerald-200">
-                    Info
-                  </Badge>
-                </div>
-                <CardDescription className="text-slate-300">
-                  First Lego League international team.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <div className="relative h-16 w-16">
-                    <div className="absolute inset-0 rounded-2xl bg-emerald-400/20 blur-sm" />
-                    <Image
-                      src={addBasePath("/lebob.png")}
-                      alt="Lebob team logo"
-                      width={64}
-                      height={64}
-                      className="relative rounded-2xl border border-white/10 bg-white/5"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-emerald-200">
-                      Team Name
-                    </p>
-                    <p className="text-2xl font-semibold">Lebob</p>
-                  </div>
-                </div>
-                <div className="grid gap-3">
-                  {aboutUsInfo.map((item) => (
-                    <div key={item.text} className="flex items-start gap-3">
-                      <item.icon className="mt-1 h-5 w-5 text-emerald-300" />
-                      <p className="text-sm text-slate-200">{item.text}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
 
-            <Card className="border-white/10 bg-gradient-to-br from-white/10 via-transparent to-emerald-500/10 text-white card-hover">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <BadgeCheck className="h-5 w-5 text-sky-300" />
+            <aside className="lb-about-card">
+              <div className="lb-about-header">
+                <h2>
+                  <Sparkles />
+                  About Us
+                </h2>
+                <span>Info</span>
+              </div>
+              <p className="lb-about-description">First Lego League international team.</p>
+              <div className="lb-team-name">
+                <Image
+                  src={addBasePath("/lebob.png")}
+                  alt="Lebob team logo"
+                  width={64}
+                  height={64}
+                />
+                <div>
+                  <small>Team Name</small>
+                  <strong>Lebob</strong>
+                </div>
+              </div>
+              <ul className="lb-about-list">
+                {aboutUsInfo.map((item) => (
+                  <li key={item.text}>
+                    <item.icon />
+                    <span>{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="lb-core-values">
+                <h3>
+                  <BadgeCheck />
                   Core Values in action
-                </CardTitle>
-                <CardDescription className="text-slate-300">
-                  Innovation, impact, inclusion, discovery, teamwork, and fun.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </h3>
+                <p>Innovation, impact, inclusion, discovery, teamwork, and fun.</p>
+              </div>
+            </aside>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                What we do
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
-                Building robots is only half the story.
-              </h2>
-              <p className="mt-4 text-base text-slate-300">
-                Our season is about turning wild ideas into reliable systems,
-                then sharing how we got there. We design, iterate, and present as
-                a single unit -- every win is a team win.
+        <section className="lb-section lb-reveal">
+          <div className="lb-container lb-values-layout">
+            <div className="lb-section-copy">
+              <p>What we do</p>
+              <h2>Building robots is only half the story.</h2>
+              <p className="lb-copy-body">
+                Our season is about turning wild ideas into reliable systems, then sharing how we
+                got there. We design, iterate, and present as a single unit. Every win is a team
+                win.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="lb-values-grid">
               {values.map((value) => (
-                <Card
-                  key={value.title}
-                  className="border-white/10 bg-white/5 text-white card-hover"
-                >
-                  <CardHeader className="space-y-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-400/20">
-                      <value.icon className="h-5 w-5 text-emerald-300" />
-                    </div>
-                    <CardTitle>{value.title}</CardTitle>
-                    <CardDescription className="text-slate-300">
-                      {value.description}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <article key={value.title} className="lb-panel">
+                  <div className="lb-icon-wrap">
+                    <value.icon />
+                  </div>
+                  <h3>{value.title}</h3>
+                  <p>{value.description}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-glow">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <section className="lb-section lb-reveal">
+          <div className="lb-container lb-flow-panel">
+            <div className="lb-flow-header">
               <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-sky-200">
-                  Our flow
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">
-                  From mission model to match day.
-                </h2>
+                <p>Our flow</p>
+                <h2>From mission model to match day.</h2>
               </div>
-              <div className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-200">
-                <Users className="h-4 w-4 text-emerald-200" />
+              <div className="lb-pill">
+                <Users />
                 All 8 members contribute at every stage.
               </div>
             </div>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="lb-flow-grid">
               {milestones.map((milestone, index) => (
-                <div
-                  key={milestone.title}
-                  className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 via-transparent to-transparent p-4 card-hover"
-                >
-                  <p className="text-sm font-semibold text-emerald-200">
-                    {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-2 text-lg font-semibold text-white">
-                    {milestone.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-300">
-                    {milestone.detail}
-                  </p>
-                </div>
+                <article key={milestone.title} className="lb-step-card">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{milestone.title}</h3>
+                  <p>{milestone.detail}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="team" className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 animate-fade-up delay-1">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                Team Lebob
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white">
-                Eight builders, one mission.
-              </h2>
+        <section id="team" className="lb-section lb-reveal">
+          <div className="lb-container">
+            <div className="lb-section-head">
+              <div>
+                <p>Team Lebob</p>
+                <h2>Eight builders, one mission.</h2>
+              </div>
+              <span className="lb-tag">2026 Season</span>
             </div>
-            <Badge className="w-fit bg-white/10 text-white">2026 Season</Badge>
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((member) => (
-              <Card
-                key={member.name}
-                className="border-white/10 bg-white/5 text-white card-hover"
-              >
-                <CardHeader className="space-y-3">
-                  {member.image ? (
-                    <div className="h-12 w-12 overflow-hidden rounded-full border border-white/15">
-                      <Image
-                        src={addBasePath(member.image)}
-                        alt={`${member.name} profile`}
-                        width={48}
-                        height={48}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-400/15">
-                      <Users className="h-5 w-5 text-sky-300" />
-                    </div>
-                  )}
-                  <CardTitle className="text-lg">{member.name}</CardTitle>
-                </CardHeader>
-              </Card>
-            ))}
+            <div className="lb-team-grid">
+              {team.map((member) => (
+                <article key={member.name} className="lb-member-card">
+                  <div className="lb-member-avatar">
+                    <Image
+                      src={addBasePath(member.image)}
+                      alt={`${member.name} profile`}
+                      width={56}
+                      height={56}
+                    />
+                  </div>
+                  <h3>{member.name}</h3>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-6 pb-14 pt-0 sm:px-10 animate-fade-up delay-2">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                Mentors
-              </p>
-              <h2 className="mt-3 text-3xl font-semibold text-white">
-                Guidance behind the scenes.
-              </h2>
+        <section className="lb-section lb-reveal">
+          <div className="lb-container">
+            <div className="lb-section-head">
+              <div>
+                <p>Mentors</p>
+                <h2>Guidance behind the scenes.</h2>
+              </div>
+              <span className="lb-tag">Support Team</span>
             </div>
-            <Badge className="w-fit bg-white/10 text-white">Support Team</Badge>
-          </div>
-          <Card className="mt-8 overflow-hidden border-white/10 bg-white/5 text-white card-hover">
-            <div className="w-full bg-gradient-to-br from-slate-900/35 via-black/20 to-emerald-500/10 p-3 sm:p-5">
-              <div className="relative mx-auto aspect-square w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10">
+            <article className="lb-mentor-card">
+              <div className="lb-mentor-image">
                 <Image
                   src={addBasePath(mentors.image)}
                   alt="Kaelie and Jade"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 768px"
-                  className="object-contain"
+                  sizes="(max-width: 1024px) 100vw, 760px"
                 />
               </div>
-            </div>
-            <CardHeader className="space-y-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/15">
-                <HeartHandshake className="h-5 w-5 text-emerald-200" />
+              <div className="lb-mentor-copy">
+                <HeartHandshake />
+                <h3>{mentors.names.join(" & ")}</h3>
               </div>
-              <CardTitle className="text-2xl">{mentors.names.join(" & ")}</CardTitle>
-            </CardHeader>
-          </Card>
-        </section>
-
-        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
-          <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white card-hover">
-            <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                  Follow our solution
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold">Our Innovations Design</h2>
-                <p className="mt-2 max-w-xl text-sm text-slate-200">
-                  Explore our 3D models and CAD files for SoftSense. See our design evolution, from early concepts to field-worthy products. Feel free to comment on our project on our forms!
-                </p>
-              </div>
-              <Button
-                size="lg"
-                asChild
-                className="github-cta-button"
-              >
-                <a
-                  href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <Image
-                    src={addBasePath("/onshape.svg")}
-                    alt="Onshape"
-                    width={20}
-                    height={20}
-                    className="mr-2 h-5 w-5 onshape-icon"
-                  />
-                  Go to our Onshape
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
-        <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-6 sm:px-10 animate-fade-up delay-2">
-          <Card className="border-white/10 bg-gradient-to-r from-emerald-500/20 via-sky-500/10 to-transparent text-white card-hover">
-            <CardContent className="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">
-                  Follow our build
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold">Our GitHub lab</h2>
-                <p className="mt-2 max-w-xl text-sm text-slate-200">
-                  Code, notes, and project updates live in our repo. Explore
-                  what we are building this season and see how Lebob grows with
-                  each iteration.
-                </p>
-              </div>
-              <Button
-                size="lg"
-                asChild
-                className="github-cta-button"
-              >
-                <a
-                  href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <GitFork className="mr-2 h-5 w-5" />
-                  Visit GitHub
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
-      </main>
-
-      <footer className="border-t border-white/10 bg-black/30">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-10">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-emerald-300" />
-            Lebob FLL Robotics Team
+            </article>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-2">
-              <HeartHandshake className="h-4 w-4 text-emerald-300" />
-              Built with teamwork
-            </span>
-            <span className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-sky-300" />
-              <a
-                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
-                target="_blank"
-                rel="noreferrer"
-                className="footer-link"
-              >
-                GitHub
-              </a>
-            </span>
-            <span className="flex items-center gap-2">
-              <ArrowUpRight className="h-4 w-4 text-sky-300" />
+        </section>
+
+        <section className="lb-section lb-reveal">
+          <div className="lb-container">
+            <article className="lb-cta-card">
+              <div>
+                <p>Follow our solution</p>
+                <h2>Our Innovations Design</h2>
+                <p>
+                  Explore our 3D models and CAD files for SoftSense. See our design evolution, from
+                  early concepts to field-worthy products.
+                </p>
+              </div>
               <a
                 href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
                 target="_blank"
                 rel="noreferrer"
-                className="footer-link"
+                className="lb-btn lb-btn-solid"
               >
-                Onshape
+                <Image
+                  src={addBasePath("/onshape.svg")}
+                  alt="Onshape"
+                  width={20}
+                  height={20}
+                  className="onshape-icon"
+                />
+                Go to our Onshape
               </a>
+            </article>
+          </div>
+        </section>
+
+        <section className="lb-section lb-reveal">
+          <div className="lb-container">
+            <article className="lb-cta-card">
+              <div>
+                <p>Follow our build</p>
+                <h2>Our GitHub</h2>
+                <p>
+                  Code, notes, and project updates live in our repo. Explore what we are building
+                  this season and see how Lebob grows with each iteration.
+                </p>
+              </div>
+              <a
+                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+                target="_blank"
+                rel="noreferrer"
+                className="lb-btn lb-btn-solid"
+              >
+                <GitFork />
+                Visit GitHub
+              </a>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer className="lb-footer lb-reveal">
+        <div className="lb-container lb-footer-inner">
+          <div className="lb-footer-branding">
+            <Sparkles />
+            Lebob FLL Robotics Team
+          </div>
+          <div className="lb-footer-links">
+            <span>
+              <HeartHandshake />
+              Built with teamwork
             </span>
+            <a href="https://github.com/prawny-boy/FLL-Lebob-Unearthed" target="_blank" rel="noreferrer">
+              <ArrowUpRight />
+              GitHub
+            </a>
+            <a
+              href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <ArrowUpRight />
+              Onshape
+            </a>
           </div>
         </div>
       </footer>
+
+      <div className="lb-mobile-dock">
+        <Link href="/" className="lb-mobile-dock-button" aria-label="Home">
+          <House />
+        </Link>
+        <Link href="/media" className="lb-mobile-dock-button" aria-label="Media">
+          <ImageIcon />
+        </Link>
+        <Link href="/docs" className="lb-mobile-dock-button" aria-label="Docs">
+          <Newspaper />
+        </Link>
+        <button type="button" className="lb-mobile-dock-button" onClick={toggleSearch} aria-label="Search">
+          <Search />
+        </button>
+      </div>
     </div>
   );
 }

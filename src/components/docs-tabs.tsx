@@ -19,7 +19,7 @@ export function DocsTabs({ tabs }: DocsTabsProps) {
   const pathname = usePathname();
 
   return (
-    <div className="mt-8 flex flex-wrap gap-3 animate-fade-up delay-2">
+    <div className="docs-tabs animate-fade-up delay-2">
       {tabs.map((tab) => {
         const isActive = pathname === tab.href;
 
@@ -28,16 +28,14 @@ export function DocsTabs({ tabs }: DocsTabsProps) {
             key={tab.href}
             href={tab.href}
             className={cn(
-              "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors",
-              isActive
-                ? "border-emerald-300/80 bg-emerald-300/20 text-emerald-100"
-                : "border-white/20 bg-black/30 text-slate-200 hover:bg-black/50",
+              "docs-tab",
+              isActive ? "is-active" : "",
             )}
             aria-current={isActive ? "page" : undefined}
           >
             {tab.label}
             {typeof tab.count === "number" ? (
-              <span className="rounded-full border border-white/20 px-2 py-0.5 text-xs">
+              <span className="docs-tab-count">
                 {tab.count}
               </span>
             ) : null}

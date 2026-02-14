@@ -1,26 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, FileImage, Film, X } from "lucide-react";
-import { addBasePath } from "next/dist/client/add-base-path";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import Image from "next/image";
+import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
 
-export type MediaItem = {
-  fileName: string;
+import { cn } from "@/lib/utils";
+
+export type WallPhoto = Photo & {
   label: string;
-  type: "image" | "video";
 };
 
 type MediaGridProps = {
-  items: MediaItem[];
+  photos: WallPhoto[];
 };
 
-function mediaSrc(fileName: string): string {
-  return addBasePath(`/media/${encodeURIComponent(fileName)}`);
-}
-
-export function MediaGrid({ items }: MediaGridProps) {
+export function MediaGrid({ photos }: MediaGridProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const activeItem = activeIndex === null ? null : items[activeIndex];
+  const activePhoto = activeIndex === null ? null : photos[activeIndex];
+  const hasNavigation = photos.length > 1;
 
   useEffect(() => {
     if (activeIndex === null) {
@@ -31,13 +29,9 @@ export function MediaGrid({ items }: MediaGridProps) {
       if (event.key === "Escape") {
         setActiveIndex(null);
       } else if (event.key === "ArrowRight") {
-        setActiveIndex((index) =>
-          index === null ? index : (index + 1) % items.length,
-        );
+        setActiveIndex((index) => (index === null ? index : (index + 1) % photos.length));
       } else if (event.key === "ArrowLeft") {
-        setActiveIndex((index) =>
-          index === null ? index : (index - 1 + items.length) % items.length,
-        );
+        setActiveIndex((index) => (index === null ? index : (index - 1 + photos.length) % photos.length));
       }
     };
 
@@ -49,133 +43,146 @@ export function MediaGrid({ items }: MediaGridProps) {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [activeIndex, items.length]);
-
-  const showNavigation = items.length > 1;
+  }, [activeIndex, photos.length]);
 
   return (
     <>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, index) => (
-          <article
-            key={item.fileName}
-            className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 card-hover"
-          >
-            <button
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className="block w-full text-left"
-              aria-label={`Open ${item.label} fullscreen`}
-            >
-              <div className="relative aspect-[4/3] bg-black/30">
-                {item.type === "image" ? (
-                  <img
-                    src={mediaSrc(item.fileName)}
-                    alt={item.label}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <>
-                    <video
-                      src={mediaSrc(item.fileName)}
-                      className="h-full w-full object-cover"
-                      muted
-                      playsInline
-                      preload="metadata"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-black/30" />
-                  </>
-                )}
+      <section className="media-shell">
+        <MasonryPhotoAlbum
+          photos={photos}
+          defaultContainerWidth={1200}
+          columns={(containerWidth) => {
+            if (containerWidth < 640) {
+              return 1;
+            }
+            if (containerWidth < 1024) {
+              return 2;
+            }
+            if (containerWidth < 1400) {
+              return 3;
+            }
+            return 4;
+          }}
+          spacing={(containerWidth) => (containerWidth < 640 ? 10 : 14)}
+          onClick={({ index }) => setActiveIndex(index)}
+          componentsProps={{
+            button: {
+              className: "media-tile card-hover",
+            },
+            image: {
+              className: "media-tile-image",
+            },
+          }}
+          render={{
+            extras: (_, { photo }) => (
+              <div className="media-cap">
+                <p>{(photo as WallPhoto).label}</p>
               </div>
-              <div className="flex items-center justify-between border-t border-white/10 px-4 py-3">
-                <p className="truncate text-sm font-medium text-white">{item.label}</p>
-                <span className="ml-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/5 px-2 py-0.5 text-xs text-slate-200">
-                  {item.type === "image" ? (
-                    <FileImage className="h-3.5 w-3.5" />
-                  ) : (
-                    <Film className="h-3.5 w-3.5" />
-                  )}
-                  {item.type === "image" ? "Photo" : "Video"}
-                </span>
-              </div>
-            </button>
-          </article>
-        ))}
-      </div>
+            ),
+          }}
+        />
+      </section>
 
-      {activeItem ? (
+      {activePhoto ? (
         <div
-          className="fixed inset-0 z-50 bg-black"
+          className="media-lightbox"
           role="dialog"
           aria-modal="true"
-          aria-label={activeItem.label}
+          aria-label={activePhoto.label}
           onClick={() => setActiveIndex(null)}
         >
-          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-            <div className="h-[100dvh] w-screen" onClick={(event) => event.stopPropagation()}>
-              {activeItem.type === "image" ? (
-                <img
-                  src={mediaSrc(activeItem.fileName)}
-                  alt={activeItem.label}
-                  className="h-full w-full object-contain"
-                />
-              ) : (
-                <video
-                  src={mediaSrc(activeItem.fileName)}
-                  className="h-full w-full object-contain"
-                  controls
-                  autoPlay
-                />
-              )}
+          <div className="media-lightbox-bar">
+            <p className="media-lightbox-title">
+              {activeIndex! + 1} / {photos.length} · {activePhoto.label}
+            </p>
+            <button
+              type="button"
+              onClick={() => setActiveIndex(null)}
+              className="media-close"
+              aria-label="Close fullscreen media"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="media-stage">
+            <div className="media-frame" onClick={(event) => event.stopPropagation()}>
+              <Image
+                src={activePhoto.src}
+                alt={activePhoto.alt ?? activePhoto.label}
+                fill
+                sizes="100vw"
+                className="media-stage-image"
+                priority
+              />
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setActiveIndex(null)}
-            className="absolute right-3 top-3 z-20 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:right-4 sm:top-4"
-            aria-label="Close fullscreen media"
-          >
-            <X className="h-4 w-4" />
-          </button>
-
-          {showNavigation ? (
+          {hasNavigation ? (
             <button
               type="button"
               onClick={(event) => {
                 event.stopPropagation();
                 setActiveIndex((index) =>
-                  index === null ? index : (index - 1 + items.length) % items.length,
+                  index === null ? index : (index - 1 + photos.length) % photos.length,
                 );
               }}
-              className="absolute left-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:left-4"
-              aria-label="Previous media"
+              className="media-nav media-nav-left"
+              aria-label="Previous image"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
           ) : null}
 
-          {showNavigation ? (
+          {hasNavigation ? (
             <button
               type="button"
               onClick={(event) => {
                 event.stopPropagation();
                 setActiveIndex((index) =>
-                  index === null ? index : (index + 1) % items.length,
+                  index === null ? index : (index + 1) % photos.length,
                 );
               }}
-              className="absolute right-3 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/25 bg-black/60 p-2 text-white hover:bg-black/80 sm:right-4"
-              aria-label="Next media"
+              className="media-nav media-nav-right"
+              aria-label="Next image"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
           ) : null}
 
-          <div className="pointer-events-none absolute inset-x-0 bottom-3 z-20 flex justify-center px-3 sm:bottom-4">
-            <p className="max-w-[92vw] truncate rounded-full border border-white/20 bg-black/60 px-3 py-1 text-center text-sm text-slate-100">
-              {activeItem.label}
+          <div className="media-foot">
+            <p className="media-tip">
+              Tip: use Left/Right arrow keys to move through the wall
             </p>
+            <div className="media-thumbs">
+              {photos.map((photo, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <button
+                    key={photo.src}
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setActiveIndex(index);
+                    }}
+                    className={cn(
+                      "media-thumb",
+                      isActive ? "is-active" : "",
+                    )}
+                    aria-label={`View ${photo.label}`}
+                    aria-current={isActive ? "true" : undefined}
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt ?? photo.label}
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       ) : null}
