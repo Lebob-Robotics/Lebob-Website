@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 
-import { DocsTabs } from "@/components/docs-tabs";
-import { DocumentGrid } from "@/components/document-grid";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { DocsFileList } from "@/components/docs-file-list";
+import { DocsSidebar } from "@/components/docs-sidebar";
 import {
+  DOCS_SECTIONS,
   getAllSectionDocumentItems,
   getDocsTabs,
 } from "@/lib/docs-data";
@@ -24,62 +20,36 @@ export default async function DocsPage() {
   ]);
 
   return (
-    <div className="min-h-screen">
-      <main className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-70 bg-grid" />
-        <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-emerald-500/20 blur-[160px] animate-float" />
-        <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-sky-400/20 blur-[160px] animate-float delay-3" />
+    <div className="docs2-page">
+      <main className="docs2-main">
+        <DocsSidebar current="all" tabs={tabs} />
 
-        <div className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-6 sm:px-10">
-          <Button
-            asChild
-            variant="outline"
-            className="border-white/30 bg-transparent text-white hover:bg-white/10"
-          >
-            <Link href="/">
-              Back to Home
-              <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-          <ThemeToggle />
-        </div>
+        <section className="docs2-content">
+          <header className="docs2-head">
+            <p className="docs2-breadcrumb">Docs / All files</p>
+            <h1>Team Documentation</h1>
+          </header>
 
-        <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-16 sm:px-10">
-          <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-            Team Documentation ({totalCount})
-          </Badge>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl animate-fade-up delay-1">
-            Lebob Docs
-          </h1>
-          <p className="mt-4 max-w-3xl text-base text-slate-200 animate-fade-up delay-2">
-            This is the main docs home. Jump into Robot or Innovation for
-            focused files, galleries, and links.
-          </p>
+          <div className="docs2-metrics">
+            <article className="docs2-metric">
+              <p>Total files</p>
+              <strong>{totalCount}</strong>
+            </article>
+            {DOCS_SECTIONS.map((section) => {
+              const tab = tabs.find((entry) => entry.href === `/docs/${section.slug}`);
+              return (
+                <article key={section.slug} className="docs2-metric">
+                  <p>{section.tabLabel}</p>
+                  <strong>{tab?.count ?? 0}</strong>
+                </article>
+              );
+            })}
+          </div>
 
-          <DocsTabs tabs={tabs} />
-
-          {documentItems.length > 0 ? (
-            <div className="mt-10 animate-fade-up delay-3">
-              <DocumentGrid items={documentItems} />
-            </div>
-          ) : (
-            <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 animate-fade-up delay-3">
-              <p className="text-xl font-semibold text-white">
-                No documents found yet.
-              </p>
-              <p className="mt-2 text-sm text-slate-300">
-                Add files to section folders like{" "}
-                <code className="rounded bg-black/30 px-2 py-1">
-                  public/documents/robot
-                </code>{" "}
-                or{" "}
-                <code className="rounded bg-black/30 px-2 py-1">
-                  public/documents/innovation
-                </code>{" "}
-                and refresh this page.
-              </p>
-            </div>
-          )}
+          <DocsFileList
+            items={documentItems}
+            emptyMessage="No documents found. Add files to public/documents, public/documents/robot, or public/documents/innovation and refresh."
+          />
         </section>
       </main>
     </div>

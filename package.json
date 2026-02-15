@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "images:build": "node scripts/generate-image-variants.mjs",
+    "predev": "pnpm images:build",
+    "prebuild": "pnpm images:build",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -12,10 +15,13 @@
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "image-size": "^2.0.2",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-photo-album": "^3.5.0",
+    "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
