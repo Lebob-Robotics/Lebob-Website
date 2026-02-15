@@ -344,7 +344,7 @@ export default function Home() {
               <p className="lb-kicker">Lebob - FLL Team #3236</p>
               <h1>
                 Robots that compete and ideas that inspire.
-                <span> Welcome to Lebob.</span>
+                <span className="lb-welcome-wordmark"> Welcome to Lebob.</span>
               </h1>
               <p className="lb-hero-text">
                 We are a team competing in the

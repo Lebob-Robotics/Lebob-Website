@@ -1494,6 +1494,11 @@ a {
   color: transparent;
 }
 
+.lb-hero-copy h1 .lb-welcome-wordmark {
+  font-family: var(--font-bungee), var(--font-space-grotesk), system-ui, sans-serif;
+  letter-spacing: 0.01em;
+}
+
 .lb-hero-text {
   margin-top: 1rem;
   max-width: 760px;

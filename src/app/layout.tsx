@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
+import { Bungee, IBM_Plex_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -29,6 +29,13 @@ const inter = Manrope({
   display: "swap",
 });
 
+const bungee = Bungee({
+  variable: "--font-bungee",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Lebob | FLL Robotics Team",
   description:
@@ -43,6 +50,7 @@ const bodyClasses = [
   plexMono.variable,
   poppins.variable,
   inter.variable,
+  bungee.variable,
   "antialiased",
 ].join(" ");
 
