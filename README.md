@@ -26,7 +26,7 @@
 
 ### Branches
 - Before starting your work, make sure to create a new branch by running:
-    `git switch -b <branch-name>`
+    `git checkout -b <branch-name>`
     `git push origin -u <branch-name>`
 - `<branch-name>` should be named in the format of `<your-name>/<branch-scope>`
 - `<branch-scope>` should be a short, fully lowercase description of what your change is doing. *e.g. fixing bugs*
