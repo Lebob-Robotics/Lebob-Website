@@ -43,31 +43,43 @@ const mentors = {
 const values = [
   {
     title: "Build",
-    description: "We turn ideas into mechanisms that can survive competition day.",
+    description: "We first build our robot to our best specifications.",
     icon: Wrench,
   },
   {
     title: "Code",
-    description: "We program with precision so our robot moves like a teammate.",
+    description: "We then program our robot to achieve our goals.",
     icon: CircuitBoard,
   },
   {
-    title: "Explore",
-    description: "We research, iterate, and learn from every prototype.",
+    title: "Iterate",
+    description: "We continue researching and iterating to improve our standard.",
     icon: Orbit,
   },
   {
-    title: "Share",
+    title: "Inspire",
     description: "We show up for the community and inspire new builders.",
     icon: Globe,
   },
 ];
 
 const milestones = [
-  { title: "Discover", detail: "Study the mission model and imagine our best run." },
-  { title: "Design", detail: "Prototype attachments, refine the drive base, repeat." },
-  { title: "Program", detail: "Automate missions and tune for consistency." },
-  { title: "Present", detail: "Share our innovation story and teamwork journey." },
+  {
+    title: "Plan",
+    detail: "Study the game and imagine our best run.",
+  },
+  {
+    title: "Design",
+    detail: "Prototype and iterate on many attachments to achieve our strategy.",
+  },
+  {
+    title: "Program",
+    detail: "Automate missions to enable the robot to carry out runs.",
+  },
+  {
+    title: "Present",
+    detail: "Share our innovation and teamwork journey.",
+  },
 ];
 
 const aboutUsInfo = [
@@ -175,19 +187,19 @@ export default function Home() {
                   className="lb-btn lb-btn-primary"
                 >
                   <GitFork />
-                  Explore our GitHub
+                  Github
                 </a>
                 <a href="#team" className="lb-btn lb-btn-outline">
                   <Users />
-                  Meet the team
+                  Our Team
                 </a>
                 <Link href="/media" className="lb-btn lb-btn-ghost">
                   <ImageIcon />
-                  Team media
+                  Media
                 </Link>
                 <Link href="/docs" className="lb-btn lb-btn-ghost">
                   <Newspaper />
-                  Team docs
+                  Documentation
                 </Link>
               </div>
             </div>
@@ -240,11 +252,10 @@ export default function Home() {
           <div className="lb-container lb-values-layout">
             <div className="lb-section-copy">
               <p>What we do</p>
-              <h2>Building robots is only half the story.</h2>
+              <h2>Building robots is only part of our goal.</h2>
               <p className="lb-copy-body">
-                Our season is about turning wild ideas into reliable systems, then sharing how we
-                got there. We design, iterate, and present as a single unit. Every win is a team
-                win.
+                Our goal is about turning our ideas into real, working 
+                prototypes through teamwork, then sharing how we got there.
               </p>
             </div>
             <div className="lb-values-grid">
@@ -266,12 +277,12 @@ export default function Home() {
             <div className="lb-flow-panel">
               <div className="lb-flow-header">
                 <div>
-                  <p>Our flow</p>
-                  <h2>From mission model to match day.</h2>
+                  <p>Our Process</p>
+                  <h2>Guidelines for our success.</h2>
                 </div>
                 <div className="lb-pill">
                   <Users />
-                  All 8 members contribute at every stage.
+                  4 simple steps
                 </div>
               </div>
               <div className="lb-flow-grid">
@@ -292,7 +303,7 @@ export default function Home() {
             <div className="lb-section-head">
               <div>
                 <p>Team Lebob</p>
-                <h2>Eight builders, one mission.</h2>
+                <h2>Our team members.</h2>
               </div>
               <span className="lb-tag">2026 Season</span>
             </div>
@@ -337,7 +348,7 @@ export default function Home() {
                   src={mentorImage.src}
                   srcSet={mentorImage.srcSet}
                   sizes="(max-width: 1024px) 100vw, 760px"
-                  alt="Kaelie and Jade"
+                  alt="Kaelie O and Jade T"
                   loading="lazy"
                   decoding="async"
                 />
@@ -354,11 +365,10 @@ export default function Home() {
           <div className="lb-container">
             <article className="lb-cta-card">
               <div>
-                <p>Follow our solution</p>
+                <p>Innovations</p>
                 <h2>Our Innovations Design</h2>
                 <p>
-                  Explore our 3D models and CAD files for SoftSense. See our design evolution, from
-                  early concepts to field-worthy products.
+                  Our CAD files and designs for SoftSense in Onshape.
                 </p>
               </div>
               <a
@@ -376,7 +386,7 @@ export default function Home() {
                   loading="lazy"
                   decoding="async"
                 />
-                Go to our Onshape
+                Onshape
               </a>
             </article>
           </div>
@@ -386,11 +396,10 @@ export default function Home() {
           <div className="lb-container">
             <article className="lb-cta-card">
               <div>
-                <p>Follow our build</p>
+                <p>Programming</p>
                 <h2>Our GitHub</h2>
                 <p>
-                  Code, notes, and project updates live in our repo. Explore what we are building
-                  this season and see how Lebob grows with each iteration.
+                  Our github repository for robot and innovations code.
                 </p>
               </div>
               <a
@@ -400,7 +409,7 @@ export default function Home() {
                 className="lb-btn lb-btn-solid"
               >
                 <GitFork />
-                Visit GitHub
+                GitHub
               </a>
             </article>
           </div>
