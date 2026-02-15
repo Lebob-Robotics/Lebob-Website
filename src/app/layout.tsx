@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
-import Script from "next/script";
+import { Bungee, IBM_Plex_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -16,6 +15,27 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+const poppins = Sora({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const inter = Manrope({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const bungee = Bungee({
+  variable: "--font-bungee",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Lebob | FLL Robotics Team",
   description:
@@ -25,23 +45,14 @@ export const metadata: Metadata = {
   },
 };
 
-const themeInitScript = `
-(() => {
-  try {
-    const savedTheme = window.localStorage.getItem("lebob-theme");
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    const theme = savedTheme === "dark" || savedTheme === "light"
-      ? savedTheme
-      : systemTheme;
-
-    document.documentElement.setAttribute("data-theme", theme);
-  } catch {
-    document.documentElement.setAttribute("data-theme", "dark");
-  }
-})();
-`;
+const bodyClasses = [
+  spaceGrotesk.variable,
+  plexMono.variable,
+  poppins.variable,
+  inter.variable,
+  bungee.variable,
+  "antialiased",
+].join(" ");
 
 export default function RootLayout({
   children,
@@ -50,10 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} ${plexMono.variable} antialiased`}>
-        <Script id="theme-init" strategy="beforeInteractive">
-          {themeInitScript}
-        </Script>
+      <body className={bodyClasses}>
         {children}
       </body>
     </html>

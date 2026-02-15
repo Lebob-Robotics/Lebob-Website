@@ -3,15 +3,16 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { imageSizeFromFile } from "image-size/fromFile";
 
-import { MediaGrid, type MediaItem } from "@/components/media-grid";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { MediaGrid, type WallPhoto } from "@/components/media-grid";
+import { getVariantDimensions, getVariantList, pickVariantForWidth } from "@/lib/image-variants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Team Media | Lebob",
-  description: "Team photos and videos for Lebob.",
+  description: "Lebob media wall.",
 };
 
 const IMAGE_EXTENSIONS = new Set([
@@ -31,42 +32,92 @@ function fileLabel(fileName: string): string {
     .trim();
 }
 
-async function getMediaItems(): Promise<MediaItem[]> {
+function normalizeDimensions(
+  width: number,
+  height: number,
+  orientation?: number,
+): { width: number; height: number } {
+  if (orientation && [5, 6, 7, 8].includes(orientation)) {
+    return { width: height, height: width };
+  }
+
+  return { width, height };
+}
+
+async function getMediaWallData(): Promise<{ photos: WallPhoto[]; videoCount: number }> {
   const mediaDir = path.join(process.cwd(), "public", "media");
 
   try {
     const entries = await readdir(mediaDir, { withFileTypes: true });
 
-    const items: MediaItem[] = [];
-
-    for (const entry of entries) {
-      if (!entry.isFile()) {
-        continue;
-      }
-
-      const ext = path.extname(entry.name).toLowerCase();
-
-      if (IMAGE_EXTENSIONS.has(ext)) {
-        items.push({
-          fileName: entry.name,
-          label: fileLabel(entry.name),
-          type: "image",
-        });
-      } else if (VIDEO_EXTENSIONS.has(ext)) {
-        items.push({
-          fileName: entry.name,
-          label: fileLabel(entry.name),
-          type: "video",
-        });
-      }
-    }
-
-    return items.sort((a, b) =>
-        a.fileName.localeCompare(b.fileName, undefined, {
-          numeric: true,
-          sensitivity: "base",
-        }),
+    const imageEntries = entries.filter(
+      (entry) => entry.isFile() && IMAGE_EXTENSIONS.has(path.extname(entry.name).toLowerCase()),
     );
+    const videoCount = entries.filter(
+      (entry) => entry.isFile() && VIDEO_EXTENSIONS.has(path.extname(entry.name).toLowerCase()),
+    ).length;
+
+    const photoItems = await Promise.all(
+      imageEntries.map(async (entry) => {
+        const absolutePath = path.join(mediaDir, entry.name);
+        const label = fileLabel(entry.name);
+        const sourcePath = `/media/${encodeURIComponent(entry.name)}`;
+        const variants = getVariantList(sourcePath);
+        const previewVariant = pickVariantForWidth(sourcePath, 1200);
+        const lightboxVariant = pickVariantForWidth(sourcePath, 2048);
+        const thumbVariant = pickVariantForWidth(sourcePath, 240);
+        const variantDimensions = getVariantDimensions(sourcePath);
+
+        let width = variantDimensions?.width ?? 1600;
+        let height = variantDimensions?.height ?? 1000;
+
+        if (!variantDimensions) {
+          try {
+            const dimensions = await imageSizeFromFile(absolutePath);
+            if (dimensions.width && dimensions.height) {
+              const normalized = normalizeDimensions(
+                dimensions.width,
+                dimensions.height,
+                dimensions.orientation,
+              );
+              width = normalized.width;
+              height = normalized.height;
+            }
+          } catch {
+            // Fallback dimensions keep the wall rendering even if metadata lookup fails.
+          }
+        }
+
+        const layoutWidth = previewVariant?.width ?? width;
+        const layoutHeight = previewVariant?.height ?? height;
+
+        return {
+          sortKey: sourcePath,
+          photo: {
+            src: previewVariant?.src ?? sourcePath,
+            srcSet: variants.length > 0 ? variants : undefined,
+            width: layoutWidth,
+            height: layoutHeight,
+            alt: label,
+            title: label,
+            label,
+            fullSrc: lightboxVariant?.src ?? sourcePath,
+            thumbSrc: thumbVariant?.src ?? sourcePath,
+          } satisfies WallPhoto,
+        };
+      }),
+    );
+
+    photoItems.sort((a, b) =>
+      a.sortKey.localeCompare(b.sortKey, undefined, {
+        numeric: true,
+        sensitivity: "base",
+      }),
+    );
+
+    const photos = photoItems.map((item) => item.photo);
+
+    return { photos, videoCount };
   } catch (error) {
     if (
       typeof error === "object" &&
@@ -74,7 +125,7 @@ async function getMediaItems(): Promise<MediaItem[]> {
       "code" in error &&
       error.code === "ENOENT"
     ) {
-      return [];
+      return { photos: [], videoCount: 0 };
     }
 
     throw error;
@@ -82,52 +133,57 @@ async function getMediaItems(): Promise<MediaItem[]> {
 }
 
 export default async function MediaPage() {
-  const mediaItems = await getMediaItems();
+  const { photos, videoCount } = await getMediaWallData();
 
   return (
-    <div className="min-h-screen">
-      <main className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-70 bg-grid" />
-        <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-emerald-500/20 blur-[160px] animate-float" />
-        <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-sky-400/20 blur-[160px] animate-float delay-3" />
+    <div className="sub-page">
+      <main className="sub-main">
+        <div className="sub-grid bg-grid" />
+        <div className="sub-orb sub-orb-left" />
+        <div className="sub-orb sub-orb-right" />
 
-        <div className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-6 sm:px-10">
+        <div className="sub-top">
           <Button
             asChild
             variant="outline"
-            className="border-white/30 bg-transparent text-white hover:bg-white/10"
+            className="sub-back-btn"
           >
             <Link href="/">
               Back to Home
-              <ArrowUpRight className="ml-2 h-4 w-4" />
+              <ArrowUpRight className="sub-icon" />
             </Link>
           </Button>
-          <ThemeToggle />
         </div>
 
-        <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-16 sm:px-10">
-          <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-            Team Media ({mediaItems.length})
+        <section className="sub-wrap">
+          <Badge className="sub-badge animate-fade-up">
+            Leob Media Wall
           </Badge>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl animate-fade-up delay-1">
-            Lebob Media Hub
+          <h1 className="sub-title animate-fade-up delay-1">
+            Lebob Media Wall
           </h1>
 
-          {mediaItems.length > 0 ? (
-            <div className="mt-10 animate-fade-up delay-3">
-              <MediaGrid items={mediaItems} />
+          <div className="sub-pill-row animate-fade-up delay-2">
+            <span className="sub-pill">
+              {photos.length} photos in the wall
+            </span>
+            {videoCount > 0 ? (
+              <span className="sub-pill">
+                {videoCount} video file(s) detected and excluded
+              </span>
+            ) : null}
+          </div>
+
+          {photos.length > 0 ? (
+            <div className="sub-block animate-fade-up delay-3">
+              <MediaGrid photos={photos} />
             </div>
           ) : (
-            <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 animate-fade-up delay-3">
-              <p className="text-xl font-semibold text-white">
-                No media files found yet.
-              </p>
-              <p className="mt-2 text-sm text-slate-300">
-                Add photos/videos to{" "}
-                <code className="rounded bg-black/30 px-2 py-1">
-                  public/media
-                </code>{" "}
-                and refresh this page.
+            <div className="sub-empty animate-fade-up delay-3">
+              <p className="sub-empty-title">No image files found yet.</p>
+              <p className="sub-empty-copy">
+                Add `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, or `.avif` files to{" "}
+                <code className="sub-code">public/media</code> and refresh.
               </p>
             </div>
           )}
