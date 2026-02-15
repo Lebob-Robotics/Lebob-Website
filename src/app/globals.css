@@ -1614,17 +1614,44 @@ a {
 }
 
 .lb-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-inter), var(--font-poppins), sans-serif;
   font-size: clamp(0.88rem, 1.1vw, 1rem);
   font-weight: 500;
   text-decoration: none;
   color: var(--foreground);
-  transition: letter-spacing 0.45s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease,
+    letter-spacing 0.45s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.lb-nav-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.32rem;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  opacity: 0;
+  transform: scaleX(0.3);
+  transform-origin: left;
+  transition: opacity 0.25s ease, transform 0.28s ease;
 }
 
 .lb-nav-link:hover,
 .lb-nav-link:focus-visible {
   color: var(--accent);
+  transform: translateY(-1px);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 32%, transparent);
+}
+
+.lb-nav-link:hover::before,
+.lb-nav-link:focus-visible::before {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .lb-header-actions {
@@ -1648,22 +1675,61 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .lb-icon-button svg {
   width: clamp(1rem, 1.4vw, 1.25rem);
   height: clamp(1rem, 1.4vw, 1.25rem);
+  transition: transform 0.25s ease;
 }
 
 .lb-icon-button:hover,
 .lb-icon-button:focus-visible {
   border-color: var(--surface-border-emphasis);
   background: var(--surface-strong);
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-2) 28%, transparent),
+    0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.lb-icon-button:hover svg,
+.lb-icon-button:focus-visible svg {
+  transform: scale(1.08);
 }
 
 .lb-icon-link {
   text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-nav-link,
+  .lb-nav-link::before,
+  .lb-icon-button,
+  .lb-icon-button svg {
+    transition: none;
+  }
+
+  .lb-nav-link:hover,
+  .lb-nav-link:focus-visible {
+    transform: none;
+    text-shadow: none;
+  }
+
+  .lb-nav-link:hover::before,
+  .lb-nav-link:focus-visible::before {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+
+  .lb-icon-button:hover,
+  .lb-icon-button:focus-visible,
+  .lb-icon-button:hover svg,
+  .lb-icon-button:focus-visible svg {
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .lb-backdrop {
@@ -2439,6 +2505,16 @@ a {
     background: color-mix(in srgb, var(--surface-soft) 86%, transparent);
     padding: 0.66rem 0.9rem;
     font-size: 1rem;
+  }
+
+  .lb-nav-link::before {
+    display: none;
+  }
+
+  .lb-nav-link:hover,
+  .lb-nav-link:focus-visible {
+    transform: none;
+    text-shadow: none;
   }
 
   .lb-nav-link::after {
