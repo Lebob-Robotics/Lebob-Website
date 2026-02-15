@@ -16,7 +16,6 @@ import {
   Menu,
   Newspaper,
   Orbit,
-  Search,
   Sparkles,
   Trophy,
   UserSearch,
@@ -112,7 +111,6 @@ function buildResponsiveImage(
 
 export default function Home() {
   const [isHeroVisible, setIsHeroVisible] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const logoImage = buildResponsiveImage("/lebob.png", 96, 160);
   const heroImage = buildResponsiveImage("/media/5Z9A0947.JPG", 1600, 2048);
@@ -154,13 +152,13 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (isSearchOpen || isMobileMenuOpen) {
+    if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
       return;
     }
 
     document.body.style.overflow = "";
-  }, [isSearchOpen, isMobileMenuOpen]);
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     const syncDockPadding = () => {
@@ -185,18 +183,11 @@ export default function Home() {
   }, []);
 
   const closeOverlays = () => {
-    setIsSearchOpen(false);
-    setIsMobileMenuOpen(false);
-  };
-
-  const toggleSearch = () => {
-    setIsSearchOpen((state) => !state);
     setIsMobileMenuOpen(false);
   };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((state) => !state);
-    setIsSearchOpen(false);
   };
 
   return (
@@ -247,14 +238,6 @@ export default function Home() {
           </nav>
 
           <div className="lb-header-actions">
-            <button
-              type="button"
-              className={`lb-icon-button ${isSearchOpen ? "is-active" : ""}`}
-              onClick={toggleSearch}
-              aria-label="Open search overlay"
-            >
-              <Search />
-            </button>
             <Link href="/media" className="lb-icon-button lb-icon-link" aria-label="Go to media page">
               <ImageIcon />
             </Link>
@@ -270,61 +253,6 @@ export default function Home() {
           aria-label="Close menu backdrop"
         />
       ) : null}
-
-      {isSearchOpen ? (
-        <button
-          type="button"
-          className="lb-search-backdrop"
-          onClick={() => setIsSearchOpen(false)}
-          aria-label="Close search backdrop"
-        />
-      ) : null}
-
-      <div className={`lb-search-overlay ${isSearchOpen ? "is-open" : ""}`}>
-        <form className="lb-search-panel" onSubmit={(event) => event.preventDefault()}>
-          <label htmlFor="lb-search-input" className="lb-search-label">
-            Quick access
-          </label>
-          <div className="lb-search-row">
-            <input
-              id="lb-search-input"
-              type="search"
-              className="lb-search-input"
-              placeholder="Search team pages..."
-            />
-            <button type="submit" className="lb-search-submit">
-              <Search />
-              Search
-            </button>
-          </div>
-          <div className="lb-search-links">
-            <Link href="/docs" className="lb-chip" onClick={closeOverlays}>
-              Team docs
-            </Link>
-            <Link href="/media" className="lb-chip" onClick={closeOverlays}>
-              Team media
-            </Link>
-            <a
-              href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
-              target="_blank"
-              rel="noreferrer"
-              className="lb-chip"
-              onClick={closeOverlays}
-            >
-              GitHub
-            </a>
-            <a
-              href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
-              target="_blank"
-              rel="noreferrer"
-              className="lb-chip"
-              onClick={closeOverlays}
-            >
-              Onshape
-            </a>
-          </div>
-        </form>
-      </div>
 
       <main className="lb-main">
         <section className={`lb-hero ${isHeroVisible ? "show" : ""}`}>
@@ -628,9 +556,6 @@ export default function Home() {
         <Link href="/docs" className="lb-mobile-dock-button" aria-label="Docs">
           <Newspaper />
         </Link>
-        <button type="button" className="lb-mobile-dock-button" onClick={toggleSearch} aria-label="Search">
-          <Search />
-        </button>
       </div>
     </div>
   );
