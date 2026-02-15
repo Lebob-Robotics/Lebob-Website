@@ -436,7 +436,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="lb-section lb-reveal">
+        <section className="lb-section lb-reveal lb-section-tight-bottom">
           <div className="lb-container">
             <div className="lb-section-head">
               <div>
@@ -464,7 +464,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="lb-section lb-reveal">
+        <section className="lb-section lb-reveal lb-section-tight-y">
           <div className="lb-container">
             <article className="lb-cta-card">
               <div>
@@ -496,7 +496,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="lb-section lb-reveal">
+        <section className="lb-section lb-reveal lb-section-tight-top">
           <div className="lb-container">
             <article className="lb-cta-card">
               <div>

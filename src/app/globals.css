@@ -1276,6 +1276,19 @@ a {
   padding-bottom: clamp(24px, 4vw, 56px);
 }
 
+.lb-section-tight-top {
+  padding-top: clamp(12px, 1.8vw, 24px);
+}
+
+.lb-section-tight-bottom {
+  padding-bottom: clamp(12px, 1.8vw, 24px);
+}
+
+.lb-section-tight-y {
+  padding-top: clamp(12px, 1.8vw, 24px);
+  padding-bottom: clamp(12px, 1.8vw, 24px);
+}
+
 .lb-reveal {
   opacity: 0;
   transform: translateY(26px);
