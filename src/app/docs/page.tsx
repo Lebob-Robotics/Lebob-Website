@@ -64,7 +64,11 @@ export default async function DocsPage() {
             <div className="sub-empty animate-fade-up delay-3">
               <p className="sub-empty-title">No documents found yet.</p>
               <p className="sub-empty-copy">
-                Add files to section folders like{" "}
+                Add files to{" "}
+                <code className="sub-code">
+                  public/documents
+                </code>{" "}
+                for the All view, or to section folders like{" "}
                 <code className="sub-code">
                   public/documents/robot
                 </code>{" "}

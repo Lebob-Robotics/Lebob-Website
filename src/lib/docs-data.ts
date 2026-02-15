@@ -89,6 +89,42 @@ function documentsSectionDir(sectionSlug: DocsSectionSlug): string {
   return path.join(DOCUMENTS_ROOT_DIR, sectionSlug);
 }
 
+async function readDocumentItemsFromDirectory(
+  directoryPath: string,
+  relativePrefix?: string,
+): Promise<DocumentItem[]> {
+  try {
+    const entries = await readdir(directoryPath, { withFileTypes: true });
+    const items: DocumentItem[] = [];
+
+    for (const entry of entries) {
+      if (!entry.isFile() || entry.name.startsWith(".")) {
+        continue;
+      }
+
+      items.push({
+        fileName: entry.name,
+        label: fileLabel(entry.name),
+        extension: fileExtension(entry.name),
+        relativePath: relativePrefix ? `${relativePrefix}/${entry.name}` : entry.name,
+      });
+    }
+
+    return items.sort(sortByFileName);
+  } catch (error) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "ENOENT"
+    ) {
+      return [];
+    }
+
+    throw error;
+  }
+}
+
 function sortByFileName(a: DocumentItem, b: DocumentItem): number {
   return a.fileName.localeCompare(b.fileName, undefined, {
     numeric: true,
@@ -113,38 +149,7 @@ export function isDocsSectionSlug(value: string): value is DocsSectionSlug {
 export async function getSectionDocumentItems(
   sectionSlug: DocsSectionSlug,
 ): Promise<DocumentItem[]> {
-  const sectionDirectory = documentsSectionDir(sectionSlug);
-
-  try {
-    const entries = await readdir(sectionDirectory, { withFileTypes: true });
-    const items: DocumentItem[] = [];
-
-    for (const entry of entries) {
-      if (!entry.isFile() || entry.name.startsWith(".")) {
-        continue;
-      }
-
-      items.push({
-        fileName: entry.name,
-        label: fileLabel(entry.name),
-        extension: fileExtension(entry.name),
-        relativePath: `${sectionSlug}/${entry.name}`,
-      });
-    }
-
-    return items.sort(sortByFileName);
-  } catch (error) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      error.code === "ENOENT"
-    ) {
-      return [];
-    }
-
-    throw error;
-  }
+  return readDocumentItemsFromDirectory(documentsSectionDir(sectionSlug), sectionSlug);
 }
 
 export async function getSectionDocumentCount(
@@ -153,26 +158,35 @@ export async function getSectionDocumentCount(
   return (await getSectionDocumentItems(sectionSlug)).length;
 }
 
-export async function getAllSectionDocumentItems(): Promise<DocumentItem[]> {
-  const sectionItems = await Promise.all(
-    DOCS_SECTIONS.map((section) => getSectionDocumentItems(section.slug)),
-  );
+async function getRootDocumentItems(): Promise<DocumentItem[]> {
+  return readDocumentItemsFromDirectory(DOCUMENTS_ROOT_DIR);
+}
 
-  return sectionItems.flat().sort(sortByFileName);
+export async function getAllSectionDocumentItems(): Promise<DocumentItem[]> {
+  const [rootItems, sectionItems] = await Promise.all([
+    getRootDocumentItems(),
+    Promise.all(DOCS_SECTIONS.map((section) => getSectionDocumentItems(section.slug))),
+  ]);
+
+  return [...rootItems, ...sectionItems.flat()].sort(sortByFileName);
 }
 
 export async function getDocsTabs(): Promise<{
   tabs: DocsTab[];
   totalCount: number;
 }> {
-  const sectionCounts = await Promise.all(
-    DOCS_SECTIONS.map(async (section) => ({
-      section,
-      count: await getSectionDocumentCount(section.slug),
-    })),
-  );
+  const [rootDocumentCount, sectionCounts] = await Promise.all([
+    getRootDocumentItems().then((items) => items.length),
+    Promise.all(
+      DOCS_SECTIONS.map(async (section) => ({
+        section,
+        count: await getSectionDocumentCount(section.slug),
+      })),
+    ),
+  ]);
 
-  const totalCount = sectionCounts.reduce((sum, item) => sum + item.count, 0);
+  const totalCount =
+    rootDocumentCount + sectionCounts.reduce((sum, item) => sum + item.count, 0);
   const tabs: DocsTab[] = [
     {
       href: "/docs",

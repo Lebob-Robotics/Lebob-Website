@@ -376,25 +376,27 @@ export default function Home() {
         </section>
 
         <section className="lb-section lb-reveal">
-          <div className="lb-container lb-flow-panel">
-            <div className="lb-flow-header">
-              <div>
-                <p>Our flow</p>
-                <h2>From mission model to match day.</h2>
+          <div className="lb-container">
+            <div className="lb-flow-panel">
+              <div className="lb-flow-header">
+                <div>
+                  <p>Our flow</p>
+                  <h2>From mission model to match day.</h2>
+                </div>
+                <div className="lb-pill">
+                  <Users />
+                  All 8 members contribute at every stage.
+                </div>
               </div>
-              <div className="lb-pill">
-                <Users />
-                All 8 members contribute at every stage.
+              <div className="lb-flow-grid">
+                {milestones.map((milestone, index) => (
+                  <article key={milestone.title} className="lb-step-card">
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <h3>{milestone.title}</h3>
+                    <p>{milestone.detail}</p>
+                  </article>
+                ))}
               </div>
-            </div>
-            <div className="lb-flow-grid">
-              {milestones.map((milestone, index) => (
-                <article key={milestone.title} className="lb-step-card">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{milestone.title}</h3>
-                  <p>{milestone.detail}</p>
-                </article>
-              ))}
             </div>
           </div>
         </section>
