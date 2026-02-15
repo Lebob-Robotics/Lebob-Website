@@ -5,7 +5,7 @@ import { HeartHandshake } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Sponsors | Lebob",
-  description: "Thank you to the sponsors supporting Team Lebob.",
+  description: "Sponsorship Page",
 };
 
 export default function SponsorPage() {

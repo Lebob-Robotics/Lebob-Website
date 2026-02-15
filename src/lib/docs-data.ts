@@ -16,9 +16,9 @@ export const DOCS_SECTIONS = [
     description:
       "Everything we use to design, build, test, and improve our robot.",
     highlights: [
-      "Build logs and code notes from each major version.",
-      "Practice checklists and run-planning notes for competition day.",
-      "Robot photos, files, and links in one organized place.",
+      "Full documentation of our work.",
+      "Detailed explainations of our code, mechanisms and strategy.",
+      "Robot photos, files, and links in one place.",
     ],
     links: [
       {
@@ -40,10 +40,10 @@ export const DOCS_SECTIONS = [
     tabLabel: "Innovation",
     title: "Innovation Documentation",
     description:
-      "Research notes, presentation files, and impact material for our project.",
+      "Research, design and planning for our innovations project, SoftSense.",
     highlights: [
-      "Research findings and source-backed project notes.",
-      "Pitch drafts, presentation flow, and judging prep material.",
+      "Detailed summary of design, research and planning.",
+      "Full explainations of our innovations project.",
       "Innovation docs, media, and quick references for review.",
     ],
     links: [

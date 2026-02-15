@@ -10,7 +10,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Team Documentation | Lebob",
-  description: "Main docs hub for Robot and Innovation files.",
+  description: "Documentation Page",
 };
 
 export default async function DocsPage() {
