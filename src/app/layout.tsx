@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bungee, IBM_Plex_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { FloatingBar } from "@/components/floating-bar";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -62,6 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark" suppressHydrationWarning>
       <body className={bodyClasses}>
+        <FloatingBar />
         {children}
       </body>
     </html>

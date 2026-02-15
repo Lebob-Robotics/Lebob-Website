@@ -12,7 +12,6 @@ import {
   Globe,
   HeartHandshake,
   ImageIcon,
-  Menu,
   Newspaper,
   Orbit,
   Sparkles,
@@ -20,18 +19,10 @@ import {
   Users,
   Wrench,
   WrenchIcon,
-  X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { getVariantList, pickVariantForWidth } from "@/lib/image-variants";
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/media", label: "Media" },
-  { href: "/docs", label: "Docs" },
-  { href: "/sponsor", label: "Sponsors" },
-];
 
 const team = [
   { name: "Kingsley W", image: "/members/kingsley.png" },
@@ -109,8 +100,6 @@ function buildResponsiveImage(
 
 export default function Home() {
   const [isHeroVisible, setIsHeroVisible] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isHeaderCompact, setIsHeaderCompact] = useState(false);
   const logoImage = buildResponsiveImage("/lebob.png", 96, 160);
   const heroImage = buildResponsiveImage("/media/5Z9A0947.JPG", 1600, 2048);
   const mentorImage = buildResponsiveImage(mentors.image, 1400, 2048);
@@ -150,104 +139,8 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-      return;
-    }
-
-    document.body.style.overflow = "";
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, []);
-
-  useEffect(() => {
-    const updateHeader = () => {
-      setIsHeaderCompact(window.scrollY > 40);
-    };
-
-    updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
-
-    return () => window.removeEventListener("scroll", updateHeader);
-  }, []);
-
-  const closeOverlays = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen((state) => !state);
-  };
-
   return (
     <div className="lb-page">
-      <header className={`lb-header ${isHeaderCompact ? "is-scrolled" : ""}`}>
-        <div className="lb-container lb-header-inner">
-          <Link href="/" className="lb-brand" onClick={closeOverlays}>
-            <img
-              src={logoImage.src}
-              srcSet={logoImage.srcSet}
-              sizes="48px"
-              alt="Lebob logo"
-              width={48}
-              height={48}
-              className="lb-brand-image"
-              loading="eager"
-              decoding="async"
-            />
-            <span className="lb-brand-copy">
-              <strong>Lebob</strong>
-              <small>FLL Team #3236</small>
-            </span>
-          </Link>
-
-          <button
-            type="button"
-            className="lb-menu-toggle"
-            onClick={toggleMobileMenu}
-            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </button>
-
-          <nav
-            className={`lb-nav ${isMobileMenuOpen ? "is-open" : ""}`}
-            aria-label="Main navigation"
-          >
-            <ul className="lb-nav-list">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="lb-nav-link" onClick={closeOverlays}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="lb-header-actions">
-            <Link href="/media" className="lb-icon-button lb-icon-link" aria-label="Go to media page">
-              <ImageIcon />
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {isMobileMenuOpen ? (
-        <button
-          type="button"
-          className="lb-backdrop"
-          onClick={closeOverlays}
-          aria-label="Close menu backdrop"
-        />
-      ) : null}
-
       <main className="lb-main">
         <section className={`lb-hero ${isHeroVisible ? "show" : ""}`}>
           <img

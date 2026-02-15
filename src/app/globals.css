@@ -1648,8 +1648,14 @@ a {
   text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 32%, transparent);
 }
 
+.lb-nav-link.is-active {
+  color: var(--accent);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
 .lb-nav-link:hover::before,
-.lb-nav-link:focus-visible::before {
+.lb-nav-link:focus-visible::before,
+.lb-nav-link.is-active::before {
   opacity: 1;
   transform: scaleX(1);
 }
@@ -1741,6 +1747,10 @@ a {
 .lb-backdrop {
   z-index: 73;
   background: rgba(0, 0, 0, 0.58);
+}
+
+.lb-header-spacer {
+  height: clamp(78px, 8vw, 108px);
 }
 
 .lb-main {
@@ -2517,6 +2527,11 @@ a {
     text-shadow: none;
   }
 
+  .lb-nav-link.is-active {
+    border-color: color-mix(in srgb, var(--accent) 72%, white);
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+
   .lb-nav-link::after {
     content: "Open";
     font-size: 0.67rem;
@@ -2524,6 +2539,11 @@ a {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  }
+
+  .lb-nav-link.is-active::after {
+    content: "Current";
+    color: color-mix(in srgb, var(--accent) 72%, white);
   }
 
   .lb-header-actions {
@@ -2536,6 +2556,10 @@ a {
 
   .lb-backdrop {
     backdrop-filter: blur(2px);
+  }
+
+  .lb-header-spacer {
+    height: 5.7rem;
   }
 
   .lb-hero {
@@ -2606,6 +2630,10 @@ a {
     top: calc(0.65rem + 3.05rem + 0.42rem);
     border-radius: 18px;
     padding: 0.55rem;
+  }
+
+  .lb-header-spacer {
+    height: 5.15rem;
   }
 
   .lb-hero-copy h1 {
