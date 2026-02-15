@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 
 import type { Metadata } from "next";
-import { HeartHandshake } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, HeartHandshake } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Sponsors | Lebob",
@@ -28,6 +29,12 @@ export default function SponsorPage() {
             We appreciate the organizations that support Team Lebob and help us keep building,
             learning, and competing.
           </p>
+          <div className="sub-pill-row">
+            <Link href="/sponsor/how-to" className="docs-link-btn">
+              How to sponsor us
+              <ArrowUpRight className="sub-icon" />
+            </Link>
+          </div>
         </section>
 
         <section className="sponsor-spotlight-wrap">
