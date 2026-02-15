@@ -70,19 +70,6 @@ export default function SponsorPage() {
         <div className="sub-orb sub-orb-left" />
         <div className="sub-orb sub-orb-right" />
 
-        <div className="sub-top">
-          <Button
-            asChild
-            variant="outline"
-            className="sub-back-btn"
-          >
-            <Link href="/">
-              Back to Home
-              <ArrowUpRight className="sub-icon" />
-            </Link>
-          </Button>
-        </div>
-
         <section className="sub-wrap sub-wrap-tight">
           <Badge className="sub-badge animate-fade-up">
             Partner With Lebob

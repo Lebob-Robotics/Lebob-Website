@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 
 import { DocumentGrid, type DocumentItem } from "@/components/document-grid";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Team Documentation | Lebob",
@@ -81,17 +78,7 @@ export default async function DocsPage() {
         <div className="absolute -left-40 top-4 h-80 w-80 rounded-full bg-emerald-500/20 blur-[160px] animate-float" />
         <div className="absolute -right-32 top-14 h-80 w-80 rounded-full bg-sky-400/20 blur-[160px] animate-float delay-3" />
 
-        <div className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-6 sm:px-10">
-          <Button
-            asChild
-            variant="outline"
-            className="border-white/30 bg-transparent text-white hover:bg-white/10"
-          >
-            <Link href="/">
-              Back to Home
-              <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+        <div className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-end px-6 pt-6 sm:px-10">
           <ThemeToggle />
         </div>
 
