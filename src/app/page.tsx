@@ -11,14 +11,12 @@ import {
   GitFork,
   Globe,
   HeartHandshake,
-  House,
   ImageIcon,
   Menu,
   Newspaper,
   Orbit,
   Sparkles,
   Trophy,
-  UserSearch,
   Users,
   Wrench,
   WrenchIcon,
@@ -161,23 +159,7 @@ export default function Home() {
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
-    const syncDockPadding = () => {
-      const dock = document.querySelector<HTMLElement>(".lb-mobile-dock");
-
-      if (window.innerWidth <= 782 && dock) {
-        document.body.style.paddingBottom = `${dock.offsetHeight}px`;
-        return;
-      }
-
-      document.body.style.paddingBottom = "";
-    };
-
-    syncDockPadding();
-    window.addEventListener("resize", syncDockPadding);
-
     return () => {
-      window.removeEventListener("resize", syncDockPadding);
-      document.body.style.paddingBottom = "";
       document.body.style.overflow = "";
     };
   }, []);
@@ -292,7 +274,7 @@ export default function Home() {
                   Explore our GitHub
                 </a>
                 <a href="#team" className="lb-btn lb-btn-outline">
-                  <UserSearch />
+                  <Users />
                   Meet the team
                 </a>
                 <Link href="/media" className="lb-btn lb-btn-ghost">
@@ -548,17 +530,6 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="lb-mobile-dock">
-        <Link href="/" className="lb-mobile-dock-button" aria-label="Home">
-          <House />
-        </Link>
-        <Link href="/media" className="lb-mobile-dock-button" aria-label="Media">
-          <ImageIcon />
-        </Link>
-        <Link href="/docs" className="lb-mobile-dock-button" aria-label="Docs">
-          <Newspaper />
-        </Link>
-      </div>
     </div>
   );
 }
