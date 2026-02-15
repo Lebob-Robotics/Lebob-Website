@@ -10,8 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Team Media | Lebob",
-  description: "Team photos and videos for Lebob.",
+  title: "Image Gallery | Lebob",
+  description: "Team photos for Lebob.",
 };
 
 const IMAGE_EXTENSIONS = new Set([
@@ -83,6 +83,7 @@ async function getMediaItems(): Promise<MediaItem[]> {
 
 export default async function MediaPage() {
   const mediaItems = await getMediaItems();
+  const imageItems = mediaItems.filter((item) => item.type === "image");
 
   return (
     <div className="min-h-screen">
@@ -107,23 +108,21 @@ export default async function MediaPage() {
 
         <section className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-16 sm:px-10">
           <Badge className="w-fit bg-white/10 text-white hover:bg-white/20 animate-fade-up">
-            Team Media ({mediaItems.length})
+            Image Gallery ({imageItems.length})
           </Badge>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl animate-fade-up delay-1">
-            Lebob Media Hub
+            Lebob Image Gallery
           </h1>
 
-          {mediaItems.length > 0 ? (
+          {imageItems.length > 0 ? (
             <div className="mt-10 animate-fade-up delay-3">
-              <MediaGrid items={mediaItems} />
+              <MediaGrid items={imageItems} />
             </div>
           ) : (
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-8 animate-fade-up delay-3">
-              <p className="text-xl font-semibold text-white">
-                No media files found yet.
-              </p>
+              <p className="text-xl font-semibold text-white">No images found yet.</p>
               <p className="mt-2 text-sm text-slate-300">
-                Add photos/videos to{" "}
+                Add photos to{" "}
                 <code className="rounded bg-black/30 px-2 py-1">
                   public/media
                 </code>{" "}
