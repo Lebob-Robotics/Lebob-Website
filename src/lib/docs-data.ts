@@ -14,7 +14,7 @@ export const DOCS_SECTIONS = [
     tabLabel: "Robot",
     title: "Robot Documentation",
     description:
-      "Everything we use to design build, test, and improve our robot.",
+      "Everything we use to design, build, test, and improve our robot.",
     highlights: [
       "Build logs and code notes from each major version.",
       "Practice checklists and run-planning notes for competition day.",
