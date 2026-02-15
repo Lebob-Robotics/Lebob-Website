@@ -201,6 +201,10 @@ export default function Home() {
                   <Newspaper />
                   Documentation
                 </Link>
+                <Link href="/sponsor" className="lb-btn lb-btn-ghost">
+                  <HeartHandshake />
+                  Sponsors
+                </Link>
               </div>
             </div>
 
