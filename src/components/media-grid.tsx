@@ -40,10 +40,6 @@ export function MediaGrid({ photos }: MediaGridProps) {
   const hasNavigation = albumPhotos.length > 1;
 
   useEffect(() => {
-    if (activeIndex === null) {
-      return;
-    }
-
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setActiveIndex(null);
@@ -54,12 +50,9 @@ export function MediaGrid({ photos }: MediaGridProps) {
       }
     };
 
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [activeIndex, albumPhotos.length]);

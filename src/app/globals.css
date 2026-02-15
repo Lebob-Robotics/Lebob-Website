@@ -1487,18 +1487,57 @@ a {
 }
 
 .lb-header {
-  position: absolute;
-  inset: 0 0 auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   z-index: 80;
-  padding-top: clamp(20px, 2.7vw, 30px);
-  padding-bottom: clamp(16px, 2vw, 22px);
+  overflow: hidden;
+  isolation: isolate;
+  padding-top: clamp(12px, 2.2vw, 20px);
+  padding-bottom: clamp(10px, 1.6vw, 16px);
+  background-color: rgba(26, 15, 9, 0.55);
+  background-image: linear-gradient(180deg, rgba(26, 15, 9, 0.7), rgba(26, 15, 9, 0.35));
+  border-bottom: 1px solid rgba(151, 86, 61, 0.35);
+  background-clip: padding-box;
+  transition: padding 0.45s cubic-bezier(0.55, 0, 0.1, 1),
+    background-color 0.45s cubic-bezier(0.55, 0, 0.1, 1),
+    box-shadow 0.45s cubic-bezier(0.55, 0, 0.1, 1),
+    border-color 0.45s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.lb-header.is-scrolled {
+  padding-top: clamp(6px, 1.4vw, 10px);
+  padding-bottom: clamp(5px, 1.1vw, 8px);
+  background-color: rgba(26, 15, 9, 0.82);
+  background-image: linear-gradient(180deg, rgba(26, 15, 9, 0.95), rgba(26, 15, 9, 0.62));
+  border-bottom: 1px solid rgba(151, 86, 61, 0.55);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.lb-header.is-scrolled .lb-header-inner {
+  justify-content: space-between;
+}
+
+.lb-header.is-scrolled .lb-brand-image {
+  width: clamp(36px, 3.2vw, 52px);
+  height: clamp(36px, 3.2vw, 52px);
+}
+
+.lb-header.is-scrolled .lb-nav-list {
+  width: 100%;
+  gap: clamp(1.2rem, 3vw, 2.6rem);
+}
+
+.lb-header.is-scrolled .lb-nav-link {
+  letter-spacing: 0.04em;
 }
 
 .lb-header-inner {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: clamp(0.6rem, 1.2vw, 1.25rem);
 }
 
 .lb-brand {
@@ -1512,6 +1551,10 @@ a {
 
 .lb-brand-image {
   border-radius: 11px;
+  width: clamp(44px, 5vw, 68px);
+  height: clamp(44px, 5vw, 68px);
+  transition: width 0.45s cubic-bezier(0.55, 0, 0.1, 1),
+    height 0.45s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .lb-brand-copy {
@@ -1521,13 +1564,13 @@ a {
 }
 
 .lb-brand-copy strong {
-  font-size: 1.15rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.55rem);
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
 .lb-brand-copy small {
-  font-size: 0.72rem;
+  font-size: clamp(0.62rem, 1vw, 0.9rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0.8;
@@ -1563,15 +1606,20 @@ a {
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: clamp(0.85rem, 1.8vw, 1.6rem);
+  width: min(520px, 70vw);
+  justify-content: space-between;
+  gap: clamp(0.75rem, 2vw, 1.8rem);
+  transition: gap 0.45s cubic-bezier(0.55, 0, 0.1, 1),
+    width 0.45s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .lb-nav-link {
   font-family: var(--font-inter), var(--font-poppins), sans-serif;
-  font-size: 0.95rem;
+  font-size: clamp(0.9rem, 1.35vw, 1.15rem);
   font-weight: 500;
   text-decoration: none;
   color: var(--foreground);
+  transition: letter-spacing 0.45s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .lb-nav-link:hover,
@@ -1586,11 +1634,12 @@ a {
   justify-content: flex-end;
   align-items: center;
   gap: 0.6rem;
+  margin-right: 48px;
 }
 
 .lb-icon-button {
-  width: 2.45rem;
-  height: 2.45rem;
+  width: clamp(2.2rem, 3vw, 3rem);
+  height: clamp(2.2rem, 3vw, 3rem);
   border: 1px solid transparent;
   border-radius: 999px;
   background: transparent;
@@ -1603,8 +1652,8 @@ a {
 }
 
 .lb-icon-button svg {
-  width: 1.1rem;
-  height: 1.1rem;
+  width: clamp(1rem, 1.4vw, 1.25rem);
+  height: clamp(1rem, 1.4vw, 1.25rem);
 }
 
 .lb-icon-button:hover,
