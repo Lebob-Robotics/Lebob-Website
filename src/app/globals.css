@@ -1067,113 +1067,47 @@ a {
   border-color: color-mix(in srgb, var(--accent) 78%, white);
 }
 
-.spon-actions {
-  margin-top: 1.5rem;
+.sponsor-gratitude-wrap {
+  padding-bottom: 2.5rem;
+}
+
+.sponsor-heart-pill-row {
+  margin-top: 0.35rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
-.spon-primary-btn {
-  background: var(--github-cta-bg) !important;
-  color: var(--github-cta-fg) !important;
-  border: 1px solid var(--surface-border-strong) !important;
-}
-
-.spon-primary-btn:hover {
-  background: var(--github-cta-hover) !important;
-}
-
-.spon-note {
-  margin-top: 0.75rem;
-  font-size: 0.75rem;
-  color: color-mix(in srgb, var(--foreground) 82%, transparent);
-}
-
-.spon-grid {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1120px;
-  display: grid;
-  gap: 1rem;
-  padding: 2rem 1.5rem;
-}
-
-.spon-card {
-  border: 1px solid color-mix(in srgb, var(--surface-border) 74%, transparent) !important;
-  background: color-mix(in srgb, var(--surface-soft) 76%, transparent) !important;
-  color: var(--foreground) !important;
-}
-
-.spon-head {
-  gap: 0.75rem !important;
-}
-
-.spon-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 999px;
+.sponsor-heart-pill {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: color-mix(in srgb, var(--accent) 24%, transparent);
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 90%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  color: color-mix(in srgb, var(--foreground) 92%, transparent);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.spon-icon-svg {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: color-mix(in srgb, var(--accent) 78%, white);
+.sponsor-thanks-title {
+  max-width: 18ch;
 }
 
-.spon-desc {
-  color: color-mix(in srgb, var(--foreground) 82%, transparent) !important;
+.sponsor-thanks-text {
+  max-width: 52rem;
 }
 
-.spon-title-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
-}
-
-.spon-title-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: color-mix(in srgb, var(--accent-2) 72%, white);
-}
-
-.spon-list {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.spon-list-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-}
-
-.spon-check {
-  margin-top: 0.125rem;
-  width: 1rem;
-  height: 1rem;
-  color: color-mix(in srgb, var(--accent) 78%, white);
-}
-
-.spon-list-text {
-  margin: 0;
-  font-size: 0.875rem;
-  color: color-mix(in srgb, var(--foreground) 82%, transparent);
-}
-
-.spon-cta-wrap {
+.sponsor-spotlight-wrap {
   margin: 0 auto;
   width: 100%;
   max-width: 1120px;
   padding: 0.5rem 1.5rem 5rem;
 }
 
-.spon-cta-card {
+.sponsor-spotlight-card {
   border: 1px solid color-mix(in srgb, var(--surface-border) 74%, transparent) !important;
   background: linear-gradient(
     to right,
@@ -1184,14 +1118,19 @@ a {
   color: var(--foreground) !important;
 }
 
-.spon-cta-inner {
+.sponsor-spotlight-inner {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   padding: 2rem !important;
 }
 
-.spon-eyebrow {
+.sponsor-spotlight-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.sponsor-spotlight-eyebrow {
   margin: 0;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -1199,17 +1138,41 @@ a {
   color: color-mix(in srgb, var(--accent) 78%, white);
 }
 
-.spon-cta-title {
-  margin: 0.75rem 0 0;
+.sponsor-spotlight-title {
+  margin: 0.45rem 0 0;
   font-size: clamp(1.8rem, 3.5vw, 2rem);
   font-weight: 600;
 }
 
-.spon-cta-copy {
+.sponsor-spotlight-copytext {
   margin: 0.5rem 0 0;
   max-width: 42rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: color-mix(in srgb, var(--foreground) 82%, transparent);
+}
+
+.sponsor-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-emphasis) 88%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 76%, transparent);
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.sponsor-logo-link:hover,
+.sponsor-logo-link:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--surface-border-emphasis));
+  box-shadow: 0 14px 28px var(--card-hover-shadow);
+}
+
+.sponsor-logo-image {
+  width: min(100%, 399px);
+  height: auto;
 }
 
 @media screen and (max-width: 1024px) {
@@ -1306,15 +1269,7 @@ a {
 }
 
 @media screen and (min-width: 768px) {
-  .spon-grid-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .spon-grid-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .spon-cta-inner {
+  .sponsor-spotlight-inner {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
