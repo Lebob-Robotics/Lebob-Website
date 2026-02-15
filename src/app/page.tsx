@@ -110,6 +110,7 @@ function buildResponsiveImage(
 export default function Home() {
   const [isHeroVisible, setIsHeroVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHeaderCompact, setIsHeaderCompact] = useState(false);
   const logoImage = buildResponsiveImage("/lebob.png", 96, 160);
   const heroImage = buildResponsiveImage("/media/5Z9A0947.JPG", 1600, 2048);
   const mentorImage = buildResponsiveImage(mentors.image, 1400, 2048);
@@ -164,6 +165,17 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const updateHeader = () => {
+      setIsHeaderCompact(window.scrollY > 40);
+    };
+
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    return () => window.removeEventListener("scroll", updateHeader);
+  }, []);
+
   const closeOverlays = () => {
     setIsMobileMenuOpen(false);
   };
@@ -174,7 +186,7 @@ export default function Home() {
 
   return (
     <div className="lb-page">
-      <header className="lb-header">
+      <header className={`lb-header ${isHeaderCompact ? "is-scrolled" : ""}`}>
         <div className="lb-container lb-header-inner">
           <Link href="/" className="lb-brand" onClick={closeOverlays}>
             <img
@@ -251,7 +263,6 @@ export default function Home() {
           <div className="lb-hero-overlay" />
           <div className="lb-container lb-hero-inner">
             <div className="lb-hero-copy">
-              <p className="lb-kicker">Lebob - FLL Team #3236</p>
               <h1>
                 Robots that compete and ideas that inspire.
                 <span className="lb-welcome-wordmark"> Welcome to Lebob.</span>
