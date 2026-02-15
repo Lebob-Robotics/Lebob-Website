@@ -51,10 +51,8 @@ export function DocsSidebar({ current, tabs }: DocsSidebarProps) {
       </nav>
 
       <div className="docs2-sidebar-links">
-        <Link href="/">Back to Home</Link>
         <Link href="/media">Team Media</Link>
       </div>
     </aside>
   );
 }
-
