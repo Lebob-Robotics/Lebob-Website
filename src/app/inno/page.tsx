@@ -47,6 +47,7 @@ async function getDocumentItems(): Promise<DocumentItem[]> {
         fileName: entry.name,
         label: fileLabel(entry.name),
         extension: fileExtension(entry.name),
+        relativePath: entry.name,
       });
     }
 
