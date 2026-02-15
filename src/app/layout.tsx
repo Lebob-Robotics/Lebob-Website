@@ -38,9 +38,9 @@ const bungee = Bungee({
 });
 
 export const metadata: Metadata = {
-  title: "Lebob | FLL Robotics Team",
+  title: "Lebob | Home",
   description:
-    "Meet Lebob, an FLL robotics team of 8 builders, coders, and problem solvers exploring creativity, teamwork, and engineering.",
+    "Main Page",
   other: {
     "darkreader-lock": "true",
   },

@@ -20,14 +20,14 @@ import {
 } from "@/components/ui/card";
 
 export const metadata: Metadata = {
-  title: "How to Sponsor Us | Lebob",
+  title: "Sponsorships | Lebob",
   description:
-    "Support Lebob with funding, tools, and mentorship to help our robotics team build, test, and compete.",
+    "Sponsorship Page",
 };
 
 const supportOptions = [
   {
-    title: "Financial Sponsorship",
+    title: "Financial",
     description:
       "Sponsor travel, registration fees, and build materials for the season.",
     icon: HandCoins,
@@ -57,7 +57,7 @@ const sponsorBenefits = [
   "Recognition on team materials and sponsorship page",
   "Project updates during the season",
   "Highlight mentions in team presentations and outreach",
-  "A direct role in supporting student engineering growth",
+  "A direct role in supporting us and our community",
 ];
 
 const sponsorEmail = "your-team-email@example.com";
@@ -72,20 +72,18 @@ export default function SponsorPage() {
 
         <section className="sub-wrap sub-wrap-tight">
           <Badge className="sub-badge animate-fade-up">
-            Partner With Lebob
+            Sponsorships
           </Badge>
           <h1 className="sub-title animate-fade-up delay-1">
-            How to Sponsor Us
+            Sponsor Us
           </h1>
           <p className="sub-text animate-fade-up delay-2">
-            Your support helps our team build better robots, travel to
-            competitions, and share STEM with more students in our community.
-            We welcome sponsors of every size.
+            Your support helps our team build, improve and inspire more students in our community. We welcome sponsors of any size.
           </p>
           <div className="spon-actions animate-fade-up delay-3">
             <Button asChild className="spon-primary-btn">
               <a href={`mailto:${sponsorEmail}?subject=Lebob%20Sponsorship%20Inquiry`}>
-                Start a sponsorship conversation
+                Start a conversation
               </a>
             </Button>
             <Button
@@ -94,7 +92,7 @@ export default function SponsorPage() {
               className="sub-back-btn"
             >
               <Link href="/docs">
-                Review team documentation
+                Review our team documentation
                 <ArrowUpRight className="sub-icon" />
               </Link>
             </Button>
@@ -149,7 +147,7 @@ export default function SponsorPage() {
             <CardHeader>
               <CardTitle className="spon-title-row">
                 <BadgeCheck className="spon-title-icon" />
-                What sponsors receive
+                What you receive
               </CardTitle>
             </CardHeader>
             <CardContent className="spon-list">
@@ -168,14 +166,13 @@ export default function SponsorPage() {
             <CardContent className="spon-cta-inner">
               <div>
                 <p className="spon-eyebrow">
-                  Ready to partner?
+                  Ready to support our team?
                 </p>
                 <h2 className="spon-cta-title">
-                  Sponsor Lebob this season
+                  Sponsor Lebob
                 </h2>
                 <p className="spon-cta-copy">
-                  Reach out and we will share sponsor levels, timelines, and how
-                  your support will be acknowledged.
+                  Reach out and we will discuss your part in our future.
                 </p>
               </div>
               <Button size="lg" asChild className="github-cta-button">

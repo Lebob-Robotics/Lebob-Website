@@ -8,7 +8,7 @@ import { getVariantDimensions, getVariantList, pickVariantForWidth } from "@/lib
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
-  title: "Team Media | Lebob",
+  title: "Media | Lebob",
   description: "Lebob media wall.",
 };
 
@@ -141,15 +141,15 @@ export default async function MediaPage() {
 
         <section className="sub-wrap">
           <Badge className="sub-badge animate-fade-up">
-            Leob Media Wall
+            Media
           </Badge>
           <h1 className="sub-title animate-fade-up delay-1">
-            Lebob Media Wall
+            Lebob Photos
           </h1>
 
           <div className="sub-pill-row animate-fade-up delay-2">
             <span className="sub-pill">
-              {photos.length} photos in the wall
+              {photos.length} photos
             </span>
             {videoCount > 0 ? (
               <span className="sub-pill">

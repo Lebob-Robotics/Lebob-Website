@@ -278,11 +278,11 @@ export default function Home() {
               <div className="lb-flow-header">
                 <div>
                   <p>Our Process</p>
-                  <h2>Persistance and teamwork to create success.</h2>
+                  <h2>Guidelines for our success.</h2>
                 </div>
                 <div className="lb-pill">
                   <Users />
-                  All 8 members contribute at every stage.
+                  4 simple steps
                 </div>
               </div>
               <div className="lb-flow-grid">
@@ -348,7 +348,7 @@ export default function Home() {
                   src={mentorImage.src}
                   srcSet={mentorImage.srcSet}
                   sizes="(max-width: 1024px) 100vw, 760px"
-                  alt="Kaelie and Jade"
+                  alt="Kaelie O and Jade T"
                   loading="lazy"
                   decoding="async"
                 />
