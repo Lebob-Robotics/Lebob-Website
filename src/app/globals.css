@@ -1495,8 +1495,8 @@ a {
   z-index: 80;
   overflow: hidden;
   isolation: isolate;
-  padding-top: clamp(12px, 2.2vw, 20px);
-  padding-bottom: clamp(10px, 1.6vw, 16px);
+  padding-top: clamp(8px, 1.6vw, 14px);
+  padding-bottom: clamp(6px, 1.1vw, 10px);
   background-color: rgba(26, 15, 9, 0.55);
   background-image: linear-gradient(180deg, rgba(26, 15, 9, 0.7), rgba(26, 15, 9, 0.35));
   border-bottom: 1px solid rgba(151, 86, 61, 0.35);
@@ -1551,8 +1551,8 @@ a {
 
 .lb-brand-image {
   border-radius: 11px;
-  width: clamp(44px, 5vw, 68px);
-  height: clamp(44px, 5vw, 68px);
+  width: clamp(40px, 4.2vw, 56px);
+  height: clamp(40px, 4.2vw, 56px);
   transition: width 0.45s cubic-bezier(0.55, 0, 0.1, 1),
     height 0.45s cubic-bezier(0.55, 0, 0.1, 1);
 }
@@ -1564,13 +1564,13 @@ a {
 }
 
 .lb-brand-copy strong {
-  font-size: clamp(1.05rem, 2.2vw, 1.55rem);
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
 .lb-brand-copy small {
-  font-size: clamp(0.62rem, 1vw, 0.9rem);
+  font-size: clamp(0.58rem, 0.82vw, 0.78rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0.8;
@@ -1615,7 +1615,7 @@ a {
 
 .lb-nav-link {
   font-family: var(--font-inter), var(--font-poppins), sans-serif;
-  font-size: clamp(0.9rem, 1.35vw, 1.15rem);
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
   font-weight: 500;
   text-decoration: none;
   color: var(--foreground);
