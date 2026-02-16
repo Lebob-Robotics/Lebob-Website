@@ -48,6 +48,10 @@ export default async function DocsPage() {
               full file library.
             </p>
             <div className="docs2-hero-actions">
+              <Link href="/docs/general" className="docs2-hero-btn">
+                Open General docs
+                <ArrowRight className="h-4 w-4" />
+              </Link>
               <Link href="/docs/robot" className="docs2-hero-btn">
                 Start with Robot docs
                 <ArrowRight className="h-4 w-4" />
@@ -94,7 +98,7 @@ export default async function DocsPage() {
 
             <DocsFileList
               items={documentItems}
-              emptyMessage="No documents found. Add files to public/documents, public/documents/robot, or public/documents/innovation and refresh."
+              emptyMessage="No documents found. Add files to public/documents/general, public/documents/robot, or public/documents/innovation and refresh."
             />
           </section>
         </section>

@@ -10,6 +10,32 @@ export type DocumentItem = {
 
 export const DOCS_SECTIONS = [
   {
+    slug: "general",
+    tabLabel: "General",
+    title: "General Documentation",
+    description:
+      "Shared team-wide documentation and files that support both robot and innovation work.",
+    highlights: [
+      "Core files used across multiple project areas.",
+      "Easy access to primary documentation for judges and reviewers.",
+      "General references and season-wide supporting documents.",
+    ],
+    links: [
+      {
+        label: "Back to Overview",
+        href: "/docs",
+      },
+      {
+        label: "Team Media Gallery",
+        href: "/media",
+      },
+      {
+        label: "Back to Home",
+        href: "/",
+      },
+    ],
+  },
+  {
     slug: "robot",
     tabLabel: "Robot",
     title: "Robot Documentation",
