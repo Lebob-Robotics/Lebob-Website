@@ -37,6 +37,7 @@
   --github-cta-bg: #ff8b3d;
   --github-cta-fg: #2f0f00;
   --github-cta-hover: #ffa451;
+  --lb-header-offset: clamp(78px, 8vw, 108px);
 
   --shadow-glow-1: rgba(255, 90, 42, 0.24);
   --shadow-glow-2: rgba(255, 156, 47, 0.2);
@@ -274,7 +275,7 @@ a {
   margin: 0 auto;
   width: 100%;
   max-width: 1120px;
-  padding: 3.5rem 1.5rem 5rem;
+  padding: calc(var(--lb-header-offset) + 3.5rem) 1.5rem 5rem;
 }
 
 .sub-wrap-tight {
@@ -453,6 +454,7 @@ a {
   width: min(1240px, 100%);
   margin: 0 auto;
   padding: clamp(1rem, 2.4vw, 1.7rem);
+  padding-top: calc(var(--lb-header-offset) + clamp(1rem, 2.4vw, 1.7rem));
   display: grid;
   grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
   gap: clamp(0.9rem, 2vw, 1.4rem);
@@ -2392,6 +2394,10 @@ a {
 }
 
 @media screen and (max-width: 62em) {
+  :root {
+    --lb-header-offset: 5.7rem;
+  }
+
   .lb-header,
   .lb-header.is-scrolled {
     padding-top: 0.72rem;
@@ -2596,6 +2602,10 @@ a {
 }
 
 @media screen and (max-width: 600px) {
+  :root {
+    --lb-header-offset: 5.15rem;
+  }
+
   .lb-brand-copy strong {
     font-size: 0.96rem;
   }
