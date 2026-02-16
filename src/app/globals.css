@@ -443,14 +443,31 @@ a {
 }
 
 .docs2-page {
+  position: relative;
   min-height: 100vh;
+  overflow: hidden;
   background:
     radial-gradient(900px 500px at -8% -10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
     radial-gradient(760px 460px at 108% -20%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 58%),
     var(--background);
 }
 
+.docs2-page::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  opacity: 0.7;
+}
+
 .docs2-main {
+  position: relative;
+  z-index: 1;
   width: min(1240px, 100%);
   margin: 0 auto;
   padding: clamp(1rem, 2.4vw, 1.7rem);
