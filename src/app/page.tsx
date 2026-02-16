@@ -376,7 +376,7 @@ export default function Home() {
                     SoftSense research, documentation, and links.
                   </p>
                 </div>
-                <Link href="/inno" className="lb-btn lb-btn-solid">
+                <Link href="/inno" scroll className="lb-btn lb-btn-solid">
                   Inno
                 </Link>
               </article>
@@ -389,7 +389,7 @@ export default function Home() {
                     Robot documentation, coding resources, and files.
                   </p>
                 </div>
-                <Link href="/robot" className="lb-btn lb-btn-solid">
+                <Link href="/robot" scroll className="lb-btn lb-btn-solid">
                   Robot
                 </Link>
               </article>

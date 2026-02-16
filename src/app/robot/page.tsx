@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import { DocsFileList } from "@/components/docs-file-list";
 import { DocsSidebar } from "@/components/docs-sidebar";
+import { RouteScrollTop } from "@/components/route-scroll-top";
 import { getDocsSection, getDocsTabs, getSectionDocumentItems } from "@/lib/docs-data";
 
 const sectionSlug = "robot";
@@ -22,6 +23,7 @@ export default async function RobotPage() {
 
   return (
     <div className="docs2-page">
+      <RouteScrollTop />
       <main className="docs2-main">
         <DocsSidebar current={sectionSlug} tabs={tabs} />
 
