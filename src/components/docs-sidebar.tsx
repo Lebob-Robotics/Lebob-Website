@@ -16,17 +16,20 @@ export function DocsSidebar({ current, tabs }: DocsSidebarProps) {
 
   return (
     <aside className="docs2-sidebar">
-      <p className="docs2-kicker">Documentation</p>
-      <h2>Lebob Docs</h2>
+      <div className="docs2-sidebar-head">
+        <p className="docs2-kicker">Lebob Documentation</p>
+        <h2>Docs Navigator</h2>
+        <p className="docs2-version">Season 2025-2026</p>
+      </div>
 
       <nav className="docs2-nav" aria-label="Docs navigation">
-        <p className="docs2-nav-group">Overview</p>
+        <p className="docs2-nav-group">Getting Started</p>
         <Link
           href="/docs"
           className={`docs2-nav-link ${current === "all" ? "is-active" : ""}`}
           aria-current={current === "all" ? "page" : undefined}
         >
-          <span>All files</span>
+          <span>Overview</span>
           <span>{allCount}</span>
         </Link>
 
@@ -51,6 +54,7 @@ export function DocsSidebar({ current, tabs }: DocsSidebarProps) {
       </nav>
 
       <div className="docs2-sidebar-links">
+        <Link href="/">Home</Link>
         <Link href="/media">Team Media</Link>
       </div>
     </aside>
