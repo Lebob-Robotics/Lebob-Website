@@ -2,6 +2,7 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
+import { addBasePath } from "next/dist/client/add-base-path";
 import { ArrowUpRight, HeartHandshake } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -54,7 +55,7 @@ export default function SponsorPage() {
               >
                 <img
                   className="sponsor-logo-image"
-                  src="/sponsors/cropped-FullLogoWARES.png"
+                  src={addBasePath("/sponsors/cropped-FullLogoWARES.png")}
                   alt="WA Robotics Education logo"
                   width={399}
                   height={82}
