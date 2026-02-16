@@ -6,7 +6,7 @@ import sharp from "sharp";
 
 const projectRoot = process.cwd();
 const publicDir = path.join(projectRoot, "public");
-const outputDir = path.join(publicDir, "_img");
+const defaultOutputDirName = "_img";
 const generatedDir = path.join(projectRoot, "src", "generated");
 const manifestPath = path.join(generatedDir, "image-variants.json");
 
@@ -14,6 +14,38 @@ const sourceFolders = ["media", "members"];
 const sourceFiles = ["lebob.png"];
 const rasterExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
 const variantWidths = [64, 96, 160, 240, 320, 480, 640, 768, 960, 1200, 1600, 2048];
+
+function sanitizePathSegment(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "local";
+}
+
+function currentUserTag() {
+  if (process.env.SUDO_USER) {
+    return sanitizePathSegment(process.env.SUDO_USER);
+  }
+
+  if (process.env.USER) {
+    return sanitizePathSegment(process.env.USER);
+  }
+
+  if (process.env.LOGNAME) {
+    return sanitizePathSegment(process.env.LOGNAME);
+  }
+
+  if (typeof process.getuid === "function") {
+    return `uid-${process.getuid()}`;
+  }
+
+  return "local";
+}
+
+function hasErrorCode(error, code) {
+  return Boolean(error && typeof error === "object" && "code" in error && error.code === code);
+}
+
+function isPermissionError(error) {
+  return hasErrorCode(error, "EACCES") || hasErrorCode(error, "EPERM");
+}
 
 function asPosix(filePath) {
   return filePath.split(path.sep).join("/");
@@ -117,7 +149,7 @@ function widthsForSource(sourceWidth) {
   return widths;
 }
 
-async function createVariantsForImage(absoluteSourcePath) {
+async function createVariantsForImage(absoluteSourcePath, activeOutputDir) {
   const metadata = await sharp(absoluteSourcePath).rotate().metadata();
   if (!metadata.width || !metadata.height) {
     return null;
@@ -128,7 +160,7 @@ async function createVariantsForImage(absoluteSourcePath) {
   const sourceKey = keyForPublicFile(absoluteSourcePath);
   const relativeSourcePath = asPosix(path.relative(publicDir, absoluteSourcePath));
   const sourceFolder = path.dirname(relativeSourcePath);
-  const outputFolder = path.join(outputDir, sourceFolder);
+  const outputFolder = path.join(activeOutputDir, sourceFolder);
 
   await fs.mkdir(outputFolder, { recursive: true });
 
@@ -164,16 +196,47 @@ async function createVariantsForImage(absoluteSourcePath) {
   ];
 }
 
+async function clearAndCreateOutputDir(absoluteDir) {
+  await fs.rm(absoluteDir, { recursive: true, force: true });
+  await fs.mkdir(absoluteDir, { recursive: true });
+}
+
+async function resolveOutputDir() {
+  const defaultOutputDir = path.join(publicDir, defaultOutputDirName);
+
+  try {
+    await clearAndCreateOutputDir(defaultOutputDir);
+    return { outputDir: defaultOutputDir, didFallback: false };
+  } catch (error) {
+    if (!isPermissionError(error)) {
+      throw error;
+    }
+  }
+
+  const fallbackOutputDirName = `${defaultOutputDirName}-${currentUserTag()}`;
+  const fallbackOutputDir = path.join(publicDir, fallbackOutputDirName);
+  await clearAndCreateOutputDir(fallbackOutputDir);
+
+  return { outputDir: fallbackOutputDir, didFallback: true };
+}
+
 async function main() {
-  await fs.rm(outputDir, { recursive: true, force: true });
-  await fs.mkdir(outputDir, { recursive: true });
+  const { outputDir, didFallback } = await resolveOutputDir();
   await fs.mkdir(generatedDir, { recursive: true });
+
+  if (didFallback) {
+    console.warn(
+      `image variants: default output dir "${defaultOutputDirName}" is not writable, using "${path.basename(
+        outputDir,
+      )}" instead`,
+    );
+  }
 
   const sourceImages = await collectSourceImages();
   const manifestEntries = {};
 
   for (const sourceImage of sourceImages) {
-    const entry = await createVariantsForImage(sourceImage);
+    const entry = await createVariantsForImage(sourceImage, outputDir);
     if (!entry) {
       continue;
     }
