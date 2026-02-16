@@ -2382,10 +2382,15 @@ a {
 }
 
 @media screen and (max-width: 62em) {
-  .lb-header {
+  .lb-header,
+  .lb-header.is-scrolled {
     padding-top: 0.72rem;
     padding-bottom: 0;
     overflow: visible;
+    background-color: transparent;
+    background-image: none;
+    border-bottom: 0;
+    box-shadow: none;
   }
 
   .lb-header-inner {
