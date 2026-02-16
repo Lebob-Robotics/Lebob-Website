@@ -1,4 +1,6 @@
-# Lebob FLL Robotics Team website.
+# Lebob FLL Robotics Team Website
+The recommended code editor for beginners is VSCode.
+Install VSCode [here](https://code.visualstudio.com/download).
 ## Contributing
 ### Issues
 - Issues are used for telling other contributors what to fix (issues the code has)
@@ -19,15 +21,17 @@
    - **Right-click** the folder, and select open in terminal
    - Enter `git clone https://github.com/Lebob-Robotics/Lebob-Website` in the terminal, and it should have cloned
    - You can now navigate to `Lebob-Website` in your code editor and check if it has cloned
+3. Before continuing, see [dependencies](#dependencies) to be able to run the website.
 
 ### Terminal
 - Most commands will be run in terminal
-- To open terminal in VSC, enter <kbd>Ctrl</kbd> + <kbd>`</kbd>
+- To open terminal in VSC, enter <kbd>Ctrl/Cmd</kbd> + <kbd>`</kbd>
+- You can also search up terminal as an app on your computer and it will show up.
 
 ### Branches
 - Before starting your work, make sure to create a new branch by running:
-    `git switch -b <branch-name>`
-    `git push origin -u <branch-name>`
+    ```git switch -b <branch-name>
+    git push origin -u <branch-name>```
 - `<branch-name>` should be named in the format of `<your-name>/<branch-scope>`
 - `<branch-scope>` should be a short, fully lowercase description of what your change is doing. *e.g. fixing bugs*
   
@@ -51,32 +55,27 @@
 - They can tell you to fix certain things by leaving a review which you can do by editing the code and commiting again.
 
 ### Pushing
-- Before you can push, someone else has to review your changes.
+- Before you can push, someone else has to review your changes. (and accept them)
 - A check will then run to see if your code works.
 - If it doesn't work you will need to fix your code.
 - Otherwise, you can click **merge** to push your code to main.
 - To get the latest code from the repo, enter:
-  ```git add .
-     git pull origin main
-     git checkout <your-branch-name>
-     git merge main
+  ```git pull origin main
+  git checkout <your-branch-name>
+  git merge main
   ```
 - If there are conflicts, click **Resolve in merge editor**, click the double checkmark in the incoming window, and click **Complete merge**
-      - Commit the merge and push to your branch
-
-## Node
-- Node is required to run the website
-- Install it from [this website](https://nodejs.org/en/download/current)
+- Commit the merge and push to your branch
 
 ## Dependencies
-Run this to be able to test your code.
-`pnpm install`
+- node.js: [Install (latest)](https://nodejs.org/en/download/current)
+- pnpm: run `npm install pnpm`
+These are both needed to run the website.
 ## Run (Development)
 You can run this command if you want to test the code:
-`npm run dev`
+`pnpm run dev`
 
-Wait for it to say **✅ Starting...** then enter the link it tells you too to see the website locally on your laptop.
+Wait for it to say `✅ Starting...` then enter the link it tells you to to see the website locally on your laptop.
 The changes you make will be updated as you save your work.
 
 <img width="552.5" height="345.5" align="center" alt="image" src="https://github.com/user-attachments/assets/0c917561-a855-41c0-8b02-70e063f22702" />
-
