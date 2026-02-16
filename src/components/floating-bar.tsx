@@ -23,8 +23,6 @@ export function FloatingBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHeaderCompact, setIsHeaderCompact] = useState(false);
 
-  const isHomePage = pathname === "/";
-
   useEffect(() => {
     const updateHeader = () => {
       setIsHeaderCompact(window.scrollY > 40);
@@ -132,8 +130,6 @@ export function FloatingBar() {
       {isMobileMenuOpen ? (
         <button type="button" className="lb-backdrop" onClick={closeMenu} aria-label="Close menu backdrop" />
       ) : null}
-
-      {!isHomePage ? <div className="lb-header-spacer" aria-hidden /> : null}
     </>
   );
 }

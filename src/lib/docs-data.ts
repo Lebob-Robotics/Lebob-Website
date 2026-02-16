@@ -48,6 +48,10 @@ export const DOCS_SECTIONS = [
     ],
     links: [
       {
+        label: "SoftSense CAD Workspace (Onshape)",
+        href: "https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9",
+      },
+      {
         label: "Innovation Section on Home",
         href: "/#values",
       },
