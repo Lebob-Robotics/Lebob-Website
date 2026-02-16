@@ -3,6 +3,8 @@
 ### Issues
 - Issues are used for telling other contributors what to fix (issues the code has)
 - To create an issue, go to the **issues** tab on our repository and click **new issue**
+  <img width="2522" height="601" alt="image" src="https://github.com/user-attachments/assets/098e8525-629c-4cb2-9859-219a24df1726" />
+
 - If you want to work on an issue, assign yourself and comment on the issue to tell other contributors that you are doing the issue
 ### Cloning the Repo
 - To begin making changes on the repository, you must clone it to your device locally first. There are two ways of doing this:
