@@ -423,9 +423,6 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <Link href="/brendon" className="lb-footer-brendon-btn">
-          brendon
-        </Link>
       </footer>
 
     </div>
