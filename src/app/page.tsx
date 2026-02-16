@@ -367,55 +367,33 @@ export default function Home() {
 
         <section className="lb-section lb-reveal lb-section-tight-y">
           <div className="lb-container">
-            <article className="lb-cta-card">
-              <div>
-                <p>Innovations</p>
-                <h2>Our Innovations Design</h2>
-                <p>
-                  Our CAD files and designs for SoftSense in Onshape.
-                </p>
-              </div>
-              <a
-                href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb?renderMode=0&uiState=698c7958681008fee6ee1ae9"
-                target="_blank"
-                rel="noreferrer"
-                className="lb-btn lb-btn-solid"
-              >
-                <img
-                  src={addBasePath("/onshape.svg")}
-                  alt="Onshape"
-                  width={20}
-                  height={20}
-                  className="onshape-icon"
-                  loading="lazy"
-                  decoding="async"
-                />
-                Onshape
-              </a>
-            </article>
-          </div>
-        </section>
+            <div className="lb-cta-grid">
+              <article className="lb-cta-card">
+                <div>
+                  <p>Innovations</p>
+                  <h2>Our Innovations</h2>
+                  <p>
+                    SoftSense research, documentation, and links.
+                  </p>
+                </div>
+                <Link href="/inno" className="lb-btn lb-btn-solid">
+                  Inno
+                </Link>
+              </article>
 
-        <section className="lb-section lb-reveal lb-section-tight-top">
-          <div className="lb-container">
-            <article className="lb-cta-card">
-              <div>
-                <p>Programming</p>
-                <h2>Our GitHub</h2>
-                <p>
-                  Our github repository for robot and innovations code.
-                </p>
-              </div>
-              <a
-                href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
-                target="_blank"
-                rel="noreferrer"
-                className="lb-btn lb-btn-solid"
-              >
-                <GitFork />
-                GitHub
-              </a>
-            </article>
+              <article className="lb-cta-card">
+                <div>
+                  <p>Programming</p>
+                  <h2>Our Robot Work</h2>
+                  <p>
+                    Robot documentation, coding resources, and files.
+                  </p>
+                </div>
+                <Link href="/robot" className="lb-btn lb-btn-solid">
+                  Robot
+                </Link>
+              </article>
+            </div>
           </div>
         </section>
       </main>
