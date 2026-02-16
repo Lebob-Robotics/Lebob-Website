@@ -2385,6 +2385,7 @@ a {
   .lb-header {
     padding-top: 0.72rem;
     padding-bottom: 0;
+    overflow: visible;
   }
 
   .lb-header-inner {
@@ -2433,7 +2434,7 @@ a {
     opacity: 0;
     pointer-events: none;
     transition: transform 0.28s ease, opacity 0.24s ease;
-    z-index: 74;
+    z-index: 84;
     overflow-y: auto;
     border: 1px solid var(--surface-border-strong);
     border-radius: 22px;
