@@ -63,7 +63,11 @@
   ```
 - If there are conflicts, click **Resolve in merge editor**, click the double checkmark in the incoming window, and click **Complete merge**
       - Commit the merge and push to your branch
-  
+
+## Node
+- Node is required to run the website
+- Install it from [this website](https://nodejs.org/en/download/current)
+
 ## Dependencies
 Run this to be able to test your code.
 `pnpm install`
