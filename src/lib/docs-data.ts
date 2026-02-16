@@ -42,9 +42,9 @@ export const DOCS_SECTIONS = [
     description:
       "Everything we use to design, build, test, and improve our robot.",
     highlights: [
-      "Full documentation of our work.",
-      "Detailed explainations of our code, mechanisms and strategy.",
-      "Robot photos, files, and links in one place.",
+      "Complete documentation of our robot work.",
+      "Clear explanations of code, mechanisms, and strategy.",
+      "Photos, files, and key links in one place.",
     ],
     links: [
       {
@@ -68,9 +68,9 @@ export const DOCS_SECTIONS = [
     description:
       "Research, design and planning for our innovations project, SoftSense.",
     highlights: [
-      "Detailed summary of design, research and planning.",
-      "Full explainations of our innovations project.",
-      "Innovation docs, media, and quick references for review.",
+      "Detailed summary of design, research, and planning.",
+      "Clear explanation of the SoftSense innovation project.",
+      "Docs, media, and quick references for review in one section.",
     ],
     links: [
       {

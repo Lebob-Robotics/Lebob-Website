@@ -17,19 +17,19 @@ export function DocsSidebar({ current, tabs }: DocsSidebarProps) {
   return (
     <aside className="docs2-sidebar">
       <div className="docs2-sidebar-head">
-        <p className="docs2-kicker">Lebob Documentation</p>
-        <h2>Docs Navigator</h2>
-        <p className="docs2-version">Season 2025-2026</p>
+        <p className="docs2-kicker">Lebob Team Docs</p>
+        <h2>Navigation</h2>
+        <p className="docs2-version">Choose a section, then use search in the file library.</p>
       </div>
 
       <nav className="docs2-nav" aria-label="Docs navigation">
-        <p className="docs2-nav-group">Getting Started</p>
+        <p className="docs2-nav-group">Overview</p>
         <Link
           href="/docs"
           className={`docs2-nav-link ${current === "all" ? "is-active" : ""}`}
           aria-current={current === "all" ? "page" : undefined}
         >
-          <span>Overview</span>
+          <span>All Documents</span>
           <span>{allCount}</span>
         </Link>
 
