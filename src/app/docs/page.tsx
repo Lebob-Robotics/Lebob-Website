@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 
 import { DocsFileList } from "@/components/docs-file-list";
 import { DocsSidebar } from "@/components/docs-sidebar";
-import { DocsToc } from "@/components/docs-toc";
 import { RouteScrollTop } from "@/components/route-scroll-top";
 import {
   DOCS_SECTIONS,
@@ -14,7 +13,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Team Documentation | Lebob",
-  description: "Documentation Page",
+  description: "Simple and organized access to all team documentation files.",
 };
 
 export default async function DocsPage() {
@@ -40,16 +39,19 @@ export default async function DocsPage() {
 
         <section className="docs2-content">
           <header className="docs2-head" id="overview">
-            <p className="docs2-breadcrumb">Docs / Overview</p>
-            <h1>Team Documentation</h1>
+            <p className="docs2-breadcrumb">Documentation</p>
+            <h1>Find the right file quickly</h1>
             <p>
-              A centralized, review-ready library of Lebob robot and innovation files.
-              Use the left sidebar to move between sections, or jump directly into the
-              full file library.
+              Use a section to focus on one project area, or use the full library with
+              search and filters to jump straight to a specific file.
             </p>
+            <div className="docs2-pill-row">
+              <span className="docs2-pill">{totalCount} total files</span>
+              <span className="docs2-pill">Season 2025-2026</span>
+            </div>
             <div className="docs2-hero-actions">
               <Link href="/docs/robot" className="docs2-hero-btn">
-                Start with Robot docs
+                Open Robot docs
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link href="/docs/innovation" className="docs2-hero-btn">
@@ -59,12 +61,49 @@ export default async function DocsPage() {
             </div>
           </header>
 
+          <section id="quick-start" className="docs2-block">
+            <div className="docs2-block-head">
+              <h2>Quick Start</h2>
+              <p>New here? Follow these steps.</p>
+            </div>
+
+            <div className="docs2-overview-cards">
+              <article className="docs2-overview-card">
+                <div className="docs2-overview-meta">
+                  <p>Step 1</p>
+                </div>
+                <h3>Pick a section</h3>
+                <p>
+                  Start with Robot or Innovation if you already know what you need.
+                </p>
+              </article>
+              <article className="docs2-overview-card">
+                <div className="docs2-overview-meta">
+                  <p>Step 2</p>
+                </div>
+                <h3>Filter the list</h3>
+                <p>
+                  Use search and type filters in the file library to narrow results fast.
+                </p>
+              </article>
+              <article className="docs2-overview-card">
+                <div className="docs2-overview-meta">
+                  <p>Step 3</p>
+                </div>
+                <h3>Open or download</h3>
+                <p>
+                  Open any file in a new tab or download it directly from the same row.
+                </p>
+              </article>
+            </div>
+          </section>
+
           <section id="sections" className="docs2-block">
             <div className="docs2-block-head">
-              <h2>Sections</h2>
+              <h2>Browse by Section</h2>
               <p>
-                Browse by project area. There are currently <strong>{totalCount}</strong>{" "}
-                files available across all docs.
+                Choose a focused area first. Each section includes notes, key links, and
+                its own file library.
               </p>
             </div>
 
@@ -89,7 +128,10 @@ export default async function DocsPage() {
           <section id="library" className="docs2-block">
             <div className="docs2-block-head">
               <h2>Document Library</h2>
-              <p>Every file from all documentation folders in one list.</p>
+              <p>
+                Every file in one place. Search by keyword, then filter by section or
+                file type.
+              </p>
             </div>
 
             <DocsFileList
@@ -98,22 +140,6 @@ export default async function DocsPage() {
             />
           </section>
         </section>
-
-        <DocsToc
-          items={[
-            { id: "overview", label: "Overview" },
-            { id: "sections", label: "Sections" },
-            { id: "library", label: "Document Library" },
-          ]}
-          links={[
-            { label: "Team Media", href: "/media" },
-            {
-              label: "Robot Code (GitHub)",
-              href: "https://github.com/prawny-boy/FLL-Lebob-Unearthed",
-              external: true,
-            },
-          ]}
-        />
       </main>
     </div>
   );

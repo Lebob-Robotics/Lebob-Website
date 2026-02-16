@@ -448,14 +448,14 @@ a {
   overflow: hidden;
   background:
     radial-gradient(
-      940px 540px at -8% -12%,
-      color-mix(in srgb, var(--accent) 20%, transparent),
-      transparent 62%
+      980px 560px at -8% -14%,
+      color-mix(in srgb, var(--accent) 16%, transparent),
+      transparent 66%
     ),
     radial-gradient(
-      840px 500px at 112% -14%,
-      color-mix(in srgb, var(--accent-2) 18%, transparent),
-      transparent 58%
+      820px 460px at 112% -14%,
+      color-mix(in srgb, var(--accent-2) 12%, transparent),
+      transparent 60%
     ),
     var(--background);
 }
@@ -468,21 +468,21 @@ a {
   background-image:
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 42px 42px;
+  background-size: 56px 56px;
   mask-image: radial-gradient(circle at top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-  opacity: 0.7;
+  opacity: 0.24;
 }
 
 .docs2-main {
   position: relative;
   z-index: 1;
-  width: min(1400px, 100%);
+  width: min(1240px, 100%);
   margin: 0 auto;
-  padding: clamp(1rem, 2.4vw, 1.7rem);
-  padding-top: calc(var(--lb-header-offset) + clamp(1rem, 2.4vw, 1.7rem));
+  padding: clamp(1rem, 2.4vw, 1.5rem);
+  padding-top: calc(var(--lb-header-offset) + clamp(1rem, 2.4vw, 1.5rem));
   display: grid;
-  grid-template-columns: minmax(235px, 280px) minmax(0, 1fr) minmax(200px, 240px);
-  gap: clamp(0.9rem, 2vw, 1.4rem);
+  grid-template-columns: minmax(220px, 256px) minmax(0, 1fr);
+  gap: clamp(0.95rem, 2vw, 1.25rem);
   align-items: start;
 }
 
@@ -491,8 +491,8 @@ a {
   top: calc(var(--lb-header-offset) + 1rem);
   align-self: start;
   border-radius: 18px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 84%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 74%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 92%, transparent);
   padding: 1rem 0.9rem;
 }
 
@@ -516,8 +516,9 @@ a {
 
 .docs2-version {
   margin: 0.45rem 0 0;
-  font-size: 0.78rem;
-  color: color-mix(in srgb, var(--foreground) 74%, transparent);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--foreground) 76%, transparent);
 }
 
 .docs2-nav {
@@ -588,9 +589,9 @@ a {
 
 .docs2-content {
   border-radius: 18px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 76%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
-  padding: clamp(1rem, 2.3vw, 1.6rem);
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 94%, transparent);
+  padding: clamp(1rem, 2.3vw, 1.5rem);
   min-width: 0;
 }
 
@@ -691,15 +692,15 @@ a {
 
 .docs2-overview-cards {
   display: grid;
-  gap: 0.78rem;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.82rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 }
 
 .docs2-overview-card {
   border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 74%, transparent);
-  background: color-mix(in srgb, var(--background) 88%, transparent);
-  padding: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
+  background: color-mix(in srgb, var(--background) 90%, transparent);
+  padding: 0.95rem;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
@@ -763,9 +764,9 @@ a {
 
 .docs2-panel {
   border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
-  background: color-mix(in srgb, var(--background) 88%, transparent);
-  padding: 0.88rem;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
+  background: color-mix(in srgb, var(--background) 90%, transparent);
+  padding: 0.95rem;
 }
 
 .docs2-panel h2 {
@@ -792,8 +793,8 @@ a {
 .docs2-quick-links a {
   min-height: 40px;
   border-radius: 11px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 92%, transparent);
   padding: 0.45rem 0.68rem;
   display: inline-flex;
   align-items: center;
@@ -809,9 +810,122 @@ a {
   border-color: var(--surface-border-emphasis);
 }
 
+.docs2-list-tools {
+  margin-bottom: 0.8rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
+  background: color-mix(in srgb, var(--background) 90%, transparent);
+  padding: 0.86rem;
+  display: grid;
+  gap: 0.72rem;
+}
+
+.docs2-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.docs2-search svg {
+  position: absolute;
+  left: 0.72rem;
+  color: color-mix(in srgb, var(--foreground) 62%, transparent);
+  pointer-events: none;
+}
+
+.docs2-search input {
+  width: 100%;
+  min-height: 41px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 92%, transparent);
+  color: color-mix(in srgb, var(--foreground) 92%, transparent);
+  padding: 0.4rem 0.7rem 0.4rem 2.08rem;
+  font-size: 0.88rem;
+}
+
+.docs2-search input::placeholder {
+  color: color-mix(in srgb, var(--foreground) 52%, transparent);
+}
+
+.docs2-search input:focus-visible {
+  outline: 0;
+  border-color: color-mix(in srgb, var(--accent) 62%, var(--surface-border-emphasis));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.docs2-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.55rem;
+}
+
+.docs2-filter {
+  display: grid;
+  gap: 0.26rem;
+  min-width: min(240px, 100%);
+}
+
+.docs2-filter span {
+  margin: 0;
+  font-size: 0.67rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 82%, transparent);
+}
+
+.docs2-filter select {
+  min-height: 38px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 92%, transparent);
+  color: color-mix(in srgb, var(--foreground) 90%, transparent);
+  padding: 0 0.65rem;
+  font-size: 0.84rem;
+}
+
+.docs2-filter select:focus-visible {
+  outline: 0;
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--surface-border-emphasis));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.docs2-filter-reset {
+  min-height: 38px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  color: color-mix(in srgb, var(--foreground) 88%, transparent);
+  padding: 0.38rem 0.66rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.docs2-filter-reset:hover,
+.docs2-filter-reset:focus-visible {
+  border-color: var(--surface-border-emphasis);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.docs2-filter-reset:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.docs2-list-summary {
+  margin: 0;
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--foreground) 74%, transparent);
+}
+
 .docs2-list-shell {
   border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
   overflow: hidden;
 }
 
@@ -837,7 +951,7 @@ a {
 }
 
 .docs2-list {
-  background: color-mix(in srgb, var(--background) 88%, transparent);
+  background: color-mix(in srgb, var(--background) 90%, transparent);
   display: grid;
 }
 
@@ -914,7 +1028,7 @@ a {
 
 .docs2-row-actions a {
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
   background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
   min-height: 34px;
   padding: 0.35rem 0.66rem;
@@ -924,6 +1038,11 @@ a {
   font-size: 0.8rem;
   color: color-mix(in srgb, var(--foreground) 90%, transparent);
   transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.docs2-row-actions a:first-child {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--surface-border-emphasis));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .docs2-row-actions a:hover,
@@ -943,6 +1062,24 @@ a {
   margin: 0;
   line-height: 1.6;
   color: color-mix(in srgb, var(--foreground) 78%, transparent);
+}
+
+.docs2-empty-action {
+  margin-top: 0.7rem;
+  min-height: 34px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  color: color-mix(in srgb, var(--foreground) 88%, transparent);
+  padding: 0.32rem 0.7rem;
+  font-size: 0.8rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.docs2-empty-action:hover,
+.docs2-empty-action:focus-visible {
+  border-color: var(--surface-border-emphasis);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .docs2-toc {
@@ -1446,11 +1583,7 @@ a {
 
 @media screen and (max-width: 1260px) {
   .docs2-main {
-    grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-  }
-
-  .docs2-toc {
-    display: none;
+    grid-template-columns: minmax(205px, 240px) minmax(0, 1fr);
   }
 }
 
@@ -1474,6 +1607,11 @@ a {
   .docs2-section-panels {
     grid-template-columns: 1fr;
   }
+
+  .docs2-filter {
+    min-width: 0;
+    flex: 1 1 220px;
+  }
 }
 
 @media screen and (max-width: 720px) {
@@ -1492,6 +1630,19 @@ a {
 
   .docs2-row-section {
     justify-self: start;
+  }
+
+  .docs2-filter-row {
+    align-items: stretch;
+  }
+
+  .docs2-filter {
+    flex-basis: 100%;
+  }
+
+  .docs2-filter-reset {
+    justify-content: center;
+    width: 100%;
   }
 }
 

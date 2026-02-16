@@ -5,7 +5,6 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { DocsFileList } from "@/components/docs-file-list";
 import { DocsSidebar } from "@/components/docs-sidebar";
-import { DocsToc } from "@/components/docs-toc";
 import { RouteScrollTop } from "@/components/route-scroll-top";
 import {
   DOCS_SECTIONS,
@@ -36,7 +35,7 @@ export async function generateMetadata({
 
   return {
     title: `${sectionInfo.title} | Lebob`,
-    description: sectionInfo.description,
+    description: `Clear access to ${sectionInfo.tabLabel} files, links, and notes.`,
   };
 }
 
@@ -68,19 +67,19 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
 
         <section className="docs2-content">
           <header className="docs2-head" id="overview">
-            <p className="docs2-breadcrumb">Docs / {sectionInfo.tabLabel}</p>
+            <p className="docs2-breadcrumb">Documentation / {sectionInfo.tabLabel}</p>
             <h1>{sectionInfo.title}</h1>
             <p>{sectionInfo.description}</p>
             <div className="docs2-pill-row">
-              <span className="docs2-pill">{documentItems.length} files</span>
+              <span className="docs2-pill">{documentItems.length} files available</span>
               <span className="docs2-pill">{sectionInfo.tabLabel} section</span>
             </div>
           </header>
 
-          <section id="highlights" className="docs2-block">
+          <section id="inside" className="docs2-block">
             <div className="docs2-section-panels">
               <article className="docs2-panel">
-                <h2>Section Notes</h2>
+                <h2>What You Will Find</h2>
                 <ul>
                   {sectionInfo.highlights.map((item) => (
                     <li key={item}>{item}</li>
@@ -89,7 +88,7 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
               </article>
 
               <article className="docs2-panel">
-                <h2>Quick Links</h2>
+                <h2>Key Links</h2>
                 <div className="docs2-quick-links">
                   {sectionInfo.links.map((link) => {
                     const isExternal = link.href.startsWith("http");
@@ -117,7 +116,9 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
           <section id="library" className="docs2-block">
             <div className="docs2-block-head">
               <h2>{sectionInfo.tabLabel} File Library</h2>
-              <p>All uploaded files for this section.</p>
+              <p>
+                Search by keyword and filter by file type to get to the right file faster.
+              </p>
             </div>
 
             <DocsFileList
@@ -129,54 +130,24 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
 
           <section id="next" className="docs2-block">
             <div className="docs2-block-head">
-              <h2>Continue exploring</h2>
+              <h2>Go Next</h2>
+              <p>Need another section? Use these shortcuts.</p>
             </div>
 
-            <div className="docs2-overview-cards">
-              <article className="docs2-overview-card">
-                <div className="docs2-overview-meta">
-                  <p>Docs</p>
-                  <span>All files</span>
-                </div>
-                <h3>Full Documentation Index</h3>
-                <p>Jump back to the complete file library and section overview.</p>
-                <Link href="/docs">
-                  Open overview
+            <div className="docs2-hero-actions">
+              <Link href="/docs" className="docs2-hero-btn">
+                Open all docs
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              {otherSections.map((entry) => (
+                <Link key={entry.slug} href={`/docs/${entry.slug}`} className="docs2-hero-btn">
+                  Open {entry.tabLabel} docs
                   <ArrowRight className="h-4 w-4" />
                 </Link>
-              </article>
-
-              {otherSections.map((entry) => (
-                <article key={entry.slug} className="docs2-overview-card">
-                  <div className="docs2-overview-meta">
-                    <p>{entry.tabLabel}</p>
-                    <span>Section</span>
-                  </div>
-                  <h3>{entry.title}</h3>
-                  <p>{entry.description}</p>
-                  <Link href={`/docs/${entry.slug}`}>
-                    Open section
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </article>
               ))}
             </div>
           </section>
         </section>
-
-        <DocsToc
-          items={[
-            { id: "overview", label: "Overview" },
-            { id: "highlights", label: "Highlights & Links" },
-            { id: "library", label: "File Library" },
-            { id: "next", label: "Continue Exploring" },
-          ]}
-          links={sectionInfo.links.map((link) => ({
-            label: link.label,
-            href: link.href,
-            external: link.href.startsWith("http"),
-          }))}
-        />
       </main>
     </div>
   );
