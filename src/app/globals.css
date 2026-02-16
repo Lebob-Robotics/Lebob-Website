@@ -447,8 +447,16 @@ a {
   min-height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(900px 500px at -8% -10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
-    radial-gradient(760px 460px at 108% -20%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 58%),
+    radial-gradient(
+      940px 540px at -8% -12%,
+      color-mix(in srgb, var(--accent) 20%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      840px 500px at 112% -14%,
+      color-mix(in srgb, var(--accent-2) 18%, transparent),
+      transparent 58%
+    ),
     var(--background);
 }
 
@@ -468,87 +476,109 @@ a {
 .docs2-main {
   position: relative;
   z-index: 1;
-  width: min(1240px, 100%);
+  width: min(1400px, 100%);
   margin: 0 auto;
   padding: clamp(1rem, 2.4vw, 1.7rem);
   padding-top: calc(var(--lb-header-offset) + clamp(1rem, 2.4vw, 1.7rem));
   display: grid;
-  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  grid-template-columns: minmax(235px, 280px) minmax(0, 1fr) minmax(200px, 240px);
   gap: clamp(0.9rem, 2vw, 1.4rem);
+  align-items: start;
 }
 
 .docs2-sidebar {
   position: sticky;
-  top: 1rem;
+  top: calc(var(--lb-header-offset) + 1rem);
   align-self: start;
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid color-mix(in srgb, var(--surface-border-strong) 84%, transparent);
   background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
-  padding: 1rem;
+  padding: 1rem 0.9rem;
+}
+
+.docs2-sidebar-head {
+  padding: 0.25rem 0.55rem 0.9rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--surface-border-strong) 62%, transparent);
 }
 
 .docs2-kicker {
   margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--muted) 88%, transparent);
+  color: color-mix(in srgb, var(--muted) 84%, transparent);
 }
 
 .docs2-sidebar h2 {
   margin: 0.35rem 0 0;
-  font-size: 1.2rem;
+  font-size: 1.08rem;
+}
+
+.docs2-version {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--foreground) 74%, transparent);
 }
 
 .docs2-nav {
-  margin-top: 1rem;
+  margin-top: 0.95rem;
   display: grid;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .docs2-nav-group {
-  margin: 0.55rem 0 0.2rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  margin: 0.6rem 0 0.2rem;
+  padding-inline: 0.55rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--muted) 88%, transparent);
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
 }
 
 .docs2-nav-link {
-  min-height: 40px;
+  min-height: 38px;
   border-radius: 10px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 78%, transparent);
-  background: color-mix(in srgb, var(--background) 86%, transparent);
-  padding: 0.45rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 70%, transparent);
+  background: color-mix(in srgb, var(--background) 86%, #02080d);
+  padding: 0.4rem 0.65rem;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  font-size: 0.9rem;
-  color: color-mix(in srgb, var(--foreground) 86%, transparent);
+  font-size: 0.86rem;
+  color: color-mix(in srgb, var(--foreground) 84%, transparent);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .docs2-nav-link:hover,
 .docs2-nav-link:focus-visible {
+  background: color-mix(in srgb, var(--surface-soft) 90%, transparent);
   border-color: var(--surface-border-emphasis);
 }
 
 .docs2-nav-link.is-active {
-  border-color: color-mix(in srgb, var(--accent) 72%, white);
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
-  color: color-mix(in srgb, var(--accent) 84%, white);
+  border-color: color-mix(in srgb, var(--accent) 74%, white);
+  background: linear-gradient(
+    125deg,
+    color-mix(in srgb, var(--accent) 26%, transparent),
+    color-mix(in srgb, var(--accent-2) 16%, transparent)
+  );
+  color: color-mix(in srgb, var(--foreground) 94%, white);
 }
 
 .docs2-sidebar-links {
-  margin-top: 1rem;
+  margin-top: 0.9rem;
+  padding: 0.7rem 0.55rem 0.15rem;
+  border-top: 1px solid color-mix(in srgb, var(--surface-border-strong) 62%, transparent);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .docs2-sidebar-links a {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   color: color-mix(in srgb, var(--foreground) 76%, transparent);
+  width: fit-content;
 }
 
 .docs2-sidebar-links a:hover,
@@ -557,137 +587,275 @@ a {
 }
 
 .docs2-content {
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid color-mix(in srgb, var(--surface-border-strong) 76%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 85%, transparent);
-  padding: clamp(1rem, 2.5vw, 1.5rem);
+  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
+  padding: clamp(1rem, 2.3vw, 1.6rem);
+  min-width: 0;
+}
+
+.docs2-head {
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--surface-border-strong) 68%, transparent);
 }
 
 .docs2-head h1 {
   margin: 0.45rem 0 0;
-  font-size: clamp(1.7rem, 3.6vw, 2.3rem);
+  font-size: clamp(1.75rem, 3.9vw, 2.45rem);
+  letter-spacing: -0.02em;
 }
 
 .docs2-breadcrumb {
   margin: 0;
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--muted) 86%, transparent);
+  color: color-mix(in srgb, var(--muted) 82%, transparent);
 }
 
 .docs2-head > p:last-child {
-  margin: 0.65rem 0 0;
+  margin: 0.75rem 0 0;
   max-width: 66ch;
+  font-size: 0.96rem;
   color: color-mix(in srgb, var(--foreground) 84%, transparent);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-.docs2-head code {
-  border-radius: 7px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
-  background: color-mix(in srgb, var(--background) 86%, transparent);
-  padding: 0.08rem 0.35rem;
-  font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.82em;
+.docs2-hero-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
-.docs2-metrics {
-  margin-top: 1.1rem;
-  display: grid;
-  gap: 0.75rem;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+.docs2-hero-btn {
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-emphasis) 86%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  padding: 0.45rem 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  color: color-mix(in srgb, var(--foreground) 92%, transparent);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.docs2-metric {
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 74%, transparent);
-  background: color-mix(in srgb, var(--background) 86%, transparent);
-  padding: 0.65rem 0.75rem;
+.docs2-hero-btn:hover,
+.docs2-hero-btn:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 70%, var(--surface-border-emphasis));
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
-.docs2-metric p {
-  margin: 0;
-  font-size: 0.76rem;
-  letter-spacing: 0.06em;
+.docs2-pill-row {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.docs2-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 80%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
+  padding: 0.24rem 0.68rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--muted) 84%, transparent);
+  color: color-mix(in srgb, var(--foreground) 84%, transparent);
 }
 
-.docs2-metric strong {
-  margin-top: 0.2rem;
-  display: block;
-  font-size: 1.28rem;
+.docs2-block {
+  margin-top: 1.45rem;
+}
+
+.docs2-block-head {
+  margin-bottom: 0.85rem;
+}
+
+.docs2-block-head h2 {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.docs2-block-head p {
+  margin: 0.4rem 0 0;
+  max-width: 74ch;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--foreground) 80%, transparent);
+}
+
+.docs2-overview-cards {
+  display: grid;
+  gap: 0.78rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.docs2-overview-card {
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 74%, transparent);
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.docs2-overview-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.docs2-overview-meta p,
+.docs2-overview-meta span {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 82%, transparent);
+}
+
+.docs2-overview-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.docs2-overview-card > p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--foreground) 80%, transparent);
+}
+
+.docs2-overview-card > a {
+  margin-top: auto;
+  width: fit-content;
+  min-height: 32px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-emphasis) 86%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 86%, transparent);
+  padding: 0.25rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--foreground) 90%, transparent);
+}
+
+.docs2-overview-card > a:hover,
+.docs2-overview-card > a:focus-visible {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 64%, var(--surface-border-emphasis));
 }
 
 .docs2-section-panels {
-  margin-top: 1.1rem;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.78rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .docs2-panel {
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 74%, transparent);
-  background: color-mix(in srgb, var(--background) 86%, transparent);
-  padding: 0.8rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  padding: 0.88rem;
 }
 
 .docs2-panel h2 {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1rem;
 }
 
 .docs2-panel ul {
-  margin: 0.65rem 0 0;
+  margin: 0.68rem 0 0;
   padding-left: 1rem;
   color: color-mix(in srgb, var(--foreground) 82%, transparent);
   display: grid;
   gap: 0.45rem;
-  font-size: 0.86rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
 .docs2-quick-links {
-  margin-top: 0.65rem;
+  margin-top: 0.7rem;
   display: grid;
   gap: 0.45rem;
 }
 
 .docs2-quick-links a {
   min-height: 40px;
-  border-radius: 10px;
+  border-radius: 11px;
   border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 86%, transparent);
-  padding: 0.45rem 0.65rem;
+  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
+  padding: 0.45rem 0.68rem;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  font-size: 0.86rem;
+  font-size: 0.85rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .docs2-quick-links a:hover,
 .docs2-quick-links a:focus-visible {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
   border-color: var(--surface-border-emphasis);
 }
 
-.docs2-list {
-  margin-top: 1.1rem;
+.docs2-list-shell {
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  overflow: hidden;
+}
+
+.docs2-list-header {
+  min-height: 38px;
+  border-bottom: 1px solid color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
+  padding: 0.45rem 0.82rem;
   display: grid;
-  gap: 0.65rem;
+  gap: 0.8rem;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+.docs2-list-shell.is-no-section .docs2-list-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.docs2-list-header span {
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 82%, transparent);
+}
+
+.docs2-list {
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  display: grid;
 }
 
 .docs2-row {
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 74%, transparent);
-  background: color-mix(in srgb, var(--background) 86%, transparent);
   padding: 0.72rem 0.82rem;
   display: grid;
   align-items: center;
   gap: 0.8rem;
   grid-template-columns: minmax(0, 1fr) auto auto;
+  border-top: 1px solid color-mix(in srgb, var(--surface-border-strong) 64%, transparent);
+}
+
+.docs2-list .docs2-row:first-child {
+  border-top: 0;
+}
+
+.docs2-row.is-no-section {
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 
 .docs2-row-main {
@@ -729,49 +897,131 @@ a {
 .docs2-row-section {
   margin: 0;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 74%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 84%, transparent);
   padding: 0.25rem 0.62rem;
   font-size: 0.76rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--foreground) 72%, transparent);
+  color: color-mix(in srgb, var(--foreground) 74%, transparent);
 }
 
 .docs2-row-actions {
   display: inline-flex;
   gap: 0.45rem;
+  flex-wrap: wrap;
 }
 
 .docs2-row-actions a {
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 76%, transparent);
-  background: color-mix(in srgb, var(--surface-soft) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 78%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
   min-height: 34px;
   padding: 0.35rem 0.66rem;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   font-size: 0.8rem;
+  color: color-mix(in srgb, var(--foreground) 90%, transparent);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .docs2-row-actions a:hover,
 .docs2-row-actions a:focus-visible {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
   border-color: var(--surface-border-emphasis);
 }
 
 .docs2-empty {
-  margin-top: 1.1rem;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px dashed color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
-  background: color-mix(in srgb, var(--background) 86%, transparent);
-  padding: 1rem;
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  padding: 1.15rem;
 }
 
 .docs2-empty p {
   margin: 0;
   line-height: 1.6;
   color: color-mix(in srgb, var(--foreground) 78%, transparent);
+}
+
+.docs2-toc {
+  position: sticky;
+  top: calc(var(--lb-header-offset) + 1rem);
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  background: color-mix(in srgb, var(--surface-soft) 88%, transparent);
+  padding: 0.85rem 0.8rem;
+}
+
+.docs2-toc-title {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 82%, transparent);
+}
+
+.docs2-toc-list {
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.docs2-toc-list a {
+  min-height: 32px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  padding: 0.35rem 0.45rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  color: color-mix(in srgb, var(--foreground) 80%, transparent);
+}
+
+.docs2-toc-list a:hover,
+.docs2-toc-list a:focus-visible {
+  border-color: color-mix(in srgb, var(--surface-border-emphasis) 86%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  color: var(--foreground);
+}
+
+.docs2-toc-links {
+  margin-top: 0.8rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--surface-border-strong) 66%, transparent);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.docs2-toc-links p {
+  margin: 0 0 0.15rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+}
+
+.docs2-toc-links a {
+  min-height: 34px;
+  border-radius: 9px;
+  border: 1px solid color-mix(in srgb, var(--surface-border-strong) 72%, transparent);
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  padding: 0.34rem 0.52rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  font-size: 0.79rem;
+  color: color-mix(in srgb, var(--foreground) 86%, transparent);
+}
+
+.docs2-toc-links a:hover,
+.docs2-toc-links a:focus-visible {
+  border-color: var(--surface-border-emphasis);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .docs-tabs {
@@ -1194,13 +1444,17 @@ a {
   height: auto;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1260px) {
   .docs2-main {
     grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
   }
+
+  .docs2-toc {
+    display: none;
+  }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 920px) {
   .docs2-main {
     grid-template-columns: 1fr;
   }
@@ -1220,24 +1474,24 @@ a {
   .docs2-section-panels {
     grid-template-columns: 1fr;
   }
+}
 
-  .docs2-row {
+@media screen and (max-width: 720px) {
+  .docs2-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .docs2-list-header {
+    display: none;
+  }
+
+  .docs2-row,
+  .docs2-row.is-no-section {
     grid-template-columns: 1fr;
   }
 
   .docs2-row-section {
     justify-self: start;
-  }
-
-  .docs2-row-actions {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .docs2-nav {
-    grid-template-columns: 1fr;
   }
 }
 

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Download,
   ExternalLink,
@@ -17,6 +18,7 @@ const AUDIO_EXTENSIONS = new Set(["mp3", "wav", "m4a", "aac", "ogg", "flac"]);
 type DocsFileListProps = {
   items: DocumentItem[];
   emptyMessage: string;
+  showSection?: boolean;
 };
 
 function documentHref(relativePath: string): string {
@@ -59,7 +61,11 @@ function fileIcon(extension: string) {
   return <File className="h-4 w-4" />;
 }
 
-export function DocsFileList({ items, emptyMessage }: DocsFileListProps) {
+export function DocsFileList({
+  items,
+  emptyMessage,
+  showSection = true,
+}: DocsFileListProps) {
   if (items.length === 0) {
     return (
       <div className="docs2-empty">
@@ -69,36 +75,48 @@ export function DocsFileList({ items, emptyMessage }: DocsFileListProps) {
   }
 
   return (
-    <div className="docs2-list">
-      {items.map((item) => {
-        const href = documentHref(item.relativePath);
+    <div className={`docs2-list-shell ${showSection ? "" : "is-no-section"}`}>
+      <div className="docs2-list-header">
+        <span>Document</span>
+        {showSection ? <span>Section</span> : null}
+        <span>Actions</span>
+      </div>
 
-        return (
-          <article key={item.relativePath} className="docs2-row">
-            <div className="docs2-row-main">
-              <div className="docs2-row-icon">{fileIcon(item.extension)}</div>
-              <div>
-                <p className="docs2-row-title">{item.label}</p>
-                <p className="docs2-row-file">{item.fileName}</p>
+      <div className="docs2-list">
+        {items.map((item) => {
+          const href = documentHref(item.relativePath);
+
+          return (
+            <article
+              key={item.relativePath}
+              className={`docs2-row ${showSection ? "" : "is-no-section"}`}
+            >
+              <div className="docs2-row-main">
+                <div className="docs2-row-icon">{fileIcon(item.extension)}</div>
+                <div>
+                  <p className="docs2-row-title">{item.label}</p>
+                  <p className="docs2-row-file">{item.fileName}</p>
+                </div>
               </div>
-            </div>
 
-            <p className="docs2-row-section">{fileSection(item.relativePath)}</p>
+              {showSection ? (
+                <p className="docs2-row-section">{fileSection(item.relativePath)}</p>
+              ) : null}
 
-            <div className="docs2-row-actions">
-              <a href={href} target="_blank" rel="noreferrer">
-                Open
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-              <a href={href} download={item.fileName}>
-                Download
-                <Download className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </article>
-        );
-      })}
+              <div className="docs2-row-actions">
+                <Link href={href} target="_blank" rel="noreferrer">
+                  Open
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </Link>
+                <Link href={href} download={item.fileName}>
+                  Download
+                  <Download className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </article>
+          );
+        })}
+      </div>
     </div>
   );
 }
-
