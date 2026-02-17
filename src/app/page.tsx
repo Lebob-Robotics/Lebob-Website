@@ -43,17 +43,17 @@ const mentors = {
 const values = [
   {
     title: "Build",
-    description: "We first build our robot to our best specifications.",
+    description: "First we build our robot to fit our best runs.",
     icon: Wrench,
   },
   {
     title: "Code",
-    description: "We then program our robot to achieve our goals.",
+    description: "Then we program our robot to achieve our runs.",
     icon: CircuitBoard,
   },
   {
     title: "Iterate",
-    description: "We continue researching and iterating to improve our standard.",
+    description: "We continue researching, testing and iterating to improve our standard.",
     icon: Orbit,
   },
   {
@@ -66,15 +66,15 @@ const values = [
 const milestones = [
   {
     title: "Plan",
-    detail: "Study the game and imagine our best run.",
+    detail: "Study the game and brainstorm the best run.",
   },
   {
     title: "Design",
-    detail: "Prototype and iterate on many attachments to achieve our strategy.",
+    detail: "Prototype, test and iterate on attachments to achieve our strategy.",
   },
   {
     title: "Program",
-    detail: "Automate missions to enable the robot to carry out runs.",
+    detail: "Automate and code missions to enable the robot to carry out runs.",
   },
   {
     title: "Present",
@@ -85,7 +85,7 @@ const milestones = [
 const aboutUsInfo = [
   { text: "Won national and state competitions in First Lego League.", icon: Trophy },
   { text: "Built and coded a robot to complete various missions reliably.", icon: WrenchIcon },
-  { text: "Made the SoftSense manipulator arm for innovations.", icon: Brain },
+  { text: "Made the SoftSense manipulator arm for our Innovation Project.", icon: Brain },
 ];
 
 function withBasePath(path: string): string {
@@ -173,11 +173,10 @@ export default function Home() {
                 <span className="lb-welcome-wordmark"> Welcome to Lebob.</span>
               </h1>
               <p className="lb-hero-text">
-                We are a team competing in the
-                <Link href="https://www.firstlegoleague.org/" target="_blank"> First Lego League</Link>.
+                We are a team competing in the 
+                <Link href="https://www.firstlegoleague.org/" target="_blank" > First Lego League</Link>.
                 We <b>engineer</b> robots to complete missions, <b>research</b> and <b>innovate</b> to
-                design impactful mechanisms, and make it possible through <b>collaboration</b>.
-                This is our official website.
+                design impactful mechanisms, and make it possible through <b>collaboration</b> and <b>teamwork</b>.
               </p>
               <div className="lb-action-row">
                 <a
@@ -216,7 +215,7 @@ export default function Home() {
                 </h2>
                 <span>Info</span>
               </div>
-              <p className="lb-about-description">First Lego League international team.</p>
+              <p className="lb-about-description">An international First Lego League team.</p>
               <div className="lb-team-name">
                 <img
                   src={logoImage.src}
@@ -259,7 +258,8 @@ export default function Home() {
               <h2>Building robots is only part of our goal.</h2>
               <p className="lb-copy-body">
                 Our goal is about turning our ideas into real, working 
-                prototypes through teamwork, then sharing how we got there.
+                prototypes through teamwork and collaboration and then sharing
+                 our ideas with the rest of the engineering world.
               </p>
             </div>
             <div className="lb-values-grid">
