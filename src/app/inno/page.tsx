@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
+import { withRepoBasePath } from "@/lib/site-path";
 
 export default function InnovationPage() {
-  redirect("/docs/innovation");
+  redirect(withRepoBasePath("/docs/innovation"));
 }
