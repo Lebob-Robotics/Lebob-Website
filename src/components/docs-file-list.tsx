@@ -286,7 +286,6 @@ export function DocsFileList({
           <div className="docs2-list-header">
             <span>Document</span>
             {showSection ? <span>Section</span> : null}
-            <span>Actions</span>
           </div>
 
           <div className="docs2-list">
