@@ -101,14 +101,6 @@ export default function SponsorHowToPage() {
               </Link>
             </Button>
           </div>
-
-          <p className="sub-text animate-fade-up delay-3">
-            Update contact email in{" "}
-            <code className="sub-code">
-              src/app/sponsor/how-to/page.tsx
-            </code>{" "}
-            before publishing.
-          </p>
         </section>
 
         <section className="mx-auto grid w-full max-w-6xl gap-4 px-6 py-2 sm:px-10 md:grid-cols-3 animate-fade-up delay-1">
