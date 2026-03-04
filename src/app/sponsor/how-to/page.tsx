@@ -60,7 +60,7 @@ const sponsorBenefits = [
   "A direct role in supporting student engineering growth",
 ];
 
-const sponsorEmail = "your-team-email@example.com";
+const sponsorEmail = "team@lebob.com.au";
 
 export default function SponsorHowToPage() {
   return (
