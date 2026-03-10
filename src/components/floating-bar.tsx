@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { addBasePath } from "next/dist/client/add-base-path";
-import { HeartHandshake, Menu, X } from "lucide-react";
+import { HeartHandshake, Instagram, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
@@ -120,6 +120,9 @@ export function FloatingBar() {
           </nav>
 
           <div className="lb-header-actions">
+            <a href="https://www.instagram.com/lebob_aus" target="_blank" rel="noreferrer" className="lb-icon-button lb-icon-link" aria-label="Follow us on Instagram">
+              <Instagram />
+            </a>
             <Link href="/sponsor" className="lb-icon-button lb-icon-link" aria-label="Go to sponsors page">
               <HeartHandshake />
             </Link>
