@@ -12,6 +12,7 @@ import {
   Globe,
   HeartHandshake,
   ImageIcon,
+  Instagram,
   Newspaper,
   Orbit,
   Sparkles,
@@ -420,6 +421,10 @@ export default function Home() {
             >
               <ArrowUpRight />
               Onshape
+            </a>
+            <a href="https://www.instagram.com/lebob_aus" target="_blank" rel="noreferrer">
+              <Instagram />
+              Instagram
             </a>
           </div>
         </div>
