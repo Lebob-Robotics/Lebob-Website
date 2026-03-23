@@ -33,7 +33,6 @@ export function DocsSidebar({ current, tabs }: DocsSidebarProps) {
           <span>{allCount}</span>
         </Link>
 
-        <p className="docs2-nav-group">Sections</p>
         {DOCS_SECTIONS.map((section) => {
           const href = `/docs/${section.slug}`;
           const count = tabCountByHref(tabs, href);
