@@ -286,7 +286,7 @@ export function DocsFileList({
           <div className="docs2-list-header">
             <span>Document</span>
             {showSection ? <span>Section</span> : null}
-            <span></span>
+            <span aria-hidden="true"></span>
           </div>
 
           <div className="docs2-list">
