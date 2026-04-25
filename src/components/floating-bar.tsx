@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -72,9 +73,10 @@ export function FloatingBar() {
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
           >
-            <span className="lb-pf-menu-toggle-stack" aria-hidden="true">
-              <span className="lb-pf-menu-label menu">menu</span>
-              <span className="lb-pf-menu-label close">close</span>
+            <span className="lb-pf-burger" aria-hidden="true">
+              <span className="lb-pf-burger-bar lb-pf-burger-top" />
+              <span className="lb-pf-burger-bar lb-pf-burger-mid" />
+              <span className="lb-pf-burger-bar lb-pf-burger-bot" />
             </span>
           </button>
 
@@ -96,6 +98,22 @@ export function FloatingBar() {
                 </Link>
               );
             })}
+
+            {/* Drawer footer — primary CTA + status */}
+            <div className="lb-pf-drawer-foot" aria-hidden={!isMobileMenuOpen}>
+              <Link
+                href="/sponsor/how-to"
+                className="lb-pf-drawer-cta"
+                onClick={closeMenu}
+              >
+                <span>Sponsor Lebob</span>
+                <ArrowUpRight />
+              </Link>
+              <div className="lb-pf-drawer-status">
+                <span className="lb-pf-status-dot" />
+                <span>iterating · season unearthed</span>
+              </div>
+            </div>
           </nav>
 
           <div className="lb-pf-nav-meta">
