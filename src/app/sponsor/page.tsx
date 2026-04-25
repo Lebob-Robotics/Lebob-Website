@@ -3,70 +3,141 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { addBasePath } from "next/dist/client/add-base-path";
-import { ArrowUpRight, HeartHandshake } from "lucide-react";
+import { ArrowUpRight, ExternalLink, HeartHandshake } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Sponsors | Lebob",
   description: "Sponsorship Page",
 };
 
+const sponsors = [
+  {
+    num: "01",
+    cat: "Featured",
+    name: "WA Robotics Education",
+    sub: "WARES",
+    desc: "Long-time backers of Western Australian robotics teams. Click the logo to visit their site.",
+    href: "https://warobotics.education/",
+    logo: "/sponsors/cropped-FullLogoWARES.png",
+  },
+];
+
 export default function SponsorPage() {
   return (
-    <div className="sub-page">
-      <main className="sub-main">
-        <div className="sub-grid bg-grid" />
-        <div className="sub-orb sub-orb-left" />
-        <div className="sub-orb sub-orb-right" />
-
-        <section className="sub-wrap sub-wrap-tight sponsor-gratitude-wrap">
-          <div className="sponsor-heart-pill-row">
-            <span className="sponsor-heart-pill">
-              <HeartHandshake size={14} />
-              Sponsors
-            </span>
+    <div className="pf-page-bg">
+      <main>
+        {/* HERO */}
+        <section className="pf-container pf-hero">
+          <div className="pf-hero-grid">
+            <div>
+              <div className="pf-eyebrow">Sponsors · Team #3236</div>
+              <h1 className="pf-h1">
+                Thanks to the people who back<span className="amp"> us.</span>
+              </h1>
+              <p className="pf-lede">
+                We appreciate the organizations that support Team Lebob and help us keep
+                building, learning, and competing.
+              </p>
+              <div className="pf-cta-row">
+                <Link href="/sponsor/how-to" className="pf-btn is-primary">
+                  <HeartHandshake />
+                  <span>How to sponsor us</span>
+                  <ArrowUpRight />
+                </Link>
+                <Link href="/" className="pf-btn">
+                  <span>Back to home</span>
+                </Link>
+              </div>
+            </div>
+            <aside className="pf-hero-aside">
+              <div className="row"><span className="k">team</span> <span className="v">#3236</span></div>
+              <div className="row"><span className="k">season</span> <span className="v">Unearthed</span></div>
+              <div className="row"><span className="k">sponsors</span> <span className="v">{sponsors.length.toString().padStart(2, "0")}</span></div>
+              <div className="row"><span className="k">status</span> <span className="acc">welcoming</span></div>
+            </aside>
           </div>
-          <h1 className="sub-title sponsor-thanks-title">Thank You to Our Sponsors</h1>
-          <p className="sub-text sponsor-thanks-text">
-            We appreciate the organizations that support Team Lebob and help us keep building,
-            learning, and competing.
+        </section>
+
+        {/* CURRENT SPONSORS */}
+        <section className="pf-container pf-section" id="current">
+          <header className="pf-section-head">
+            <span className="pf-section-num">01</span>
+            <span>current sponsors</span>
+            <span className="pf-section-dash" />
+            <span>~/partners</span>
+          </header>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {sponsors.map((s) => (
+              <a
+                key={s.name}
+                className="pf-spotlight"
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Visit ${s.name}`}
+              >
+                <div className="pf-spotlight-copy">
+                  <p className="pf-spotlight-eyebrow">
+                    {s.num} · {s.cat}
+                  </p>
+                  <h2 className="pf-spotlight-title">{s.name}</h2>
+                  <p className="pf-spotlight-sub">
+                    {s.sub} — {s.desc}
+                    <ExternalLink size={11} style={{ display: "inline", marginLeft: 6, verticalAlign: "middle" }} />
+                  </p>
+                </div>
+                <div className="pf-spotlight-logo">
+                  <img
+                    src={addBasePath(s.logo)}
+                    alt={`${s.name} logo`}
+                    width={399}
+                    height={82}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="pf-container pf-section" id="join">
+          <header className="pf-section-head">
+            <span className="pf-section-num">02</span>
+            <span>join them</span>
+            <span className="pf-section-dash" />
+            <span>echo $REPLY</span>
+          </header>
+
+          <h2 className="pf-section-title">
+            Sponsor a future<br />
+            <span className="amp">builder.</span>
+          </h2>
+          <p className="pf-section-lede">
+            Open to financial support, equipment, mentorship — or all three. Every
+            level helps the workshop tick over.
           </p>
-          <div className="sub-pill-row">
-            <Link href="/sponsor/how-to" className="docs-link-btn">
-              How to sponsor us
-              <ArrowUpRight className="sub-icon" />
+          <div className="pf-cta-row" style={{ marginTop: 0 }}>
+            <Link href="/sponsor/how-to" className="pf-btn is-primary">
+              <HeartHandshake />
+              <span>Read how to sponsor</span>
             </Link>
           </div>
         </section>
-
-        <section className="sponsor-spotlight-wrap">
-          <article className="sponsor-spotlight-card card-hover">
-            <div className="sponsor-spotlight-inner">
-              <div className="sponsor-spotlight-copy">
-                <p className="sponsor-spotlight-eyebrow">Featured sponsor</p>
-                <h2 className="sponsor-spotlight-title">WA Robotics Education</h2>
-                <p className="sponsor-spotlight-copytext">Click the logo to visit their website.</p>
-              </div>
-              <a
-                className="sponsor-logo-link"
-                href="https://warobotics.education/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Visit WA Robotics Education website"
-              >
-                <img
-                  className="sponsor-logo-image"
-                  src={addBasePath("/sponsors/cropped-FullLogoWARES.png")}
-                  alt="WA Robotics Education logo"
-                  width={399}
-                  height={82}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
-            </div>
-          </article>
-        </section>
       </main>
+
+      <footer className="pf-footer">
+        <div className="pf-container pf-footer-inner">
+          <div className="who">Lebob FLL Robotics · Team #3236 · Perth Modern</div>
+          <div>
+            <a href="https://github.com/Lebob-Robotics" target="_blank" rel="noreferrer">
+              github.com/Lebob-Robotics
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
