@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
+import { SiteFooter } from "@/components/site-footer";
 
 import { DocsFileList } from "@/components/docs-file-list";
 import { DocsSidebar } from "@/components/docs-sidebar";
@@ -176,16 +177,7 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
         </section>
       </main>
 
-      <footer className="pf-footer">
-        <div className="pf-container pf-footer-inner">
-          <div className="who">Lebob FLL Robotics · Team #3236 · Perth Modern</div>
-          <div>
-            <a href="https://github.com/Lebob-Robotics" target="_blank" rel="noreferrer">
-              github.com/Lebob-Robotics
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { addBasePath } from "next/dist/client/add-base-path";
 import { ArrowUpRight, ExternalLink, HeartHandshake } from "lucide-react";
+import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Sponsors | Lebob",
@@ -128,16 +129,7 @@ export default function SponsorPage() {
         </section>
       </main>
 
-      <footer className="pf-footer">
-        <div className="pf-container pf-footer-inner">
-          <div className="who">Lebob FLL Robotics · Team #3236 · Perth Modern</div>
-          <div>
-            <a href="https://github.com/Lebob-Robotics" target="_blank" rel="noreferrer">
-              github.com/Lebob-Robotics
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

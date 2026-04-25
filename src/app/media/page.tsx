@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { imageSizeFromFile } from "image-size/fromFile";
+import { SiteFooter } from "@/components/site-footer";
 
 import { MediaGrid, type WallPhoto } from "@/components/media-grid";
 import { getVariantDimensions, getVariantList, pickVariantForWidth } from "@/lib/image-variants";
@@ -185,16 +186,7 @@ export default async function MediaPage() {
         </section>
       </main>
 
-      <footer className="pf-footer">
-        <div className="pf-container pf-footer-inner">
-          <div className="who">Lebob FLL Robotics · Team #3236 · Perth Modern</div>
-          <div>
-            <a href="https://github.com/Lebob-Robotics" target="_blank" rel="noreferrer">
-              github.com/Lebob-Robotics
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

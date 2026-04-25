@@ -4,8 +4,9 @@
 import Link from "next/link";
 import { addBasePath } from "next/dist/client/add-base-path";
 import { Brain, Trophy, WrenchIcon } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
+import { SiteFooter } from "@/components/site-footer";
 import { getVariantList, pickVariantForWidth } from "@/lib/image-variants";
 import "./home.css";
 
@@ -122,13 +123,7 @@ function buildResponsiveImage(
   return { src: withBasePath(preferredVariant?.src ?? sourcePath), srcSet };
 }
 
-function pad2(n: number): string {
-  return String(n).padStart(2, "0");
-}
-
 export default function Home() {
-  const [, setClock] = useState("--:--:-- UTC+00");
-  const [footClock, setFootClock] = useState("—");
   const tagRef = useRef<HTMLSpanElement | null>(null);
   const taglineTimer = useRef<number | null>(null);
   const taglineIdx = useRef(0);
@@ -136,22 +131,6 @@ export default function Home() {
   useEffect(() => {
     document.body.classList.add("p3-active");
     return () => document.body.classList.remove("p3-active");
-  }, []);
-
-  useEffect(() => {
-    const tick = () => {
-      const d = new Date();
-      const h = pad2(d.getHours());
-      const m = pad2(d.getMinutes());
-      const s = pad2(d.getSeconds());
-      const off = -d.getTimezoneOffset() / 60;
-      const tz = `UTC${off >= 0 ? "+" : ""}${off}`;
-      setClock(`${h}:${m}:${s} ${tz}`);
-      setFootClock(`${d.getFullYear()} · built w/ teamwork`);
-    };
-    tick();
-    const id = window.setInterval(tick, 1000);
-    return () => window.clearInterval(id);
   }, []);
 
   useEffect(() => {
@@ -586,17 +565,7 @@ export default function Home() {
       </main>
 
       {/* FOOTER */}
-      <footer className="footer">
-        <div className="container footer-inner">
-          <div className="who">Lebob FLL Robotics · Team #3236 · Perth Modern</div>
-          <div>
-            <a href="https://github.com/Lebob-Robotics" target="_blank" rel="noopener noreferrer">
-              github.com/Lebob-Robotics
-            </a>
-          </div>
-          <div>{footClock}</div>
-        </div>
-      </footer>
+      <SiteFooter />
 
       <div className="kbd-hint" aria-hidden="true">
         <span className="kbd">j</span>
