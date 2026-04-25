@@ -4004,3 +4004,24 @@ a {
   .media-tile { border-radius: 4px; }
   .media-shell { padding: 0; }
 }
+
+/* ============================================================
+   /media lightbox mobile pass
+   ============================================================ */
+@media (max-width: 700px) {
+  .media-lightbox-bar { padding: 0.5rem 0.5rem; }
+  .media-lightbox-title { font-size: 12px; padding-right: 0.5rem; }
+  .media-stage { padding: 0.25rem; }
+  .media-frame { padding-inline: 0.5rem; }
+  .media-nav { padding: 0.4rem; }
+  .media-nav-left { left: 0.25rem; }
+  .media-nav-right { right: 0.25rem; }
+  .media-foot { padding: 0.5rem; }
+  .media-tip { display: none; }
+  .media-thumbs {
+    margin-top: 0;
+    gap: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .media-thumb { width: 3.5rem; height: 2.4rem; }
+}
