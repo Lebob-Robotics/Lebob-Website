@@ -143,7 +143,7 @@ export default async function MediaPage() {
               </h1>
               <p className="pf-lede">
                 Competition shots, build sessions, and prototype iterations. The season as
-                it actually happened — Nikon and phone alike.
+                it actually happened.
               </p>
               <div className="pf-pill-row" style={{ marginTop: "1.5rem" }}>
                 <span className="pf-pill">{photos.length} photos</span>

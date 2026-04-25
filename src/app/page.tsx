@@ -491,21 +491,48 @@ export default function Home() {
                   <div className="crew-meta">
                     <span className="crew-id">{member.id}</span>
                     <h3>{member.name}</h3>
-                    <span className="crew-role">{member.role}</span>
                   </div>
                 </article>
               );
             })}
           </div>
 
-          <div className="mentor-strip">
-            <span className="mt-num mono">MT-01</span>
-            <span className="mt-cat">mentors / coaching</span>
-            <span className="mt-name">
-              Jade <span className="amp">&amp;</span> Kaelie
-              <span className="mt-meta">  ·  coaches  ·  season 2026</span>
-            </span>
-          </div>
+          {(() => {
+            const mentorImage = buildResponsiveImage("/members/mentors.jpg", 600, 1200);
+            return (
+              <article className="mentor-card">
+                <div className="mentor-card-photo">
+                  <img
+                    src={mentorImage.src}
+                    srcSet={mentorImage.srcSet}
+                    sizes="(max-width: 900px) 100vw, 280px"
+                    alt="Jade and Kaelie, Lebob mentors"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="mentor-card-meta">
+                  <span className="mentor-card-id mono">MT-01 · mentors / coaching</span>
+                  <h3>
+                    Jade <span className="amp">&amp;</span> Kaelie
+                  </h3>
+                  <p className="mentor-card-role">
+                    Coaches · season 2026 · perth modern
+                  </p>
+                  <dl className="mentor-card-spec">
+                    <div>
+                      <dt>role</dt>
+                      <dd>coach · mentor</dd>
+                    </div>
+                    <div>
+                      <dt>tenure</dt>
+                      <dd>season 2026</dd>
+                    </div>
+                  </dl>
+                </div>
+              </article>
+            );
+          })()}
         </section>
 
         {/* CONTACT */}

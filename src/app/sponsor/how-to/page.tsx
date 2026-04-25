@@ -129,14 +129,7 @@ export default function SponsorHowToPage() {
             <span>where it goes / what you get</span>
           </header>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1.5rem",
-            }}
-            className="pf-impact-grid"
-          >
+          <div className="pf-impact-grid">
             <div>
               <header className="pf-section-head" style={{ marginBottom: "1rem" }}>
                 <PackageCheck size={14} style={{ color: "var(--p-accent)" }} />
