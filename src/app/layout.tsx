@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bungee, IBM_Plex_Mono, Manrope, Sora, Space_Grotesk } from "next/font/google";
+import { Bungee, IBM_Plex_Mono, Inter_Tight, Manrope, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { FloatingBar } from "@/components/floating-bar";
 
@@ -30,6 +30,13 @@ const inter = Manrope({
   display: "swap",
 });
 
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
 const bungee = Bungee({
   variable: "--font-bungee",
   subsets: ["latin"],
@@ -51,6 +58,7 @@ const bodyClasses = [
   plexMono.variable,
   poppins.variable,
   inter.variable,
+  interTight.variable,
   bungee.variable,
   "antialiased",
 ].join(" ");

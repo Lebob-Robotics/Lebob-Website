@@ -1,45 +1,30 @@
 "use client";
-/* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
-import { addBasePath } from "next/dist/client/add-base-path";
-import { HeartHandshake, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/media", label: "Media" },
-  { href: "/docs", label: "Docs" },
-  { href: "/sponsor", label: "Sponsors" },
+  { href: "/", label: "home" },
+  { href: "/media", label: "media" },
+  { href: "/docs", label: "docs" },
+  { href: "/sponsor", label: "sponsors" },
 ];
 
-function withBasePath(path: string): string {
-  return path.startsWith("/") ? addBasePath(path) : path;
+function pad2(n: number): string {
+  return String(n).padStart(2, "0");
 }
 
 export function FloatingBar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isHeaderCompact, setIsHeaderCompact] = useState(false);
-
-  useEffect(() => {
-    const updateHeader = () => {
-      setIsHeaderCompact(window.scrollY > 40);
-    };
-
-    updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
-
-    return () => window.removeEventListener("scroll", updateHeader);
-  }, []);
+  const [clock, setClock] = useState("--:--:-- UTC+00");
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
       document.body.style.overflow = "";
       return;
     }
-
     document.body.style.overflow = "hidden";
   }, [isMobileMenuOpen]);
 
@@ -49,86 +34,87 @@ export function FloatingBar() {
     };
   }, []);
 
-  const logoPath = useMemo(() => withBasePath("/lebob.png"), []);
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      const off = -d.getTimezoneOffset() / 60;
+      const tz = `UTC${off >= 0 ? "+" : ""}${off}`;
+      setClock(`${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())} ${tz}`);
+    };
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, []);
 
-  const closeMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
-  const toggleMenu = () => {
-    setIsMobileMenuOpen((state) => !state);
-  };
+  const closeMenu = () => setIsMobileMenuOpen(false);
+  const toggleMenu = () => setIsMobileMenuOpen((s) => !s);
 
   const isLinkActive = (href: string): boolean => {
-    if (href === "/") {
-      return pathname === "/";
-    }
-
+    if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
   return (
     <>
-      <header className={`lb-header ${isHeaderCompact ? "is-scrolled" : ""}`}>
-        <div className="lb-container lb-header-inner">
-          <Link href="/" className="lb-brand" onClick={closeMenu}>
-            <img
-              src={logoPath}
-              sizes="48px"
-              alt="Lebob logo"
-              width={48}
-              height={48}
-              className="lb-brand-image"
-              loading="eager"
-              decoding="async"
-            />
-            <span className="lb-brand-copy">
-              <strong>Lebob</strong>
-              <small>FLL Team #3236</small>
-            </span>
+      <header className="lb-pf-nav">
+        <div className="lb-pf-nav-inner">
+          <Link href="/" className="lb-pf-logo" aria-label="Lebob home" onClick={closeMenu}>
+            <span className="lb-pf-logo-dot" />
+            <span>LB</span>
+            <small>·3236</small>
           </Link>
 
           <button
             type="button"
-            className="lb-menu-toggle"
+            className="lb-pf-menu-toggle"
+            data-open={isMobileMenuOpen ? "true" : "false"}
             onClick={toggleMenu}
-            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X /> : <Menu />}
+            <span className="lb-pf-menu-toggle-stack" aria-hidden="true">
+              <span className="lb-pf-menu-label menu">menu</span>
+              <span className="lb-pf-menu-label close">close</span>
+            </span>
           </button>
 
-          <nav className={`lb-nav ${isMobileMenuOpen ? "is-open" : ""}`} aria-label="Main navigation">
-            <ul className="lb-nav-list">
-              {navLinks.map((link) => {
-                const active = isLinkActive(link.href);
-
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`lb-nav-link ${active ? "is-active" : ""}`}
-                      onClick={closeMenu}
-                      aria-current={active ? "page" : undefined}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+          <nav
+            className={`lb-pf-nav-links ${isMobileMenuOpen ? "is-open" : ""}`}
+            aria-label="Main"
+          >
+            {navLinks.map((link) => {
+              const active = isLinkActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={active ? "is-active" : ""}
+                  onClick={closeMenu}
+                  aria-current={active ? "page" : undefined}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
-          <div className="lb-header-actions">
-            <Link href="/sponsor" className="lb-icon-button lb-icon-link" aria-label="Go to sponsors page">
-              <HeartHandshake />
-            </Link>
+          <div className="lb-pf-nav-meta">
+            <span className="lb-pf-status">
+              <span className="lb-pf-status-dot" />
+              <span>iterating</span>
+            </span>
+            <span className="lb-pf-clock">{clock}</span>
           </div>
         </div>
       </header>
 
       {isMobileMenuOpen ? (
-        <button type="button" className="lb-backdrop" onClick={closeMenu} aria-label="Close menu backdrop" />
+        <button
+          type="button"
+          className="lb-pf-backdrop"
+          onClick={closeMenu}
+          aria-label="Close menu backdrop"
+        />
       ) : null}
     </>
   );
