@@ -28,7 +28,7 @@ export default async function DocsPage() {
               </h1>
               <p className="pf-lede">
                 Every file in one place. Search by keyword, then filter by section
-                or file type. Pick a section in the sidebar for a focused view.
+                or file type.
               </p>
               <div className="pf-pill-row" style={{ marginTop: "1.5rem" }}>
                 <span className="pf-pill">{totalCount} total files</span>

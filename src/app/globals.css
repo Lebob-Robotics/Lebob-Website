@@ -3798,8 +3798,18 @@ a {
     padding: 1.1rem;
     gap: 1rem;
   }
-  .pf-spotlight-logo { padding: 0.75rem 1rem; min-width: 0; }
-  .pf-spotlight-logo img { max-width: 100%; height: auto; width: 100%; }
+  .pf-spotlight-logo {
+    padding: 1rem;
+    min-width: 0;
+    max-height: 140px;
+  }
+  .pf-spotlight-logo img {
+    max-width: 100%;
+    max-height: 96px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
   .pf-spotlight-title { font-size: 1.4rem; }
   .pf-spotlight-sub { font-size: 11px; line-height: 1.45; }
 
@@ -3923,3 +3933,85 @@ a {
 }
 
 /* Lock body scroll when drawer open is handled in JS via overflow:hidden */
+
+/* ============================================================
+   /docs mobile — hide sidebar (filter UI dupes the function),
+   tighten file rows, drop card chrome.
+   ============================================================ */
+@media (max-width: 700px) {
+  .docs2-page { padding: 0; max-width: 100%; }
+  .docs2-main {
+    gap: 0;
+    grid-template-columns: 1fr !important;
+    width: 100%;
+    max-width: 100%;
+  }
+  .docs2-sidebar { display: none !important; }
+  .docs2-content {
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+  }
+  .docs2-list-tools { padding: 0 !important; background: transparent !important; border: none !important; max-width: 100%; overflow: hidden; }
+  .docs2-filter-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 4px !important;
+  }
+  .docs2-search { padding: 0 4px; }
+  .docs2-filter {
+    min-width: 0 !important;
+    width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+  .docs2-filter select { width: 100%; max-width: 100%; }
+  .docs2-filter-reset { width: 100% !important; }
+  .docs2-search { width: 100%; max-width: 100%; }
+  .docs2-search input { width: 100%; max-width: 100%; box-sizing: border-box; }
+  .docs2-block {
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+  .docs2-filter-row {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+  }
+  .docs2-filter, .docs2-search {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+  .docs2-list {
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg-elev);
+  }
+  .docs2-row {
+    padding: 14px 14px;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .docs2-row:last-child { border-bottom: none; }
+  .docs2-row-actions { gap: 0.4rem; flex-wrap: wrap; }
+  .docs2-row-action {
+    padding: 6px 10px;
+    font-size: 11px;
+    min-height: 32px;
+  }
+  .docs2-row-name { font-size: 0.9375rem; line-height: 1.3; }
+  .docs2-row-file { font-size: 11px; }
+}
+
+/* ============================================================
+   /media mobile — drop file label overlays, single-col tight.
+   ============================================================ */
+@media (max-width: 700px) {
+  .media-cap { display: none !important; }
+  .media-tile { border-radius: 4px; }
+  .media-shell { padding: 0; }
+}

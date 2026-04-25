@@ -626,7 +626,7 @@ body.p3-active {
   .p3-page .project-num,
   .p3-page .project-cat,
   .p3-page .project-tags,
-  .p3-page .project-link-wrap .project-link-host,
+  .p3-page .project-link-wrap,
   .p3-page .mentor-card-spec,
   .p3-page .mentor-card-role { display: none !important; }
 
@@ -649,8 +649,7 @@ body.p3-active {
     margin-bottom: 1rem;
     letter-spacing: -0.03em;
   }
-  .p3-page .hero-name br { display: none; }
-  .p3-page .hero-name .soft { display: inline; }
+  .p3-page .hero-name .soft { display: block; margin-top: 0.4rem; }
   .p3-page .hero-tag {
     font-size: 0.95rem;
   }
