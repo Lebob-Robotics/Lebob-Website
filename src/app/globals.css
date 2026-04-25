@@ -4224,3 +4224,20 @@ a {
     gap: 0.5rem;
   }
 }
+
+/* ============================================================
+   Polish: scroll margin so anchored sections clear sticky nav
+   ============================================================ */
+.p3-page section[id],
+.pf-page-bg section[id] {
+  scroll-margin-top: 70px;
+}
+
+/* Smooth scroll globally */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
