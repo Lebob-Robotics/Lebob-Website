@@ -20,6 +20,7 @@ const sponsors = [
     desc: "Long-time backers of Western Australian robotics teams. Click the logo to visit their site.",
     href: "https://warobotics.education/",
     logo: "/sponsors/cropped-FullLogoWARES.png",
+    alwaysFullColor: true,
   },
 ];
 
@@ -96,6 +97,7 @@ export default function SponsorPage() {
                     height={82}
                     loading="lazy"
                     decoding="async"
+                    className={s.alwaysFullColor ? "is-full-color" : undefined}
                   />
                 </div>
               </a>
