@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bungee, IBM_Plex_Mono, Inter_Tight, Manrope, Sora, Space_Grotesk } from "next/font/google";
+import { Bungee, IBM_Plex_Mono, Inter_Tight, Manrope, Press_Start_2P, Sora, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { FloatingBar } from "@/components/floating-bar";
 
@@ -44,6 +44,13 @@ const bungee = Bungee({
   display: "swap",
 });
 
+const pressStart = Press_Start_2P({
+  variable: "--font-press-start",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Lebob | Home",
   description:
@@ -60,6 +67,7 @@ const bodyClasses = [
   inter.variable,
   interTight.variable,
   bungee.variable,
+  pressStart.variable,
   "antialiased",
 ].join(" ");
 

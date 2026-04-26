@@ -78,10 +78,10 @@ body.p3-active {
   display: block;
 }
 .p3-page .hero-wordmark-name {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: 0.08em;
+  font-family: var(--font-press-start), var(--mono);
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
   color: var(--fg);
   line-height: 1;
 }
@@ -99,7 +99,7 @@ body.p3-active {
 @media (max-width: 700px) {
   .p3-page .hero-wordmark { gap: 10px; padding: 6px 10px 6px 6px; }
   .p3-page .hero-wordmark-logo { width: 32px; height: 32px; }
-  .p3-page .hero-wordmark-name { font-size: 1.25rem; }
+  .p3-page .hero-wordmark-name { font-size: 0.875rem; }
   .p3-page .hero-wordmark-meta { font-size: 10px; padding-left: 8px; letter-spacing: 0.14em; }
 }
 .p3-page .hero-grid {
