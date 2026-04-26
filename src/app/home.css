@@ -108,14 +108,6 @@ body.p3-active {
   gap: 3rem;
   align-items: end;
 }
-.p3-page .hero-eyebrow {
-  font-family: var(--mono); font-size: 12px;
-  color: var(--fg-muted);
-  display: inline-flex; align-items: center; gap: 0.6rem;
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.04em;
-}
-.p3-page .hero-eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--p3-accent); }
 .p3-page .hero-name {
   font-family: var(--mono);
   font-weight: 500;
@@ -679,12 +671,6 @@ body.p3-active {
     padding-bottom: 2.25rem;
   }
   .p3-page .hero-grid { display: block; }
-  .p3-page .hero-eyebrow {
-    font-size: 10.5px;
-    margin-bottom: 1rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
   .p3-page .hero-name {
     font-size: clamp(2.4rem, 12vw, 3.4rem);
     line-height: 1;

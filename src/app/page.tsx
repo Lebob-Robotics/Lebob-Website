@@ -174,7 +174,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const order = ["top", "about", "projects", "stack", "crew", "contact"];
+    const order = ["top", "crew", "about", "projects", "stack", "contact"];
     const goSection = (delta: number) => {
       const y = window.scrollY + 120;
       let idx = 0;

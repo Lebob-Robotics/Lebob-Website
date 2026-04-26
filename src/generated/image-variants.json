@@ -604,6 +604,72 @@
       }
     ]
   },
+  "/media/Lebob.jpg": {
+    "width": 4000,
+    "height": 3000,
+    "variants": [
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-64.webp",
+        "width": 64,
+        "height": 48
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-96.webp",
+        "width": 96,
+        "height": 72
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-160.webp",
+        "width": 160,
+        "height": 120
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-240.webp",
+        "width": 240,
+        "height": 180
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-320.webp",
+        "width": 320,
+        "height": 240
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-480.webp",
+        "width": 480,
+        "height": 360
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-640.webp",
+        "width": 640,
+        "height": 480
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-768.webp",
+        "width": 768,
+        "height": 576
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-960.webp",
+        "width": 960,
+        "height": 720
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-1200.webp",
+        "width": 1200,
+        "height": 900
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-1600.webp",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "src": "/_img-andre/media/lebob-d7878dc5-2048.webp",
+        "width": 2048,
+        "height": 1536
+      }
+    ]
+  },
   "/members/aaron.png": {
     "width": 498,
     "height": 555,
