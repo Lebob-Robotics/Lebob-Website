@@ -102,7 +102,7 @@ export function DocumentGrid({ items }: DocumentGridProps) {
                   <a
                     href={src}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="doc-action"
                   >
                     Open

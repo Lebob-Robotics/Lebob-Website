@@ -115,7 +115,7 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
               const isExternal = link.href.startsWith("http");
               if (isExternal) {
                 return (
-                  <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className="pf-btn">
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="pf-btn">
                     <span>{link.label}</span>
                     <ArrowUpRight />
                   </a>

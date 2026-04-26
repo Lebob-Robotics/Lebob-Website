@@ -41,17 +41,24 @@ function pad2(n: number): string {
   return String(n).padStart(2, "0");
 }
 
+function formatUtcOffset(date: Date): string {
+  const totalMinutes = -date.getTimezoneOffset();
+  const sign = totalMinutes >= 0 ? "+" : "-";
+  const abs = Math.abs(totalMinutes);
+  return `UTC${sign}${pad2(Math.floor(abs / 60))}:${pad2(abs % 60)}`;
+}
+
 export function SiteFooter() {
   const [year, setYear] = useState<number | null>(null);
-  const [time, setTime] = useState("--:--:-- UTC+00");
+  const [time, setTime] = useState("--:--:-- UTC+00:00");
 
   useEffect(() => {
     const tick = () => {
       const d = new Date();
-      const off = -d.getTimezoneOffset() / 60;
-      const tz = `UTC${off >= 0 ? "+" : ""}${off}`;
       setYear(d.getFullYear());
-      setTime(`${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())} ${tz}`);
+      setTime(
+        `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())} ${formatUtcOffset(d)}`,
+      );
     };
     tick();
     const id = window.setInterval(tick, 1000);

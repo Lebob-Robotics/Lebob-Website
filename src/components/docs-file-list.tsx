@@ -286,6 +286,7 @@ export function DocsFileList({
           <div className="docs2-list-header">
             <span>Document</span>
             {showSection ? <span>Section</span> : null}
+            <span>Actions</span>
           </div>
 
           <div className="docs2-list">
@@ -310,7 +311,7 @@ export function DocsFileList({
                   ) : null}
 
                   <div className="docs2-row-actions">
-                    <Link href={href} target="_blank" rel="noreferrer">
+                    <Link href={href} target="_blank" rel="noopener noreferrer">
                       Open
                       <ExternalLink className="h-3.5 w-3.5" />
                     </Link>

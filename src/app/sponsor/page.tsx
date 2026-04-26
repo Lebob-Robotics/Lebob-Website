@@ -75,7 +75,7 @@ export default function SponsorPage() {
                 className="pf-spotlight"
                 href={s.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label={`Visit ${s.name}`}
               >
                 <div className="pf-spotlight-copy">
