@@ -3384,8 +3384,8 @@ a {
 
 /* Hero (text-only, no photo) */
 .pf-hero {
-  padding-top: clamp(4.5rem, 9vw, 7rem);
-  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2.5rem, 6vw, 4.5rem);
+  padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
 }
 .pf-hero-grid {
   display: grid;
@@ -3480,8 +3480,8 @@ a {
 
 /* Section pattern */
 .pf-section {
-  padding-top: clamp(3.5rem, 7vw, 5.5rem);
-  padding-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
   border-top: 1px solid var(--line-soft);
 }
 .pf-section-head {

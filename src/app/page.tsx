@@ -222,7 +222,17 @@ export default function Home() {
         <section className="hero container">
           <div className="hero-grid">
             <div>
-              <div className="hero-eyebrow mono">FLL Robotics · Team #3236 · Perth</div>
+              <div className="hero-wordmark">
+                <img
+                  src={withBasePath("/lebob.png")}
+                  alt=""
+                  width={64}
+                  height={64}
+                  className="hero-wordmark-logo"
+                />
+                <span className="hero-wordmark-name">LEBOB</span>
+                <span className="hero-wordmark-meta">FLL · #3236</span>
+              </div>
               <h1 className="hero-name">
                 Robots that compete<span className="amp">.</span>
                 <br />
@@ -265,12 +275,11 @@ export default function Home() {
             </div>
             <aside className="hero-aside">
               <div className="row"><span className="k">location</span> <span className="v">Perth · WA</span></div>
-              <div className="row"><span className="k">school</span> <span className="v">Perth Modern</span></div>
               <div className="row"><span className="k">team</span> <span className="v">#3236</span></div>
               <div className="row"><span className="k">season</span> <span className="v">Unearthed</span></div>
               <div className="row"><span className="k">members</span> <span className="v">08</span></div>
               <div className="row"><span className="k">mentors</span> <span className="v">02</span></div>
-              <div className="row"><span className="k">status</span> <span className="acc">iterating</span></div>
+              <div className="row"><span className="k">awards</span> <span className="acc">state · nat</span></div>
             </aside>
           </div>
         </section>
@@ -289,10 +298,46 @@ export default function Home() {
           </div>
         </section>
 
+        {/* CREW */}
+        <section className="section container" id="crew">
+          <header className="section-head">
+            <span className="section-num">01</span>
+            <span>crew</span>
+            <span className="section-dash" />
+            <span>personnel manifest</span>
+          </header>
+
+          <div className="crew-grid">
+            {team.map((member) => {
+              const memberImage = buildResponsiveImage(member.image, 160, 320);
+              return (
+                <article key={member.id} className="crew-cell">
+                  <div className="crew-portrait">
+                    <img
+                      src={memberImage.src}
+                      srcSet={memberImage.srcSet}
+                      sizes="56px"
+                      alt={member.name}
+                      width={56}
+                      height={56}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div className="crew-meta">
+                    <span className="crew-id">{member.id}</span>
+                    <h3>{member.name}</h3>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
         {/* ABOUT */}
         <section className="section container" id="about">
           <header className="section-head">
-            <span className="section-num">01</span>
+            <span className="section-num">02</span>
             <span>about</span>
             <span className="section-dash" />
             <span>whoami</span>
@@ -301,9 +346,9 @@ export default function Home() {
             <div className="about-prose">
               <p>
                 Lebob is an <strong>international FIRST LEGO League team</strong>{" "}
-                based at Perth Modern School in Western Australia. We engineer
-                robots, research soft-robotic mechanisms, and ship our work as
-                documentation others can learn from.
+                based in Perth, Western Australia. We engineer robots, research
+                soft-robotic mechanisms, and ship our work as documentation
+                others can learn from.
               </p>
               <p>
                 Eight members, two mentors, one shared workshop. Our goal is
@@ -347,8 +392,8 @@ export default function Home() {
                 <div className="stat-key">2025/26 season</div>
               </div>
               <div className="stat">
-                <div className="stat-val">∞</div>
-                <div className="stat-key">iterations shipped</div>
+                <div className="stat-val">02</div>
+                <div className="stat-key">mentors</div>
               </div>
             </div>
           </div>
@@ -357,7 +402,7 @@ export default function Home() {
         {/* PROJECTS */}
         <section className="section container" id="projects">
           <header className="section-head">
-            <span className="section-num">02</span>
+            <span className="section-num">03</span>
             <span>projects</span>
             <span className="section-dash" />
             <span>~/src</span>
@@ -421,7 +466,7 @@ export default function Home() {
         {/* STACK */}
         <section className="section container" id="stack">
           <header className="section-head">
-            <span className="section-num">03</span>
+            <span className="section-num">04</span>
             <span>stack</span>
             <span className="section-dash" />
             <span>which --all</span>
@@ -441,78 +486,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CREW */}
-        <section className="section container" id="crew">
-          <header className="section-head">
-            <span className="section-num">04</span>
-            <span>crew</span>
-            <span className="section-dash" />
-            <span>personnel manifest</span>
-          </header>
-
-          <div className="crew-grid">
-            {team.map((member) => {
-              const memberImage = buildResponsiveImage(member.image, 160, 320);
-              return (
-                <article key={member.id} className="crew-cell">
-                  <div className="crew-portrait">
-                    <img
-                      src={memberImage.src}
-                      srcSet={memberImage.srcSet}
-                      sizes="56px"
-                      alt={member.name}
-                      width={56}
-                      height={56}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="crew-meta">
-                    <span className="crew-id">{member.id}</span>
-                    <h3>{member.name}</h3>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-
-          {(() => {
-            const mentorImage = buildResponsiveImage("/members/mentors.jpg", 600, 1200);
-            return (
-              <article className="mentor-card">
-                <div className="mentor-card-photo">
-                  <img
-                    src={mentorImage.src}
-                    srcSet={mentorImage.srcSet}
-                    sizes="(max-width: 900px) 100vw, 280px"
-                    alt="Jade and Kaelie, Lebob mentors"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div className="mentor-card-meta">
-                  <span className="mentor-card-id mono">MT-01 · mentors / coaching</span>
-                  <h3>
-                    Jade <span className="amp">&amp;</span> Kaelie
-                  </h3>
-                  <p className="mentor-card-role">
-                    Coaches · season 2026 · perth modern
-                  </p>
-                  <dl className="mentor-card-spec">
-                    <div>
-                      <dt>role</dt>
-                      <dd>coach · mentor</dd>
-                    </div>
-                    <div>
-                      <dt>tenure</dt>
-                      <dd>season 2026</dd>
-                    </div>
-                  </dl>
-                </div>
-              </article>
-            );
-          })()}
-        </section>
 
         {/* CONTACT */}
         <section className="section container contact" id="contact">
