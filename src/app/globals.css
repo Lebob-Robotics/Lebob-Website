@@ -4280,3 +4280,25 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* Nav Instagram icon link */
+.lb-pf-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-elev);
+  color: var(--fg-muted);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.lb-pf-icon-link:hover {
+  color: var(--p-accent);
+  border-color: var(--fg-muted);
+}
+.lb-pf-icon-link svg {
+  width: 14px;
+  height: 14px;
+}

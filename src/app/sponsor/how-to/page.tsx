@@ -52,7 +52,7 @@ const sponsorBenefits = [
   "A direct role in supporting student engineering growth",
 ];
 
-const sponsorEmail = "your-team-email@example.com";
+const sponsorEmail = "team@lebob.com.au";
 
 export default function SponsorHowToPage() {
   return (
@@ -86,9 +86,6 @@ export default function SponsorHowToPage() {
                   <span>Team documentation</span>
                 </Link>
               </div>
-              <p className="pf-lede" style={{ marginTop: "1.25rem", fontSize: "0.875rem" }}>
-                Update contact email in <code className="pf-code">src/app/sponsor/how-to/page.tsx</code> before publishing.
-              </p>
             </div>
             <aside className="pf-hero-aside">
               <div className="row"><span className="k">team</span> <span className="v">#3236</span></div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Instagram } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -124,6 +124,15 @@ export function FloatingBar() {
           </nav>
 
           <div className="lb-pf-nav-meta">
+            <a
+              href="https://www.instagram.com/lebob_aus"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="lb-pf-icon-link"
+              aria-label="Follow Lebob on Instagram"
+            >
+              <Instagram />
+            </a>
             <span className="lb-pf-status">
               <span className="lb-pf-status-dot" />
               <span>iterating</span>

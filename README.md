@@ -1,4 +1,7 @@
 # Lebob FLL Robotics Team Website
+Live website: https://lebob.com.au  
+Docs: https://lebob.com.au/Lebob-Website/docs
+
 The recommended code editor for beginners is VSCode.
 Install VSCode [here](https://code.visualstudio.com/download).
 ## Contributing
