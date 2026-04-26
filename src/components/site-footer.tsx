@@ -23,7 +23,7 @@ const FOOTER_GROUPS: Array<{
       { label: "Instagram · @lebob_aus", href: "https://www.instagram.com/lebob_aus", external: true },
       { label: "FLL · official site", href: "https://www.firstlegoleague.org/", external: true },
       { label: "Onshape · CAD", href: "https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb", external: true },
-      { label: "GitHub · source", href: "https://github.com/prawny-boy/FLL-Lebob-Unearthed", external: true },
+      { label: "GitHub · source", href: "https://github.com/Lebob-Robotics", external: true },
       { label: "Sponsor us", href: "/sponsor/how-to" },
     ],
   },
@@ -120,7 +120,7 @@ export function SiteFooter() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            source
+            site source
           </a>
         </span>
       </div>

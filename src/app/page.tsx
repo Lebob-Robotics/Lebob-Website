@@ -397,17 +397,6 @@ export default function Home() {
                 for ROV manipulation. The goal: software, mechanisms, and a team
                 that <strong>work well</strong> and <strong>feel right</strong>.
               </p>
-              <a
-                className="about-link mono"
-                href="https://github.com/Lebob-Robotics"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span>github.com/Lebob-Robotics</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M7 17L17 7M8 7h9v9" />
-                </svg>
-              </a>
             </div>
             <div className="stats">
               <div className="stat">
@@ -547,7 +536,7 @@ export default function Home() {
               <span>Sponsor Lebob</span>
             </Link>
             <a
-              href="https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+              href="https://github.com/Lebob-Robotics"
               target="_blank"
               rel="noopener noreferrer"
               className="btn"
@@ -555,7 +544,7 @@ export default function Home() {
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 .5C5.73.5.67 5.56.67 11.83c0 4.97 3.22 9.18 7.7 10.67.56.1.77-.24.77-.54v-1.9c-3.13.68-3.8-1.51-3.8-1.51-.51-1.31-1.25-1.66-1.25-1.66-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.64 1.22 3.28.93.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.57 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.43.11-2.98 0 0 .94-.3 3.1 1.16a10.75 10.75 0 0 1 5.64 0c2.15-1.46 3.09-1.16 3.09-1.16.62 1.55.23 2.69.11 2.98.72.79 1.15 1.8 1.15 3.03 0 4.33-2.63 5.29-5.14 5.57.41.35.76 1.04.76 2.1v3.11c0 .3.2.65.78.54 4.48-1.49 7.69-5.7 7.69-10.67C23.33 5.56 18.27.5 12 .5z" />
               </svg>
-              <span>github.com/prawny-boy/FLL-Lebob-Unearthed</span>
+              <span>Team Github</span>
             </a>
             <a
               href="https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb"
@@ -563,7 +552,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="btn"
             >
-              <span>cad.onshape.com</span>
+              <span>Innovations Onshape</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 17L17 7M8 7h9v9" />
               </svg>
