@@ -3143,20 +3143,24 @@ a {
 }
 
 .lb-pf-nav-links a {
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .lb-pf-nav-links a::before {
   content: "~/";
   display: inline-block;
+  flex-shrink: 0;
   overflow: hidden;
   max-width: 0;
   opacity: 0;
   margin-right: 0;
   transform: translateX(-4px);
   color: var(--p-accent);
-  line-height: 1;
+  line-height: inherit;
+  vertical-align: baseline;
   transition:
     max-width 220ms cubic-bezier(0.4, 0, 0.2, 1),
     opacity 180ms ease,
