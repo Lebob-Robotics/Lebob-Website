@@ -3143,10 +3143,20 @@ a {
 }
 
 .lb-pf-nav-links a::before {
-  content: "";
+  content: "~/";
+  display: inline-block;
+  overflow: hidden;
+  max-width: 0;
   opacity: 0;
-  margin-right: 4px;
+  margin-right: 0;
+  transform: translateX(-4px);
   color: var(--p-accent);
+  transition:
+    max-width 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 180ms ease,
+    transform 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    margin-right 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
 }
 
 .lb-pf-nav-links a:hover {
@@ -3155,8 +3165,14 @@ a {
 
 .lb-pf-nav-links a:hover::before,
 .lb-pf-nav-links a.is-active::before {
-  content: "~/";
+  max-width: 2ch;
   opacity: 1;
+  transform: translateX(0);
+  margin-right: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-pf-nav-links a::before { transition: none; }
 }
 
 .lb-pf-nav-links a.is-active {
@@ -3860,7 +3876,7 @@ a {
   .pf-btn:hover { transform: none; }
   .pf-spotlight:hover { background: var(--bg-elev); border-color: var(--line); }
   .lb-pf-nav-links a:hover { color: var(--fg-muted); }
-  .lb-pf-nav-links a:hover::before { content: ""; opacity: 0; }
+  .lb-pf-nav-links a:hover::before { max-width: 0; opacity: 0; margin-right: 0; }
 }
 
 /* ============================================================
