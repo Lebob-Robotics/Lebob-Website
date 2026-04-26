@@ -60,7 +60,7 @@ const projects = [
     num: "03",
     cat: "Documentation",
     title: "Engineering Notebook",
-    desc: "Living documentation of our season — robot design rationale, code architecture, attachment library, and the research notes behind every iteration we ship to the field.",
+    desc: "Living documentation of our season · robot design rationale, code architecture, attachment library, and the research notes behind every iteration we ship to the field.",
     tags: ["Markdown", "Next.js", "Docs", "OpenSource"],
     href: "/docs",
     host: "/docs",
@@ -80,7 +80,7 @@ const projects = [
     num: "05",
     cat: "Hardware / CAD",
     title: "Onshape Workspace",
-    desc: "Full CAD models for the robot, attachments, and SoftSense innovation prototypes. Live Onshape document — every revision logged.",
+    desc: "Full CAD models for the robot, attachments, and SoftSense innovation prototypes. Live Onshape document · every revision logged.",
     tags: ["Onshape", "CAD", "STL", "DXF"],
     href: "https://cad.onshape.com/documents/47a3be0d6a2fdc65e8e54697/w/01a750025f75b7ddacbabc32/e/b3435ce241b6547a5a3021fb",
     host: "cad.onshape.com",
@@ -90,7 +90,7 @@ const projects = [
     num: "06",
     cat: "Media",
     title: "Photo Gallery",
-    desc: "Competition photos, build sessions, prototype iterations, and the moments between. Shot on Nikon and phone alike — the season as it actually happened.",
+    desc: "Competition photos, build sessions, prototype iterations, and the moments between. Shot on Nikon and phone alike · the season as it actually happened.",
     tags: ["Gallery", "Photography", "Season 2026"],
     href: "/media",
     host: "/media",
@@ -387,13 +387,13 @@ export default function Home() {
               </p>
               <p>
                 Eight members, two mentors, one shared workshop. Our goal is
-                turning ideas into real, working prototypes through teamwork —
+                turning ideas into real, working prototypes through teamwork,
                 and then sharing them with the rest of the engineering world.
               </p>
               <p className="pull">&quot;the workshop is home.&quot;</p>
               <p>
                 We compete in the <strong>Unearthed</strong> season and run the{" "}
-                <strong>SoftSense</strong> innovation project — a soft gripper
+                <strong>SoftSense</strong> innovation project · a soft gripper
                 for ROV manipulation. The goal: software, mechanisms, and a team
                 that <strong>work well</strong> and <strong>feel right</strong>.
               </p>
@@ -536,7 +536,7 @@ export default function Home() {
           </h2>
           <p className="contact-sub">
             Open to sponsorship, mentorship, and collaboration with other teams.
-            Drop us a line — we run lean and we ship.
+            Drop us a line · we run lean and we ship.
           </p>
           <div className="contact-links">
             <Link href="/sponsor" className="btn primary">

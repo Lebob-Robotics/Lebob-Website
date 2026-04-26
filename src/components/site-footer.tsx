@@ -111,7 +111,7 @@ export function SiteFooter() {
 
       <div className="lb-site-footer-bottom">
         <span>
-          {year ?? "—"} · Lebob FLL Robotics · Team #3236 · Western Australia
+          {year ?? "·"} · Lebob FLL Robotics · Team #3236 · Western Australia
         </span>
         <span className="lb-site-footer-bottom-right">
           Built with teamwork ·{" "}
