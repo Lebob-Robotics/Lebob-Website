@@ -174,7 +174,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const order = ["top", "crew", "about", "projects", "stack", "contact"];
+    const order = ["top", "crew", "mentors", "about", "projects", "stack", "contact"];
     const goSection = (delta: number) => {
       const y = window.scrollY + 120;
       let idx = 0;
@@ -332,6 +332,41 @@ export default function Home() {
               );
             })}
           </div>
+
+          {(() => {
+            const mentorImage = buildResponsiveImage("/members/mentors.jpg", 600, 1200);
+            return (
+              <article className="mentor-card" id="mentors">
+                <div className="mentor-card-photo">
+                  <img
+                    src={mentorImage.src}
+                    srcSet={mentorImage.srcSet}
+                    sizes="(max-width: 900px) 100vw, 280px"
+                    alt="Jade and Kaelie, Lebob mentors"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="mentor-card-meta">
+                  <span className="mentor-card-id mono">MT-01 · mentors / coaching</span>
+                  <h3>
+                    Jade <span className="amp">&amp;</span> Kaelie
+                  </h3>
+                  <p className="mentor-card-role">Coaches · season 2026</p>
+                  <dl className="mentor-card-spec">
+                    <div>
+                      <dt>role</dt>
+                      <dd>coach · mentor</dd>
+                    </div>
+                    <div>
+                      <dt>tenure</dt>
+                      <dd>season 2026</dd>
+                    </div>
+                  </dl>
+                </div>
+              </article>
+            );
+          })()}
         </section>
 
         {/* ABOUT */}
