@@ -118,7 +118,7 @@ export function FloatingBar() {
               </Link>
               <div className="lb-pf-drawer-status">
                 <span className="lb-pf-status-dot" />
-                <span>iterating · season unearthed</span>
+                <span>season unearthed · perth · au</span>
               </div>
             </div>
           </nav>
@@ -135,7 +135,7 @@ export function FloatingBar() {
             </a>
             <span className="lb-pf-status">
               <span className="lb-pf-status-dot" />
-              <span>iterating</span>
+              <span>perth · au</span>
             </span>
             <span className="lb-pf-clock">{clock}</span>
           </div>

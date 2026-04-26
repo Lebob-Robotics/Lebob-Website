@@ -39,7 +39,7 @@ const supportOptions = [
 ];
 
 const whereSupportGoes = [
-  "Competition registration and event travel",
+  "Competition registration fees",
   "Prototype parts, sensors, replacement hardware",
   "Presentation materials and community outreach demos",
   "Team learning resources and practice field upgrades",
@@ -47,7 +47,6 @@ const whereSupportGoes = [
 
 const sponsorBenefits = [
   "Recognition on team materials and sponsorship page",
-  "Project updates during the season",
   "Highlight mentions in team presentations and outreach",
   "A direct role in supporting student engineering growth",
 ];

@@ -30,7 +30,6 @@ const FOOTER_GROUPS: Array<{
   {
     head: "Team",
     links: [
-      { label: "Perth Modern School", href: "https://perthmodern.wa.edu.au/", external: true },
       { label: "Team #3236 · Lebob", href: "/" },
       { label: "Season · Unearthed 2025/26", href: "/" },
       { label: "Western Australia · AU", href: "/" },
@@ -81,7 +80,7 @@ export function SiteFooter() {
           <div className="lb-site-footer-meta">
             <span className="lb-site-footer-status">
               <span className="lb-site-footer-status-dot" />
-              <span>iterating</span>
+              <span>perth · au</span>
             </span>
             <span>{time}</span>
           </div>
@@ -112,8 +111,7 @@ export function SiteFooter() {
 
       <div className="lb-site-footer-bottom">
         <span>
-          {year ?? "—"} · Lebob FLL Robotics · Team #3236 · Perth Modern School,
-          Western Australia
+          {year ?? "·"} · Lebob FLL Robotics · Team #3236 · Western Australia
         </span>
         <span className="lb-site-footer-bottom-right">
           Built with teamwork ·{" "}

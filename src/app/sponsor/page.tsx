@@ -84,7 +84,7 @@ export default function SponsorPage() {
                   </p>
                   <h2 className="pf-spotlight-title">{s.name}</h2>
                   <p className="pf-spotlight-sub">
-                    {s.sub} — {s.desc}
+                    {s.sub} · {s.desc}
                     <ExternalLink size={11} style={{ display: "inline", marginLeft: 6, verticalAlign: "middle" }} />
                   </p>
                 </div>
@@ -117,7 +117,7 @@ export default function SponsorPage() {
             <span className="amp">builder.</span>
           </h2>
           <p className="pf-section-lede">
-            Open to financial support, equipment, mentorship — or all three. Every
+            Open to financial support, equipment, mentorship · or all three. Every
             level helps the workshop tick over.
           </p>
           <div className="pf-cta-row" style={{ marginTop: 0 }}>
