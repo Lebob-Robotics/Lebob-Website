@@ -36,7 +36,7 @@ export function DocsToc({ items, links = [] }: DocsTocProps) {
           <p>Quick links</p>
           {links.map((link) =>
             link.external ? (
-              <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+              <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
                 {link.label}
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </a>

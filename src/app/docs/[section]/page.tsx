@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { SiteFooter } from "@/components/site-footer";
 
 import { DocsFileList } from "@/components/docs-file-list";
 import { DocsSidebar } from "@/components/docs-sidebar";
@@ -60,95 +61,123 @@ export default async function DocsSectionPage({ params }: DocsSectionPageProps) 
   const otherSections = DOCS_SECTIONS.filter((entry) => entry.slug !== sectionSlug);
 
   return (
-    <div className="docs2-page">
-      <RouteScrollTop />
-      <main className="docs2-main">
-        <DocsSidebar current={sectionSlug} tabs={tabs} />
-
-        <section className="docs2-content">
-          <header className="docs2-head" id="overview">
-            <p className="docs2-breadcrumb">Documentation / {sectionInfo.tabLabel}</p>
-            <h1>{sectionInfo.title}</h1>
-            <p>{sectionInfo.description}</p>
-            <div className="docs2-pill-row">
-              <span className="docs2-pill">{documentItems.length} files available</span>
-              <span className="docs2-pill">{sectionInfo.tabLabel} section</span>
+    <div className="pf-page-bg">
+      <main>
+        <section className="pf-container pf-hero">
+          <div className="pf-hero-grid">
+            <div>
+              <div className="pf-eyebrow">Documentation / {sectionInfo.tabLabel}</div>
+              <h1 className="pf-h1">
+                {sectionInfo.title}<span className="amp">.</span>
+              </h1>
+              <p className="pf-lede">{sectionInfo.description}</p>
+              <div className="pf-pill-row" style={{ marginTop: "1.5rem" }}>
+                <span className="pf-pill">{documentItems.length} files</span>
+                <span className="pf-pill">{sectionInfo.tabLabel.toLowerCase()} section</span>
+              </div>
             </div>
+            <aside className="pf-hero-aside">
+              <div className="row"><span className="k">section</span> <span className="v">{sectionSlug}</span></div>
+              <div className="row"><span className="k">files</span> <span className="v">{documentItems.length.toString().padStart(3, "0")}</span></div>
+              <div className="row"><span className="k">links</span> <span className="v">{sectionInfo.links.length.toString().padStart(2, "0")}</span></div>
+              <div className="row"><span className="k">status</span> <span className="acc">live</span></div>
+            </aside>
+          </div>
+        </section>
+
+        <RouteScrollTop />
+
+        <section className="pf-container pf-section" id="inside">
+          <header className="pf-section-head">
+            <span className="pf-section-num">01</span>
+            <span>what you will find</span>
+            <span className="pf-section-dash" />
+            <span>~/highlights</span>
+          </header>
+          <div className="pf-rows">
+            {sectionInfo.highlights.map((item) => (
+              <div key={item} className="pf-row">
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="pf-container pf-section" id="links">
+          <header className="pf-section-head">
+            <span className="pf-section-num">02</span>
+            <span>key links</span>
+            <span className="pf-section-dash" />
+            <span>~/refs</span>
+          </header>
+          <div className="pf-cta-row" style={{ marginTop: 0 }}>
+            {sectionInfo.links.map((link) => {
+              const isExternal = link.href.startsWith("http");
+              if (isExternal) {
+                return (
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="pf-btn">
+                    <span>{link.label}</span>
+                    <ArrowUpRight />
+                  </a>
+                );
+              }
+              return (
+                <Link key={link.href} href={link.href} className="pf-btn">
+                  <span>{link.label}</span>
+                  <ArrowUpRight />
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="pf-container pf-section" id="library">
+          <header className="pf-section-head">
+            <span className="pf-section-num">03</span>
+            <span>{sectionInfo.tabLabel.toLowerCase()} library</span>
+            <span className="pf-section-dash" />
+            <span>~/files</span>
           </header>
 
-          <section id="inside" className="docs2-block">
-            <div className="docs2-section-panels">
-              <article className="docs2-panel">
-                <h2>What You Will Find</h2>
-                <ul>
-                  {sectionInfo.highlights.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </article>
-
-              <article className="docs2-panel">
-                <h2>Key Links</h2>
-                <div className="docs2-quick-links">
-                  {sectionInfo.links.map((link) => {
-                    const isExternal = link.href.startsWith("http");
-                    if (isExternal) {
-                      return (
-                        <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
-                          {link.label}
-                          <ArrowUpRight className="h-3.5 w-3.5" />
-                        </a>
-                      );
-                    }
-
-                    return (
-                      <Link key={link.href} href={link.href}>
-                        {link.label}
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      </Link>
-                    );
-                  })}
+          <div className="docs2-page">
+            <div className="docs2-main">
+              <DocsSidebar current={sectionSlug} tabs={tabs} />
+              <div className="docs2-content">
+                <div className="docs2-block">
+                  <DocsFileList
+                    items={documentItems}
+                    showSection={false}
+                    emptyMessage={`No documents found in public/documents/${sectionSlug}. Add files to that folder and refresh.`}
+                  />
                 </div>
-              </article>
+              </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section id="library" className="docs2-block">
-            <div className="docs2-block-head">
-              <h2>{sectionInfo.tabLabel} File Library</h2>
-              <p>
-                Search by keyword and filter by file type to get to the right file faster.
-              </p>
-            </div>
-
-            <DocsFileList
-              items={documentItems}
-              showSection={false}
-              emptyMessage={`No documents found in public/documents/${sectionSlug}. Add files to that folder and refresh.`}
-            />
-          </section>
-
-          <section id="next" className="docs2-block">
-            <div className="docs2-block-head">
-              <h2>Go Next</h2>
-              <p>Need another section? Use these shortcuts.</p>
-            </div>
-
-            <div className="docs2-hero-actions">
-              <Link href="/docs" className="docs2-hero-btn">
-                Open all docs
-                <ArrowRight className="h-4 w-4" />
+        <section className="pf-container pf-section" id="next">
+          <header className="pf-section-head">
+            <span className="pf-section-num">04</span>
+            <span>go next</span>
+            <span className="pf-section-dash" />
+            <span>~/jump</span>
+          </header>
+          <div className="pf-cta-row" style={{ marginTop: 0 }}>
+            <Link href="/docs" className="pf-btn">
+              <span>Open all docs</span>
+              <ArrowUpRight />
+            </Link>
+            {otherSections.map((entry) => (
+              <Link key={entry.slug} href={`/docs/${entry.slug}`} className="pf-btn">
+                <span>Open {entry.tabLabel.toLowerCase()} docs</span>
+                <ArrowUpRight />
               </Link>
-              {otherSections.map((entry) => (
-                <Link key={entry.slug} href={`/docs/${entry.slug}`} className="docs2-hero-btn">
-                  Open {entry.tabLabel} docs
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              ))}
-            </div>
-          </section>
+            ))}
+          </div>
         </section>
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

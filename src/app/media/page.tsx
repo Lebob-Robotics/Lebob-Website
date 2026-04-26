@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { imageSizeFromFile } from "image-size/fromFile";
+import { SiteFooter } from "@/components/site-footer";
 
 import { MediaGrid, type WallPhoto } from "@/components/media-grid";
 import { getVariantDimensions, getVariantList, pickVariantForWidth } from "@/lib/image-variants";
-import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Media | Lebob",
@@ -133,46 +133,60 @@ export default async function MediaPage() {
   const { photos, videoCount } = await getMediaWallData();
 
   return (
-    <div className="sub-page">
-      <main className="sub-main">
-        <div className="sub-grid bg-grid" />
-        <div className="sub-orb sub-orb-left" />
-        <div className="sub-orb sub-orb-right" />
-
-        <section className="sub-wrap">
-          <Badge className="sub-badge animate-fade-up">
-            Media
-          </Badge>
-          <h1 className="sub-title animate-fade-up delay-1">
-            Lebob Photos
-          </h1>
-
-          <div className="sub-pill-row animate-fade-up delay-2">
-            <span className="sub-pill">
-              {photos.length} photos
-            </span>
-            {videoCount > 0 ? (
-              <span className="sub-pill">
-                {videoCount} video file(s) detected and excluded
-              </span>
-            ) : null}
+    <div className="pf-page-bg">
+      <main>
+        <section className="pf-container pf-hero">
+          <div className="pf-hero-grid">
+            <div>
+              <div className="pf-eyebrow">Media · gallery</div>
+              <h1 className="pf-h1">
+                Photos from the<span className="amp"> field.</span>
+              </h1>
+              <p className="pf-lede">
+                Competition shots, build sessions, and prototype iterations. The season as
+                it actually happened.
+              </p>
+              <div className="pf-pill-row" style={{ marginTop: "1.5rem" }}>
+                <span className="pf-pill">{photos.length} photos</span>
+                {videoCount > 0 ? (
+                  <span className="pf-pill">{videoCount} video(s) excluded</span>
+                ) : null}
+              </div>
+            </div>
+            <aside className="pf-hero-aside">
+              <div className="row"><span className="k">count</span> <span className="v">{photos.length.toString().padStart(3, "0")}</span></div>
+              <div className="row"><span className="k">season</span> <span className="v">2025/26</span></div>
+              <div className="row"><span className="k">format</span> <span className="v">jpg · png · webp</span></div>
+              <div className="row"><span className="k">layout</span> <span className="v">masonry</span></div>
+              <div className="row"><span className="k">status</span> <span className="acc">live</span></div>
+            </aside>
           </div>
+        </section>
+
+        <section className="pf-container pf-section" id="gallery">
+          <header className="pf-section-head">
+            <span className="pf-section-num">01</span>
+            <span>gallery</span>
+            <span className="pf-section-dash" />
+            <span>~/photos</span>
+          </header>
 
           {photos.length > 0 ? (
-            <div className="sub-block animate-fade-up delay-3">
-              <MediaGrid photos={photos} />
-            </div>
+            <MediaGrid photos={photos} />
           ) : (
-            <div className="sub-empty animate-fade-up delay-3">
-              <p className="sub-empty-title">No image files found yet.</p>
-              <p className="sub-empty-copy">
-                Add `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, or `.avif` files to{" "}
-                <code className="sub-code">public/media</code> and refresh.
-              </p>
+            <div className="pf-rows">
+              <div className="pf-row"><span>No image files found yet.</span></div>
+              <div className="pf-row">
+                <span>
+                  Add files to <code className="pf-code">public/media</code> and refresh.
+                </span>
+              </div>
             </div>
           )}
         </section>
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Mobile Frame</title>
+<style>
+  html,body { margin: 0; background: #000; height: 100%; font-family: ui-sans-serif, system-ui; color: #888; }
+  body { display: grid; grid-template-rows: auto 1fr; }
+  .bar {
+    display: flex; gap: 8px; align-items: center;
+    padding: 8px 14px; font-size: 12px; border-bottom: 1px solid #222;
+    background: #0c0c0c;
+  }
+  .bar input { flex: 1; padding: 6px 10px; background: #111; color: #ddd; border: 1px solid #2a2a2a; border-radius: 4px; font: inherit; }
+  .bar button { padding: 6px 12px; background: #1a1a1a; color: #ddd; border: 1px solid #2a2a2a; border-radius: 4px; font: inherit; cursor: pointer; }
+  .stage { display: grid; place-items: center; padding: 20px; min-height: 0; overflow: auto; }
+  .device {
+    width: 390px; height: 844px; max-height: 100%;
+    border: 8px solid #1a1a1a; border-radius: 36px;
+    background: #000; box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    overflow: hidden;
+    position: relative;
+  }
+  .device iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .swatch { display: inline-flex; gap: 4px; align-items: center; }
+  .swatch button { padding: 4px 8px; font-size: 11px; }
+</style>
+</head>
+<body>
+  <header class="bar">
+    <input id="path" value="/" />
+    <span class="swatch">
+      <button data-go="/">/</button>
+      <button data-go="/sponsor/">/sponsor</button>
+      <button data-go="/sponsor/how-to/">/how-to</button>
+      <button data-go="/docs/">/docs</button>
+      <button data-go="/media/">/media</button>
+    </span>
+    <button id="reload">reload</button>
+  </header>
+  <main class="stage">
+    <div class="device">
+      <iframe id="frame" src="/" loading="eager"></iframe>
+    </div>
+  </main>
+<script>
+  const frame = document.getElementById("frame");
+  const input = document.getElementById("path");
+  const reload = document.getElementById("reload");
+  const url = new URL(location.href);
+  const q = url.searchParams.get("path");
+  if (q) { input.value = q; frame.src = q; }
+  function go(path) { input.value = path; frame.src = path; }
+  document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+  input.addEventListener("change", () => go(input.value));
+  reload.addEventListener("click", () => frame.contentWindow.location.reload());
+</script>
+</body>
+</html>

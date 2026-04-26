@@ -311,7 +311,7 @@ export function DocsFileList({
                   ) : null}
 
                   <div className="docs2-row-actions">
-                    <Link href={href} target="_blank" rel="noreferrer">
+                    <Link href={href} target="_blank" rel="noopener noreferrer">
                       Open
                       <ExternalLink className="h-3.5 w-3.5" />
                     </Link>
