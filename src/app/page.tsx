@@ -90,7 +90,7 @@ const projects = [
     num: "06",
     cat: "Media",
     title: "Photo Gallery",
-    desc: "Competition photos, build sessions, prototype iterations, and the moments between. Shot on Nikon and phone alike · the season as it actually happened.",
+    desc: "Competition photos, build sessions, prototype iterations, and the moments between. The season as it actually happened.",
     tags: ["Gallery", "Photography", "Season 2026"],
     href: "/media",
     host: "/media",
