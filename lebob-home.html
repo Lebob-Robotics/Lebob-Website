@@ -1,0 +1,805 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeBob — FLL Team #3236</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdfdf8;
+      --surface: #eeefe9;
+      --fg: #4d4f46;
+      --fg-dark: #23251d;
+      --muted: #65675e;
+      --border: #bfc1b7;
+      --border-light: #d4d5cd;
+      --accent: #A67C00;
+      --accent-bright: #F5C518;
+      --accent-light: #FEF7DC;
+      --placeholder: #9ea096;
+      --cta-bg: #1e1f23;
+      --hover-bg: #f4f4f4;
+
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+      --radius: 4px;
+      --radius-md: 6px;
+      --radius-pill: 9999px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--fg);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-brand img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+    .nav-brand span {
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--fg-dark);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--fg-dark);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 16px;
+      background: var(--cta-bg);
+      color: #fff !important;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-hamburger svg { display: block; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      z-index: 99;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a {
+      display: block;
+      padding: 12px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--fg-dark);
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    .hero {
+      padding: clamp(48px, 8vw, 96px) 0 clamp(40px, 6vw, 72px);
+      text-align: center;
+    }
+    .hero-logo {
+      width: clamp(120px, 18vw, 200px);
+      height: auto;
+      margin: 0 auto 24px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: var(--fg-dark);
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .hero-meta .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+      display: inline-block;
+    }
+    .hero-tagline {
+      margin-top: 20px;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.4;
+    }
+    .hero-tagline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-rotate {
+      display: inline-block;
+      min-width: 200px;
+      transition: opacity 0.3s;
+    }
+    .hero-sub {
+      margin-top: 16px;
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .section {
+      padding: clamp(40px, 6vw, 80px) 0;
+    }
+    .section-border {
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--fg-dark);
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .highlight-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      transition: border-color 0.2s;
+    }
+    .highlight-card:hover { border-color: var(--accent-bright); }
+    .highlight-num {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .highlight-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--fg-dark);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .highlight-card p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .crew-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .crew-card {
+      text-align: center;
+    }
+    .crew-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 12px;
+      border: 2px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .crew-card:hover .crew-photo { border-color: var(--accent-bright); }
+    .crew-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--fg-dark);
+      margin-bottom: 4px;
+    }
+    .crew-id {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 4px;
+    }
+    .crew-role {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .crew-mentors {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .crew-mentors .crew-card {
+      max-width: 200px;
+    }
+    .crew-mentors .crew-photo {
+      width: 140px;
+      height: 140px;
+    }
+
+    .about-text {
+      font-size: clamp(17px, 2vw, 19px);
+      line-height: 1.65;
+      color: var(--fg);
+      max-width: 720px;
+    }
+    .about-text strong { color: var(--fg-dark); font-weight: 700; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      transition: border-color 0.2s, background 0.2s;
+      min-height: 140px;
+    }
+    .project-card:hover {
+      border-color: var(--accent-bright);
+      background: var(--hover-bg);
+    }
+    .project-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--fg-dark);
+      margin-bottom: 6px;
+    }
+    .project-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      flex: 1;
+    }
+    .project-card .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      transition: gap 0.2s;
+    }
+    .project-card:hover .project-link { gap: 8px; }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .stack-col h3 {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    .stack-col ul {
+      list-style: none;
+    }
+    .stack-col li {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--fg);
+      padding: 4px 0;
+    }
+
+    .cta-section {
+      padding: clamp(48px, 8vw, 80px) 0;
+      border-top: 1px solid var(--border);
+    }
+    .cta-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: clamp(32px, 5vw, 56px);
+      text-align: center;
+    }
+    .cta-inner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 700;
+      color: var(--fg-dark);
+      margin-bottom: 12px;
+    }
+    .cta-inner p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: var(--cta-bg);
+      color: #fff;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      text-decoration: none;
+    }
+    .cta-btn:hover { opacity: 0.7; color: var(--accent-bright); }
+
+    .footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 1024px) {
+      .highlights-grid { grid-template-columns: repeat(3, 1fr); }
+      .crew-grid { grid-template-columns: repeat(3, 1fr); }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .stack-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .highlights-grid { grid-template-columns: 1fr; }
+      .crew-grid { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: 1fr; }
+      .stack-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .crew-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .crew-photo { width: 96px; height: 96px; }
+      .crew-mentors .crew-photo { width: 110px; height: 110px; }
+      .stack-grid { grid-template-columns: 1fr; }
+      .hero-meta { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-brand">
+        <img src="mp5kyikp-lebob.png" alt="LeBob logo">
+        <span>LeBob</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="media.html">Media</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="sponsor.html">Sponsors</a></li>
+        <li><a href="sponsor-how-to.html" class="nav-cta">Support Us</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="media.html">Media</a>
+    <a href="docs.html">Docs</a>
+    <a href="sponsor.html">Sponsors</a>
+    <a href="sponsor-how-to.html">Support Us</a>
+  </div>
+
+  <section class="hero">
+    <div class="container">
+      <img src="mp5kyikp-lebob.png" alt="LeBob mascot" class="hero-logo">
+      <h1>LEBOB</h1>
+      <div class="hero-meta">
+        <span>FLL Team #3236</span>
+        <span class="dot"></span>
+        <span class="hero-rotate" id="heroRotate">Perth, Western Australia</span>
+      </div>
+      <p class="hero-tagline">Robots that compete. <em>Ideas that inspire.</em></p>
+      <p class="hero-sub">International FIRST LEGO League competitors engineering robots and researching soft-robotic mechanisms for the 2025/26 Unearthed season.</p>
+    </div>
+  </section>
+
+  <section class="section section-border">
+    <div class="container">
+      <div class="section-label">Highlights</div>
+      <h2 class="section-title">What we've built</h2>
+      <div class="highlights-grid">
+        <div class="highlight-card">
+          <div class="highlight-num">01</div>
+          <h3>National & State Champions</h3>
+          <p>Multiple competition wins at state and national level, representing Western Australia on the FLL stage.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-num">02</div>
+          <h3>Reliable Mission Robot</h3>
+          <p>LEGO Spike Prime robot with custom 3D-printed attachments, consistent autonomous mission runs, and field-tested reliability.</p>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-num">03</div>
+          <h3>SoftSense Manipulator</h3>
+          <p>Soft-robotic gripper for ROV manipulation in underwater environments — our innovation project exploring pneumatic actuation and compliant mechanisms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-border">
+    <div class="container">
+      <div class="section-label">The Crew</div>
+      <h2 class="section-title">Eight members. Two mentors. One mission.</h2>
+      <div class="crew-grid">
+        <div class="crew-card">
+          <img src="mp5kync7-kingsley.png" alt="Kingsley W" class="crew-photo">
+          <div class="crew-name">Kingsley W</div>
+          <div class="crew-id">CR-01</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-card">
+          <img src="mp5kyncd-andre.jpeg" alt="Andre N" class="crew-photo">
+          <div class="crew-name">Andre N</div>
+          <div class="crew-id">CR-02</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-card">
+          <img src="mp5kynbk-sean.jpg" alt="Sean C" class="crew-photo">
+          <div class="crew-name">Sean C</div>
+          <div class="crew-id">CR-03</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-card">
+          <img src="mp5kynbm-oliver.png" alt="Oliver L" class="crew-photo">
+          <div class="crew-name">Oliver L</div>
+          <div class="crew-id">CR-04</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-card">
+          <img src="mp5kynbk-subesh.png" alt="Subesh S" class="crew-photo">
+          <div class="crew-name">Subesh S</div>
+          <div class="crew-id">CR-05</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-card">
+          <img src="mp5kync9-chris.png" alt="Chris W" class="crew-photo">
+          <div class="crew-name">Chris W</div>
+          <div class="crew-id">CR-06</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-card">
+          <img src="mp5kyncg-aaron.png" alt="Aaron Z" class="crew-photo">
+          <div class="crew-name">Aaron Z</div>
+          <div class="crew-id">CR-07</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-card">
+          <img src="mp5kync4-leven.png" alt="Leven S" class="crew-photo">
+          <div class="crew-name">Leven S</div>
+          <div class="crew-id">CR-08</div>
+          <div class="crew-role">Member</div>
+        </div>
+        <div class="crew-mentors">
+          <div class="crew-card">
+            <img src="mp5kynbq-mentors.jpg" alt="Jade & Kaelie" class="crew-photo">
+            <div class="crew-name">Jade &amp; Kaelie</div>
+            <div class="crew-id">MT-01</div>
+            <div class="crew-role">Coaches — Season 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-border">
+    <div class="container">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Who we are</h2>
+      <div class="about-text">
+        <p><strong>LeBob is a FIRST LEGO League team from Perth Modern School, Western Australia.</strong> We compete internationally in FLL, engineering autonomous robots and researching real-world problems. For the 2025/26 Unearthed season, we're building mission robots on LEGO Spike Prime and developing SoftSense — a soft-robotic manipulator arm designed for underwater ROV operations.</p>
+        <br>
+        <p>We design in Onshape, print on Bambu Lab, code in Python, and document everything. The workshop is home.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-border">
+    <div class="container">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title">What we're working on</h2>
+      <div class="projects-grid">
+        <a href="docs.html#robot" class="project-card">
+          <div>
+            <h3>FLL Unearthed Robot</h3>
+            <p>Spike Prime autonomous robot — custom attachments, sensor arrays, and consistent mission runs.</p>
+          </div>
+          <span class="project-link">Robot docs →</span>
+        </a>
+        <a href="docs.html#innovation" class="project-card">
+          <div>
+            <h3>SoftSense Manipulator</h3>
+            <p>Soft-robotic gripper for ROV underwater manipulation — pneumatic actuation with compliant mechanisms.</p>
+          </div>
+          <span class="project-link">Innovation docs →</span>
+        </a>
+        <a href="docs.html" class="project-card">
+          <div>
+            <h3>Engineering Notebook</h3>
+            <p>Full documentation of our design process, testing, and iteration for judges and reviewers.</p>
+          </div>
+          <span class="project-link">All docs →</span>
+        </a>
+        <a href="https://github.com/prawny-boy/FLL-Lebob-Unearthed" target="_blank" rel="noopener" class="project-card">
+          <div>
+            <h3>Source Code</h3>
+            <p>Mission programs, sensor calibration, and autonomous routines — open source on GitHub.</p>
+          </div>
+          <span class="project-link">github.com →</span>
+        </a>
+        <a href="#" class="project-card">
+          <div>
+            <h3>CAD Workspace</h3>
+            <p>Robot assemblies, attachment designs, and SoftSense gripper models in Onshape cloud CAD.</p>
+          </div>
+          <span class="project-link">onshape.com →</span>
+        </a>
+        <a href="media.html" class="project-card">
+          <div>
+            <h3>Photo Gallery</h3>
+            <p>Competition days, build sessions, prototype iterations, and team moments captured on camera.</p>
+          </div>
+          <span class="project-link">View gallery →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-border">
+    <div class="container">
+      <div class="section-label">Tech Stack</div>
+      <h2 class="section-title">Tools of the trade</h2>
+      <div class="stack-grid">
+        <div class="stack-col">
+          <h3>Hardware</h3>
+          <ul>
+            <li>LEGO Spike Prime</li>
+            <li>Color &amp; distance sensors</li>
+            <li>Custom attachments</li>
+            <li>3D-printed parts (Bambu P1S)</li>
+          </ul>
+        </div>
+        <div class="stack-col">
+          <h3>Software</h3>
+          <ul>
+            <li>Python</li>
+            <li>Spike App</li>
+            <li>GitHub Actions</li>
+            <li>Next.js</li>
+          </ul>
+        </div>
+        <div class="stack-col">
+          <h3>Design</h3>
+          <ul>
+            <li>Onshape CAD</li>
+            <li>Bambu Studio</li>
+            <li>Inkscape</li>
+            <li>Adobe Creative Cloud</li>
+          </ul>
+        </div>
+        <div class="stack-col">
+          <h3>Competition</h3>
+          <ul>
+            <li>Unearthed mat</li>
+            <li>Mission models</li>
+            <li>Field rig</li>
+            <li>Pit kit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <h2>Support LeBob</h2>
+        <p>We're preparing for the Korea Open Invitational and need support with travel, equipment, and registration. Every contribution helps.</p>
+        <a href="sponsor-how-to.html" class="cta-btn">
+          Learn how to sponsor
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        © 2025 LeBob — FLL Team #3236 · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="media.html">Media</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="sponsor.html">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    const taglines = [
+      'Perth, Western Australia',
+      '2025/26 Unearthed Season',
+      'Korea Open Invitational',
+      'Perth Modern School'
+    ];
+    let tagIdx = 0;
+    const rotateEl = document.getElementById('heroRotate');
+    setInterval(() => {
+      rotateEl.style.opacity = '0';
+      setTimeout(() => {
+        tagIdx = (tagIdx + 1) % taglines.length;
+        rotateEl.textContent = taglines[tagIdx];
+        rotateEl.style.opacity = '1';
+      }, 300);
+    }, 3000);
+
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
