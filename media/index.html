@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Gallery — Lebob</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    .gallery-section { padding: clamp(32px, 5vw, 56px) 0; }
+    .masonry {
+      columns: 3;
+      column-gap: 16px;
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .masonry-item:hover { border-color: var(--accent-bright); }
+    .masonry-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .masonry-item:hover img { transform: scale(1.02); }
+    .masonry-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 8px 12px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.6));
+      font-size: 13px; font-weight: 500;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .masonry-item:hover .masonry-caption { opacity: 1; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.9); z-index: 200;
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw; max-height: 85vh;
+      border-radius: var(--radius);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 24px;
+      background: none; border: none; color: #fff;
+      font-size: 32px; cursor: pointer; padding: 8px;
+      line-height: 1; opacity: 0.7; transition: opacity 0.15s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: #fff;
+      font-size: 28px; cursor: pointer; padding: 16px;
+      opacity: 0.6; transition: opacity 0.15s;
+    }
+    .lightbox-nav:hover { opacity: 1; }
+    .lightbox-prev { left: 12px; }
+    .lightbox-next { right: 12px; }
+    .lightbox-counter {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-mono); font-size: 14px; color: rgba(255,255,255,0.6);
+    }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 1024px) { .masonry { columns: 2; } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      .masonry { columns: 1; }
+      .container { padding: 0 16px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="page-label">Media · gallery</div>
+      <h1 class="page-title">Photos from the field.</h1>
+      <p class="page-desc">Competition shots, build sessions, and prototype iterations. The season as it actually happened.</p>
+    </div>
+  </header>
+
+  <section class="gallery-section">
+    <div class="container">
+      <div class="masonry" id="gallery">
+        <div class="masonry-item" onclick="openLightbox(0)">
+          <img src="/img/gallery/competition-table-run.webp" alt="Competition — robot table run" loading="lazy">
+          <div class="masonry-caption">Competition table run</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(1)">
+          <img src="/img/gallery/team-at-table.webp" alt="Competition — team at table" loading="lazy">
+          <div class="masonry-caption">Team at the competition table</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(2)">
+          <img src="/img/gallery/outdoor-event-audience.webp" alt="Audience at outdoor event" loading="lazy">
+          <div class="masonry-caption">Outdoor event audience</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(3)">
+          <img src="/img/gallery/build-session.webp" alt="Build session" loading="lazy">
+          <div class="masonry-caption">Build session</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(4)">
+          <img src="/img/gallery/workshop-iteration.webp" alt="Workshop iteration" loading="lazy">
+          <div class="masonry-caption">Workshop iteration</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(5)">
+          <img src="/img/gallery/prototype-testing.webp" alt="Prototype testing" loading="lazy">
+          <div class="masonry-caption">Prototype testing</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(6)">
+          <img src="/img/gallery/team-moment.webp" alt="Team moment" loading="lazy">
+          <div class="masonry-caption">Team moment</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(7)">
+          <img src="/img/gallery/behind-the-scenes.webp" alt="Behind the scenes" loading="lazy">
+          <div class="masonry-caption">Behind the scenes</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(8)">
+          <img src="/img/gallery/team-outdoors.webp" alt="Team outdoors" loading="lazy">
+          <div class="masonry-caption">Team outdoors</div>
+        </div>
+        <div class="masonry-item" onclick="openLightbox(9)">
+          <img src="/img/gallery/team-group-photo.webp" alt="Lebob team group photo" loading="lazy">
+          <div class="masonry-caption">Lebob team group photo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">×</button>
+    <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)" aria-label="Previous">‹</button>
+    <img id="lightboxImg" alt="">
+    <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)" aria-label="Next">›</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025 Lebob — FLL Team #3236 · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a></div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+    const images = [
+      '/img/gallery/competition-table-run.webp', '/img/gallery/team-at-table.webp', '/img/gallery/outdoor-event-audience.webp',
+      '/img/gallery/build-session.webp', '/img/gallery/workshop-iteration.webp', '/img/gallery/prototype-testing.webp',
+      '/img/gallery/team-moment.webp', '/img/gallery/behind-the-scenes.webp',
+      '/img/gallery/team-outdoors.webp', '/img/gallery/team-group-photo.webp'
+    ];
+    let currentIdx = 0;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+
+    function openLightbox(idx) {
+      currentIdx = idx;
+      lightboxImg.src = images[idx];
+      lightboxCounter.textContent = (idx + 1) + ' / ' + images.length;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function navLightbox(dir) {
+      currentIdx = (currentIdx + dir + images.length) % images.length;
+      lightboxImg.src = images[currentIdx];
+      lightboxCounter.textContent = (currentIdx + 1) + ' / ' + images.length;
+    }
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+      if (e.key === 'ArrowRight') navLightbox(1);
+    });
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  </script>
+</body>
+</html>
