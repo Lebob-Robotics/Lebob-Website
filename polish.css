@@ -1,0 +1,270 @@
+/* =====================================================================
+   polish.css — design-engineering polish layer (Emil Kowalski / animations.dev)
+   ---------------------------------------------------------------------
+   HOW THIS FILE WORKS
+   This stylesheet is <link>ed AFTER each page's inline <style> block, so
+   its rules win ties by source order and INTENTIONALLY OVERRIDE the inline
+   transitions (e.g. the inline `transition: color 0.15s`). Tune timing and
+   easing HERE, not in the per-page <style> blocks — a value you change in a
+   page's <style> may be silently superseded by this file.
+
+   PRINCIPLES APPLIED
+   - Custom easing curves; never `ease-in` on UI; UI durations < 300ms.
+   - Press feedback: scale(~0.97) on :active for every pressable element.
+   - Animate transform / opacity / translate only (GPU); never layout props.
+   - Hover effects gated behind (hover: hover) and (pointer: fine).
+   - Full prefers-reduced-motion support: keep opacity, drop movement.
+   - Enter animations never start from scale(0); ease-out; modals stay centered.
+
+   REVEAL ARCHITECTURE (works with polish.js)
+   - Above the fold (hero / page header): pure-CSS keyframe load animation,
+     gated by `prefers-reduced-motion: no-preference`. No JS, no flash.
+   - Below the fold (card groups / section titles): hidden only when
+     <html> has `.js-reveal` (added by polish.js). If polish.js fails to
+     load, the class is never added and everything stays visible.
+   ===================================================================== */
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);      /* strong ease-out for UI */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* on-screen movement */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* iOS-like drawer curve */
+}
+
+/* ───────────────────────── Links (color hovers) ───────────────────────
+   :not(.nav-cta) so this (more specific) rule doesn't strip the CTA's own
+   transform transition — the CTA is an <a> living inside .nav-links. */
+.nav-links a:not(.nav-cta),
+.footer-links a,
+.mobile-menu a { transition: color 120ms ease; }
+
+/* ───────────────────────── Pressable buttons ──────────────────────── */
+/* Buttons must feel responsive: instant scale-down on press. */
+/* .nav-links a.nav-cta beats the inline `.nav-links a { transition: color }`
+   (0,1,1) which would otherwise strip the CTA's transform transition. */
+.nav-links a.nav-cta,
+.nav-cta {
+  transition: opacity 140ms ease, color 140ms ease, transform 160ms var(--ease-out);
+}
+.nav-cta:active { transform: scale(0.97); }
+
+.cta-btn {
+  transition: opacity 140ms ease, color 140ms ease, transform 160ms var(--ease-out);
+}
+.cta-btn:active { transform: scale(0.97); }
+
+.contact-email {
+  transition: background-color 140ms ease, color 140ms ease, transform 160ms var(--ease-out);
+}
+.contact-email:active { transform: scale(0.97); }
+
+.doc-ext-link {
+  transition: border-color 140ms ease, background-color 140ms ease,
+              color 140ms ease, transform 160ms var(--ease-out);
+}
+.doc-ext-link:active { transform: scale(0.97); }
+
+.nav-hamburger { transition: transform 160ms var(--ease-out); }
+.nav-hamburger:active { transform: scale(0.9); }
+
+/* Lightbox controls (lightbox-nav keeps its translateY centring) */
+.lightbox-close { transition: opacity 140ms ease, transform 160ms var(--ease-out); }
+.lightbox-close:active { transform: scale(0.9); }
+.lightbox-nav { transition: opacity 140ms ease, transform 160ms var(--ease-out); }
+.lightbox-nav:active { transform: translateY(-50%) scale(0.9); }
+
+/* Search input focus */
+.search-bar input { transition: border-color 140ms ease; }
+
+/* ───────────────────────── Cards ──────────────────────────────────────
+   One transition list per card so reveal (opacity + translate, slow) and
+   interaction (transform + colour, fast) never fight over the `transition`
+   shorthand. Reveal uses the independent `translate` property; hover/press
+   use `transform` — so they compose instead of clobbering each other. */
+.highlight-card,
+.project-card,
+.tier-card,
+.where-card,
+.doc-item,
+.sponsor-card,
+.masonry-item,
+.crew-card,
+.section-title,
+.section-label {
+  transition:
+    opacity 500ms var(--ease-out),
+    translate 500ms var(--ease-out),
+    transform 200ms var(--ease-out),
+    border-color 200ms var(--ease-out),
+    background-color 200ms var(--ease-out);
+}
+
+.crew-photo {
+  transition: border-color 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+
+/* Project-link arrow: nudge with transform instead of animating `gap`
+   (layout property, and a no-op on a single text node anyway). */
+.project-card .project-link { transition: transform 200ms var(--ease-out); }
+
+/* Masonry image zoom — neutralise the inline ungated hover first, then
+   re-enable only on real pointers (so a tap doesn't leave it stuck). */
+.masonry-item img { transition: transform 250ms var(--ease-out); }
+.masonry-item:hover img { transform: none; }
+
+/* ───────────────────────── Hover effects (gated) ──────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  .highlight-card:hover,
+  .project-card:hover,
+  .tier-card:hover,
+  .where-card:hover,
+  .doc-item:hover,
+  .sponsor-card:hover { transform: translateY(-3px); }
+
+  .crew-card:hover .crew-photo { transform: scale(1.04); }
+  .project-card:hover .project-link { transform: translateX(3px); }
+  .masonry-item:hover img { transform: scale(1.03); }
+}
+
+/* ───────────────────────── Press feedback (cards) ─────────────────────
+   Outside the hover query so touch taps get feedback too. After :hover in
+   source order so a press overrides the hover lift while held. */
+.highlight-card:active,
+.project-card:active,
+.tier-card:active,
+.where-card:active,
+.doc-item:active,
+.sponsor-card:active { transform: scale(0.98); }
+.masonry-item:active { transform: scale(0.985); }
+
+/* ───────────────────────── Mobile menu (drawer) ───────────────────────
+   Was a bare display toggle; animate it. Degrades to display:flex if this
+   file is absent. */
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out),
+              transform 200ms var(--ease-out),
+              visibility 200ms linear;
+}
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ───────────────────────── Lightbox (modal) ───────────────────────────
+   Backdrop fades; image scales in from 0.96 (never from 0). Modal stays
+   centred (default transform-origin) — it isn't anchored to a trigger. */
+.lightbox {
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-out), visibility 200ms linear;
+}
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.lightbox img {
+  transform: scale(0.96);
+  transition: transform 250ms var(--ease-out);
+}
+.lightbox.open img { transform: scale(1); }
+
+/* ───────────────────────── Above-the-fold load animation ──────────────
+   Pure CSS: renders hidden, rises in. `both` fill holds the start state
+   during the delay, so there is no flash. Gated so reduced motion skips
+   it entirely (content just renders normally). */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-logo,
+  .hero h1,
+  .hero-tagline,
+  .hero .hero-meta,
+  .page-label,
+  .page-title,
+  .page-desc {
+    animation: pl-rise-in 500ms var(--ease-out) both;
+  }
+  .hero h1 { animation-delay: 60ms; }
+  .hero-tagline { animation-delay: 120ms; }
+  .hero .hero-meta { animation-delay: 180ms; }
+  .page-title { animation-delay: 60ms; }
+  .page-desc { animation-delay: 120ms; }
+}
+
+@keyframes pl-rise-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ───────────────────────── Below-the-fold scroll reveal ───────────────
+   Hidden only when polish.js has added `.js-reveal`. polish.js adds
+   `.is-visible` as each group/title scrolls into view (with a capped
+   stagger). Reveal animates opacity + translate (independent property),
+   leaving `transform` free for hover/press. */
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveal .highlight-card,
+  .js-reveal .crew-card,
+  .js-reveal .project-card,
+  .js-reveal .tier-card,
+  .js-reveal .where-card,
+  .js-reveal .doc-item,
+  .js-reveal .masonry-item,
+  .js-reveal .sponsor-card,
+  .js-reveal .section-title,
+  .js-reveal .section-label {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  .js-reveal .is-visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ───────────────────────── Reduced motion ─────────────────────────────
+   Keep colour / opacity / border feedback; remove movement. (The reveal
+   and load animations above are already gated to no-preference, so under
+   `reduce` all content renders fully visible.) */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .mobile-menu,
+  .mobile-menu.open { transform: none !important; }
+
+  .lightbox img,
+  .lightbox.open img { transform: none !important; }
+
+  .highlight-card:hover,
+  .project-card:hover,
+  .tier-card:hover,
+  .where-card:hover,
+  .doc-item:hover,
+  .sponsor-card:hover,
+  .crew-card:hover .crew-photo,
+  .project-card:hover .project-link,
+  .masonry-item:hover img { transform: none !important; }
+
+  .nav-cta:active,
+  .cta-btn:active,
+  .contact-email:active,
+  .doc-ext-link:active,
+  .nav-hamburger:active,
+  .lightbox-close:active,
+  .highlight-card:active,
+  .project-card:active,
+  .tier-card:active,
+  .where-card:active,
+  .doc-item:active,
+  .sponsor-card:active,
+  .masonry-item:active { transform: none !important; }
+  .lightbox-nav:active { transform: translateY(-50%) !important; }
+}
