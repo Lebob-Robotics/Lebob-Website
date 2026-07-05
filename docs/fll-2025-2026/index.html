@@ -120,6 +120,10 @@
       transition: border-color 0.2s, background 0.2s;
     }
     .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
     .doc-item-info { flex: 1; }
     .doc-item-title {
       font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
@@ -169,7 +173,7 @@
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-hamburger { display: block; }
-      .doc-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
       .footer-inner { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
     }
@@ -227,7 +231,7 @@
         </div>
         <ul class="doc-list">
           <li class="doc-item" data-title="internationals general documentation korea open">
-            <a href="/files/fll-2025-2026/internationals-general-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/internationals-general-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Internationals General Documentation</div>
                 <div class="doc-item-meta">PDF — full team documentation for judges</div>
@@ -236,7 +240,7 @@
             </a>
           </li>
           <li class="doc-item" data-title="internationals robot design documentation korea open">
-            <a href="/files/fll-2025-2026/internationals-robot-design-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/internationals-robot-design-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Internationals Robot Design Documentation</div>
                 <div class="doc-item-meta">PDF — Spike Prime build, mechanisms &amp; mission strategy</div>
@@ -245,7 +249,7 @@
             </a>
           </li>
           <li class="doc-item" data-title="internationals innovation documentation korea open softsense">
-            <a href="/files/fll-2025-2026/internationals-innovation-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/internationals-innovation-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Internationals Innovation Documentation</div>
                 <div class="doc-item-meta">PDF — SoftSense research, design &amp; testing</div>
@@ -254,7 +258,7 @@
             </a>
           </li>
           <li class="doc-item" data-title="internationals presentation korea open slides">
-            <a href="/files/fll-2025-2026/internationals-presentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/internationals-presentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Internationals Presentation</div>
                 <div class="doc-item-meta">PDF — 71-slide judging presentation</div>
@@ -273,7 +277,7 @@
         </div>
         <ul class="doc-list">
           <li class="doc-item" data-title="nationals general documentation">
-            <a href="/files/fll-2025-2026/nationals-general-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/nationals-general-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Nationals General Documentation</div>
                 <div class="doc-item-meta">PDF — shared team documentation for judges</div>
@@ -282,7 +286,7 @@
             </a>
           </li>
           <li class="doc-item" data-title="nationals robot design journal">
-            <a href="/files/fll-2025-2026/nationals-robot-design-journal.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/nationals-robot-design-journal.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Nationals Robot Design Journal</div>
                 <div class="doc-item-meta">PDF — Spike Prime build documentation</div>
@@ -291,7 +295,7 @@
             </a>
           </li>
           <li class="doc-item" data-title="nationals innovation documentation softsense">
-            <a href="/files/fll-2025-2026/nationals-innovation-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/nationals-innovation-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Nationals Innovation Documentation</div>
                 <div class="doc-item-meta">PDF — SoftSense research, design &amp; planning</div>
@@ -310,7 +314,7 @@
         </div>
         <ul class="doc-list">
           <li class="doc-item" data-title="regionals innovation documentation softsense">
-            <a href="/files/fll-2025-2026/regionals-innovation-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
+            <a href="/files/fll-2025-2026/regionals-innovation-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Regionals Innovation Documentation</div>
                 <div class="doc-item-meta">PDF — SoftSense research, design &amp; planning</div>
