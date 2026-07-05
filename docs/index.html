@@ -51,91 +51,41 @@
     .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
     .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
 
-    /* Search */
-    .search-bar {
-      margin-top: 24px;
-      position: relative;
-      max-width: 400px;
-    }
-    .search-bar input {
-      width: 100%;
-      padding: 10px 16px 10px 40px;
-      font-family: var(--font-body);
-      font-size: 15px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--surface);
-      color: var(--fg);
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .search-bar input::placeholder { color: var(--placeholder); }
-    .search-bar input:focus { border-color: var(--accent); }
-    .search-icon {
-      position: absolute;
-      left: 12px; top: 50%; transform: translateY(-50%);
-      color: var(--placeholder);
-    }
-
     .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
 
-    .doc-section {
-      margin-bottom: 48px;
-    }
-    .doc-section:last-child { margin-bottom: 0; }
-
-    .doc-section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-    .doc-section-header h2 {
-      font-size: 22px; font-weight: 700; color: var(--fg-dark);
-    }
     .doc-count {
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
       color: var(--accent); background: var(--accent-light);
       padding: 2px 8px; border-radius: var(--radius-pill);
-    }
-
-    .doc-list { list-style: none; }
-    .doc-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
-      border: 1px solid var(--border); border-radius: var(--radius);
-      margin-bottom: 8px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
-    .doc-item-info { flex: 1; }
-    .doc-item-title {
-      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
-    }
-    .doc-item-meta {
-      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
-    }
-    .doc-item-badge {
-      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
-      color: var(--accent); background: var(--accent-light);
-      padding: 3px 10px; border-radius: var(--radius-pill);
       white-space: nowrap;
     }
 
-    .doc-links {
-      margin-top: 16px;
-      display: flex; gap: 16px; flex-wrap: wrap;
+    /* Season cards */
+    .season-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .season-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 28px 28px;
+      border: 1px solid var(--border); border-radius: var(--radius-md);
+      background: var(--surface);
+      transition: border-color 0.2s, background 0.2s;
     }
-    .doc-ext-link {
-      display: inline-flex; align-items: center; gap: 6px;
+    .season-card:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .season-card:hover .season-card-arrow { transform: translateX(4px); color: var(--accent); }
+    .season-card-label {
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
-      color: var(--accent); padding: 6px 12px;
-      border: 1px solid var(--border); border-radius: var(--radius);
-      transition: border-color 0.15s, background 0.15s;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--accent); margin-bottom: 6px;
     }
-    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+    .season-card-title {
+      font-family: var(--font-display); font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800; letter-spacing: -0.5px; color: var(--fg-dark); margin-bottom: 6px;
+    }
+    .season-card-desc { font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 620px; }
+    .season-card-side { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .season-card-arrow {
+      font-size: 22px; color: var(--muted);
+      transition: transform 0.2s, color 0.2s;
+    }
 
     .footer { padding: 32px 0; border-top: 1px solid var(--border); }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
@@ -146,20 +96,10 @@
     .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
     .footer-links a:hover { color: var(--accent); }
 
-    .doc-section { scroll-margin-top: 80px; }
-
-    .no-results {
-      display: none;
-      padding: 40px 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 16px;
-    }
-
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-hamburger { display: block; }
-      .doc-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .season-card { flex-direction: column; align-items: flex-start; gap: 12px; }
       .footer-inner { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
     }
@@ -192,101 +132,29 @@
 
   <header class="page-header">
     <div class="container">
-      <div class="page-label">Documentation · all files</div>
+      <div class="page-label">Documentation · by season</div>
       <h1 class="page-title">The full library.</h1>
-      <p class="page-desc">Every file in one place. Search by keyword, then filter by section or file type.</p>
-      <div class="search-bar">
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/>
-        </svg>
-        <input type="text" id="searchInput" placeholder="Search documents..." oninput="filterDocs()">
-      </div>
+      <p class="page-desc">Everything we've produced — documentation, journals and presentations from every stage of competition, organised by season.</p>
     </div>
   </header>
 
   <section class="docs-content">
     <div class="container">
-
-      <!-- General -->
-      <div class="doc-section" id="general" data-section="general">
-        <div class="doc-section-header">
-          <h2>General</h2>
-          <span class="doc-count">1 file</span>
-        </div>
-        <ul class="doc-list">
-          <li class="doc-item" data-title="nationals main documentation">
-            <a href="/files/nationals-main-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
-              <div class="doc-item-info">
-                <div class="doc-item-title">Nationals Main Documentation</div>
-                <div class="doc-item-meta">PDF — shared team documentation for judges</div>
-              </div>
-              <span class="doc-item-badge">PDF</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Robot -->
-      <div class="doc-section" id="robot" data-section="robot">
-        <div class="doc-section-header">
-          <h2>Robot Design</h2>
-          <span class="doc-count">1 file</span>
-        </div>
-        <ul class="doc-list">
-          <li class="doc-item" data-title="robot design journal">
-            <a href="/files/robot-design-journal.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
-              <div class="doc-item-info">
-                <div class="doc-item-title">Robot Design Journal</div>
-                <div class="doc-item-meta">PDF — Spike Prime build documentation</div>
-              </div>
-              <span class="doc-item-badge">PDF</span>
-            </a>
-          </li>
-        </ul>
-        <div class="doc-links">
-          <a href="https://github.com/prawny-boy/FLL-Lebob-Unearthed" target="_blank" rel="noopener" class="doc-ext-link">
-            GitHub — mission code →
+      <ul class="season-list">
+        <li>
+          <a href="/docs/fll-2025-2026/" class="season-card">
+            <div class="season-card-info">
+              <div class="season-card-label">FLL 2025–2026</div>
+              <h2 class="season-card-title">Unearthed</h2>
+              <p class="season-card-desc">Western Australian National Champions. Every document from regionals through nationals to the 2026 Korea Open Invitational.</p>
+            </div>
+            <div class="season-card-side">
+              <span class="doc-count">8 files</span>
+              <span class="season-card-arrow">→</span>
+            </div>
           </a>
-          <a href="#" class="doc-ext-link">
-            Onshape — CAD models →
-          </a>
-        </div>
-      </div>
-
-      <!-- Innovation -->
-      <div class="doc-section" id="innovation" data-section="innovation">
-        <div class="doc-section-header">
-          <h2>Innovation Project</h2>
-          <span class="doc-count">2 files</span>
-        </div>
-        <ul class="doc-list">
-          <li class="doc-item" data-title="nationals innovation documentation">
-            <a href="/files/nationals-innovation-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
-              <div class="doc-item-info">
-                <div class="doc-item-title">Nationals Innovation Documentation</div>
-                <div class="doc-item-meta">PDF — SoftSense research, design & planning (nationals)</div>
-              </div>
-              <span class="doc-item-badge">PDF</span>
-            </a>
-          </li>
-          <li class="doc-item" data-title="regionals innovation documentation">
-            <a href="/files/regionals-innovation-documentation.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;text-decoration:none;color:inherit;">
-              <div class="doc-item-info">
-                <div class="doc-item-title">Regionals Innovation Documentation</div>
-                <div class="doc-item-meta">PDF — SoftSense research, design & planning (regionals)</div>
-              </div>
-              <span class="doc-item-badge">PDF</span>
-            </a>
-          </li>
-        </ul>
-        <div class="doc-links">
-          <a href="#" class="doc-ext-link">
-            Onshape — SoftSense CAD →
-          </a>
-        </div>
-      </div>
-
-      <div class="no-results" id="noResults">No documents match your search.</div>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -302,29 +170,6 @@
 
   <script>
     function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
-
-    function filterDocs() {
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      const sections = document.querySelectorAll('.doc-section');
-      let anyVisible = false;
-
-      sections.forEach(section => {
-        const items = section.querySelectorAll('.doc-item');
-        let sectionVisible = false;
-        items.forEach(item => {
-          const title = item.getAttribute('data-title') || '';
-          const match = !query || title.includes(query);
-          item.style.display = match ? '' : 'none';
-          if (match) sectionVisible = true;
-        });
-        section.style.display = sectionVisible ? '' : 'none';
-        if (sectionVisible) anyVisible = true;
-      });
-
-      document.getElementById('noResults').style.display = anyVisible ? 'none' : 'block';
-    }
-
-    // Hash navigation handled natively via CSS scroll-margin-top
   </script>
 </body>
 </html>
