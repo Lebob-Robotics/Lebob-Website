@@ -62,7 +62,11 @@
     .section-title { font-family: var(--font-display); font-size: clamp(22px, 3vw, 30px); font-weight: 700; line-height: 1.2; color: var(--fg-dark); margin-bottom: 16px; }
 
     .tiers-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-top: 32px;
+    }
+    .options-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
       gap: 16px; margin-top: 32px;
     }
     .tier-card {
@@ -71,12 +75,17 @@
       display: flex; flex-direction: column;
     }
     .tier-card:hover { border-color: var(--accent-bright); }
+    .tier-card--gold { border-color: var(--accent); background: var(--surface); }
     .tier-num {
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
       color: var(--accent); margin-bottom: 12px;
     }
     .tier-card h3 {
-      font-size: 20px; font-weight: 700; color: var(--fg-dark); margin-bottom: 8px;
+      font-size: 20px; font-weight: 700; color: var(--fg-dark); margin-bottom: 4px;
+    }
+    .tier-price {
+      font-family: var(--font-mono); font-size: 15px; font-weight: 500;
+      color: var(--fg-dark); margin-bottom: 10px;
     }
     .tier-card p { font-size: 15px; line-height: 1.6; color: var(--muted); flex: 1; }
     .tier-examples {
@@ -133,10 +142,14 @@
     .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
     .footer-links a:hover { color: var(--accent); }
 
+    @media (max-width: 1024px) {
+      .tiers-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-hamburger { display: block; }
       .tiers-grid { grid-template-columns: 1fr; }
+      .options-grid { grid-template-columns: 1fr; }
       .where-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
@@ -172,30 +185,78 @@
     <div class="container">
       <div class="page-label">Sponsorships · how to help</div>
       <h1 class="page-title">How to sponsor us.</h1>
-      <p class="page-desc">Your support helps the team build better robots, travel to competitions, and share STEM with more students. We welcome sponsors of every size.</p>
+      <p class="page-desc">Your support helps the team build better robots, travel to competitions, and share STEM with more students. Four tiers, from $500 to season naming rights &mdash; plus equipment and mentorship, which count just as much.</p>
     </div>
   </header>
 
   <!-- TIERS -->
   <section class="section">
     <div class="container">
-      <div class="section-label">01 · how you can help / ~/options</div>
-      <h2 class="section-title">Sponsorship options</h2>
+      <div class="section-label">01 · sponsorship tiers / ~/levels</div>
+      <h2 class="section-title">Sponsorship tiers</h2>
+      <p class="page-desc">Each tier includes everything in the tiers below it. Amounts are a starting point, not a ceiling — if you want to build something different, talk to us.</p>
       <div class="tiers-grid">
         <div class="tier-card">
-          <div class="tier-num">01</div>
-          <h3>Financial Sponsorship</h3>
-          <p>Sponsor travel, registration fees, and build materials for the season.</p>
+          <div class="tier-num">01 · Bronze</div>
+          <h3>Bronze</h3>
+          <div class="tier-price">from $500</div>
+          <p>Get your name in front of the team, the competition, and the community.</p>
           <ul class="tier-examples">
-            <li>International travel (Korea Open)</li>
-            <li>FLL registration fees</li>
-            <li>3D printing materials</li>
-            <li>Sensor & electronics parts</li>
+            <li>Logo &amp; link on lebob.com.au</li>
+            <li>Logo on our pit display</li>
+            <li>Thank-you post on our socials</li>
+            <li>End-of-season report</li>
           </ul>
         </div>
         <div class="tier-card">
-          <div class="tier-num">02</div>
-          <h3>Equipment & Materials</h3>
+          <div class="tier-num">02 · Silver</div>
+          <h3>Silver</h3>
+          <div class="tier-price">from $1,500</div>
+          <p>Everything in Bronze, plus a place on the kit we wear all season.</p>
+          <ul class="tier-examples">
+            <li>Logo on the season team shirt</li>
+            <li>Named in judging presentations</li>
+            <li>Named at outreach events</li>
+            <li>A dedicated post about the partnership</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-card--gold">
+          <div class="tier-num">03 · Gold</div>
+          <h3>Gold</h3>
+          <div class="tier-price">from $3,000</div>
+          <p>Everything in Silver, plus prime placement and time with the team.</p>
+          <ul class="tier-examples">
+            <li>Prominent shirt placement</li>
+            <li>Logo on the robot, where the rules allow</li>
+            <li>A team demo at your workplace</li>
+            <li>Featured writeup &amp; outreach materials</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <div class="tier-num">04 · Platinum</div>
+          <h3>Platinum</h3>
+          <div class="tier-price">from $5,000 · tailored</div>
+          <p>Everything in Gold, built around what your organisation actually wants.</p>
+          <ul class="tier-examples">
+            <li>Season or robot naming rights</li>
+            <li>Top billing across everything we make</li>
+            <li>Student site visits &amp; careers sessions</li>
+            <li>Shaped with you, not off a list</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IN-KIND -->
+  <section class="section section-border">
+    <div class="container">
+      <div class="section-label">02 · in-kind / ~/other-ways</div>
+      <h2 class="section-title">Not everything useful is cash</h2>
+      <p class="page-desc">Equipment, materials and expertise are worth just as much to us. In-kind support is recognised the same way — we'll place you at the tier that matches what you've given.</p>
+      <div class="options-grid">
+        <div class="tier-card">
+          <div class="tier-num">Equipment &amp; materials</div>
           <p>Tools, fabrication help, prototyping supplies, or printing resources.</p>
           <ul class="tier-examples">
             <li>LEGO Spike Prime kits</li>
@@ -205,13 +266,12 @@
           </ul>
         </div>
         <div class="tier-card">
-          <div class="tier-num">03</div>
-          <h3>Professional Support</h3>
+          <div class="tier-num">Professional support</div>
           <p>Volunteer mentorship in engineering, software, comms, or planning.</p>
           <ul class="tier-examples">
             <li>Robotics engineering</li>
             <li>Soft robotics research</li>
-            <li>CAD & manufacturing</li>
+            <li>CAD &amp; manufacturing</li>
             <li>Presentation coaching</li>
           </ul>
         </div>
@@ -222,7 +282,7 @@
   <!-- WHERE MONEY GOES -->
   <section class="section section-border">
     <div class="container">
-      <div class="section-label">02 · impact / where it goes</div>
+      <div class="section-label">03 · impact / where it goes</div>
       <h2 class="section-title">Where your support goes</h2>
       <div class="where-grid">
         <div class="where-card">
@@ -248,12 +308,13 @@
   <!-- WHAT SPONSORS GET -->
   <section class="section section-border">
     <div class="container">
-      <div class="section-label">What you get</div>
-      <h2 class="section-title">What sponsors receive</h2>
+      <div class="section-label">04 · the details / ~/fine-print</div>
+      <h2 class="section-title">The details</h2>
       <ul class="benefits-list">
-        <li>Recognition on team materials and sponsorship page</li>
-        <li>Highlight mentions in team presentations and outreach</li>
-        <li>A direct role in supporting student engineering growth</li>
+        <li>All amounts are in AUD and exclude GST. Every sponsorship is invoiced, so it goes through your books as a marketing expense rather than a donation.</li>
+        <li>Shirt logos have to be locked in before the season print run. Ask us for this season's cutoff date before you commit to a Silver tier or above.</li>
+        <li>Logo placement on the robot is subject to the competition's branding rules, which set limits on size and position.</li>
+        <li>Tiers apply from the 2026&ndash;27 season onward. The organisations who backed us before we had a tier structure are listed permanently as <a href="/sponsors/" style="color:var(--accent)">Founding Supporters</a>.</li>
       </ul>
     </div>
   </section>
@@ -263,7 +324,7 @@
     <div class="container">
       <div class="contact-box">
         <h3>Sponsor Lebob this season.</h3>
-        <p>Reach out and we will share sponsor levels, timelines, and how your support will be acknowledged.</p>
+        <p>Pick a tier, or tell us what you had in mind. We'll come back with an invoice, the season timeline, and exactly how you'll be acknowledged.</p>
         <a href="mailto:team@lebob.com.au" class="contact-email">team@lebob.com.au</a>
       </div>
     </div>
