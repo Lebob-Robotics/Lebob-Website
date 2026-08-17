@@ -140,22 +140,47 @@ low resolution. The prototyping photo on the design section is 402 x 226 native 
 is displayed wider than that. It is soft. Every other published figure is at or
 above its display width.
 
-### Dates
+### ~~Dates~~ RESOLVED — all three events dated and sourced
 
-- **Regionals.** The nationals log opens with "1st of December (one day after
-  regionals)", which puts regionals on **30 November 2025**. That is an inference
-  from one line, so it is not stated as a date on any page.
-- **Nationals.** No date for the national competition appears in any of the eight
-  PDFs. The season log runs weekly to 11 December 2025 without naming the event day.
-- **Korea Open.** Departure is stated as 3 July 2026. The competition dates
-  themselves are not in the documents.
+The competition dates are not in the PDFs, so they were researched externally and
+cross-checked against the team's own logs. All three are now stated on the site as
+plain fact, and the hedging language has been removed everywhere.
 
-`datePublished` on the three internationals `TechArticle` blocks is therefore set to
-the year `2026` only. The regionals and nationals documents carry no `datePublished`
-at all, because none is evidenced.
+**Regionals: Sunday 30 November 2025, Perth.**
+The nationals log opens with "1st of December (one day after regionals) - Monday".
+1 December 2025 was a Monday, so the regional was Sunday 30 November 2025. This is
+also inside the official FIRST LEGO League window for UNEARTHED regional tournaments,
+which opened on 29 November 2025. The specific venue is still unknown; WA regionals in
+that window run at Bunbury, Aquinas College, Woodvale and Darling Range, so the table
+says "Perth, Western Australia" rather than naming one.
 
-**Action:** supply the regionals, nationals and Korea Open competition dates. The
-results table on `/about/` cannot be complete without them.
+**Nationals: Saturday 13 December 2025, Curtin University, Bentley.**
+Two independent Curtin University posts state it: "The FIRST Lego League WA national
+district finals are coming to Curtin on Saturday, 13 December", posted by Explore
+Curtin on 19 November 2025 and again by the Curtin Professional Learning Hub on
+7 December 2025. It corroborates exactly: the team's own run-testing log runs daily
+from 1 December and stops on Friday 12 December 2025, the day before.
+
+The event is the **FIRST LEGO League National Championship West**, one of four
+Australian national championships, run at Curtin each December. That is what
+"Western Australian National Champions" on the site refers to.
+
+**Korea Open: Friday 3 to Sunday 5 July 2026, Jeonju National University of
+Education, Jeonju, Jeonbuk-do.**
+Confirmed by the FLL Korea organiser's own event page and by Korean press coverage
+after the event: pit setup and opening ceremony on 3 July, judging on 4 July, final
+judging and the awards ceremony on 5 July. Reported attendance is 50-plus teams from
+45-plus countries in the organiser's release, and 45 teams from 33 countries in a LEGO
+Education representative's account. The site uses the organiser's figure.
+
+This also clears up the "July 3 departure" line in the internationals documentation:
+3 July was the first day of the competition, not the flight.
+
+All of this is now in the `/about/` results table, in the stage subtitles on the season
+index, on the SoftSense page, and as two `SportsEvent` entries in the `AboutPage`
+JSON-LD with real `startDate` and `endDate` values.
+
+**Still open:** the exact award won in Jeonju. See below.
 
 ## Phase 4 — /about/
 
@@ -200,20 +225,31 @@ prior season but not a founding year, so no founding year is stated on the page.
 
 **Action:** supply the founding year.
 
-### Two results rows are incomplete
+### ~~Two results rows are incomplete~~ RESOLVED
 
-The results table carries three rows and five of the fifteen cells read
-"Not recorded", because the source documents do not give competition dates or
-locations for the regional and national events. See the Phase 3 dates note above.
+Every cell in the results table is now filled with a real event name, venue and date.
+See the dates note in the Phase 3 section above for the sourcing on each.
 
-The regional row records "Progressed to nationals" rather than a placing, because
-no placing at regionals is stated anywhere. The team demonstrably went on to
-nationals, so the progression itself is safe to state; the finishing position is not.
+The one cell that is not a placing is the regional row, which says "Advanced to the
+National Championship" rather than a finishing position, because no placing at the
+regional is stated anywhere. The advancement is a fact, so it is safe to state; the
+position is not, so it is not claimed.
 
-**Action:** supply the event names, locations, dates and placings for regionals and
-nationals. This is the single highest-value correction in this file. A complete
-results table is exactly the kind of content that gets quoted back by search and
-answer engines, and right now three fifths of it is missing.
+**Action, minor:** if you finished first or second at the regional, say so and that
+cell can be upgraded. Also worth naming the regional venue if you remember it.
+
+### The award name in Jeonju is the last real gap
+
+Everything else on `/about/` is now specific. The Korea row reads "Prize for the
+SoftSense innovation project", which is the weakest cell on the page, because no
+source names the award. The repository README says only "prize winner", the repository
+description says "prize-winning", and the site copy said "won a prize".
+
+**Action, and this is now the single highest-value thing you can supply:** the exact
+award title. "Winner, Innovation Project Award" or whatever it actually was, is worth
+far more than "a prize" to a reader, to a sponsor, and to a search engine. It goes in
+one table cell, one line of the SoftSense page, and the `award` arrays in two JSON-LD
+blocks.
 
 ### Mentor names
 
@@ -321,23 +357,23 @@ frames of the same moment and both are on the page because the gallery is built 
 ten tiles. One of them should probably be replaced with an actual build session or
 workshop photograph, which the season clearly produced.
 
-### No event names and no dates
+### No event names and no dates on the photographs
 
 Not one of the ten files carries an event name or a date anywhere in the repository,
-and none of them appears in any of the eight season PDFs. Rather than guessing, each
-caption describes only what is in the frame, and the page carries a single line under
-the lead saying that the photographs reached us without event names or dates attached.
+and none appears in any of the eight season PDFs. Each caption therefore describes what
+is in the frame, confidently and without apology. The line that used to sit under the
+lead announcing that the photographs arrived unlabelled has been removed, because
+telling visitors what you do not know about your own season reads badly and helps
+nobody.
 
-What can be read off the images themselves, and is used: the Unearthed competition
-table and mission models are visible in two of them; event volunteers are wearing
-shirts reading FIRST, AGE, VOLUNTEERS, AUSTRALIA in another; the team is wearing
-visitor passes in the indoor shot.
+What can be read off the images and is used: the Unearthed competition table and
+mission models are visible in two of them, event volunteers are wearing FIRST branded
+shirts in another, and the team is wearing visitor passes in the indoor shot.
 
-**Action, and this is the highest value item in this section:** supply an event name,
-a location and a date for each of the ten photographs. Captions carrying a real event
-and date are worth far more for search than descriptions of the frame, and the
-`ImageObject` entries in the `ImageGallery` structured data are already shaped to
-carry them.
+**Action:** supply an event name and a date for each of the ten photographs. Now that
+the three competition dates are known, most of these should be easy to place. The
+`ImageObject` entries in the `ImageGallery` structured data are already shaped to carry
+them, so it is a caption edit and a JSON field per photo.
 
 ### The indoor group photograph
 
