@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nationals Robot Design Journal &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
+  <meta name="description" content="The Lebob robot design journal for FLL Unearthed nationals: mission strategy, five attachments, the PyBricks code architecture and the problems we fixed.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/nationals-robot-design-journal/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Nationals Robot Design Journal &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
+  <meta property="og:description" content="The Lebob robot design journal for FLL Unearthed nationals: mission strategy, five attachments, the PyBricks code architecture and the problems we fixed.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/nationals-robot-design-journal/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Nationals Robot Design Journal",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/nationals-robot-design-journal/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Nationals Robot Design Journal",
+    "name": "Nationals Robot Design Journal",
+    "description": "The Lebob robot design journal for FLL Unearthed nationals: mission strategy, five attachments, the PyBricks code architecture and the problems we fixed.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/nationals-robot-design-journal/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/nationals-robot-design-journal.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Nationals Robot Design Journal (PDF)",
+      "contentSize": "1.4 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Nationals · FLL Unearthed 2025</div>
+      <h1 class="page-title">Nationals Robot Design Journal</h1>
+      <p class="page-desc">Our robot design journal for nationals, written against the FLL rubric: identify, design, create, iterate and communicate.</p>
+      <a href="/files/fll-2025-2026/nationals-robot-design-journal.pdf" class="doc-download">Download the original PDF <span class="size">1.4 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#identify">Identify</a></li>
+          <li><a href="#design">Design</a></li>
+          <li><a href="#create">Create</a></li>
+          <li><a href="#iterate">Iterate</a></li>
+          <li><a href="#communicate">Communicate</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="identify">Identify</h2>
+
+        <h3>Coding resources</h3>
+        <p>The coding resources we used to help our team code and learn to do new things include the PyBricks documentation, the Python documentation, and a website called Grok that lets each team member learn Python from whatever skill level, beginner to advanced.</p>
+        <p>PyBricks documentation allowed us to explore the potential of using PyBricks. It showed that PyBricks had much more potential in controlling the robot, including PID, and let us directly control the circuitry of the robot, which helped us add more power and load into motors and reach faster motor speeds. The benefits over the standard bricks:</p>
+        <ul>
+          <li>It runs directly on the hub itself rather than relying on a tablet or computer, which is more reliable and faster because it does not need to rely on external sources.</li>
+          <li>It provides advanced models like drivebase and gyro drive base, which deliver extremely accurate navigation.</li>
+          <li>It supports Python and block code, which helps us learn programming and software engineering at a young age.</li>
+          <li>Many teams around the world use PyBricks for FLL and have been successful, such as the Monongahela Cryptid Cooperative (Team 45775) and Noddin Robotmakers (Team 60215).</li>
+        </ul>
+        <p>The Python documentation let us understand, explore and effectively use Python through detailed explanations of its syntax, functions, libraries and modules, along with examples and guidelines. Grok Learning helps people learn coding through interactive, curriculum aligned courses, competitions and resources.</p>
+        <h3>Engineering resources</h3>
+        <p>We watched YouTube videos on the missions so we could construct the routes for our mission plan. This helped a lot because we had many choices to decide from and we had to make these runs as fast and as efficient as possible. It allowed us to start coding without having to worry about changes in routes after we had chosen the one we wanted.</p>
+        <h3>Mission strategy</h3>
+        <p>Our mission map plan lists all the missions, then as a team we made a brainstorm page showing whether we thought we would do it (blue), might do it if we had time (green), or would not do it because it would take too long and would not fit our robot (none).</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p004-05.webp" alt="Mission planning table listing each Unearthed mission against distance, programming difficulty and mechanical difficulty" width="1097" height="1418" loading="lazy" decoding="async">
+          <figcaption>The mission map. Every mission is rated on distance, programming difficulty and mechanical difficulty, then colour coded by whether we planned to attempt it.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p006-07.webp" alt="Hand drawn run plan over the competition field with a key reading X is do mission, question mark is maybe, rainbow colours for paths" width="725" height="310" loading="lazy" decoding="async">
+          <figcaption>Run planning over the field, with the key we used throughout: a cross marks a mission we will do, a question mark marks a maybe, and rainbow colours separate the paths.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p003-02.webp" alt="Screenshot of the PyBricks documentation site open at the programmable hubs page" width="1299" height="622" loading="lazy" decoding="async">
+          <figcaption>The PyBricks documentation. It is where we found the functions that let us drive the hub directly, including the duty cycle control that gave the motors more power.</figcaption>
+        </figure>
+
+            <h2 id="design">Design</h2>
+
+        <h3>Contribution from every member</h3>
+        <p>Each person created around one attachment used within the runs. Despite not all of them being used, they were considered and tested before deciding not to use them. We all collaborated with each other to construct the attachments so that most of them could both be attached to the robot and be necessary within the run. We also made sure that everyone would get a chance to code the robot showing what they can do. We used GitHub so that anyone can clone our code and work on it at home, and the more experienced coders on our team would help and teach.</p>
+        <h3>The gearbox</h3>
+        <p>All our attachments are made on separate gearboxes and quickly attached to the motors on the top of the robot. This allows for efficient pit stops in between runs.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p007-13.webp" alt="Close up photograph of a LEGO gearbox unit built to carry a robot attachment" width="332" height="452" loading="lazy" decoding="async">
+          <figcaption>The gearbox. Attachments are built onto separate gearboxes and slot onto the motors on top of the robot, which keeps pit stops short.</figcaption>
+        </figure>
+
+        <h3>The attachments</h3>
+        <p><strong>Attachment 1</strong> is used for the mission surface brushing, and to recover the soil. It is based on the engineering principles of reliability and functionality. It is very reliable for the surface brushing because of the funnel at the end of the arm, and the other arm allows us to do the soil missions at once.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p008-14.webp" alt="Attachment one held in hand, showing the funnel at the end of the arm" width="357" height="492" loading="lazy" decoding="async">
+          <figcaption>Attachment 1. The funnel at the end of the arm is what makes the surface brushing work every time.</figcaption>
+        </figure>
+
+        <p><strong>Attachment 2</strong> completes both components of salvage operation as well as marking the area with a flag. It was made using the engineering principles of problem solving and reliability. We wanted to put a flag into the pirate ship at the same time, and came up with an idea to push the ship and then do the arm and let go of the flag.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p008-15.webp" alt="Attachment two held in hand" width="394" height="564" loading="lazy" decoding="async">
+          <figcaption>Attachment 2. It pushes the ship, works the arm, and releases the flag in one sequence.</figcaption>
+        </figure>
+
+        <p><strong>Attachment 3</strong> completes both components of the mineshaft explorer and the careful recovery. It is based on the engineering principles of simplicity and efficiency, doing both missions at once with simple gearboxes so it attaches easily onto the robot.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p009-16.webp" alt="Attachment three on the workbench" width="304" height="407" loading="lazy" decoding="async">
+          <figcaption>Attachment 3. Simple gearboxes, two missions in one pass.</figcaption>
+        </figure>
+
+        <p><strong>Attachment 4</strong> does a lot of missions including the forge, who lived here, raising the roof of the market and heavy lifting. It uses the engineering principles of efficiency and maintainability, doing two of the missions with a passive mechanism and being easy to put back together.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p009-17.webp" alt="Attachment four mounted on the robot over the competition mat" width="416" height="502" loading="lazy" decoding="async">
+          <figcaption>Attachment 4. Two of its missions are completed by a passive mechanism, with no motor of their own.</figcaption>
+        </figure>
+
+        <p><strong>Attachment 5</strong> does Statue Rebuild combined with another arm to raise the goods and pull out the item. It is designed on the robot principle of simplicity, with a simple arm on a simple and standard gearbox plus two passive mechanisms to the right side.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p010-18.webp" alt="Attachment five held above the competition mat" width="285" height="477" loading="lazy" decoding="async">
+          <figcaption>Attachment 5. A simple arm on a standard gearbox, with two passive mechanisms on the right side.</figcaption>
+        </figure>
+
+        <h3>Issues we came across and how we fixed them</h3>
+        <ul>
+          <li>The centre of gravity of the robot was too high, which meant there were inaccuracies in movement as the robot swayed when moving. To fix this we moved the heavy motors and the hub lower.</li>
+          <li>Gears were not connected well, which meant attachments on gears slipped and did not turn well. To fix this we added pieces to pin down the gears and attachments to reduce gear slippage.</li>
+          <li>The stability wheel caused inaccuracies in movement, because it would keep moving even after we had stopped. We came up with three possible solutions, non-friction, a caster ball and a plastic nub, tested them on turning and driving, and determined that the caster ball was best.</li>
+        </ul>
+        <h3>How we improved from last year</h3>
+        <p><strong>Robot problems.</strong> Last year we did not do very well at nationals for the robot game because we changed the whole robot and did not have enough time to code it. This year we decided to change the path of the robot instead of changing the robot, which allowed us to code the game in time.</p>
+        <p><strong>Logging.</strong> Another problem was that we did not have enough proof of progressive testing. Now we have a logbook in the documentation booklet.</p>
+        <p><strong>Communication.</strong> Last year we found communicating hard, especially through emails, so this year we set up a WhatsApp group chat and a Discord server where we can talk and send photos and videos. The Discord has announcement, general, programming, mechanical, innovations, pictures and bot spam channels, plus a voice channel for calls.</p>
+            <h2 id="create">Create</h2>
+
+        <h3>Innovative code and sensor use</h3>
+        <p>We based our code on programming principles to ensure our code is robust, readable, maintainable and modular.</p>
+        <p><strong>Using PID.</strong> Because we used PyBricks for coding our robot, we can set it so that the drive base uses the built-in gyro in the Spike to align our movement for better accuracy.</p>
+        <p><strong>Resetting the angle of the mechanism motors.</strong> We made a function to do this, move until stalled, which moves the motor at a certain speed until it is unable to move physically at all. This lets us align the motor to a certain surface so that we can have better accuracy, and so that people do not need to set the mechanism to the right position in the pit stops.</p>
+        <p><strong>Automatically updating menu using decorators.</strong> We used a decorator to automatically add new functions of runs to our robot menu, allowing us to save time when coding runs.</p>
+        <h3>How our code works</h3>
+        <p>This system uses object-oriented programming to keep the robot's code organised and efficient. A Robot class manages motors, drive settings, gyrometer and arm movements, while a PID class improves accuracy with angle wrapping and precise turning calculations. The MissionControl class provides a user interface on the hub, letting users select missions during matches, and it also manages animations, gyro resets, drive profiles and timing. Missions are easily added with an <code>@mission()</code> decorator, and each mission function leverages Robot helpers for reliable driving, turning and arm control.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-robot-design-journal/p014-21.webp" alt="Screenshot of the PID controller source code used in the robot drive and turn functions" width="707" height="884" loading="lazy" decoding="async">
+          <figcaption>Our PID code. The controller is used in the drive and turn functions so the robot holds an accurate heading.</figcaption>
+        </figure>
+
+            <h2 id="iterate">Iterate</h2>
+
+        <p>We have our commit changes for our code on GitHub, and it shows how we have repeatedly tested and improved all our code over a long period of time. We also have many logs of each run we have done since regionals in our documentation folder.</p>
+        <p>To ensure our runs were consistent, we constantly improved our code and mechanisms after running them repeatedly. Although it was very slow, we ended up with consistent runs which can be run multiple times without failing.</p>
+            <h2 id="communicate">Communicate</h2>
+
+        <blockquote>It's about the friends we made along the way.<cite>Kingsley, a member of our team</cite></blockquote>
+        <p>This was what we learnt in FLL: to achieve a lot, but also to know that we cannot make it perfect, unlike those 545 max points teams. We just need to do our best.</p>
+        <ul>
+          <li><strong>Working together.</strong> As a team we learnt to work together, even during the hardest times.</li>
+          <li><strong>Division of work.</strong> We found that having few people on many different things was better than having lots of people on one thing, overcrowding the area.</li>
+          <li><strong>Gracious professionalism.</strong> We learnt to be GP.</li>
+          <li><strong>Staying on task.</strong> Not getting distracted, and a longer attention span, were advantages we gained.</li>
+          <li><strong>Healthy work environment.</strong> To make everyone happy and work better.</li>
+          <li><strong>No big changes.</strong> Last year we changed the whole robot before nationals and did not have enough time to code it. This year we changed the path instead.</li>
+          <li><strong>Documentation.</strong> Last year we did not have proof of progressive testing. This year we have a logbook and documentation.</li>
+          <li><strong>Communication.</strong> We used a WhatsApp group and a Discord server this year. It was better for talking, sending photos, announcements and organisation.</li>
+          <li><strong>Organisation.</strong> We used Trello to organise ourselves, which let us know what to do and work faster than last year.</li>
+        </ul>
+        <h3>What each of us is proud of</h3>
+        <p><strong>Sean.</strong> I am proud of how good our robot turned out, considering the short amount of time we had to build it. We achieved an amazing score.</p>
+        <p><strong>Andre.</strong> I really appreciated our team's effort this semester, everyone put their best work into this.</p>
+        <p><strong>Kingsley.</strong> I am very proud of making the robot and some of its attachments. Our teammates collaborated and worked very well together as well as listening and interpreting different things.</p>
+        <p><strong>Chris.</strong> I am very happy to work on the robot this year, as I generally only worked on the innovation project in my last team. Having the chance to work on the robot allowed me to expand on my existing knowledge and abilities.</p>
+        <p><strong>Leven.</strong> I am glad that I was able to gain this experience, as it was only my second year of robotics, being able to contribute ideas to all aspects of our project, designing a mechanism, working on documents, and being on the board operating the robot.</p>
+        <p><strong>Oliver.</strong> I think our team collaborated very well, and we all cooperated to complete the mission to the best of our ability.</p>
+        <p><strong>Aaron.</strong> I think that my team helped me understand the code that they wrote, told me what errors to fix, and collaborated well across all categories in general. The group chats made it easy to be organised and to communicate.</p>
+        <p><strong>Subesh.</strong> I believe that our team worked cohesively throughout this semester, despite setbacks with delays in receiving the mission models. I believe we were organised and that everyone did their part in all parts of FLL.</p>
+          </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>

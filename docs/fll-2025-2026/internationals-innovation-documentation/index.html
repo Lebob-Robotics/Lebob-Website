@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internationals Innovation Documentation &mdash; SoftSense &mdash; Lebob</title>
+  <meta name="description" content="The full SoftSense engineering record. Fin Ray TPU fingers, crosshatch grip texture, grip force read from motor current, materials, and bench test data.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/internationals-innovation-documentation/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Internationals Innovation Documentation &mdash; SoftSense &mdash; Lebob">
+  <meta property="og:description" content="The full SoftSense engineering record. Fin Ray TPU fingers, crosshatch grip texture, grip force read from motor current, materials, and bench test data.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/internationals-innovation-documentation/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Internationals Innovation Documentation",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/internationals-innovation-documentation/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Internationals Innovation Documentation",
+    "name": "Internationals Innovation Documentation",
+    "description": "The full SoftSense engineering record. Fin Ray TPU fingers, crosshatch grip texture, grip force read from motor current, materials, and bench test data.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/internationals-innovation-documentation/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/internationals-innovation-documentation.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Internationals Innovation Documentation (PDF)",
+      "contentSize": "5.6 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png",
+    "datePublished": "2026"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Internationals · 2026 Korea Open Invitational</div>
+      <h1 class="page-title">Internationals Innovation Documentation</h1>
+      <p class="page-desc">SoftSense, in full. A soft, sensing gripper for recovering fragile artefacts from the seafloor, taken from a problem statement through simulation, materials selection and industry review.</p>
+      <a href="/files/fll-2025-2026/internationals-innovation-documentation.pdf" class="doc-download">Download the original PDF <span class="size">5.6 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#problem">The problem</a></li>
+          <li><a href="#team">Our team</a></li>
+          <li><a href="#innovations">The four innovations</a></li>
+          <li><a href="#mechanism">The mechanism in detail</a></li>
+          <li><a href="#finger-fea">Finger structural FEA</a></li>
+          <li><a href="#texture">Choosing the grip surface</a></li>
+          <li><a href="#motor-study">The motor study</a></li>
+          <li><a href="#drivetrain">The drivetrain limit</a></li>
+          <li><a href="#materials">Materials and printing</a></li>
+          <li><a href="#underwater">Running it underwater</a></li>
+          <li><a href="#integration">ROV integration</a></li>
+          <li><a href="#trl">Technology readiness and operating boundaries</a></li>
+          <li><a href="#test-data">Test data from the bench set</a></li>
+          <li><a href="#validation">Expert and institutional validation</a></li>
+          <li><a href="#scaling">Scaling to artefact size</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="problem">The problem</h2>
+
+        <h3>Why underwater archaeology</h3>
+        <p>Where we live, Western Australia, is surrounded by the ocean. With over 12,000 kilometres of coastline, over 1600 shipwrecks have been found, including the Batavia. This ship was lost in 1629, and when it was found, our state passed the first laws in the world to protect underwater heritage. The Batavia alone yielded 26,731 artefacts and 10,619 coins. So the problem SoftSense solves originates from our home.</p>
+        <p>Underwater archaeologists have a hard time recovering fragile artefacts from the seafloor, and the reason is that the manipulator arms bolted to remotely operated vehicles are built for industrial work, not precision handling. The standard arm has two rigid metal fingers, no force feedback, and little surface contact. That makes it clumsy with small, irregular, or brittle objects. When the wrong tool ends up in the wrong place, irreplaceable cultural heritage shatters on the seafloor.</p>
+        <p>Getting a maritime archaeology mission off the ground costs millions of dollars: vessel charter, crew wages, dive tickets, equipment shipping, port fees, insurance, fuel and permits. Months of planning go into a window of a few days on site. Even the recurring costs are punishing on their own: boat hire runs around AUD 5,000 per day and a four-person dive team is another AUD 1,200 per day, with dive gear maintenance and consumables on top.</p>
+        <blockquote>The clock starts the moment you leave port.<cite>Patrick Morrison, WA Shipwrecks Museum</cite></blockquote>
+        <p>Against that cost stack, one piece of equipment failing on site can end the whole expedition. A gripper that shears a tooth and stops responding, or simply does not exist in the right specification on the boat, sends the team home with nothing. A two-thousand-dollar tool failure can waste a million-dollar mission. That asymmetry is what makes the gripper worth taking seriously.</p>
+
+        <h3>Four identified problems</h3>
+        <p>Talking to working archaeologists and subsea engineers, we pinned down four specific failure modes that the standard industrial gripper forces onto fragile recovery work.</p>
+        <ol>
+          <li><strong>High risk of breakage.</strong> Industrial grippers apply force with no feedback channel back to the pilot. Thin pottery, coral, bone fragments and delicate shapes could crack if they are held too tightly.</li>
+          <li><strong>Poor grip on odd shapes.</strong> Flat metal jaws cannot adapt to curved, tapered or uneven artefacts. Items slip out, or cannot be lifted at all. The grippers in service today are designed for cylindrical T-bar handles on industrial tools, not for amphorae, bones or coral.</li>
+          <li><strong>Limited awareness for pilots.</strong> ROV operators cannot feel how much force the arm is applying, especially in low visibility water where the camera feed is the only signal.</li>
+          <li><strong>Cost and time pressures.</strong> A broken gripper or a missing tool means days of delay while a replacement is sourced. These failures slow missions down, push costs up, and can permanently destroy cultural heritage that has waited centuries to be recovered.</li>
+        </ol>
+
+        <h3>Why this matters now</h3>
+        <blockquote>All the wrecks we have found in Western Australia in the last four to five years are beyond recreational diving depths. The museum legally can't excavate them. The only way to recover something safely from 50 to 60 metres and beyond is a robot with actuator control.<cite>Patrick Morrison, Assistant Curator of Maritime Heritage, WA Shipwrecks Museum, 14 May 2026 site visit</cite></blockquote>
+        <p>Multibeam sonar surveys are turning up wrecks in the 40 to 100 metre range that were invisible to the previous generation of survey gear. There are more known sites than there is equipment to work them.</p>
+
+        <h3>Who would use this</h3>
+        <p>Our main user is a maritime archaeology team or research institution working from a small inspection class ROV. The closest commercial reference is the Reach Robotics Bravo 7 manipulator family, which Fugro and Woodside use for offshore inspection in Western Australia. The same gripper architecture also fits marine biology, oceanographic research, environmental monitoring, and any subsea repair job where standard grippers cause collateral damage.</p>
+
+        <h3>How we researched and refined the problem</h3>
+        <p>We did not start from a gripper design; we started from the problem and narrowed it down through research and expert review. We studied real subsea recovery using marine archaeology papers, ROV gripper datasheets and museum recovery records. That let us map exactly why the claws in service today fail on fragile artefacts: uncontrolled crush force.</p>
+        <p>We started broad, at recover artefacts, and narrowed to the specific risk of crushing fragile objects, then refined again on materials, from titanium and aluminium to printable plastics, after expert input.</p>
+            <h2 id="team">Our team</h2>
+
+        <p>Each member owns at least one work package, and most own more than one.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Member</th><th>Primary ownership this season</th></tr></thead>
+          <tbody><tr><td>Kingsley Wong</td><td>Brainstorm innovations collaboration, meeting with companies, sponsorship outreach.</td></tr><tr><td>Andre Nijman</td><td>SoftSense innovation lead. FEA campaign covering finger structural, grip texture and motor study. Sponsorship outreach. Material reevaluation. This documentation.</td></tr><tr><td>Sean Chan</td><td>Team brainstorm, collaboration, business outreach, material organisation for innovation.</td></tr><tr><td>Oliver Liu</td><td>Robot CAD and mechanical build lead. Chassis and attachment design. Field practice coordinator. Co-owner on prototype builds v1 and v2, drivetrain T_safe fix, hyperbaric pressure test.</td></tr><tr><td>Subesh Sukumaran</td><td>Research lead: existing manipulator survey and case studies. Owns expert cold email outreach and follow-up letters. Patrick Morrison site visit attendee.</td></tr><tr><td>Yuxin Chris Wang</td><td>Bench testing operator: ran the four-finger versus two-finger trials with the bone, anchor, vase and chest objects, capturing the 26, 96, 411 and 288 gf data.</td></tr><tr><td>Aaron Zhang</td><td>Created diagrams to explain and communicate the innovation work, and put together summaries in the presentation.</td></tr><tr><td>Leven Shi</td><td>Owns the photo and video evidence trail across the season. Co-ran the four-finger versus two-finger trials, and chassis design.</td></tr></tbody>
+        </table></div>
+
+        <h3>Decision-making protocol</h3>
+        <p>Day-to-day technical decisions are made by the work owner. Owners commit to their workstream and report back at the next meeting. Whole-team decisions happen when a choice touches more than one workstream, such as a robot redesign that changes attachment mounts, a SoftSense material change that affects the build schedule, or a sponsorship that needs a logo on the team shirt. These go to a meeting vote with a simple majority. The mentors have observer roles but not voting roles.</p>
+            <h2 id="innovations">The four innovations</h2>
+
+        <p>SoftSense takes the standard ROV gripper and adds four innovations that each go straight after one of the four failure modes. We tested every one, and a working expert reviewed every one.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p009-04.webp" alt="CAD render of the SoftSense end effector in a half open pose with both Fin Ray fingers pointing upward" width="1600" height="1200" loading="lazy" decoding="async">
+          <figcaption>The SoftSense end effector in a half-open pose, fingers pointing up. The gripper body and both Fin Ray fingers print as one swappable module, and the actuator is the modularity swap point that sets the depth rating.</figcaption>
+        </figure>
+
+        <h3>1. Adaptive soft-contact finger pads</h3>
+        <p>The contact face of each finger is a soft, compliant TPU surface carrying a fine printed grip texture, so the arm no longer presses bare metal against the artefact. The soft TPU spreads the gripping force over a wider area and lowers peak stress on fragile material, while the texture keeps a secure hold on wet, slippery surfaces. Where a rigid jaw point-loads a 4 mm patch of pottery rim, the compliant TPU face spreads the same total force over roughly ten times the area.</p>
+        <h3>2. Force feedback through the actuator</h3>
+        <p>The gripper senses how hard it is squeezing without placing a single sensor on the fingertips. It reads the actuator's motor current, multiplies by the torque constant, and traces that back through the drivetrain to recover the tip force, the same method force-controlled industrial and surgical grippers from Maxon, Robotiq and Schunk rely on. That reading streams to the pilot's console without a break and feeds an auto-stop control loop that halts the actuator the moment the grip crosses a configurable threshold. The control code holds a different preset per artefact class: a low threshold for coral, another for bone, another for ceramic. The same motor-current limit that sets the grip force also caps the torque on the printed gears, so one channel is both the force command and the structural safety ceiling.</p>
+        <p>We did not begin here. Our first design put a calibrated pressure sensor under each pad. Two pieces of expert feedback moved the sensing into the actuator instead.</p>
+        <p>David Howard, in his regionals feedback, spotted a subtle confounder. As the gripper descends, ambient water pressure rises by roughly 1 atmosphere every 10 metres, so a fingertip pressure sensor would read squeeze when there is none, and would need a second ambient sensor plus a software correction just to recover the true value. Reading force from the motor current sidesteps the problem entirely: the current the actuator draws tracks how hard it pushes the object, not the water column above it.</p>
+        <p>Patrick Morrison raised a second concern at our 14 May site visit that pointed the same way. Any foam or gas-filled pad compresses with depth as the air pockets inside it shrink, so a pad-based sensor drifts as the dive gets deeper.</p>
+        <blockquote>Force feedback is essential. Most industrial archaeological arms have it. Without it, you crush things and don't know about it.<cite>Patrick Morrison, WA Shipwrecks Museum</cite></blockquote>
+        <h3>3. Self-morphing TPU fingers</h3>
+        <p>Each finger is a passive Fin Ray compliant truss printed in TPU. When the contact face presses against an object, the internal ribs make the whole finger curl inward and wrap, so it conforms to whatever shape it meets, whether a cylinder, a square block or an irregular fragment, instead of touching in one narrow band. The finger morphs to the object on its own, with no motor, tendon or moving part at the fingertip to seize underwater. More contact area at the same total force means lower local pressure and less crush risk, and the self-morphing wrap also forgives imprecise placement by the ROV pilot.</p>
+        <p>This is the innovation we proved hardest in software. We ran a design search of roughly 70 FEA simulations across a battery of seven object shapes and sizes, confirmed the finger wraps along its whole face rather than point-poking, and held the peak stress far below TPU strength.</p>
+        <h3>4. A cheap, kit-based, modular claw</h3>
+        <p>The whole gripper is built as a swappable, 3D printed module. The structural body costs around USD 70 in filament, and because the costly actuator is reused from module to module, a complete first-build kit runs from roughly USD 560 with the value DYNAMIXEL XM540 servo up to about USD 1,310 with the IP68 XW540 at the top of our actuator ladder. Archaeologists can carry several spares onto a mission and swap a broken module in the field instead of waiting days for a replacement to ship. Because the parts are 3D printed, the crew can bring a small printer on the support vessel and run off a custom grip or a new tool on deck while the dive plan keeps going.</p>
+        <blockquote>The biggest cost in archaeology is time. Stick with cheap 3D printed parts. Anyone can buy filament anywhere, and the whole thing can be manufactured anywhere like a kit.<cite>Tim MacDonald, subsea engineer, Inkfish</cite></blockquote>
+            <h2 id="mechanism">The mechanism in detail</h2>
+
+        <p>The end effector has a single degree of freedom. One input shaft rotates, and both fingers open and close symmetrically, splaying outward as they open to give a funnel-mouth catch. Everything else follows from that one rotation.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p012-05.webp" alt="CAD render of the SoftSense gripper fully open with both fingers splayed outward" width="1600" height="1200" loading="lazy" decoding="async">
+          <figcaption>The fully open pose, the two Fin Ray fingers splayed into a funnel-mouth catch.</figcaption>
+        </figure>
+
+        <h3>Drive chain</h3>
+        <p>Two equal spur sector gears mesh on the centreline. The left sector carries an integral crown gear on its top face. A small spur input pinion on a vertical shaft drives that crown, a right-angle stage that lets the drive shaft exit out of the housing bottom. From the operator's side, the gripper has one input shaft going in and two symmetric fingers coming out.</p>
+        <p>Each sector gear doubles as the crank of a non-parallelogram four-bar linkage. The finger is rigid with the coupler. The link lengths give a translate-apart motion plus roughly 18 degrees of outward splay across the travel, and we sized them so the transmission angle stays well clear of any dead point, varying from 71.7 to 34.6 degrees across the open stroke.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p013-06.webp" alt="Exploded CAD view of the gripper drive mechanism showing sector gears, four bar links and the crown pinion stage" width="1600" height="1200" loading="lazy" decoding="async">
+          <figcaption>Exploded view of the drive mechanism. The axle pins pull out to reveal the two sector gears, the four-bar links, and the crown-pinion stage; the input shaft exits the bottom face of the housing.</figcaption>
+        </figure>
+
+        <h3>Fingers and enclosure</h3>
+        <p>Each finger is a passive Fin Ray compliant truss in TPU. The architecture is a thin contact beam at 1.2 mm, a sharply tapered compliant spine at 1.8 mm, and 14 fine 1.6 mm slanted ribs with hollow cells. We checked that the two TPU fingers build as valid solids with zero interference at the closed pose at every finger scale we ship.</p>
+        <p>The enclosure is a single open-front housing with a snap-on front cover. Inside sit the two sector gears, the four-bar links and the crown-pinion stage. Outside are the M4 bottom mounting flange, the vertical input shaft, eight drain and flood paths, four snap-clip windows, the two top slots where the link arms exit, four axle bore floods through the back wall, and three 1.8 mm cover vents. Every part is a single solid with exactly one shell. There is no enclosed void anywhere in the assembly, and that is what makes the design safe to flood.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p013-07.webp" alt="CAD render of the gripper in the closed pose with both fingers together" width="1600" height="1200" loading="lazy" decoding="async">
+          <figcaption>Closed pose, fingers fully together. The same finger geometry is reused across three scale factors, 0.7x, 1.0x and 1.6x, without redesigning the mount interface.</figcaption>
+        </figure>
+
+            <h2 id="finger-fea">Finger structural FEA</h2>
+
+        <p>We did not want to print a hundred fingers and snap them one by one in a bucket of water. That is slow, expensive, and biased toward the shapes we happened to think of first. So instead we built a physics model of the finger and ran a design search through it, scoring every candidate against a battery of objects, and we only committed to a geometry once it won in software and survived independent validation.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p022-11.webp" alt="Grid of finite element analysis results showing every Fin Ray finger design iteration tested" width="1346" height="1238" loading="lazy" decoding="async">
+          <figcaption>Every design iteration and its FEA result. Wave one ran roughly 45 runs across 6 design tracks, and wave two ran about 25 more to refine the Fin Ray winner.</figcaption>
+        </figure>
+
+        <h3>Dead ends we can show</h3>
+        <p>The first dead end was a concave contact face matched to the object. The reframe that followed was that universality is a measurement gap, not a shape problem.</p>
+        <p>The second dead end was the flexure family, ruled out with data. The contact-notch flexure produced the only real circle wrap we saw in wave one, but the grip jumped around chaotically between 0 N and over 100,000 N at adjacent 0.25 mm steps.</p>
+        <h3>The finalists and the shipped geometry</h3>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Candidate</th><th>Full battery score</th><th>Notes</th></tr></thead>
+          <tbody><tr><td>Production finger (w7 baseline)</td><td>0.559</td><td>Starting point. Wraps the 44 mm square but nothing else.</td></tr><tr><td>FULL_w2a05 (16 ribs, dir +1)</td><td>0.602</td><td>Better than baseline; the rib-direction lever helped a little.</td></tr><tr><td>FULL_w2c06 (blade length 76 mm, angle 32&deg;)</td><td>0.575</td><td>Shorter blade did not generalise across sizes.</td></tr><tr><td>FULL_w2d05 (tapered spine + thin contact face)</td><td>0.652</td><td>The winner. 17% gain on the universal score.</td></tr></tbody>
+        </table></div>
+
+        <p>The shipped finger geometry is 14 ribs at 38 degrees with the reversed slant direction, a 1.2 mm contact beam, a 1.8 mm spine, 1.6 mm ribs and a 2 mm tip width with a sharp taper. Verified after the port: both fingers build as valid solids, there is zero finger-to-finger interference at the closed pose, and the four-bar closure is unchanged from the baseline.</p>
+        <h3>The result at equal 12 N grip</h3>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p019-08.webp" alt="Five finite element analysis results showing the shipped finger gripping cylinders and square blocks with von Mises stress colouring" width="1603" height="698" loading="lazy" decoding="async">
+          <figcaption>The shipped finger gripping five objects at the same 12 N force: 24, 44 and 70 mm cylinders and 28 mm and 44 mm square blocks. Contact length grows from 8 mm to 44 mm as the object gets bigger or flatter. Colour is von Mises stress, and the peak across the battery stays well below the 27.3 MPa in-plane TPU strength.</figcaption>
+        </figure>
+
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Object</th><th>Old finger (arc / CoV)</th><th>Shipped finger (arc / CoV)</th><th>Change</th></tr></thead>
+          <tbody><tr><td>Cylinder &Oslash;24</td><td>2&deg; / 0.45</td><td>2&deg; / 0.71</td><td>similar contact</td></tr><tr><td>Cylinder &Oslash;44</td><td>7&deg; / 0.74</td><td>17&deg; / 0.84</td><td>about 2.5x contact arc</td></tr><tr><td>Cylinder &Oslash;70</td><td>11&deg; / 0.68</td><td>21&deg; / 1.12</td><td>about 2x arc, less even</td></tr><tr><td>Square 28 mm</td><td>1&deg; / 0.83</td><td>87&deg; / 0.98</td><td>now wraps it, was a near-miss</td></tr><tr><td>Square 44 mm</td><td>88&deg; / 1.23</td><td>87&deg; / 1.00</td><td>wraps, more even</td></tr><tr><td>Universal score</td><td>0.559</td><td>0.584</td><td>+4.5% aggregate</td></tr></tbody>
+        </table></div>
+
+        <p>The old finger's grip swung by 7 times with object height, a stiffness-gradient artefact. The shipped finger grips every object at a consistent 12 N at the test load. The old finger only wrapped one square size; the new one wraps both. On round objects the contact arc roughly doubles.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p020-09.webp" alt="Side by side FEA comparison of the old and shipped fingers gripping a 28 mm square block" width="679" height="708" loading="lazy" decoding="async">
+          <figcaption>Old finger versus shipped finger on the 28 mm square block at equal 12 N grip. The old finger barely catches the edge at 1 degree of contact. The shipped finger engages the flat face along its length and grips firmly.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p021-10.webp" alt="Side by side FEA comparison of the old and shipped fingers gripping a 44 mm cylinder" width="679" height="708" loading="lazy" decoding="async">
+          <figcaption>Old finger versus shipped finger on the 44 mm cylinder. The new finger is more compliant and spreads stress more evenly along the ribs. On a round object neither finger fully curls around it, which is the physics ceiling of a passive single-piece finger without a tendon.</figcaption>
+        </figure>
+
+        <h3>Ceilings</h3>
+        <p>Two formulations agree to order of magnitude on the fragility metric. A 2D plane-strain finite-strain solve and the 3D corotational solve both produce peak von Mises around 2.7 MPa at the 12 N stress-probe load. These are not the same problem, so this is a cross-formulation consistency check, not an independent re-derivation.</p>
+        <p>A locking-stable re-run of the 2D precursor showed that the linear-element solver under-reports peak von Mises by about 50 per cent at 12 N. So the headline 6.2 to 9.4 times margin is optimistic. A locking-free reading is closer to 4.1 to 6.2 times at 12 N. The design call does not change, because margins at the actual operating force are still around 120 to 300 times, but we corrected the absolute fragility number.</p>
+            <h2 id="texture">Choosing the grip surface</h2>
+
+        <p>Once the finger geometry was locked, we still had to sort out the actual contact surface, the micro-relief that decides whether a finger catches on a wet object or slides off it. The finger structural FEA cannot answer that: it has no friction model and no fluid model. So we set up a second campaign with its own model, its own validation gates, and its own candidate list. The TPU we print the fingers in comes off the print bed with a glossy, low-friction skin.</p>
+        <h3>Validation 1: the literature gate</h3>
+        <p>Before we trusted the model to rank anything, it had to reproduce the published wet-grip ordering of five real patterns. The model works out each pattern's wet holding coefficient and asserts six orderings. All six pass.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p025-12.webp" alt="Bar chart showing the model reproduces the published wet grip ordering across five surface patterns" width="910" height="532" loading="lazy" decoding="async">
+          <figcaption>The literature validation gate: smooth is far below ridges, below tyre tread, below tree-frog and octopus sucker. The model passes all six checks, and the design sweep was gated on this passing.</figcaption>
+        </figure>
+
+        <h3>The texture sweep</h3>
+        <p>We ran seven texture families in parallel: ridge, crosshatch, chevron, hexpad (tree-frog), concentric (octopus sucker), dimple and hierarchical. Each family had its own parameter ranges and ran an inner sweep over its full parameter space at 0.1 mm resolution, then refined around its best score with a finer mesh. Together the seven families produced more than 700,000 model evaluations.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p026-13.webp" alt="Horizontal bar chart of champion universal grip scores by texture family" width="1050" height="728" loading="lazy" decoding="async">
+          <figcaption>Champion universal grip scores by family, across the 7 condition battery.</figcaption>
+        </figure>
+
+        <h3>Validation 2: the sensitivity sweep</h3>
+        <p>The central risk of a surrogate model is that family X wins might just reflect the numbers we chose. So we perturbed every coefficient to 0.5 and 1.5 times and, at each of 31 settings, re-optimised all seven families and recorded the winner.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p026-14.webp" alt="Sensitivity heatmap marking the winning texture family at each of 31 coefficient settings" width="1938" height="545" loading="lazy" decoding="async">
+          <figcaption>The sensitivity heatmap. Stars mark the winner per column. The concentric octopus sucker pattern wins 31 of 31 settings; among the patterns that actually tile a finger blade, crosshatch wins 23 of 31.</figcaption>
+        </figure>
+
+        <h3>The physical ceiling and the override</h3>
+        <p>Concentric is the model's invariant winner, and we did not ship it, for two reasons. First, it cannot tile the finger blade: the contact face is about 72 mm by 10 mm, and at a 1.4 mm ring pitch at most one full rosette fits across the width. The model has no tileability term, so this is a missing-physics override, applied externally and on purpose. Second, its remaining lead leans on a speculative micro-suction term, which a 0.16 mm layer FDM TPU cavity cannot actually sustain.</p>
+        <p>Among patterns that actually tile the blade, hold up without speculation, and print reliably, crosshatch is the empirical winner at 23 of 31 settings. That is what ships.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p027-16.webp" alt="Grid of per condition objective scores across seven test surfaces for each candidate texture" width="1400" height="588" loading="lazy" decoding="async">
+          <figcaption>Per-condition objective score across the 7-surface battery. The shipped crosshatch grips 0.99 on smooth, rough, ridged and dry surfaces, 0.86 on a small cylinder, and degrades only on slime at 0.70 and soft objects at 0.64. The smooth control fails on every wet surface, which is the hydroplaning the texture exists to defeat.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p028-18.webp" alt="Three dimensional render of the shipped crosshatch grip texture as a grid of square posts" width="1100" height="950" loading="lazy" decoding="async">
+          <figcaption>The shipped crosshatch geometry: 1.8 mm posts, 0.54 mm crossing channels, 0.6 mm deep. The channels are sized above the drainage threshold so water is squeezed out of the contact patch.</figcaption>
+        </figure>
+
+            <h2 id="motor-study">The motor study</h2>
+
+        <p>Alongside the judging story we chased a deeper engineering question: could the actuator's own current draw stand in for the per-pad pressure sensors entirely, so there is no fingertip electronics at all? The answer turned out to be yes, with a real cost.</p>
+        <h3>The principle</h3>
+        <p>Force-controlled industrial and surgical grippers do not put strain gauges on every fingertip. They read the motor current, multiply by the torque constant, trace it back through the drivetrain, and recover an estimated tip force. For an underwater tool the payoff is hard to argue with: no fingertip wires running through a flexing TPU finger, no fingertip connector to flood, no separate analogue front-end to seal.</p>
+        <blockquote>If you have a force sensor in the motor, you've replaced one of the worst sealing problems with one of the easier ones.</blockquote>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p031-20.webp" alt="The forward sensing equation converting measured motor current into estimated per finger tip force" width="766" height="158" loading="lazy" decoding="async">
+          <figcaption>The forward sensing model. A measured current sample maps to an estimated per-finger tip force through the same chain as the drive model, so commanding a current limit sets a force limit and the gear-protection ceiling at the same time.</figcaption>
+        </figure>
+
+        <h3>The actuator ladder</h3>
+        <p>The selection sweep puts different actuator classes on top depending on depth. Same gripper body, same coupler interface, just a different drive.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Tier</th><th>Actuator</th><th>Price (May 2026)</th><th>Why</th></tr></thead>
+          <tbody><tr><td>Primary</td><td>DYNAMIXEL XW540-T260-R</td><td>USD 1,242 (AUD 1,925)</td><td>IP68 body, around 1.9 N&middot;m, RS-485 bus, native present current at 0.005 N&middot;m per step held cleanly at stall.</td></tr><tr><td>Value</td><td>DYNAMIXEL XM540-W270-R</td><td>USD 494 (AUD 766)</td><td>Same bus, identical telemetry, more torque. Drop-in replacement; the only difference is no IP68 body, which is moot inside the canister.</td></tr><tr><td>Deep-budget</td><td>Feetech STS3250</td><td>EUR 64 (AUD 110)</td><td>Bought for the prototype. 4.9 N&middot;m stall with load, position, voltage and temperature feedback; the load percentage is the torque proxy.</td></tr><tr><td>Rock-bottom</td><td>Feetech STS3215</td><td>EUR 26 (AUD 44)</td><td>Same bus at 2.94 N&middot;m stall. Continuous 0.98 N&middot;m sits below the design target but above the floor; adequate for intermittent grip-and-hold.</td></tr><tr><td>Fallback</td><td>Magnetic-coupling dry-pod</td><td>Build</td><td>No shaft penetration; depth set only by static pod seals; pole-slip torque is a built-in force limiter.</td></tr></tbody>
+        </table></div>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p031-19.webp" alt="Three charts tracing motor current through to tip force across three drivetrain configurations" width="1485" height="505" loading="lazy" decoding="async">
+          <figcaption>Motor to tip force chain across three drivetrain configurations. The gear ceiling is what binds, not the servo. 12 N is the FEA stress probe, not the operating force.</figcaption>
+        </figure>
+
+        <h3>Limits of the sensor</h3>
+        <ul>
+          <li><strong>Force only, no contact location.</strong> Motor current is one aggregate number. It cannot say where on the finger the contact sits, and it cannot map pressure across the face.</li>
+          <li><strong>Relative until calibrated, and per unit.</strong> The torque constant varies 5 to 10 per cent unit to unit.</li>
+          <li><strong>Gear-ceiling-bounded.</strong> The sensed and commandable force is capped by the safe gear torque. The sensor is most useful precisely as the limiter that keeps the printed gears alive.</li>
+        </ul>
+        <p>Where the per-pad sensors still win: they give four spatially resolved readings, one per fingertip. For the archaeological use case, where the operator needs to know which finger is overloaded, the per-pad sensors carry information the motor-current chain throws away.</p>
+            <h2 id="drivetrain">The drivetrain limit</h2>
+
+        <blockquote>The compact right-angle crown and pinion stage is the binding structural limit of the entire gripper.</blockquote>
+        <p>At the small radii the housing allows, the printed teeth carry far less torque than a 12 N stress-probe grip would need. We found this in the gear FEA. The fix has three parts: face-width strengthening, which is done and build-verified; a module and radius re-size, which is a proposed engineered target that still needs CAD clearance validation; and the motor current limit holding the safe ceiling in firmware.</p>
+        <p>We also have to flag two failure modes in our own method. The earlier framing presented a Lewis form-factor check against the FEA as cross-validation. It is not, because Lewis assumes an involute spur tooth and ours are straight-flank face teeth. Two wrong models that agree are not the same as one right model being confirmed. Second, the crown gear is a 3D problem, not a 2D plane-stress tooth, and the 2D solver catches none of the radial sweep, load split or disk-bending compliance. We added a radial variant that runs the same 2D FEA at five radial stations and takes the worst one, which tightens the single-station ceiling by 2.6 times.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Ceiling</th><th>Per-finger force band</th></tr></thead>
+          <tbody><tr><td>Radial 2D crown bound (binding)</td><td>0.14 to 0.28 N</td></tr><tr><td>Single-station 2D bound</td><td>0.35 to 0.73 N</td></tr><tr><td>Proposed re-size</td><td>4.2 to 8.7 N</td></tr></tbody>
+        </table></div>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p033-21.webp" alt="Bar chart of slip margin across seven wet object conditions at three drivetrain torque ceilings" width="1210" height="505" loading="lazy" decoding="async">
+          <figcaption>Slip margin across the 7-condition battery for the shipped crosshatch texture, at three drivetrain ceilings. Only the proposed re-size clears margin of 1.0 or better across every wet object class. That is the headline reason the gear re-size is on the roadmap and why bench testing is the gate.</figcaption>
+        </figure>
+
+        <p>We kept the 24 to 9, or 2.667 to 1, ratio on purpose. The rock-bottom budget servo sets the binding floor: at 2.667 to 1 it reaches 12 N at the tip continuously, and dropping to 2.2 to 1 takes it to about 11.4 N, where the budget option no longer hits 12 N. The real change here is engineered teeth and a derived current ceiling, not a ratio tweak.</p>
+        <p>Three consequences follow. 12 N is a stress-probe load, not a structural mandate. The motor current limit enforces the safe torque in firmware, and it is mandatory on every servo in the ladder because their stall torques beat it by 10 to 30 times. And the bench test is the only true ceiling, because both 2D bounds are upper bounds.</p>
+            <h2 id="materials">Materials and printing</h2>
+
+        <h3>Why we are 100 per cent polymer</h3>
+        <p>Galvanic corrosion has nothing to bite on in our gripper, because there is no metal anywhere inside it. Every pin, every snap, every gear, every shaft is printed. The only metal in the whole system lives inside the user's actuator canister, isolated from the seawater. That takes a whole class of failure modes off the table before it can even start.</p>
+        <blockquote>Zero bought hardware inside the gripper. No screws, no nuts, no bolts, no bushings. 17 printed parts, fastener-free assembly, tool-free disassembly.</blockquote>
+        <h3>The final build</h3>
+        <p>The production build uses three materials, each assigned by what it has to do structurally. The enclosure, front cover, drive arms, input pinion shaft, followers and axle dowels are PA12-GF. The two fingers are TPU 95A HF. The four finger snap pins are PETG-HF. Total filament comes to about 120 to 175 g of PA12-GF, 50 to 70 g of TPU and 4 to 8 g of PETG-HF.</p>
+        <p><strong>Why PA12-GF for everything rigid.</strong> PA12 is the lowest-water-uptake engineering nylon available. Saturated seawater absorption sits at about 0.7 to 1.2 per cent, and the glass fill brings that down further. It does not hydrolyse and it holds tight dimensions after long immersion. The 30 per cent glass fill gives roughly 3.5 to 5.5 GPa modulus and low creep.</p>
+        <p>PA12-GF replaces an earlier spec for carbon-filled Nylon 12, which needs a 45 to 60 degree heated chamber that the Bambu P1S we print on cannot hold. Without the chamber it lays down with poor inter-layer adhesion and warps as it cools. We will be honest that PA12-GF is also marginal on the P1S: glass-filled nylon is warp-prone on the larger parts, so it wants a closed chamber, a brim, and a 260 to 280 degree nozzle over a 90 degree bed with glue stick.</p>
+        <p><strong>Why PETG-HF only for the finger snap pins.</strong> Glass fill trades ductility for stiffness, and the barbed split-tip pin that secures the fingers has to flex inward as it passes through the receiving bore.</p>
+        <p><strong>Why TPU 95A HF for the fingers.</strong> The Fin Ray grip principle is all about material compliance. The fingers have to flex visibly as they wrap.</p>
+            <h2 id="underwater">Running it underwater</h2>
+
+        <p>The seawater audit settles the chemistry, the buoyancy and the flooded geometry. The design consequence of the finger crush analysis is a procedure, not a redesign: submerge the gripper fingers-down and let it soak so the flood paths clear.</p>
+        <p>Patrick Morrison's checklist from the site visit maps onto the build one to one. His warning that foam and gas-filled pads compress at depth reinforced the move to motor-current sensing. His fail gripping, not releasing point became the firmware holding-current threshold. His wet-connect advice fed the mounting interface. His 2 to 5 kg payload figure is the boundary we state. And his accept internal flooding, design around it advice matches our fully-flooded, no-sealed-cavity architecture.</p>
+            <h2 id="integration">ROV integration</h2>
+
+        <p>The gripper mounts through a common gripper-side mate, with adapters modelled for the Reach Robotics Bravo 7 wrist, ISO 9409-1 cobot flanges, BlueROV2 bottom panel, roof rack and payload skid mounts, and an ISO 13628 D-handle override for diver operation.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p043-22.webp" alt="CAD render of the gripper fitted to a modelled ROV wrist adapter" width="1920" height="1440" loading="lazy" decoding="async">
+          <figcaption>The gripper on a modelled ROV mounting adapter. The Reach Bravo 7 wrist is the Fugro and Woodside reference mount, so that platform is the integration target we designed against.</figcaption>
+        </figure>
+
+        <h3>Two non-negotiables</h3>
+        <ol>
+          <li>The primary tier still needs a thin pressure canister, even for the IP68 servo, because IP68 is rated for 1 metre of freshwater only while 30 metres is 3.1 bar plus seawater corrosion. The flooded gripper itself has no shaft seal and no dry cavity, so the sealing job falls entirely on the actuator.</li>
+          <li>The motor current limit must be set to the safe gear torque in firmware. Without it, a strong servo's stall torque shears the printed teeth.</li>
+        </ol>
+        <h3>The control electronics</h3>
+        <p>Rather than a topside computer and a tether junction box, we put the whole controller on one small board that travels with the gripper: a Waveshare General Driver for Robots, built around an Espressif ESP32-WROOM-32.</p>
+        <p>The board boots into its own Wi-Fi access point, serves a phone web page, and is the servo's bus master, all at once. There is no router and no internet. You power it from roughly 12 V, it broadcasts a network, you join it from a phone, a captive-portal page opens, and you get open and close buttons with live position, load, voltage and temperature underneath. A 0.91 inch OLED on the board mirrors the network name, the IP address and the current position. This replaces an earlier Orange Pi single-board-computer controller we prototyped.</p>
+        <p>The controller is also where the actuator-as-sensor thesis becomes a real readout. It commands the servo and reads that servo's own load, voltage and temperature back over the same three-wire bus, so the force sensor is exactly the number this board already streams to the phone.</p>
+        <p>The open and closed positions ship as placeholders. On first run you move the gripper to its fully open pose and save it, then to fully closed and save that. Those values, along with move speed and acceleration, are written to non-volatile flash and survive power cycles, so the gripper is calibrated once on the dock and then just works.</p>
+        <p>What is proven: the firmware is written and compiles cleanly. It is not yet bench-validated on the board, which is on order. The bus pins, baud rate and protocol are taken from Waveshare's own firmware for this exact board, so they should be correct out of the box, and the open and closed directions are placeholders until calibrated on first power-up. Like the rest of SoftSense, the controller is offline by design.</p>
+            <h2 id="trl">Technology readiness and operating boundaries</h2>
+
+        <p>At Woodside's request we say where SoftSense sits today on the NASA technology readiness level scale and what would move it forward. We sit at <strong>TRL 3 to 4</strong>. Levels 1 to 3 are done: the principle is established, the concept is specified, and there is a working scaled prototype with all four innovations integrated, bench-tested against the four-object artefact set. Level 4 is partially done, with FEA validating the fingers and the texture, and soak and hyperbaric tests scheduled. Level 5 requires a pool dive on a BlueROV2 chassis with a real artefact analog at depth. The valley of death that Woodside warned us about is the gap we are crossing right now.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Parameter</th><th>Boundary</th></tr></thead>
+          <tbody><tr><td>Operating depth</td><td>0 to 50 m for the shipped configuration; the magnetic-coupling pod extends to 200 m or more as a future option.</td></tr><tr><td>Operating temperature</td><td>&minus;2 to +30 &deg;C water temperature, which covers WA continental shelf summer and Antarctic Peninsula summer.</td></tr><tr><td>Residency time in water</td><td>Continuous immersion up to 30 days per the soak-test result; rinse with fresh water between deployments.</td></tr><tr><td>Salinity</td><td>Full marine at 35 ppt to brackish; fresh water also acceptable.</td></tr><tr><td>Payload</td><td>2 to 5 kg per the archaeology use case; structural test required to certify above 5 kg.</td></tr><tr><td>Grip force per finger</td><td>0.14 to 0.73 N with the shipped gears, or 4.2 to 8.7 N with the proposed re-size.</td></tr><tr><td>Maintenance interval</td><td>Visual inspection every dive; pin replacement annually or after visible creep; finger replacement at 10,000 grip cycles or first visible TPU crack.</td></tr></tbody>
+        </table></div>
+
+            <h2 id="test-data">Test data from the bench set</h2>
+
+        <p>We tested the scaled prototype against four artefact-analog objects picked for their range of shapes: a bone, an anchor, a vase and a treasure chest. The bone and the anchor are both long. The anchor has natural grip features, holes, while the bone has none. The chest and the vase are both stout. The chest has rectangular grooves that are easy to grip, and the vase is smooth with only the head to grab onto.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Object</th><th>Attempts (4 fingers)</th><th>Attempts (2 fingers)</th><th>Pressure to grip</th></tr></thead>
+          <tbody><tr><td>Bone</td><td>2</td><td>4</td><td>26 gf</td></tr><tr><td>Anchor</td><td>5</td><td>4</td><td>96 gf</td></tr><tr><td>Vase</td><td>3</td><td>5</td><td>411 gf</td></tr><tr><td>Chest</td><td>3</td><td>3</td><td>288 gf</td></tr></tbody>
+        </table></div>
+
+        <p>The four-finger configuration beats two fingers on smooth or round shapes such as the vase, and on shapes with poor grip features such as the bone, and it ties on regular-feature shapes. When the artefact has natural features for a rigid jaw to bite, you cannot really do better than three attempts. When the artefact is smooth or featureless, the four-pad layout wraps it and the two-jaw layout slips off it. The bone is the clearest example: two attempts versus four.</p>
+        <p>The pressure values span an order of magnitude, from 26 gf on the bone to 411 gf on the vase. That is direct empirical support for the per-artefact preset architecture: a single global pressure threshold would either crush the bone, if set high enough to lift the vase, or fail to lift the vase, if set low enough to spare the bone.</p>
+            <h2 id="validation">Expert and institutional validation</h2>
+
+        <p>SoftSense was reviewed by working subsea engineers, a practising maritime archaeologist, and three of Western Australia's major subsea-industry operators. Most of the major decisions in this document trace directly to one of the conversations below.</p>
+        <p><strong>Tim MacDonald, subsea engineer, Inkfish, formerly of the DSV Limiting Factor.</strong> Our first external reviewer, called after regionals. He confirmed the novelty claim: soft-jaw and silicone-tipped grippers already exist, so the force feedback on a cheap printed gripper is the part that is actually new. We used that to reframe the whole pitch around sensing rather than softness. His economics argument is the direct source of the modular kit innovation, and his materials steer set the constraint the materials work runs inside. His oil-filled enclosure trick is the pressure-boundary answer we carry into the electronics housing.</p>
+        <p><strong>Patrick Morrison, Assistant Curator of Maritime Heritage, WA Shipwrecks Museum.</strong> Hosted our 14 May 2026 site visit and grounded the entire problem statement. He confirmed that the wrecks WA has found recently sit beyond recreational diving depth, that the museum legally cannot excavate them, and that safe recovery from 50 to 60 metres and beyond needs a robot with actuator control. We used his mission-cost figures as the cost case, and his engineering notes map onto the build one to one.</p>
+        <p><strong>David Howard, Principal Research Scientist, CSIRO, our regionals mentor.</strong> Identified the single confounder that redirected our sensing strategy: ambient water pressure rises by about one atmosphere every ten metres, so a fingertip pressure sensor reads a squeeze that is not there. We used that observation to move the primary force channel into the actuator's motor current.</p>
+        <p><strong>Fiona Stachowiak and the Woodside subsea team, Woodside Energy.</strong> Gave us a full engineering and industry-framing review on 20 April 2026. Their water-absorption warning, drawn from real bushing-swell experience, triggered the material reevaluation. Their magnetic-coupling reference became the fallback actuator. Their two explicit asks, a technology readiness self-assessment and stated operating boundaries, are why that section exists in the form it does.</p>
+        <p><strong>Elaine Pankhurst, Fugro Australia.</strong> Met with us on 23 April 2026 and confirmed that our pressure-feedback approach parallels Fugro's own ROV valve-control work, which is independent validation that the core idea holds at industrial scale. She arranged Fugro's sponsorship of the Korea campaign and routed our documentation internally.</p>
+        <p><strong>Damien Singh, Total Marine Technology.</strong> Took SoftSense into TMT and put the documentation in front of the company's CEO for engineering review on 23 April 2026, opening TMT's mentorship and backing of the project.</p>
+        <h3>Industry support</h3>
+        <p>The Korea Open campaign is backed by Western Australian subsea-industry sponsors who fund the trip and connect the team to working engineers: Fugro, Total Marine Technology, Pulse Technology Hub, EFFEE On Site Robotics and CP Maritime.</p>
+            <h2 id="scaling">Scaling to artefact size</h2>
+
+        <p>The gripper this document describes is small on purpose. At full open the fingertips part by about 124 millimetres, and the drivetrain delivers well under a newton per finger. That is the right size for the bench and the scaled test objects, but it is too small and too gentle to recover a real amphora, anchor fluke or ballast stone off the seafloor. Every archaeologist we showed it to asked the same question: can you make it bigger?</p>
+        <p>The answer is yes, and the way we built it means bigger is one parameter, not a redesign. A single scale variable multiplies every linear dimension of the model, and we built and re-simulated two larger sizes from it, 1.5 times and 2.0 times. The linkage, the gears, the finger walls, the enclosure, the input shaft, the mounting flange and the snap clips all scale together, so every ratio and every angle is preserved. We checked it: the finger rotation is identical at all three sizes, and the jaw opening scales exactly.</p>
+        <p>A few things are held constant on purpose, because they are set by physics or by the printer rather than by the size of the part. The print and running clearances stay at about 0.3 millimetres, because they are governed by the 0.4 mm nozzle, not the part. Fastener sizes stay put, and only the positions of the bolt holes move. The flood and drain hole radii are sized by bubble and surface-tension physics, so they hold while their positions scale.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-innovation-documentation/p054-26.webp" alt="CAD render of the SoftSense gripper with both Fin Ray fingers open" width="1600" height="1200" loading="lazy" decoding="async">
+          <figcaption>The gripper the scaling study starts from. Everything in the model derives from one parametric source, so a change in scale re-simulates in minutes rather than restarting the design.</figcaption>
+        </figure>
+
+          </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>

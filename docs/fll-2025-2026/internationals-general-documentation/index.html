@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internationals General Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
+  <meta name="description" content="Six months of Lebob session logs, January to June 2026. SoftSense moves from foam pads to motor current sensing, and the robot goes from run one to full runs.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/internationals-general-documentation/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Internationals General Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
+  <meta property="og:description" content="Six months of Lebob session logs, January to June 2026. SoftSense moves from foam pads to motor current sensing, and the robot goes from run one to full runs.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/internationals-general-documentation/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Internationals General Documentation",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/internationals-general-documentation/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Internationals General Documentation",
+    "name": "Internationals General Documentation",
+    "description": "Six months of Lebob session logs, January to June 2026. SoftSense moves from foam pads to motor current sensing, and the robot goes from run one to full runs.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/internationals-general-documentation/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/internationals-general-documentation.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Internationals General Documentation (PDF)",
+      "contentSize": "2.5 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png",
+    "datePublished": "2026"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Internationals · 2026 Korea Open Invitational</div>
+      <h1 class="page-title">Internationals General Documentation</h1>
+      <p class="page-desc">The season record for the 2026 Korea Open Invitational: a weekly SoftSense engineering log from January to June 2026, twenty weeks of robot run logs, and the attendance record.</p>
+      <a href="/files/fll-2025-2026/internationals-general-documentation.pdf" class="doc-download">Download the original PDF <span class="size">2.5 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#softsense-log">The SoftSense weekly log</a></li>
+          <li><a href="#run-log">The robot run log</a></li>
+          <li><a href="#attendance">Meeting minutes and attendance</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="softsense-log">The SoftSense weekly log</h2>
+
+        <p>Every week from January 2026 we recorded what moved on the innovation project. Read end to end, it is the record of a design changing its mind under expert pressure.</p>
+
+        <h3>January: framing the problem</h3>
+        <p><strong>2 January.</strong> Planned to turn the prototype innovations project into an actual product. Reviewed nationals judges' feedback. Set a six month goal to replace assumptions with actual data, CAD and expert validation. Research began into underwater archaeology and current practices, and why current ROV manipulators fail.</p>
+        <p><strong>9 January.</strong> Studied maritime archaeology recovery practices and confirmed core issues. Identified four failure modes the innovation needs to address, and set this framing as the backbone of the pitch. Began an outreach list of subsea engineers, marine archaeologists, and companies like Fugro and Oceaneering to pressure test the ideas.</p>
+        <p><strong>16 January.</strong> Emailed a first wave of maritime archaeology experts and institutions, including UWA, the Australasian Institute for Maritime Archaeology, the Minderoo UWA Deep Sea Research Centre and the WA Museum. Sent calendar invites instead of plain emails so experts could choose a better time, which improved the reply rate. Early replies validated the need and pointed toward force feedback and gentle contact as the true novelty.</p>
+        <p><strong>23 January.</strong> A call with subsea engineer Tim MacDonald reshaped the build philosophy. We stayed with cheap 3D printed plastic rather than titanium because metals are expensive and corrode underwater. He noted that soft silicone tipped grippers already exist but lack force sensors, making our pressure sensing the key point of difference. He suggested a low cost electronics housing method: a clear tube filled with non-conductive oil to equalise pressure at depth. He also warned that Nylon 6 absorbs water badly.</p>
+        <p><strong>30 January.</strong> Formalised the design concept that had won nationals: soft foam fingertip pads to spread grip force, a pressure sensor under each pad to stream force data to the pilot, a rotating finger platform for full surface contact, and a cheap modular printed claw with spares. Writing it up exposed the open risks, which we listed plainly: unproven materials, no finite element analysis, and uncertainty about how foam sensors behave under pressure at depth.</p>
+
+        <h3>February: from foam to geometry</h3>
+        <p><strong>6 February.</strong> Worked through earlier regional feedback from David Howard. Identified that ambient water pressure rises with depth and would swamp a squeeze reading from a foam sensor. Designed a second pressure sensor on the main body to measure outside water pressure so the firmware could subtract ambient and recover a true squeeze value. This was the first clear sign that foam based sensing had depth problems that still needed solving.</p>
+        <p><strong>13 February.</strong> The competition model was migrated from Onshape and rebuilt in build123d, a Python CAD library. Every dimension was driven by a variable so the fully parametric model could automatically update as the design changed. The goal was a single repository where geometry, analysis and print files all derive from one source of truth. This initial investment allowed the entire gripper to be re-simulated within minutes of any change.</p>
+        <p><strong>20 February.</strong> The national test set was documented against a diverse range of shapes: bone, anchor, vase and chest, with gripping forces spanning 26 to 411 grams-force. Four fingers outperformed two fingers on smooth or round shapes and on poor feature shapes. The results also revealed that foam compliance alone was insufficient for repeatable grips.</p>
+        <p><strong>27 February.</strong> Research was conducted on the Fin Ray effect, a biomimetic structure copied from fish fins that bends toward and wraps around objects pushing against it. The compliance is derived entirely from geometry printed in flexible TPU, offering better full surface contact than foam pads, and removing components prone to mechanical failure or water absorption. This marked a strategic shift away from foam pads toward pure geometric compliance.</p>
+
+        <h3>March: materials, texture and analysis</h3>
+        <p><strong>6 March.</strong> Catalogued candidate filaments against real requirements: strength, low water absorption, stable performance in cold and wet conditions, printable on the Bambu P1S, and ideally recyclable. Ruled out the published carbon-filled Nylon 12 choice because it needs a heated chamber the P1S cannot maintain and still absorbs water. Flagged a salt water soak test as mandatory before making any final material claim.</p>
+        <p><strong>13 March.</strong> Studied surface micro-texture to improve TPU finger grip in wet conditions and settled on a crosshatch micro-post pattern. Sized the channels above the drainage threshold so water would be squeezed out of the contact patch, based on published friction and drainage models rather than guesswork.</p>
+        <p><strong>20 March.</strong> Set up finite element analysis on the Fin Ray finger to see how it deforms and where it is stressed under grip load. Focused the first runs on building a trustworthy, reproducible pipeline rather than chasing a final number, and confirmed that grip rankings are largely insensitive to the exact material stiffness.</p>
+
+        <h3>April: industry review</h3>
+        <p><strong>3 April.</strong> The innovation and business framing was rebuilt to position SoftSense as a bolt-on end effector for existing ROV arms instead of a full arm replacement, lowering the barrier to entry. A product brief was written defining a tiered kit, pricing structure, and a value proposition focused on doing no harm to artifacts.</p>
+        <p><strong>10 April.</strong> Meetings were lined up with subsea industry companies to secure funding for the Korea trip and gather real engineering critique. A pitch, materials and a shortlist of four target companies were prepared, which included a plan for unplanned in-person reception visits. The walk-in strategy proved effective, successfully securing same-day meetings.</p>
+        <p><strong>17 April.</strong> A long session with Woodside's subsea team yielded critical feedback, including the warning that carbon-filled Nylon absorbs water and swells under marine conditions. The feedback emphasised that subsea customers prioritise reliability over cost, and that retrieval is a strict design requirement since everything taken to the ocean must be brought back. We introduced a technology readiness self-assessment, placing the project around level two to three, and they highlighted the valley of death between a lab idea and a deployable product. They suggested exploring magnetic coupling and the Hydrus rim-drive ROV as alternative methods to eliminate leak-prone shaft seals. While Woodside offered no cash funding, they provided three warm industry referrals and a much sharper direction.</p>
+        <p><strong>24 April.</strong> The walk-in meetings converted, with Fugro confirming sponsorship and routing the project documents to their ROV manager. Both TMT and Oceaneering opened engineering feedback channels. Acting on the water absorption warnings, the rigid frame material was formally switched away from carbon-Nylon 12 to PETG, and later to a glass-filled PA12. Printed TPU was specified for the soft fingers.</p>
+
+        <h3>May: sensing moves into the motor</h3>
+        <p><strong>1 May.</strong> Input from Woodside, Fugro, TMT and Oceaneering was consolidated into a single engineering feedback record, with each point converted into a direct action. Actions were established to state operating boundaries explicitly, choose between a cheap-and-many or expensive-and-one product strategy, and design the system for quick repairs on a ship deck using only a spanner. A fail-safe grip requirement was captured to ensure the gripper holds its position during a power loss. Repeated industry confirmation that foam sensors fail at depth accelerated the shift toward motor current sensing.</p>
+        <p><strong>8 and 15 May.</strong> Meetings were held with further domain experts, including a Western Australian shipwrecks and maritime archaeology specialist, to validate the recovery use case and handling requirements. The expert feedback reinforced that prioritising gentle, measurable grip force and modular, repairable hardware was the correct approach. The per-artifact preset concept was refined based on real world methods used to lift artifacts off the seabed.</p>
+        <p><strong>22 and 29 May.</strong> The motor study concluded with the selection of a smart serial servo: the DYNAMIXEL XW540 as the primary actuator and the Feetech STS3250 as the budget alternative. Both natively expose motor current telemetry, enabling the conductive-foam fingertip sensors to be completely removed. The actuator itself was turned into the grip force sensor by reading motor current as torque and converting it into tip force. The gripper body was redesigned into a clean, centred unibody featuring snap-on printed shrouds over the electronics canister. This finalised configuration represents the official design that SoftSense is bringing to Korea.</p>
+
+        <h3>June: hardware and departure</h3>
+        <p><strong>5 June.</strong> The electronics and pressure canister hardware were finalised and ordered for the Korea display, including the serial-bus servo, USB bus adapter, a Blue Robotics enclosure with the correct penetrators and shaft seal, and the power chain. The power configuration was verified to ensure that a 3S LiPo battery at 12.6 volts exactly matches the maximum voltage ceiling of the servo. Long Western Australian shipping lead times drove the decision to place the hardware order early.</p>
+        <p><strong>12 June.</strong> A bench bring-up plan was specified for the incoming parts: locate the servo on the bus, scan its baud rate, command a closing movement, read the load and current, and hold the grip at a per-artefact threshold. The servo was confirmed to expose a usable present-current register, verifying that the motor current force sensing method is viable. The original force data from the national test set will be reused as the calibration target.</p>
+        <p><strong>19 June.</strong> Following the failure of the original single-board controller, an embedded brain was selected that combines a servo driver, bus interface and servo power onto a single board, with built-in wireless telemetry to provide a live force readout directly in front of the competition judges. A self-contained controller appliance was built and flashed. Materials for the Korea judging were prepared in parallel, including an eight-person presentation skit that dramatises the crush-versus-recover story. The final remaining tasks before the 3 July departure were bench testing the servo control loop and reconciling older documentation with the current Fin Ray, motor current design.</p>
+            <h2 id="run-log">The robot run log</h2>
+
+        <p>Alongside the innovation work, the robot game was rebuilt run by run across twenty weeks, from week 1 beginning 26 January 2026 through to full-run practice week beginning 1 June 2026. Each week is broken into sessions, and each session logs the runs attempted.</p>
+        <p>Runs 1 through 7 were developed roughly in order, each getting between four and seven sessions of its own. Week 19 switched from development to polishing, working mission by mission from mission 1 to mission 7. Week 20 was full-run practice.</p>
+        <p>The six full runs on 3 June 2026 are where the season lands. Full run A had a slight drift on mission 2 that was corrected, a slow gear spin on mission 4, and a final drop slightly early on mission 7. Full run B was the best so far. Full run C was consistent. Full run D was flawless, every mission perfect. Full run E completed with one slight drift. Full run F was perfect on all seven missions, and the log entry reads: confident and hopefully ready.</p>
+            <h2 id="attendance">Meeting minutes and attendance</h2>
+
+        <p>The session attendance log covers the Korea Open Invitational campaign in Jeonju, across both the innovation project and the robot game, from 3 January 2026 to 25 June 2026. Sessions ran either as full Saturdays, 08:00 to 17:00, or as Thursday afternoons, 15:30 to 16:30. Each entry records the focus of the session and who was present.</p>
+        <p>The first entry, Saturday 3 January 2026, records the Korea Open invitation accepted, and reviewing the national judges' feedback to list weak points to fix. The last, Thursday 25 June 2026, records Korea departure prep: presentation and skit rehearsal, hardware packing, and bench-test sign-off.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Member</th><th>Attended</th><th>Rate</th></tr></thead>
+          <tbody><tr><td>Andre Nijman</td><td>46 / 49</td><td>93.9%</td></tr><tr><td>Oliver Liu</td><td>46 / 49</td><td>93.9%</td></tr><tr><td>Sean Chan</td><td>46 / 49</td><td>93.9%</td></tr><tr><td>Kingsley Wong</td><td>45 / 49</td><td>91.8%</td></tr><tr><td>Chris Wang</td><td>44 / 49</td><td>89.8%</td></tr><tr><td>Subesh Sukumuran</td><td>48 / 49</td><td>98.0%</td></tr><tr><td>Aaron Zhang</td><td>45 / 49</td><td>91.8%</td></tr><tr><td>Leven Shi</td><td>45 / 49</td><td>91.8%</td></tr></tbody>
+        </table></div>
+
+          </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regionals Innovation Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
+  <meta name="description" content="Lebob&#x27;s regionals innovation write up for FLL Unearthed. The CTD 4000 manipulator concept, the underwater archaeology problem, research and bench results.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Regionals Innovation Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
+  <meta property="og:description" content="Lebob&#x27;s regionals innovation write up for FLL Unearthed. The CTD 4000 manipulator concept, the underwater archaeology problem, research and bench results.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Regionals Innovation Documentation",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Regionals Innovation Documentation",
+    "name": "Regionals Innovation Documentation",
+    "description": "Lebob's regionals innovation write up for FLL Unearthed. The CTD 4000 manipulator concept, the underwater archaeology problem, research and bench results.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/regionals-innovation-documentation.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Regionals Innovation Documentation (PDF)",
+      "contentSize": "1.3 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Regionals · FLL Unearthed 2025</div>
+      <h1 class="page-title">Regionals Innovation Documentation</h1>
+      <p class="page-desc">Our first innovation write up of the Unearthed season. It sets out the underwater archaeology problem, the research behind it, and the Claw Testing Design 4000 concept we took to regionals.</p>
+      <a href="/files/fll-2025-2026/regionals-innovation-documentation.pdf" class="doc-download">Download the original PDF <span class="size">1.3 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#brainstorm">Brainstorm</a></li>
+          <li><a href="#problem">The problem</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#solution">Our solution: the CTD 4000</a></li>
+          <li><a href="#testing">Testing and results</a></li>
+          <li><a href="#feedback">Feedback</a></li>
+          <li><a href="#presentation">The innovation presentation</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="brainstorm">Brainstorm</h2>
+
+        <p>As a team we had a couple of different preferences. We wanted something that was coding related as well as mechanical, and which involved electronics. We were flexible and did not really mind what we did.</p>
+        <p>We ultimately decided on manipulator arms. It is a rapidly improving field, and it was doable for a group of school students who had 3D printers and basic electronic parts at their disposal.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p002-02.webp" alt="Colour coded brainstorm mind map of candidate innovation project ideas" width="1378" height="1302" loading="lazy" decoding="async">
+          <figcaption>The team brainstorm. Candidate project ideas were grouped and colour coded before we settled on manipulator arms.</figcaption>
+        </figure>
+
+            <h2 id="problem">The problem</h2>
+
+        <p>Archaeologists are facing hard times trying to recover fragile, broken or small shards from the sea floor. They rely on cheap two finger manipulator hands on ROV arms that were originally intended for oil, mechanical or industrial use.</p>
+        <p>These clumsy setups could lead to the inability to recover artefacts, or even worse, the destruction of those artefacts. They also have severe and hard limits on the size and shape of objects they can carry.</p>
+            <h2 id="research">Research</h2>
+
+        <p>We worked through published sources on underwater manipulators, ROV damage records and materials selection, and kept notes against each one.</p>
+
+        <h3>Underwater manipulators: a review</h3>
+        <ul>
+          <li>Underwater manipulators are used for grasping, lifting and handling objects underwater, and manipulator arms are considered the most suitable tool for executing sub-sea operations.</li>
+          <li>Performance is affected by hydrodynamic effects such as drag and added mass, plus buoyancy, structural stiffness, joint design, reach and torque capability.</li>
+          <li>The majority of existing arms are anthropomorphic, and most are designed for a single purpose. Most working class ROVs carry two arms, one simple and strong one to hold onto the object and a smaller one to do the actual job.</li>
+          <li>The most common materials are metal alloys: titanium Ti 6-4, anodised aluminium alloys (5083, 6082 T6, 6061 T6, 7075 T6, A356) and stainless steel alloys (316, 630, 660), along with some plastics such as polyethylene. The key factors are high corrosion resistance, relatively high strength and ease of manufacturing.</li>
+          <li>Commercially available arms are typically rated to 3000 m to 6500 m of sea water, some reach 7000 m, and a few have been developed for full ocean depth at 11000 msw.</li>
+          <li>Reach, the length of the whole kinematic chain, runs from 0.5 m up to 2.4 m. Maximum wrist torque ranges from 8 Nm to 250 Nm. Lifting and carrying varies from 5 kg to 500 kg. Arm weight in air varies from 6 kg to 150 kg.</li>
+          <li>Grippers are usually hydraulic, with grip strength from 35 kgf to 652 kgf. Types include three or four finger intermeshing jaws, two or three finger floating jaws, scissor jaws and suction feet. The common type is parallel acting jaws with a slot for a standard T-bar handle.</li>
+          <li>Both experimental and commercial arms have between 3 and 6 degrees of freedom, because 3 DOF is sufficient for arbitrary position and 6 is sufficient for both position and orientation of the end effector.</li>
+          <li>Hydraulic systems have a much higher power to weight ratio, up to the order of three for existing commercial hydraulic underwater manipulators, against one or less for electrical ones. That is why most commercial arms are hydraulic.</li>
+          <li>Hydraulic arms suffer poor positional accuracy compared with electric arms and are not suited to fine control of contact force. Fluid leaks are almost impossible to solve. Electric arms win on precision and force or torque control, but most are not used operationally because they lack the speed, reliability and strength required.</li>
+          <li>Control schemes integrating proportional, integral and derivative terms offer simplicity of implementation and low software costs.</li>
+        </ul>
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p004-03.webp" alt="Labelled diagram of a five degree of freedom manipulator arm showing waist, shoulder, elbow, wrist and gripper rotation" width="494" height="270" loading="lazy" decoding="async">
+          <figcaption>An example of a 5 DOF manipulator arm, with waist, shoulder, elbow and wrist rotation plus the gripper.</figcaption>
+        </figure>
+
+
+        <h3>Assessing damage and predicting future risks: the Schilling Titan 4, 2017 to 2022</h3>
+        <ul>
+          <li>Leaks or damage to the seals of the manipulator arms are the most common cause of damage, and the jaws or fingers are the element most exposed to damage.</li>
+          <li>There is a correlation between operator errors and manipulator damage, and it is possible to identify preventative measures against future failures.</li>
+          <li>The Titan 4 is the most widely employed equipment on work class ROVs worldwide, and has good corrosion resistance. Its key parts are the azimuth, shoulder, upper arm, elbow, forearm, pitch and yaw, wrist and jaw.</li>
+          <li>Depth for scientific work runs from a few metres to 10,000 m, and only around 5 per cent of ROV shares are used for scientific research.</li>
+          <li>Most arms are operated by pilots and co-pilots, but limited visibility in murky water and poor camera angles can lead to collisions and significant damage.</li>
+        </ul>
+
+        <h3>Materials</h3>
+        <p>We compared lightweight materials for robot manipulators and the five materials most used in ROVs. Aluminium is widely used because of its good mechanical properties, and composites can outperform it but are more expensive and harder to manufacture.</p>
+        <ul>
+          <li><strong>Anodised aluminium.</strong> Corrosion resistant, durable, relatively light. May not suit deep sea work where titanium is preferred, and the coating can rub off in abrasive conditions.</li>
+          <li><strong>Titanium.</strong> Exceptionally strong, low weight, corrosion and fatigue resistant, handles high pressure and aggressive fluids. Much more expensive than aluminium, more complex to fabricate, large carbon and environmental footprint.</li>
+          <li><strong>Stainless steel.</strong> Corrosion resistant with good strength, but much heavier and may need extra treatment for optimal corrosion resistance.</li>
+          <li><strong>Plastics and composites.</strong> A good balance of weight, strength and corrosion resistance, can insulate against electricity and seal well. Limited high temperature resistance and limited depth capacity.</li>
+          <li><strong>Ceramics.</strong> Excellent corrosion and wear resistance and thermal stability, but brittle and rare outside specialised applications such as sensors.</li>
+        </ul>
+        <p>In general, ROV materials need three properties: corrosion resistance, because the sea is extremely salty; strength, because deep sea pressure or impacts can let water into the electronics; and low weight, because less weight needs less energy to move and leaves more power for the manipulator arms.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p007-04.webp" alt="Table comparing density and elastic modulus of aluminium 6063-T5 against a carbon fibre TPU composite" width="1243" height="178" loading="lazy" decoding="async">
+          <figcaption>The material comparison we worked from, setting aluminium 6063-T5 against a carbon fibre composite on density and elastic modulus.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p010-05.webp" alt="Dense specification table of commercially available underwater manipulator arm models" width="1050" height="1436" loading="lazy" decoding="async">
+          <figcaption>Specifications of existing manipulator arm models, collected so we could compare our concept against equipment already in service.</figcaption>
+        </figure>
+
+            <h2 id="solution">Our solution: the CTD 4000</h2>
+
+        <p>Our solution is to use a combination of existing technologies, applied in creative ways.</p>
+        <ol>
+          <li>We use soft foam pads on the tips of the fingers on the gripper to help reduce the chances of breaking delicate artefacts.</li>
+          <li>We apply pressure sensors beneath the pads. This gives a readback to the operators, and gives ROV operators the option of running our code, which stops the actuator when the pressure value reaches a certain threshold.</li>
+          <li>We attach all of the pads and the pressure sensors to a rotating surface. This allows the pads to always have decent contact on the object, making awkward positions more feasible.</li>
+        </ol>
+        <p>Operators can set presets for different objects, one for a soft object like coral and another for a harder object like limestone.</p>
+        <p>In the judging presentation the concept is named the Claw Testing Design 4000, or CTD: adaptable foam to cushion delicate vases and pottery, a large grasping area, rotating pads to grip any surface, and removable fingers so users can quickly change the length and shape of the fingers.</p>
+            <h2 id="testing">Testing and results</h2>
+
+        <p>We used a set of four objects: a pot, a treasure chest, a bone and an anchor. We chose this set because they are a diverse range of items with different shapes and features.</p>
+        <p>The bone and the anchor are both quite long items, but the anchor has two sets of holds that could provide grip for a manipulator arm while the bone has little to grip besides the two ends. The chest and the vase are both stout objects, but the chest is rectangular with grooves in the side for easy grip while the vase is smooth and circular, with only the head portion to grip.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p012-08.webp" alt="Render of the smooth ceramic vase test object" width="433" height="396" loading="lazy" decoding="async">
+          <figcaption>The vase. Smooth and circular, with only the head portion available to grip.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p012-07.webp" alt="Render of the treasure chest test object with grooved sides" width="579" height="417" loading="lazy" decoding="async">
+          <figcaption>The treasure chest. Rectangular, with grooves in the side that make it easy to grip.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p012-09.webp" alt="Render of the anchor test object" width="531" height="478" loading="lazy" decoding="async">
+          <figcaption>The anchor. A long item, but with two sets of holds that give a manipulator arm something to catch.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/regionals-innovation-documentation/p012-10.webp" alt="Render of the bone test object" width="675" height="458" loading="lazy" decoding="async">
+          <figcaption>The bone. Also long, but with little to grip besides the two ends.</figcaption>
+        </figure>
+
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Object</th><th>Attempts (4 fingers)</th><th>Attempts (2 fingers)</th><th>Pressure to grip</th></tr></thead>
+          <tbody><tr><td>Bone</td><td>2</td><td>4</td><td>26 gf</td></tr><tr><td>Anchor</td><td>5</td><td>4</td><td>96 gf</td></tr><tr><td>Vase</td><td>3</td><td>5</td><td>411 gf</td></tr><tr><td>Chest</td><td>3</td><td>3</td><td>288 gf</td></tr></tbody>
+        </table></div>
+
+            <h2 id="feedback">Feedback</h2>
+
+        <p>We emailed working experts and institutions to pressure test the problem rather than assume it.</p>
+        <p><strong>Experts emailed:</strong> Dr John McCarthy, Associate Professor Jonathan Benjamin, Chelsea Wiseman, Michael O'Leary (UWA), Jerem Leach, Ingrid Ward, Hiro Yoshida.</p>
+        <p><strong>Institutions emailed:</strong> Australasian Institute for Maritime Archaeology, Minderoo UWA Deep Sea Research Centre, and the Western Australian Museum Maritime Archaeology Department.</p>
+            <h2 id="presentation">The innovation presentation</h2>
+
+        <p>We presented the concept as a scripted play with eight roles, one per team member: two presenters, a scientist, three questionnaires and two customers.</p>
+        <p>The scientist explains the material choices. Titanium is preferred for the main structural components and frame because of its high strength and high corrosion resistance, with anodised aluminium as the cheaper option that provides many of the same advantages. Plastics and composites hold the electronics and sensors in place for the manipulator fingers, internal structural supports and filler material. That reduces the weight of the arm by around 20 per cent compared with similar sized and specified commercial arms such as the Titan 4, which has the same 6 degrees of freedom as our designed arm.</p>
+        <p>The questionnaires push back on how much of it is real. The honest answer in the script is that the arm is mainly theoretical: we had been unable to create a perfect commercial arm and had not tested it in real world conditions. Based on our testing and research we believed it could reach depths of over 6,000 metres and have a reach of 2 metres.</p>
+        <p>On durability, the script notes that the Schilling Titan 4 has been tested under full load for 250,000 underwater cycles with minimal wear, and that our prototype should have a lifespan of around 7 years with major part replacements every 2 years.</p>
+        <p>The two customer parts state the use case plainly. One is an archaeologist recovering artefacts from shipwrecks who had trouble picking up loose rocks from the seabed with currents making positioning difficult. The other is a scientist who uses ROV manipulator arms to pick up small animals such as coral, and runs the risk of damaging or killing them because there is no direct form of pressure sensor to show how much force is being applied.</p>
+          </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>
