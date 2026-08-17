@@ -2,26 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lebob.com.au/</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
   <url>
-    <loc>https://lebob.com.au/media/</loc>
-    <lastmod>2026-08-11</lastmod>
+    <loc>https://lebob.com.au/about/</loc>
+    <lastmod>2026-08-17</lastmod>
   </url>
   <url>
     <loc>https://lebob.com.au/docs/</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
   <url>
     <loc>https://lebob.com.au/docs/fll-2025-2026/</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/internationals-general-documentation/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/internationals-innovation-documentation/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/internationals-presentation/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/internationals-robot-design-documentation/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/nationals-innovation-documentation/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/nationals-robot-design-journal/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/media/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://lebob.com.au/projects/softsense/</loc>
+    <lastmod>2026-08-17</lastmod>
   </url>
   <url>
     <loc>https://lebob.com.au/sponsors/</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
   <url>
     <loc>https://lebob.com.au/sponsors/how-to/</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
 </urlset>

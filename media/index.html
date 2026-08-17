@@ -83,17 +83,18 @@
       transition: transform 0.3s;
     }
     .masonry-item:hover img { transform: scale(1.02); }
+    /* Captions sit under the image rather than floating over it on hover, so
+       they are readable on a touch screen and present for anything reading the
+       page rather than looking at it. */
     .masonry-caption {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 8px 12px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.6));
-      font-size: 13px; font-weight: 500;
-      color: #fff;
-      opacity: 0;
-      transition: opacity 0.2s;
+      padding: 12px 14px 14px;
+      border-top: 1px solid var(--border-light);
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--muted);
+      transition: color 0.2s;
     }
-    .masonry-item:hover .masonry-caption { opacity: 1; }
+    .masonry-item:hover .masonry-caption { color: var(--fg); }
 
     /* Lightbox */
     .lightbox {
@@ -158,7 +159,7 @@
     "@context": "https://schema.org",
     "@type": "ImageGallery",
     "name": "Lebob media gallery",
-    "description": "Competition shots, build sessions, and prototype iterations from the Lebob season.",
+    "description": "Photographs from the Lebob season: competition table runs, event days, site visits and the team between sessions.",
     "url": "https://lebob.com.au/media/",
     "isPartOf": {
       "@type": "WebSite",
@@ -169,70 +170,80 @@
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/competition-table-run.webp",
-        "caption": "Competition table run",
+        "caption": "Four of us around the Unearthed competition table, lining the robot up on the mat with the mission models in place.",
+        "description": "Four Lebob members in team shirts leaning over the Unearthed competition table as the robot runs",
         "width": 1600,
         "height": 1200
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/team-at-table.webp",
-        "caption": "Team at the competition table",
+        "caption": "Three of us at the table, one reaching across the mat to the robot. The Unearthed mission models are set out around it.",
+        "description": "Three Lebob members at the competition table, one reaching across the mat toward the robot",
         "width": 1600,
         "height": 2400
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/outdoor-event-audience.webp",
-        "caption": "Outdoor event audience",
+        "caption": "A packed outdoor audience under the trees, most of them students, watching something happening off to the side.",
+        "description": "A large seated outdoor audience under trees, mostly students in yellow and white shirts",
         "width": 1600,
         "height": 1067
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/build-session.webp",
-        "caption": "Build session",
+        "caption": "An outdoor gathering, with the crowd ringed around an open space and two people out in the middle of it.",
+        "description": "An outdoor school gathering with a crowd of students watching two people in an open space at the front",
         "width": 1600,
         "height": 1067
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/workshop-iteration.webp",
-        "caption": "Workshop iteration",
+        "caption": "The same gathering a moment later. The two frames were shot seconds apart.",
+        "description": "A second frame of the same outdoor gathering, taken moments after the first",
         "width": 1600,
         "height": 1067
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/prototype-testing.webp",
-        "caption": "Prototype testing",
+        "caption": "Lined up beside the pit table outside a brick building, alongside event volunteers in FIRST branded shirts. One of us is holding a robot attachment up for the camera.",
+        "description": "The Lebob team lined up beside a black draped pit table outside a brick building, with event volunteers in FIRST shirts",
         "width": 1600,
         "height": 1067
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/team-moment.webp",
-        "caption": "Team moment",
+        "caption": "On the courtyard lawn between sessions, beanbags scattered across the grass behind us.",
+        "description": "The Lebob team standing together on a grass courtyard with beanbags scattered behind them",
         "width": 1600,
         "height": 1200
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/behind-the-scenes.webp",
-        "caption": "Behind the scenes",
+        "caption": "Another shot in the same courtyard. One of us is in a FIRST shirt rather than the team shirt.",
+        "description": "Another Lebob group shot in the same grass courtyard, one member wearing a yellow FIRST shirt",
         "width": 1600,
         "height": 1200
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/team-outdoors.webp",
-        "caption": "Team outdoors",
+        "caption": "Stretched out on the grass, with a construction crane up over the rooftops behind us.",
+        "description": "The Lebob team sitting and lying on a grass lawn with a construction crane visible over the rooftops",
         "width": 1600,
         "height": 1200
       },
       {
         "@type": "ImageObject",
         "contentUrl": "https://lebob.com.au/img/gallery/team-group-photo.webp",
-        "caption": "Lebob team group photo",
+        "caption": "The team indoors with a host, visitor passes on, around a meeting room table. This is one of the site visits the season log records, though the photo is not labelled with which.",
+        "description": "Eight Lebob students wearing visitor passes standing with an adult host in a bright meeting room",
         "width": 1600,
         "height": 1200
       }
@@ -267,7 +278,8 @@
     <div class="container">
       <div class="page-label">Media · gallery</div>
       <h1 class="page-title">Photos from the field.</h1>
-      <p class="page-desc">Competition shots, build sessions, and prototype iterations. The season as it actually happened.</p>
+      <p class="page-desc">Competition shots, event days and the moments between. The season as it actually happened.</p>
+      <p class="page-desc" style="margin-top:12px;">These photographs reached us without event names or dates attached, so each caption describes only what is in the frame.</p>
     </div>
   </header>
 
@@ -275,44 +287,44 @@
     <div class="container">
       <div class="masonry" id="gallery">
         <div class="masonry-item" onclick="openLightbox(0)">
-          <img src="/img/gallery/competition-table-run.webp" alt="Competition — robot table run" loading="lazy" width="1600" height="1200" decoding="async">
-          <div class="masonry-caption">Competition table run</div>
+          <img src="/img/gallery/competition-table-run.webp" alt="Four Lebob members in team shirts leaning over the Unearthed competition table as the robot runs" loading="lazy" width="1600" height="1200" decoding="async">
+          <div class="masonry-caption">Four of us around the Unearthed competition table, lining the robot up on the mat with the mission models in place.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(1)">
-          <img src="/img/gallery/team-at-table.webp" alt="Competition — team at table" loading="lazy" width="1600" height="2400" decoding="async">
-          <div class="masonry-caption">Team at the competition table</div>
+          <img src="/img/gallery/team-at-table.webp" alt="Three Lebob members at the competition table, one reaching across the mat toward the robot" loading="lazy" width="1600" height="2400" decoding="async">
+          <div class="masonry-caption">Three of us at the table, one reaching across the mat to the robot. The Unearthed mission models are set out around it.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(2)">
-          <img src="/img/gallery/outdoor-event-audience.webp" alt="Audience at outdoor event" loading="lazy" width="1600" height="1067" decoding="async">
-          <div class="masonry-caption">Outdoor event audience</div>
+          <img src="/img/gallery/outdoor-event-audience.webp" alt="A large seated outdoor audience under trees, mostly students in yellow and white shirts" loading="lazy" width="1600" height="1067" decoding="async">
+          <div class="masonry-caption">A packed outdoor audience under the trees, most of them students, watching something happening off to the side.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(3)">
-          <img src="/img/gallery/build-session.webp" alt="Build session" loading="lazy" width="1600" height="1067" decoding="async">
-          <div class="masonry-caption">Build session</div>
+          <img src="/img/gallery/build-session.webp" alt="An outdoor school gathering with a crowd of students watching two people in an open space at the front" loading="lazy" width="1600" height="1067" decoding="async">
+          <div class="masonry-caption">An outdoor gathering, with the crowd ringed around an open space and two people out in the middle of it.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(4)">
-          <img src="/img/gallery/workshop-iteration.webp" alt="Workshop iteration" loading="lazy" width="1600" height="1067" decoding="async">
-          <div class="masonry-caption">Workshop iteration</div>
+          <img src="/img/gallery/workshop-iteration.webp" alt="A second frame of the same outdoor gathering, taken moments after the first" loading="lazy" width="1600" height="1067" decoding="async">
+          <div class="masonry-caption">The same gathering a moment later. The two frames were shot seconds apart.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(5)">
-          <img src="/img/gallery/prototype-testing.webp" alt="Prototype testing" loading="lazy" width="1600" height="1067" decoding="async">
-          <div class="masonry-caption">Prototype testing</div>
+          <img src="/img/gallery/prototype-testing.webp" alt="The Lebob team lined up beside a black draped pit table outside a brick building, with event volunteers in FIRST shirts" loading="lazy" width="1600" height="1067" decoding="async">
+          <div class="masonry-caption">Lined up beside the pit table outside a brick building, alongside event volunteers in FIRST branded shirts. One of us is holding a robot attachment up for the camera.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(6)">
-          <img src="/img/gallery/team-moment.webp" alt="Team moment" loading="lazy" width="1600" height="1200" decoding="async">
-          <div class="masonry-caption">Team moment</div>
+          <img src="/img/gallery/team-moment.webp" alt="The Lebob team standing together on a grass courtyard with beanbags scattered behind them" loading="lazy" width="1600" height="1200" decoding="async">
+          <div class="masonry-caption">On the courtyard lawn between sessions, beanbags scattered across the grass behind us.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(7)">
-          <img src="/img/gallery/behind-the-scenes.webp" alt="Behind the scenes" loading="lazy" width="1600" height="1200" decoding="async">
-          <div class="masonry-caption">Behind the scenes</div>
+          <img src="/img/gallery/behind-the-scenes.webp" alt="Another Lebob group shot in the same grass courtyard, one member wearing a yellow FIRST shirt" loading="lazy" width="1600" height="1200" decoding="async">
+          <div class="masonry-caption">Another shot in the same courtyard. One of us is in a FIRST shirt rather than the team shirt.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(8)">
-          <img src="/img/gallery/team-outdoors.webp" alt="Team outdoors" loading="lazy" width="1600" height="1200" decoding="async">
-          <div class="masonry-caption">Team outdoors</div>
+          <img src="/img/gallery/team-outdoors.webp" alt="The Lebob team sitting and lying on a grass lawn with a construction crane visible over the rooftops" loading="lazy" width="1600" height="1200" decoding="async">
+          <div class="masonry-caption">Stretched out on the grass, with a construction crane up over the rooftops behind us.</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(9)">
-          <img src="/img/gallery/team-group-photo.webp" alt="Lebob team group photo" loading="lazy" width="1600" height="1200" decoding="async">
-          <div class="masonry-caption">Lebob team group photo</div>
+          <img src="/img/gallery/team-group-photo.webp" alt="Eight Lebob students wearing visitor passes standing with an adult host in a bright meeting room" loading="lazy" width="1600" height="1200" decoding="async">
+          <div class="masonry-caption">The team indoors with a host, visitor passes on, around a meeting room table. This is one of the site visits the season log records, though the photo is not labelled with which.</div>
         </div>
       </div>
     </div>

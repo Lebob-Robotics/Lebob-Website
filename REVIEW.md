@@ -272,3 +272,73 @@ straight at GitHub. It is now a `div` with two links, a primary one to the new p
 secondary one to the repository, because a nested anchor is invalid HTML. The hover, press
 and scroll-reveal behaviour in `polish.css` and `polish.js` all key off `.project-card`
 and are unaffected.
+
+## Phase 6 — Media gallery
+
+### The filenames do not describe the photographs
+
+This is the significant finding of this phase. Five of the ten gallery files are
+named after something that is not in the frame, and the previous alt text and
+captions were generated from those filenames rather than from the images.
+
+| File | What the name claims | What is actually in the frame |
+| --- | --- | --- |
+| `build-session.webp` | A build session | An outdoor gathering with a crowd of students ringed around an open space |
+| `workshop-iteration.webp` | A workshop iteration | The same gathering, the same framing, seconds apart. It is a near duplicate of the file above |
+| `prototype-testing.webp` | Prototype testing | The team lined up beside a draped pit table outside a brick building, with event volunteers in FIRST shirts |
+| `outdoor-event-audience.webp` | An audience at an outdoor event | Accurate, but it is the same event as the two above |
+| `team-group-photo.webp` | A team group photo | Accurate, but it is taken indoors in a meeting room with everyone wearing visitor passes |
+
+All ten alt attributes and captions have been rewritten from the images themselves.
+Nothing on the page now depends on a filename.
+
+**Action:** `build-session.webp` and `workshop-iteration.webp` are near duplicate
+frames of the same moment and both are on the page because the gallery is built as
+ten tiles. One of them should probably be replaced with an actual build session or
+workshop photograph, which the season clearly produced.
+
+### No event names and no dates
+
+Not one of the ten files carries an event name or a date anywhere in the repository,
+and none of them appears in any of the eight season PDFs. Rather than guessing, each
+caption describes only what is in the frame, and the page carries a single line under
+the lead saying that the photographs reached us without event names or dates attached.
+
+What can be read off the images themselves, and is used: the Unearthed competition
+table and mission models are visible in two of them; event volunteers are wearing
+shirts reading FIRST, AGE, VOLUNTEERS, AUSTRALIA in another; the team is wearing
+visitor passes in the indoor shot.
+
+**Action, and this is the highest value item in this section:** supply an event name,
+a location and a date for each of the ten photographs. Captions carrying a real event
+and date are worth far more for search than descriptions of the frame, and the
+`ImageObject` entries in the `ImageGallery` structured data are already shaped to
+carry them.
+
+### The indoor group photograph
+
+`team-group-photo.webp` shows eight students in visitor passes with an adult host in
+a bright modern meeting room. The season log records a run of industry visits in April
+2026, including walk-in meetings that converted to same-day meetings with subsea
+companies, and a site visit to the WA Shipwrecks Museum on 14 May 2026. The photo is
+consistent with one of those, but nothing labels it, so the caption says only that it
+is one of the site visits the season log records without saying which.
+
+**Action:** identify the host and the organisation. If it is a sponsor visit, naming it
+in the caption is worth doing.
+
+### Captions were previously invisible
+
+The ten captions were rendered as an overlay strip with `opacity: 0`, revealed only on
+`:hover`. That means they were unreadable on any touch device and invisible by default
+everywhere else. They are now persistent text below each image. The hover-only gradient
+overlay was removed at the same time.
+
+### Heading order
+
+`sponsors/index.html` went straight from `h1` to the `h3` sponsor names. A real `h2`,
+"Founding Supporters", now heads that band.
+
+`sponsors/how-to/index.html` had a second, unreported skip: the four "where your
+support goes" cards used `h4` under an `h2`. They are now `h3`. Both pages pass the
+heading order check.
