@@ -11,7 +11,7 @@
   <meta property="og:title" content="Lebob — FLL &amp; FTC Robotics Team">
   <meta property="og:description" content="Lebob is a FIRST LEGO League and FIRST Tech Challenge robotics team in Perth, Western Australia. We build competition robots and research soft grippers.">
   <meta property="og:url" content="https://lebob.com.au/">
-  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_AU">
@@ -529,7 +529,11 @@
       .hero-meta { flex-wrap: wrap; justify-content: center; }
     }
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1b1e">
   <link rel="stylesheet" href="/polish.css">
   <script src="/polish.js" defer></script>
   <script type="application/ld+json">
@@ -547,7 +551,7 @@
     ],
     "url": "https://lebob.com.au/",
     "logo": "https://lebob.com.au/img/lebob-logo.webp",
-    "image": "https://lebob.com.au/img/og-default.png",
+    "image": "https://lebob.com.au/img/og-default.jpg",
     "email": "team@lebob.com.au",
     "description": "Lebob is a FIRST LEGO League and FIRST Tech Challenge robotics team based in Perth, Western Australia.",
     "address": {
@@ -617,6 +621,31 @@
         "url": "https://www.tmtrov.com/"
       }
     ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://lebob.com.au/#website",
+    "name": "Lebob",
+    "alternateName": [
+      "Team Lebob",
+      "Lebob Robotics"
+    ],
+    "url": "https://lebob.com.au/",
+    "inLanguage": "en-AU",
+    "publisher": {
+      "@id": "https://lebob.com.au/#organization"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://lebob.com.au/docs/fll-2025-2026/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
   }
   </script>
 </head>

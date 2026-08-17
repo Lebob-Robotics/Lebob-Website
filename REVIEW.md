@@ -413,3 +413,94 @@ overlay was removed at the same time.
 `sponsors/how-to/index.html` had a second, unreported skip: the four "where your
 support goes" cards used `h4` under an `h2`. They are now `h3`. Both pages pass the
 heading order check.
+
+---
+
+## GEO and SEO optimisation pass
+
+A second research-led pass after the six build phases, covering what generative
+engines actually reward in 2026 as distinct from classic search ranking. Nothing here
+needs your input; it is recorded so the reasoning is not lost.
+
+### What was added
+
+**`llms.txt` at the site root.** Consensus on this shifted during 2026 and it is now a
+recommended practice rather than a curiosity. It is a markdown map of the site written
+for a model rather than a browser: a one-paragraph definition of the team, the hard
+facts (team numbers, school, contact, ABN), the full results table, and an annotated
+link list covering every page and every season document. A model that fetches one file
+gets the whole site's shape.
+
+**AI crawlers explicitly allowed in `robots.txt`.** A wildcard `Allow` already covered
+them, but several operators only honour a named block. GPTBot, OAI-SearchBot,
+ChatGPT-User, ClaudeBot, Claude-Web, Claude-SearchBot, PerplexityBot, Perplexity-User,
+Google-Extended, Applebot, Applebot-Extended, Bingbot, Amazonbot, Meta-ExternalAgent,
+cohere-ai, DuckAssistBot, YouBot and MistralAI-User are now named. Everything on this
+site is published so other teams can learn from it, so there is nothing to withhold.
+
+**Ten FAQs on `/about/`, as visible content plus `FAQPage` schema.** This is the single
+highest-value addition in the pass. FAQ markup is one of the top predictive features
+for citation in generative engines, and the questions are the ones people actually ask:
+what Lebob is, where it is based, the team numbers, what it won, what SoftSense is and
+how it senses force without a sensor, how many members, whether the work is public,
+which programmes, and how to sponsor. Every answer is 40 to 60 words, leads with the
+answer rather than building to it, and stands alone if lifted out of context, which is
+exactly how a retrieval system will use it.
+
+**`WebSite` and `SearchAction` schema** on the home page, pointing at the season
+document search, which makes the site eligible for a sitelinks search box.
+
+**`speakable`** on `/about/`, marking the title and lead as the passage a voice
+assistant should read for "who is Lebob".
+
+**`dateModified` on every article.** Freshness is a much stronger signal for generative
+retrieval than for classic ranking; stale pages get deprioritised in RAG pipelines.
+
+**Visible breadcrumb trails** on all ten deep pages. `BreadcrumbList` schema was already
+there, but the visible trail is what a human uses and what a passage extractor reads for
+context.
+
+**Previous and next links across the eight season documents**, in reading order from
+regionals through to the Korea deck, plus `rel="prev"` and `rel="next"` in the head.
+That turns eight orphan-ish pages into a traversable sequence.
+
+### Performance
+
+**Responsive images on the gallery.** The ten photographs were being served at 1600 px
+into a column about 373 px wide. Each now has 400, 800 and 1200 px variants with a
+`sizes` attribute. On a phone the gallery drops from 2.30 MB to 257 KB, which is 11 per
+cent of the previous bytes.
+
+**The social image went from 657 KB to 92 KB.** It was a PNG carrying a photograph,
+which is the wrong format for that content. It is now a JPEG at quality 88 with no
+visible artefacts. This does not affect page speed, since the image is only fetched when
+a link is shared, but several messaging platforms will not render a preview above about
+300 KB, so the old file was at risk of silently not showing.
+
+**A real icon set.** `favicon.ico` at 16, 32 and 48 px, a 180 px Apple touch icon,
+192 and 512 px PNGs, `site.webmanifest`, and a `theme-color`. The site previously
+offered only a WebP favicon, which several browsers ignore.
+
+### Checked and deliberately not changed
+
+- **`/index.html` and `/docs/index.html` resolve as well as the clean URLs.** GitHub
+  Pages cannot issue a redirect for these. The canonical tags already point at the clean
+  URL, which is the correct and sufficient fix.
+- **`www.lebob.com.au` already 301s** to the apex domain, and extensionless paths such
+  as `/about` already 301 to `/about/`. No redirect chains.
+- **`cache-control: max-age=600`** is a GitHub Pages default and cannot be changed from
+  the repository. Putting Cloudflare in front, which is the outstanding phase 7 work,
+  would fix it.
+- **Slide images on the presentation page are left at 1400 px.** They are lazy loaded and
+  below the fold, and slide text has to stay legible when a reader zooms.
+
+### Still worth doing, and not automatable
+
+1. **Submit the sitemap to Google Search Console and Bing Webmaster Tools.** Bing feeds
+   Microsoft Copilot, which cites more often than any other assistant, so the Bing
+   submission matters more than its search share suggests.
+2. **Off-site entity corroboration.** Generative engines trust a fact more when it
+   appears in several independent places. The single cheapest win is asking the six
+   sponsors to link to lebob.com.au from their own sites. A Wikidata item for the team
+   would also help models resolve "Lebob" to the right entity.
+3. **The award name from Jeonju**, still the one factual gap on the site.

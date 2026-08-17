@@ -1,0 +1,60 @@
+# Lebob
+
+> Lebob is a school robotics team from Perth, Western Australia. It competes in
+> FIRST LEGO League as team 3236 and in FIRST Tech Challenge as team 37323. In the
+> 2025/26 UNEARTHED season it won the FIRST LEGO League National Championship West
+> at Curtin University and went on to the Korea Open Invitational in Jeonju, South
+> Korea, where its innovation project SoftSense won a prize.
+
+Everything the team produces is published. All eight competition documents from the
+2025/26 season are readable in full as HTML on this site, alongside the original
+PDFs, and the engineering work behind SoftSense is open source.
+
+## Key facts
+
+- Full name: Lebob. Also written Team Lebob and Lebob Robotics.
+- Location: Perth, Western Australia, Australia.
+- School: Perth Modern School.
+- Members: eight students, plus two mentors, Jade and Kaelie.
+- FIRST LEGO League team number: 3236.
+- FIRST Tech Challenge team number: 37323.
+- Korea Open Invitational 2026 entry code: KOI34.
+- Contact: team@lebob.com.au
+- ABN: 41 535 175 584.
+
+## Season results, 2025/26 UNEARTHED
+
+- 30 November 2025, regional tournament, Aquinas College, Salter Point, Perth. Advanced to the National Championship.
+- 13 December 2025, FIRST LEGO League National Championship West, Curtin University, Perth. Western Australian National Champions.
+- 3 to 5 July 2026, FIRST LEGO League Korea Open Invitational, Jeonju National University of Education, Jeonju, South Korea. Prize for the SoftSense innovation project.
+
+## Pages
+
+- [About Lebob](https://lebob.com.au/about/): the definitive description of the team. Team numbers, roster, mentors, school, the full results table, and how the team works.
+- [SoftSense](https://lebob.com.au/projects/softsense/): the technical writeup of the innovation project. A self sensing soft gripper for ROV manipulator arms that reads grip force from motor current instead of a fingertip sensor. Fin Ray TPU fingers, a flooded printed drivetrain, crosshatch grip texture, materials, FEA campaigns, bench results and operating boundaries.
+- [Documentation library](https://lebob.com.au/docs/): every document the team has produced, organised by season.
+- [FLL 2025/26 UNEARTHED season](https://lebob.com.au/docs/fll-2025-2026/): all eight season documents, grouped by competition stage.
+- [Media gallery](https://lebob.com.au/media/): photographs from the season.
+- [Sponsors](https://lebob.com.au/sponsors/): the six Founding Supporters backing the team.
+- [How to sponsor](https://lebob.com.au/sponsors/how-to/): four sponsorship tiers from $500, plus in kind support.
+
+## Season documents, full text
+
+- [Regionals Innovation Documentation](https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/): the first innovation writeup. The underwater archaeology problem, the research behind it, and the CTD 4000 manipulator concept.
+- [Nationals General Documentation](https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/): fifteen weeks of session notes plus the post regionals run testing log.
+- [Nationals Robot Design Journal](https://lebob.com.au/docs/fll-2025-2026/nationals-robot-design-journal/): mission strategy, five attachments, and the PyBricks code architecture.
+- [Nationals Innovation Documentation](https://lebob.com.au/docs/fll-2025-2026/nationals-innovation-documentation/): four failure modes of industrial ROV grippers, the four part solution, and the move from titanium to printed plastic.
+- [Internationals General Documentation](https://lebob.com.au/docs/fll-2025-2026/internationals-general-documentation/): six months of weekly engineering logs from January to June 2026, the robot run log, and the attendance record.
+- [Internationals Robot Design Documentation](https://lebob.com.au/docs/fll-2025-2026/internationals-robot-design-documentation/): the 545 point run plan, seven attachments, the code, and the gearbox rebuild.
+- [Internationals Innovation Documentation](https://lebob.com.au/docs/fll-2025-2026/internationals-innovation-documentation/): the full SoftSense engineering record, including the finger FEA campaign, the grip texture study, the motor study, the drivetrain limit, materials, the seawater audit and the readiness assessment.
+- [Internationals Judging Presentation](https://lebob.com.au/docs/fll-2025-2026/internationals-presentation/): all 71 slides from the Korea Open judging deck, each with the text it carries.
+
+## Source code
+
+- SoftSense CAD, FEA and firmware: https://github.com/AndreNijman/softsense
+- FLL Unearthed robot code: https://github.com/prawny-boy/FLL-Lebob-Unearthed
+- Team GitHub organisation: https://github.com/Lebob-Robotics
+
+## Optional
+
+- [Sitemap](https://lebob.com.au/sitemap.xml)
