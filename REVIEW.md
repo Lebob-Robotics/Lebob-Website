@@ -81,13 +81,17 @@ which is as precise as the evidence allows.
 state the specific award is worth considerably more than a generic "prize" both
 to a reader and to a search engine.
 
-### The FLL team number is confirmed, the FTC one is not
+### ~~The FLL team number is confirmed, the FTC one is not~~ RESOLVED
 
 `TEAM LEBOB #3236` appears throughout `internationals-robot-design-documentation.pdf`
-as a running header. That confirms the FLL team number.
+as a running header, which confirmed the FLL team number.
 
-There is **no occurrence of "FTC" or "Tech Challenge" in any of the eight PDFs**,
-and no FTC team number anywhere in the repository. See the Phase 4 section below.
+There is **no occurrence of "FTC" or "Tech Challenge" in any of the eight PDFs**, so the
+FTC number could not be sourced from the documents.
+
+**Supplied by Andre, 2026-08-17: the FTC team number is 37323.** Both numbers are now on
+`/about/` and in the `identifier` array of both the home page `Organization` block and the
+`AboutPage` block. No action outstanding.
 
 ### ~~Slide 1 of the presentation reads "FLL Team KOI34"~~ RESOLVED
 
@@ -155,20 +159,36 @@ results table on `/about/` cannot be complete without them.
 
 ## Phase 4 — /about/
 
-### FTC team number is not recorded anywhere
+### ~~FTC team number is not recorded anywhere~~ RESOLVED
 
-There is no occurrence of an FTC team number in the repository or in any of the
-eight season PDFs, and no occurrence of the strings "FTC" or "Tech Challenge" in
-the PDFs at all. The programmes table on `/about/` therefore reads:
+Supplied by Andre on 2026-08-17. The identifiers table on `/about/` now reads:
 
-| Programme | Team number |
+| Identifier | Value |
 | --- | --- |
-| FIRST LEGO League (FLL) | 3236 |
-| FIRST Tech Challenge (FTC) | To be issued |
+| FIRST LEGO League team number | 3236 |
+| FIRST Tech Challenge team number | 37323 |
+| 2026 Korea Open Invitational entry code | KOI34 |
 
-**Action:** supply the FTC number and the table row can be completed. It is also
-worth adding to the `identifier` array in the `AboutPage` JSON-LD, next to the
-FLL number and the ABN, so the two programme identities are machine readable.
+All three are machine readable: the two team numbers are in the `identifier` array of
+the home page `Organization` block and, with KOI34, in the `AboutPage` block.
+
+### The street address has been removed from the site
+
+`93 Beauchamp Loop` was published in the footer of all 17 pages and as `streetAddress`
+in two `PostalAddress` blocks. It is a residential address, so at Andre's request on
+2026-08-17 it was removed everywhere.
+
+What replaced it is `Perth, Western Australia`, not nothing, and the `PostalAddress`
+blocks keep `addressLocality: Perth`, `addressRegion: WA` and `addressCountry: AU`. The
+reasoning: the team's city is already stated in the hero, in page titles, in the about
+copy and throughout the season documents, so removing it would cost real local search
+signal while hiding nothing that is not already public. The street line was the only
+part that identified a household.
+
+**Action, if a postal address is needed for sponsorship invoicing:** a PO box or a school
+address can be substituted, and the `streetAddress` field restored with it. Sponsors
+being invoiced will expect an address on the invoice, though that does not have to be on
+the website.
 
 ### Founding year is not evidenced
 
