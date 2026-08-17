@@ -204,3 +204,71 @@ named in any PDF.
 `/about/` links twice to `/projects/softsense/`, which is created in the next
 phase. Between the Phase 4 and Phase 5 deploys those two links resolve to the 404
 page. This is by design in the build order and is resolved by the Phase 5 merge.
+
+## Phase 5 — /projects/softsense/
+
+### The competition PDF and the repository disagree, because they are different dates
+
+`internationals-innovation-documentation.pdf` is the version submitted for judging and
+was frozen before departure in June 2026. The GitHub repository README is dated
+**July 2026** and describes itself as the finished, consolidated record after the
+competition. Several load-bearing numbers changed between them.
+
+| Item | Competition PDF, June 2026 | Repository, July 2026 |
+| --- | --- | --- |
+| Right-angle stage | Crown gear plus spur pinion, 24/9 = 2.667:1 | Straight bevel pair, 12T on 6T = 2.0, module 1.8, 25 degree PA |
+| Printed part count | 17 | 25 |
+| Assembly method | Fastener-free snap pins | 8 heat-stake pins plus 8 caps melted into thermal rivets; a soldering iron is required |
+| Actuator mount | Bottom D-flat coupler | Female Feetech 25T spline socket, servo presses straight in |
+| Fingertip opening at 1x | About 124 mm | About 118 mm |
+| Corrected margin at the 12 N probe | 4.1 to 6.2 times | 3.8 to 5.7 times |
+| Margin at deliverable force | About 120 to 300 times | About 120 to 365 times |
+
+The page at `/projects/softsense/` is written from the **repository**, because it is the
+later and final state of the project, and the page for the PDF under
+`/docs/fll-2025-2026/` is written from the **PDF**, because that page exists to
+reproduce the submitted document. So the two pages state different part counts and a
+different gear stage on purpose.
+
+**Action:** confirm that is the right call. The alternative is to annotate the document
+page with the post-competition corrections, which would break its role as a faithful
+reproduction of what the judges saw.
+
+### The repository contradicts itself on the gear ratio
+
+`README.md` describes the shipped right-angle stage as a bevel pair with a **2.0** ratio.
+`motor/SENSING.md` still uses **i_g = 2.667** in the forward sensing model, which is the
+old crown-and-pinion ratio. Those cannot both be right, and the ratio feeds directly into
+the current-to-force conversion, so a stale value biases every force estimate by about
+33 per cent.
+
+The SoftSense page therefore describes the bevel stage without asserting a single ratio.
+
+**Action, and this is a real bug rather than a documentation nit:** reconcile `i_g` in
+`motor/SENSING.md` and `motor/MOTOR_MODEL.md` against the shipped bevel pair, and re-run
+`motor/scripts/drivetrain_force_envelope.py`.
+
+### The Korea Open award name is still unknown
+
+The repository README says "Project complete (July 2026), prize winner. The full
+SoftSense project took home a prize at its competition", and the repository description
+says "prize-winning". Neither names the award. See the Phase 3 note; this is the same gap.
+
+### Figures are reused from the competition PDF
+
+Every figure on the SoftSense page is extracted from
+`internationals-innovation-documentation.pdf`, because that is the source this build has
+access to. The repository has a `renders/` directory with newer hero images, animations
+and FEA montages that reflect the bevel-stage design.
+
+**Action, low effort and high value:** pull two or three renders from `renders/` into
+`img/projects/softsense/` and swap the hero and the mechanism figures. The current figures
+show the crown-era geometry.
+
+### Home page card
+
+The SoftSense card on the home page was an `<a>` wrapping the whole tile and pointing
+straight at GitHub. It is now a `div` with two links, a primary one to the new page and a
+secondary one to the repository, because a nested anchor is invalid HTML. The hover, press
+and scroll-reveal behaviour in `polish.css` and `polish.js` all key off `.project-card`
+and are unaffected.
