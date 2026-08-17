@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nationals General Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
-  <meta name="description" content="The Lebob season log for FLL Unearthed nationals: fifteen weeks of programming, mechanical and innovation work, plus the full post regionals run testing log.">
-  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/">
-  <meta property="og:type" content="article">
+  <title>About Lebob &mdash; FLL Team 3236, Perth, Western Australia</title>
+  <meta name="description" content="Lebob is a school robotics team in Perth, Western Australia. FIRST LEGO League team 3236 and a FIRST Tech Challenge team. Team members, results and contact.">
+  <link rel="canonical" href="https://lebob.com.au/about/">
+  <meta property="og:type" content="profile">
   <meta property="og:site_name" content="Lebob">
-  <meta property="og:title" content="Nationals General Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
-  <meta property="og:description" content="The Lebob season log for FLL Unearthed nationals: fifteen weeks of programming, mechanical and innovation work, plus the full post regionals run testing log.">
-  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/">
+  <meta property="og:title" content="About Lebob &mdash; FLL Team 3236, Perth, Western Australia">
+  <meta property="og:description" content="Lebob is a school robotics team in Perth, Western Australia. FIRST LEGO League team 3236 and a FIRST Tech Challenge team. Team members, results and contact.">
+  <meta property="og:url" content="https://lebob.com.au/about/">
   <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -145,6 +145,20 @@
       color: var(--accent); background: var(--accent-light);
       padding: 3px 10px; border-radius: var(--radius-pill);
       white-space: nowrap;
+    }
+
+    .doc-item { gap: 14px; }
+    .doc-item-pdf {
+      flex-shrink: 0;
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--muted); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 5px 10px; white-space: nowrap;
+    }
+    .doc-item-pdf span { opacity: 0.7; }
+    .doc-item-pdf:hover { color: var(--accent); border-color: var(--accent-bright); }
+    @media (max-width: 560px) {
+      .doc-item { flex-wrap: wrap; }
+      .doc-item-link { width: auto; flex: 1 1 100%; }
     }
 
     .doc-links {
@@ -304,20 +318,8 @@
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Docs",
-        "item": "https://lebob.com.au/docs/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "FLL 2025–2026 Unearthed",
-        "item": "https://lebob.com.au/docs/fll-2025-2026/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": "Nationals General Documentation",
-        "item": "https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/"
+        "name": "About",
+        "item": "https://lebob.com.au/about/"
       }
     ]
   }
@@ -325,35 +327,104 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Nationals General Documentation",
-    "name": "Nationals General Documentation",
-    "description": "The Lebob season log for FLL Unearthed nationals: fifteen weeks of programming, mechanical and innovation work, plus the full post regionals run testing log.",
-    "url": "https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/",
+    "@type": "AboutPage",
+    "name": "About Lebob",
+    "url": "https://lebob.com.au/about/",
     "inLanguage": "en-AU",
-    "author": {
-      "@type": "Organization",
+    "description": "Lebob is a school robotics team from Perth, Western Australia. We compete in FIRST LEGO League as team 3236 and in FIRST Tech Challenge. In the 2025/26 Unearthed season we were Western Australian National Champions and competed at the 2026 Korea Open Invitational.",
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "contentUrl": "https://lebob.com.au/img/og-default.png",
+      "width": 1200,
+      "height": 630
+    },
+    "mainEntity": {
+      "@type": [
+        "Organization",
+        "SportsTeam"
+      ],
+      "@id": "https://lebob.com.au/#organization",
       "name": "Lebob",
-      "url": "https://lebob.com.au/"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Lebob",
-      "url": "https://lebob.com.au/"
-    },
-    "isPartOf": {
-      "@type": "CollectionPage",
-      "name": "FLL 2025–2026 Unearthed",
-      "url": "https://lebob.com.au/docs/fll-2025-2026/"
-    },
-    "associatedMedia": {
-      "@type": "MediaObject",
-      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/nationals-general-documentation.pdf",
-      "encodingFormat": "application/pdf",
-      "name": "Nationals General Documentation (PDF)",
-      "contentSize": "1.2 MB"
-    },
-    "image": "https://lebob.com.au/img/og-default.png"
+      "alternateName": [
+        "Team Lebob",
+        "Lebob Robotics"
+      ],
+      "url": "https://lebob.com.au/",
+      "logo": "https://lebob.com.au/img/lebob-logo.webp",
+      "email": "team@lebob.com.au",
+      "description": "Lebob is a school robotics team from Perth, Western Australia. We compete in FIRST LEGO League as team 3236 and in FIRST Tech Challenge. In the 2025/26 Unearthed season we were Western Australian National Champions and competed at the 2026 Korea Open Invitational.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "93 Beauchamp Loop",
+        "addressLocality": "Perth",
+        "addressRegion": "WA",
+        "addressCountry": "AU"
+      },
+      "identifier": [
+        {
+          "@type": "PropertyValue",
+          "name": "ABN",
+          "value": "41535175584"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "FIRST LEGO League team number",
+          "value": "3236"
+        }
+      ],
+      "memberOf": {
+        "@type": "Organization",
+        "name": "FIRST"
+      },
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": 8,
+        "unitText": "student team members"
+      },
+      "member": [
+        {
+          "@type": "Person",
+          "name": "Kingsley Wong"
+        },
+        {
+          "@type": "Person",
+          "name": "Sean Chan"
+        },
+        {
+          "@type": "Person",
+          "name": "Oliver Liu"
+        },
+        {
+          "@type": "Person",
+          "name": "Leven Shi"
+        },
+        {
+          "@type": "Person",
+          "name": "Subesh Sukumaran"
+        },
+        {
+          "@type": "Person",
+          "name": "Yuxin (Chris) Wang"
+        },
+        {
+          "@type": "Person",
+          "name": "Aaron Zhang"
+        },
+        {
+          "@type": "Person",
+          "name": "Andre Nijman"
+        }
+      ],
+      "award": [
+        "Western Australian National Champions, FIRST LEGO League Unearthed",
+        "Prize at the 2026 Korea Open Invitational for the SoftSense innovation project"
+      ],
+      "sameAs": [
+        "https://github.com/Lebob-Robotics",
+        "https://github.com/AndreNijman/softsense",
+        "https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+      ]
+    }
   }
   </script>
 </head>
@@ -382,73 +453,108 @@
 
   <header class="page-header">
     <div class="container">
-      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
-      <div class="page-label">Nationals · FLL Unearthed 2025</div>
-      <h1 class="page-title">Nationals General Documentation</h1>
-      <p class="page-desc">Our team documentation for FLL 2025. It records what we did in each session across the season, then logs every robot run we tested after regionals.</p>
-      <a href="/files/fll-2025-2026/nationals-general-documentation.pdf" class="doc-download">Download the original PDF <span class="size">1.2 MB</span></a>
-      <nav class="doc-toc" aria-label="On this page">
-        <h2>On this page</h2>
-        <ol>
-          <li><a href="#overview">Overview</a></li>
-          <li><a href="#weekly">The season week by week</a></li>
-          <li><a href="#organisation">Organisation</a></li>
-          <li><a href="#log">The run testing log</a></li>
-        </ol>
-      </nav>
+      <div class="page-label">About &middot; who we are</div>
+      <h1 class="page-title">About Lebob.</h1>
+      <p class="page-desc">Lebob is a school robotics team from Perth, Western Australia. We compete in FIRST LEGO League as team 3236 and in FIRST Tech Challenge. In the 2025/26 Unearthed season we were Western Australian National Champions and competed at the 2026 Korea Open Invitational.</p>
     </div>
   </header>
 
   <section class="docs-content">
     <div class="container">
       <div class="doc-article">
-        <h2 id="overview">Overview</h2>
 
-        <p>This is our team Lebob's documentation for FLL 2025. It shows what we did each week in each session. We usually have one hour sessions on Thursday, working to compete in this year's FIRST LEGO League. We started late, during late August, so we had limited time to get everything done. It was reduced to about 15 weeks.</p>
+        <h2 id="what-we-do">What we do</h2>
+        <p>We build and program competition robots, and we run an engineering research
+        project alongside the robot each season. Our current project is
+        <a href="/projects/softsense/">SoftSense</a>, a soft gripper for recovering fragile
+        artefacts from the seafloor.</p>
+        <p>We publish the work rather than keeping it. Every document from the 2025/26 season
+        is <a href="/docs/fll-2025-2026/">readable in full on this site</a>, alongside the
+        original PDFs, and our code is public in the
+        <a href="https://github.com/Lebob-Robotics" target="_blank" rel="noopener">Lebob-Robotics</a>
+        GitHub organisation. As we put it in our robot design documentation, all our
+        repositories are public, which means other FLL teams can explore our robot code,
+        website projects and pathfinding experiments for inspiration.</p>
+
+        <h2 id="team-numbers">Team numbers and programmes</h2>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Programme</th><th>Team number</th></tr></thead>
+          <tbody><tr><td>FIRST LEGO League (FLL)</td><td>3236</td></tr><tr><td>FIRST Tech Challenge (FTC)</td><td>To be issued</td></tr></tbody>
+        </table></div>
+
+        <p>The FLL number appears as the running header, <strong>TEAM LEBOB #3236</strong>,
+        throughout our internationals robot design documentation. FIRST issues a separate
+        number for FIRST Tech Challenge, and ours has not been recorded anywhere in our
+        documentation yet.</p>
+
+        <h2 id="the-team">The team</h2>
+        <p>Eight students, based at Perth Modern School in Perth, Western Australia. All eight
+        are named on the cover of every season document:</p>
         <ul>
-          <li><strong>Week 1.</strong> Innovations meeting and brainstorming, while helping other teams in our school.</li>
-          <li><strong>Weeks 2 and 3.</strong> Split into sub-teams to work on different aspects of the competition. Base robot work, base programming.</li>
-          <li><strong>Weeks 4 and 5.</strong> Strategy for robot game. Start work on mechanisms for each of our runs. Innovation ideas chosen and started working on them.</li>
-          <li><strong>Week 6.</strong> Coding robot runs. More on innovations project.</li>
-          <li><strong>Week 7.</strong> Coding robot runs and making more mechanisms.</li>
-          <li><strong>Week 8.</strong> Complete all mechanisms.</li>
-          <li><strong>Week 9.</strong> Complete code. Testing for innovations project.</li>
-          <li><strong>Week 10.</strong> Practice runs, finalise innovations project and documentation.</li>
-          <li><strong>Week 11.</strong> School camp.</li>
-          <li><strong>Weeks 12 and 13.</strong> Holidays.</li>
-          <li><strong>Week 14, after regionals.</strong> Make all the mechanisms and split into teams to code, and assign innovation jobs to people to finish on time.</li>
-          <li><strong>Week 15, after regionals.</strong> Code all the mechanisms and put the innovations together.</li>
+          <li>Kingsley Wong</li>
+          <li>Sean Chan</li>
+          <li>Oliver Liu</li>
+          <li>Leven Shi</li>
+          <li>Subesh Sukumaran</li>
+          <li>Yuxin (Chris) Wang</li>
+          <li>Aaron Zhang</li>
+          <li>Andre Nijman</li>
         </ul>
-        <figure class="doc-figure">
-          <img src="/img/docs/nationals-general-documentation/p003-02.webp" alt="Colour coded brainstorm mind map from the first innovations meeting" width="788" height="499" loading="lazy" decoding="async">
-          <figcaption>Week 1. The innovations brainstorm, before we had narrowed the field to manipulator arms.</figcaption>
-        </figure>
+        <p>Jade and Kaelie mentor and coach the team. Under our decision-making protocol the
+        mentors have observer roles but not voting roles: day-to-day technical decisions are
+        made by whoever owns that work package, and anything touching more than one workstream
+        goes to a team vote with a simple majority.</p>
+        <p>The 2026 Korea Open campaign ran across 49 logged sessions between January and June
+        2026, either full Saturdays or Thursday afternoons. Attendance across the eight members
+        ranged from 89.8 to 98.0 per cent.</p>
 
-            <h2 id="weekly">The season week by week</h2>
+        <h2 id="results">Results</h2>
+        <p>One row per result stated in our own documentation. Where a competition date or
+        location is not recorded in those documents, the cell says so rather than guessing.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Season</th><th>Event</th><th>Location</th><th>Date</th><th>Result</th></tr></thead>
+          <tbody><tr><td>2025/26 Unearthed</td><td>FIRST LEGO League regional competition</td><td>Not recorded</td><td>Not recorded</td><td>Progressed to nationals</td></tr><tr><td>2025/26 Unearthed</td><td>FIRST LEGO League national competition</td><td>Not recorded</td><td>Not recorded</td><td>Western Australian National Champions</td></tr><tr><td>2025/26 Unearthed</td><td>Korea Open Invitational</td><td>Jeonju, South Korea</td><td>Not recorded</td><td>Prize for the SoftSense innovation project</td></tr></tbody>
+        </table></div>
 
-        <p>Week 1 begins on 27 August 2025, when we were informed that we had successfully signed up for FLL, so the building season starts there. Each week is logged under three headings: programming, mechanical and innovations.</p>
-        <p>The innovations track moves from the first brainstorm to a settled direction by week 3, when we settled on the early idea of improving manipulator arms. By week 10 we had decided on the linear mechanism to control all the fingers because it would be the cheapest to assemble, and by week 11 we had completed the rack and pinion mechanism for the linear claw and 3D printed a prototype. In week 12 we decided on the finger configurations: four in a square, three in a standard shape, two in a standard shape, and six with three on each side.</p>
-        <p>The programming track works run by run. Run 3 and run 2 were both being coded by week 10, run 3 finished in week 11, and run 2 finished in week 12. In week 13 we gathered at someone's house and made final alterations to all run codes, making sure they all consistently work. Week 15 was mostly mission 2, which had recently been proving extremely difficult and finicky.</p>
-        <p>The mechanical track finished the run 3 mechanism in week 10, then lost it in week 12 and had to either find or rebuild it. After the regional competition, weeks 14 and 15 went into planning new mission routes to gain more points and designing new mechanisms for those runs.</p>
-            <h2 id="organisation">Organisation</h2>
+        <p>Two notes on precision. Our nationals log opens with an entry dated
+        <em>1st of December, one day after regionals</em>, which places the regional
+        competition on 30 November 2025, but no document states the date directly. And every
+        internationals document was written before we flew out, with departure recorded as
+        3 July 2026, so none of them records what happened in Jeonju.</p>
 
-        <p>We used Trello for organisation and planning of what tasks needed to be done and when, and kept a shared board for the Unearthed season.</p>
-        <figure class="doc-figure">
-          <img src="/img/docs/nationals-general-documentation/p004-05.webp" alt="Hand drawn sketch of an early claw mechanism on lined paper" width="579" height="435" loading="lazy" decoding="async">
-          <figcaption>An early hand sketch of the claw, from the weeks when the innovation idea was still being worked out on paper.</figcaption>
-        </figure>
+        <h2 id="how-we-work">How we work</h2>
+        <p>The robot game plan for the Korea Open was built up to a maximum score of 545 points
+        across seven runs, grouping missions by proximity so the robot completes several in one
+        trip. The code is Python on PyBricks, structured with a drive base class, a mission
+        control class that renders the hub menu, and missions registered through a decorator.
+        The repository carries over 500 commits.</p>
+        <p>We learned to keep records the hard way. In our robot design journal we wrote that in
+        the past we did not keep proper records of our testing or progress, and that this season
+        we kept a real logbook, which gave us clear proof of what we tried, what worked and how
+        we improved. That logbook is the run testing log published on this site.</p>
 
-        <figure class="doc-figure">
-          <img src="/img/docs/nationals-general-documentation/p010-08.webp" alt="Screenshot of the Lebob Trello board with task cards across several lists" width="593" height="479" loading="lazy" decoding="async">
-          <figcaption>The Trello board we ran the season from, with a card per task and a list per workstream.</figcaption>
-        </figure>
+        <h2 id="softsense">SoftSense</h2>
+        <p>SoftSense is our innovation project: a soft, sensing gripper that mounts onto an
+        existing ROV manipulator arm so archaeologists can lift fragile artefacts off the seabed
+        without crushing them. The fingers are passive Fin Ray trusses printed in TPU that wrap
+        around whatever shape they meet, and the gripper reads its own grip force from the
+        actuator's motor current rather than from any sensor at the fingertip.</p>
+        <p>It was reviewed by working subsea engineers, a practising maritime archaeologist and
+        three Western Australian subsea operators, and it won a prize at the 2026 Korea Open.
+        <a href="/projects/softsense/">Read the full write up</a>, or go straight to the
+        <a href="/docs/fll-2025-2026/internationals-innovation-documentation/">engineering
+        documentation</a>.</p>
 
-            <h2 id="log">The run testing log</h2>
+        <h2 id="contact">Contact</h2>
+        <p>Email <a href="mailto:team@lebob.com.au">team@lebob.com.au</a>.</p>
+        <p>Lebob, FLL &amp; FTC Robotics Team.<br>
+        <a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a><br>
+        93 Beauchamp Loop, Perth WA</p>
+        <p>If you are interested in backing the team, the
+        <a href="/sponsors/how-to/">sponsorship tiers</a> are public, and our current
+        <a href="/sponsors/">Founding Supporters</a> are listed on this site.</p>
 
-        <p>The bulk of this document is a timestamped log of every robot run we tested, starting on 1 December 2025, one day after regionals. Each entry records the time, the run number, what went wrong and what we changed.</p>
-        <p>The first day is a good illustration of the grain of it. Run 1 failed clearing the soil for the first time after building the mechanism, then did not go forward enough, then did not turn enough towards the soil twice, then turned too much towards the soil. The next attempt turned perfectly but sat too close to the soil, so the right arm went too far across it. The attempt after that turned perfectly but was too far away, so the right arm came down and did not touch.</p>
-        <p>That pattern, a small alignment correction logged run by run until the run is repeatable, runs for the length of the document. It is the progressive testing evidence we did not have the previous season.</p>
-          </div>
+      </div>
     </div>
   </section>
 
