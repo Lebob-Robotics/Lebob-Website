@@ -89,16 +89,20 @@ as a running header. That confirms the FLL team number.
 There is **no occurrence of "FTC" or "Tech Challenge" in any of the eight PDFs**,
 and no FTC team number anywhere in the repository. See the Phase 4 section below.
 
-### Slide 1 of the presentation reads "FLL Team KOI34"
+### ~~Slide 1 of the presentation reads "FLL Team KOI34"~~ RESOLVED
 
 The title slide of `internationals-presentation.pdf` reads
-`TEAM LEBOB | FLL Team KOI34 - Perth, Western Australia`. That is inconsistent with
-`#3236` used in the robot design document. `KOI34` looks like a Korea Open
-Invitational entry code rather than a team number, but nothing in the documents
-says so, so it has not been used anywhere on the site.
+`TEAM LEBOB | FLL Team KOI34 - Perth, Western Australia`, which appeared to conflict
+with `#3236` in the robot design document.
 
-**Action:** confirm what `KOI34` is. If it is the Korea Open entry identifier it is
-worth stating on `/about/` as such.
+**Confirmed by Andre, 2026-08-17:** 3236 is the team number. **KOI34 is the entry code
+the organisers allocated for the 2026 Korea Open Invitational**, and applies to that
+event only.
+
+Both are now stated on `/about/` under "Team numbers and programmes", with the
+distinction spelled out so neither is mistaken for the other, and `KOI34` is carried in
+the `identifier` array of the `AboutPage` JSON-LD as a `PropertyValue` named
+"2026 Korea Open Invitational entry code". No action outstanding.
 
 ### Presentation, slides 2 and 27
 
