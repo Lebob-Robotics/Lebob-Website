@@ -1,13 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-AU">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Media Gallery — Lebob</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="Photos from the Lebob season: competition table runs, build sessions, workshop iterations and prototype testing, shot as the season actually happened.">
+  <link rel="canonical" href="https://lebob.com.au/media/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Media Gallery — Lebob">
+  <meta property="og:description" content="Photos from the Lebob season: competition table runs, build sessions, workshop iterations and prototype testing, shot as the season actually happened.">
+  <meta property="og:url" content="https://lebob.com.au/media/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -144,11 +153,97 @@
   <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
   <link rel="stylesheet" href="/polish.css">
   <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Lebob media gallery",
+    "description": "Competition shots, build sessions, and prototype iterations from the Lebob season.",
+    "url": "https://lebob.com.au/media/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "image": [
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/competition-table-run.webp",
+        "caption": "Competition table run",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/team-at-table.webp",
+        "caption": "Team at the competition table",
+        "width": 1600,
+        "height": 2400
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/outdoor-event-audience.webp",
+        "caption": "Outdoor event audience",
+        "width": 1600,
+        "height": 1067
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/build-session.webp",
+        "caption": "Build session",
+        "width": 1600,
+        "height": 1067
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/workshop-iteration.webp",
+        "caption": "Workshop iteration",
+        "width": 1600,
+        "height": 1067
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/prototype-testing.webp",
+        "caption": "Prototype testing",
+        "width": 1600,
+        "height": 1067
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/team-moment.webp",
+        "caption": "Team moment",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/behind-the-scenes.webp",
+        "caption": "Behind the scenes",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/team-outdoors.webp",
+        "caption": "Team outdoors",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "@type": "ImageObject",
+        "contentUrl": "https://lebob.com.au/img/gallery/team-group-photo.webp",
+        "caption": "Lebob team group photo",
+        "width": 1600,
+        "height": 1200
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <nav class="nav">
     <div class="container nav-inner">
-      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo"><span>Lebob</span></a>
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
       <ul class="nav-links">
         <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
         <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
@@ -178,43 +273,43 @@
     <div class="container">
       <div class="masonry" id="gallery">
         <div class="masonry-item" onclick="openLightbox(0)">
-          <img src="/img/gallery/competition-table-run.webp" alt="Competition — robot table run" loading="lazy">
+          <img src="/img/gallery/competition-table-run.webp" alt="Competition — robot table run" loading="lazy" width="1600" height="1200" decoding="async">
           <div class="masonry-caption">Competition table run</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(1)">
-          <img src="/img/gallery/team-at-table.webp" alt="Competition — team at table" loading="lazy">
+          <img src="/img/gallery/team-at-table.webp" alt="Competition — team at table" loading="lazy" width="1600" height="2400" decoding="async">
           <div class="masonry-caption">Team at the competition table</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(2)">
-          <img src="/img/gallery/outdoor-event-audience.webp" alt="Audience at outdoor event" loading="lazy">
+          <img src="/img/gallery/outdoor-event-audience.webp" alt="Audience at outdoor event" loading="lazy" width="1600" height="1067" decoding="async">
           <div class="masonry-caption">Outdoor event audience</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(3)">
-          <img src="/img/gallery/build-session.webp" alt="Build session" loading="lazy">
+          <img src="/img/gallery/build-session.webp" alt="Build session" loading="lazy" width="1600" height="1067" decoding="async">
           <div class="masonry-caption">Build session</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(4)">
-          <img src="/img/gallery/workshop-iteration.webp" alt="Workshop iteration" loading="lazy">
+          <img src="/img/gallery/workshop-iteration.webp" alt="Workshop iteration" loading="lazy" width="1600" height="1067" decoding="async">
           <div class="masonry-caption">Workshop iteration</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(5)">
-          <img src="/img/gallery/prototype-testing.webp" alt="Prototype testing" loading="lazy">
+          <img src="/img/gallery/prototype-testing.webp" alt="Prototype testing" loading="lazy" width="1600" height="1067" decoding="async">
           <div class="masonry-caption">Prototype testing</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(6)">
-          <img src="/img/gallery/team-moment.webp" alt="Team moment" loading="lazy">
+          <img src="/img/gallery/team-moment.webp" alt="Team moment" loading="lazy" width="1600" height="1200" decoding="async">
           <div class="masonry-caption">Team moment</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(7)">
-          <img src="/img/gallery/behind-the-scenes.webp" alt="Behind the scenes" loading="lazy">
+          <img src="/img/gallery/behind-the-scenes.webp" alt="Behind the scenes" loading="lazy" width="1600" height="1200" decoding="async">
           <div class="masonry-caption">Behind the scenes</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(8)">
-          <img src="/img/gallery/team-outdoors.webp" alt="Team outdoors" loading="lazy">
+          <img src="/img/gallery/team-outdoors.webp" alt="Team outdoors" loading="lazy" width="1600" height="1200" decoding="async">
           <div class="masonry-caption">Team outdoors</div>
         </div>
         <div class="masonry-item" onclick="openLightbox(9)">
-          <img src="/img/gallery/team-group-photo.webp" alt="Lebob team group photo" loading="lazy">
+          <img src="/img/gallery/team-group-photo.webp" alt="Lebob team group photo" loading="lazy" width="1600" height="1200" decoding="async">
           <div class="masonry-caption">Lebob team group photo</div>
         </div>
       </div>
@@ -243,12 +338,12 @@
   <script>
     function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
 
-    const images = [
-      '/img/gallery/competition-table-run.webp', '/img/gallery/team-at-table.webp', '/img/gallery/outdoor-event-audience.webp',
-      '/img/gallery/build-session.webp', '/img/gallery/workshop-iteration.webp', '/img/gallery/prototype-testing.webp',
-      '/img/gallery/team-moment.webp', '/img/gallery/behind-the-scenes.webp',
-      '/img/gallery/team-outdoors.webp', '/img/gallery/team-group-photo.webp'
-    ];
+    // Sources and alt text are read from the gallery markup so the lightbox can
+    // never drift out of sync with the grid, and so the enlarged image carries
+    // the same alternative text a screen reader gets in the grid.
+    const galleryImgs = Array.from(document.querySelectorAll('#gallery .masonry-item img'));
+    const images = galleryImgs.map(img => img.getAttribute('src'));
+    const alts = galleryImgs.map(img => img.getAttribute('alt'));
     let currentIdx = 0;
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
@@ -257,6 +352,7 @@
     function openLightbox(idx) {
       currentIdx = idx;
       lightboxImg.src = images[idx];
+      lightboxImg.alt = alts[idx];
       lightboxCounter.textContent = (idx + 1) + ' / ' + images.length;
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -268,6 +364,7 @@
     function navLightbox(dir) {
       currentIdx = (currentIdx + dir + images.length) % images.length;
       lightboxImg.src = images[currentIdx];
+      lightboxImg.alt = alts[currentIdx];
       lightboxCounter.textContent = (currentIdx + 1) + ' / ' + images.length;
     }
     document.addEventListener('keydown', (e) => {
