@@ -147,6 +147,20 @@
       white-space: nowrap;
     }
 
+    .doc-item { gap: 14px; }
+    .doc-item-pdf {
+      flex-shrink: 0;
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--muted); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 5px 10px; white-space: nowrap;
+    }
+    .doc-item-pdf span { opacity: 0.7; }
+    .doc-item-pdf:hover { color: var(--accent); border-color: var(--accent-bright); }
+    @media (max-width: 560px) {
+      .doc-item { flex-wrap: wrap; }
+      .doc-item-link { width: auto; flex: 1 1 100%; }
+    }
+
     .doc-links {
       margin-top: 16px;
       display: flex; gap: 16px; flex-wrap: wrap;
@@ -244,7 +258,7 @@
       <a href="/docs/" class="back-link">← All seasons</a>
       <div class="page-label">FLL 2025–2026 · Unearthed</div>
       <h1 class="page-title">The Unearthed season.</h1>
-      <p class="page-desc">Western Australian National Champions. Every document from the season — regionals, nationals, and the 2026 Korea Open Invitational.</p>
+      <p class="page-desc">Western Australian National Champions. Every document from the season, readable in full on this site, with the original PDF alongside each one.</p>
       <div class="search-bar">
         <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/>
@@ -265,41 +279,45 @@
           <span class="doc-section-sub">2026 Korea Open Invitational</span>
         </div>
         <ul class="doc-list">
-          <li class="doc-item" data-title="internationals general documentation korea open">
-            <a href="/files/fll-2025-2026/internationals-general-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="internationals general documentation korea open session log attendance">
+            <a href="/docs/fll-2025-2026/internationals-general-documentation/" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Internationals General Documentation</div>
-                <div class="doc-item-meta">PDF — full team documentation for judges</div>
+                <div class="doc-item-meta">Six months of session logs, the robot run log and the attendance record</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/internationals-general-documentation.pdf" class="doc-item-pdf" download>PDF <span>2.5 MB</span></a>
           </li>
-          <li class="doc-item" data-title="internationals robot design documentation korea open">
-            <a href="/files/fll-2025-2026/internationals-robot-design-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="internationals robot design documentation korea open spike prime attachments 545">
+            <a href="/docs/fll-2025-2026/internationals-robot-design-documentation/" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Internationals Robot Design Documentation</div>
-                <div class="doc-item-meta">PDF — Spike Prime build, mechanisms &amp; mission strategy</div>
+                <div class="doc-item-meta">Spike Prime build, the 545 point run plan, seven attachments and the code</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/internationals-robot-design-documentation.pdf" class="doc-item-pdf" download>PDF <span>1.5 MB</span></a>
           </li>
-          <li class="doc-item" data-title="internationals innovation documentation korea open softsense">
-            <a href="/files/fll-2025-2026/internationals-innovation-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="internationals innovation documentation korea open softsense fin ray tpu motor current">
+            <a href="/docs/fll-2025-2026/internationals-innovation-documentation/" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Internationals Innovation Documentation</div>
-                <div class="doc-item-meta">PDF — SoftSense research, design &amp; testing</div>
+                <div class="doc-item-meta">SoftSense in full: Fin Ray fingers, grip texture, motor current sensing</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/internationals-innovation-documentation.pdf" class="doc-item-pdf" download>PDF <span>5.6 MB</span></a>
           </li>
-          <li class="doc-item" data-title="internationals presentation korea open slides">
-            <a href="/files/fll-2025-2026/internationals-presentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="internationals presentation korea open slides judging deck">
+            <a href="/docs/fll-2025-2026/internationals-presentation/" class="doc-item-link">
               <div class="doc-item-info">
-                <div class="doc-item-title">Internationals Presentation</div>
-                <div class="doc-item-meta">PDF — 71-slide judging presentation</div>
+                <div class="doc-item-title">Internationals Judging Presentation</div>
+                <div class="doc-item-meta">All 71 slides from the Korea Open judging deck, with the text on each</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/internationals-presentation.pdf" class="doc-item-pdf" download>PDF <span>11.6 MB</span></a>
           </li>
         </ul>
       </div>
@@ -311,32 +329,35 @@
           <span class="doc-count">3 files</span>
         </div>
         <ul class="doc-list">
-          <li class="doc-item" data-title="nationals general documentation">
-            <a href="/files/fll-2025-2026/nationals-general-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="nationals general documentation season log run testing">
+            <a href="/docs/fll-2025-2026/nationals-general-documentation/" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Nationals General Documentation</div>
-                <div class="doc-item-meta">PDF — shared team documentation for judges</div>
+                <div class="doc-item-meta">Fifteen weeks of session notes and the post regionals run testing log</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/nationals-general-documentation.pdf" class="doc-item-pdf" download>PDF <span>1.2 MB</span></a>
           </li>
-          <li class="doc-item" data-title="nationals robot design journal">
-            <a href="/files/fll-2025-2026/nationals-robot-design-journal.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="nationals robot design journal spike prime attachments pybricks">
+            <a href="/docs/fll-2025-2026/nationals-robot-design-journal/" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Nationals Robot Design Journal</div>
-                <div class="doc-item-meta">PDF — Spike Prime build documentation</div>
+                <div class="doc-item-meta">Mission strategy, five attachments and the PyBricks code architecture</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/nationals-robot-design-journal.pdf" class="doc-item-pdf" download>PDF <span>1.4 MB</span></a>
           </li>
-          <li class="doc-item" data-title="nationals innovation documentation softsense">
-            <a href="/files/fll-2025-2026/nationals-innovation-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="nationals innovation documentation softsense claw pressure sensor">
+            <a href="/docs/fll-2025-2026/nationals-innovation-documentation/" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Nationals Innovation Documentation</div>
-                <div class="doc-item-meta">PDF — SoftSense research, design &amp; planning</div>
+                <div class="doc-item-meta">Four failure modes, the four part solution and the move to printed plastic</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/nationals-innovation-documentation.pdf" class="doc-item-pdf" download>PDF <span>2.4 MB</span></a>
           </li>
         </ul>
       </div>
@@ -348,14 +369,15 @@
           <span class="doc-count">1 file</span>
         </div>
         <ul class="doc-list">
-          <li class="doc-item" data-title="regionals innovation documentation softsense">
-            <a href="/files/fll-2025-2026/regionals-innovation-documentation.pdf" target="_blank" rel="noopener" class="doc-item-link">
+          <li class="doc-item" data-title="regionals innovation documentation softsense ctd 4000 manipulator arm">
+            <a href="/docs/fll-2025-2026/regionals-innovation-documentation/" class="doc-item-link">
               <div class="doc-item-info">
                 <div class="doc-item-title">Regionals Innovation Documentation</div>
-                <div class="doc-item-meta">PDF — SoftSense research, design &amp; planning</div>
+                <div class="doc-item-meta">The CTD 4000 concept, the research behind it and the first bench results</div>
               </div>
-              <span class="doc-item-badge">PDF</span>
+              <span class="doc-item-badge">Read</span>
             </a>
+            <a href="/files/fll-2025-2026/regionals-innovation-documentation.pdf" class="doc-item-pdf" download>PDF <span>1.3 MB</span></a>
           </li>
         </ul>
       </div>

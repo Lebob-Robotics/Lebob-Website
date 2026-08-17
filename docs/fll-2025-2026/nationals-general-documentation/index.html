@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nationals General Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
+  <meta name="description" content="The Lebob season log for FLL Unearthed nationals: fifteen weeks of programming, mechanical and innovation work, plus the full post regionals run testing log.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Nationals General Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
+  <meta property="og:description" content="The Lebob season log for FLL Unearthed nationals: fifteen weeks of programming, mechanical and innovation work, plus the full post regionals run testing log.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Nationals General Documentation",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Nationals General Documentation",
+    "name": "Nationals General Documentation",
+    "description": "The Lebob season log for FLL Unearthed nationals: fifteen weeks of programming, mechanical and innovation work, plus the full post regionals run testing log.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/nationals-general-documentation.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Nationals General Documentation (PDF)",
+      "contentSize": "1.2 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Nationals · FLL Unearthed 2025</div>
+      <h1 class="page-title">Nationals General Documentation</h1>
+      <p class="page-desc">Our team documentation for FLL 2025. It records what we did in each session across the season, then logs every robot run we tested after regionals.</p>
+      <a href="/files/fll-2025-2026/nationals-general-documentation.pdf" class="doc-download">Download the original PDF <span class="size">1.2 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#weekly">The season week by week</a></li>
+          <li><a href="#organisation">Organisation</a></li>
+          <li><a href="#log">The run testing log</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="overview">Overview</h2>
+
+        <p>This is our team Lebob's documentation for FLL 2025. It shows what we did each week in each session. We usually have one hour sessions on Thursday, working to compete in this year's FIRST LEGO League. We started late, during late August, so we had limited time to get everything done. It was reduced to about 15 weeks.</p>
+        <ul>
+          <li><strong>Week 1.</strong> Innovations meeting and brainstorming, while helping other teams in our school.</li>
+          <li><strong>Weeks 2 and 3.</strong> Split into sub-teams to work on different aspects of the competition. Base robot work, base programming.</li>
+          <li><strong>Weeks 4 and 5.</strong> Strategy for robot game. Start work on mechanisms for each of our runs. Innovation ideas chosen and started working on them.</li>
+          <li><strong>Week 6.</strong> Coding robot runs. More on innovations project.</li>
+          <li><strong>Week 7.</strong> Coding robot runs and making more mechanisms.</li>
+          <li><strong>Week 8.</strong> Complete all mechanisms.</li>
+          <li><strong>Week 9.</strong> Complete code. Testing for innovations project.</li>
+          <li><strong>Week 10.</strong> Practice runs, finalise innovations project and documentation.</li>
+          <li><strong>Week 11.</strong> School camp.</li>
+          <li><strong>Weeks 12 and 13.</strong> Holidays.</li>
+          <li><strong>Week 14, after regionals.</strong> Make all the mechanisms and split into teams to code, and assign innovation jobs to people to finish on time.</li>
+          <li><strong>Week 15, after regionals.</strong> Code all the mechanisms and put the innovations together.</li>
+        </ul>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-general-documentation/p003-02.webp" alt="Colour coded brainstorm mind map from the first innovations meeting" width="788" height="499" loading="lazy" decoding="async">
+          <figcaption>Week 1. The innovations brainstorm, before we had narrowed the field to manipulator arms.</figcaption>
+        </figure>
+
+            <h2 id="weekly">The season week by week</h2>
+
+        <p>Week 1 begins on 27 August 2025, when we were informed that we had successfully signed up for FLL, so the building season starts there. Each week is logged under three headings: programming, mechanical and innovations.</p>
+        <p>The innovations track moves from the first brainstorm to a settled direction by week 3, when we settled on the early idea of improving manipulator arms. By week 10 we had decided on the linear mechanism to control all the fingers because it would be the cheapest to assemble, and by week 11 we had completed the rack and pinion mechanism for the linear claw and 3D printed a prototype. In week 12 we decided on the finger configurations: four in a square, three in a standard shape, two in a standard shape, and six with three on each side.</p>
+        <p>The programming track works run by run. Run 3 and run 2 were both being coded by week 10, run 3 finished in week 11, and run 2 finished in week 12. In week 13 we gathered at someone's house and made final alterations to all run codes, making sure they all consistently work. Week 15 was mostly mission 2, which had recently been proving extremely difficult and finicky.</p>
+        <p>The mechanical track finished the run 3 mechanism in week 10, then lost it in week 12 and had to either find or rebuild it. After the regional competition, weeks 14 and 15 went into planning new mission routes to gain more points and designing new mechanisms for those runs.</p>
+            <h2 id="organisation">Organisation</h2>
+
+        <p>We used Trello for organisation and planning of what tasks needed to be done and when, and kept a shared board for the Unearthed season.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-general-documentation/p004-05.webp" alt="Hand drawn sketch of an early claw mechanism on lined paper" width="579" height="435" loading="lazy" decoding="async">
+          <figcaption>An early hand sketch of the claw, from the weeks when the innovation idea was still being worked out on paper.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-general-documentation/p010-08.webp" alt="Screenshot of the Lebob Trello board with task cards across several lists" width="593" height="479" loading="lazy" decoding="async">
+          <figcaption>The Trello board we ran the season from, with a card per task and a list per workstream.</figcaption>
+        </figure>
+
+            <h2 id="log">The run testing log</h2>
+
+        <p>The bulk of this document is a timestamped log of every robot run we tested, starting on 1 December 2025, one day after regionals. Each entry records the time, the run number, what went wrong and what we changed.</p>
+        <p>The first day is a good illustration of the grain of it. Run 1 failed clearing the soil for the first time after building the mechanism, then did not go forward enough, then did not turn enough towards the soil twice, then turned too much towards the soil. The next attempt turned perfectly but sat too close to the soil, so the right arm went too far across it. The attempt after that turned perfectly but was too far away, so the right arm came down and did not touch.</p>
+        <p>That pattern, a small alignment correction logged run by run until the run is repeatable, runs for the length of the document. It is the progressive testing evidence we did not have the previous season.</p>
+          </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>

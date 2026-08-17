@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internationals Judging Presentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
+  <meta name="description" content="All 71 slides from the Lebob judging presentation for the 2026 Korea Open Invitational, each rendered as an image with the text it carries set out below it.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/internationals-presentation/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Internationals Judging Presentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
+  <meta property="og:description" content="All 71 slides from the Lebob judging presentation for the 2026 Korea Open Invitational, each rendered as an image with the text it carries set out below it.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/internationals-presentation/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Internationals Judging Presentation",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/internationals-presentation/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Internationals Judging Presentation",
+    "name": "Internationals Judging Presentation",
+    "description": "All 71 slides from the Lebob judging presentation for the 2026 Korea Open Invitational, each rendered as an image with the text it carries set out below it.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/internationals-presentation/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/internationals-presentation.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Internationals Judging Presentation (PDF)",
+      "contentSize": "11.6 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png",
+    "datePublished": "2026"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Internationals · 2026 Korea Open Invitational</div>
+      <h1 class="page-title">Internationals Judging Presentation</h1>
+      <p class="page-desc">The deck we presented to judges at the 2026 Korea Open Invitational, slide by slide. Every slide is reproduced as an image, followed by the text that appears on it.</p>
+      <a href="/files/fll-2025-2026/internationals-presentation.pdf" class="doc-download">Download the original PDF <span class="size">11.6 MB</span></a>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="deck">The deck</h2>
+        <figure class="slide">
+          <div class="slide-num">Slide 1 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-01.webp" alt="Slide 1: TEAM LEBOB FLL Team KOI34 - Perth, Western Australia" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>TEAM LEBOB FLL Team KOI34 - Perth, Western Australia</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 2 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-02.webp" alt="Slide 2: 217410 Four identified problems Talking to working archaeologists and subsea engineers, we pinned down four sp" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>217410 Four identified problems Talking to working archaeologists and subsea engineers, we pinned down four specific failure modes that the standard industrial gripper forces onto fragile recovery work: High risk of breakage. Industrial grippers apply force with no feedback channel back to the pilot. Thin pottery, coral, bone fragments, and delicate shapes could crack if they&#x27;re held too tightly. Poor grip on odd shapes. Flat metal jaws can&#x27;t adapt to curved, tapered, or uneven artefacts. Items slip out, or can&#x27;t be lifted at all. The grippers in service today were designed for cylindrical T-bar handles on industrial tools, not for amphorae, bones, or coral. Innovation Project Limited awareness for pilots. ROV operators can&#x27;t feel how much force the arm is Team # Team Name Judging Room applying, especially in low visibility water where the camera feed is the only signal. That leads to unforeseen accidents. Cost and time pressures. Getting archaeology equipment to site costs millions of dollars. A broken gripper or a missing tool means days of delay while they get a replacement. These failures slow missions down, push costs up, and can permanently destroy cultural heritage Innovation Project Instructions Teamsshouldcommunicate to the judges their achievement in each of the following criteria. This rubric should be filled out according to the Innovation Project presentation.</p><p><em>This is a working canvas slide. The text above is the opening of what the slide carries; the rest is in the PDF.</em></p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 3 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-03.webp" alt="Slide 3: LEBOB FLL Team KOI34 - Perth, Western Australia INNOVATIONS" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>LEBOB FLL Team KOI34 - Perth, Western Australia INNOVATIONS</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 4 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-04.webp" alt="Slide 4: INNO Artefacts PAGE 4 (Inno) Coastline: 12000+ km. Shipwreck found: 1650+. First found: Batavia Lost 1629. Dut" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO Artefacts PAGE 4 (Inno) Coastline: 12000+ km. Shipwreck found: 1650+. First found: Batavia Lost 1629. Dutch trading ship. Credit: Malis Credit: OpenStreetMaps</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 5 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-05.webp" alt="Slide 5: INNO Underwater Museum PAGE 4 (Inno) Human history: Trade and transportation. Countless artefacts. Credit: WA " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO Underwater Museum PAGE 4 (Inno) Human history: Trade and transportation. Countless artefacts. Credit: WA Shipwreck Museum Credit: WorldHistoryPics.com via Picryl.com Underwater shipwreck’s engine Underwater video monitoring Irreplacable, loss of culture. Credit: Dwi sumaiyyah makmur Credit: Australian Institute of Marine Science</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 6 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-06.webp" alt="Slide 6: INNO PAGE 5 (Inno) Recent Developments Multibeam sonar image of Artist&#x27;s conception of multibeam sonar underwa" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 5 (Inno) Recent Developments Multibeam sonar image of Artist&#x27;s conception of multibeam sonar underwater shipwreck on NOAA Ship NANCY FOSTER Credit: Wessex Archaeology Credit: NOS/NCCOS/CCMA “There are more known sites than there is equipment to work them. The only way to recover something safely from 50 to 60 metres and beyond is a robot with actuator control.” - Patrick Morrison, WA Museum Curator</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 7 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-07.webp" alt="Slide 7: INNO Main problem PAGE 4 (Inno) Validated by experts: Recovering fragile artefacts underwater. Industrial arms" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO Main problem PAGE 4 (Inno) Validated by experts: Recovering fragile artefacts underwater. Industrial arms are rigid. No force feedback. Expensive and slow. Most the experts we visited said this was a real problem. Tim Macdonald, Woodside, Leading in subsea research expert Australia’s energy sector “Major commercial systems still lack essential features like pressure sensing.” - Tim</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 8 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-08.webp" alt="Slide 8: INNO PAGE 5 (Inno) Problems High risk of breakage Poor grip on odd shapes Since grippers are rigid, pressure A" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 5 (Inno) Problems High risk of breakage Poor grip on odd shapes Since grippers are rigid, pressure Artefacts are often curved, tapered or uneven. concentrated on a small surface area, causing Rigid, flat metal jaws can’t adapt. fractures and breakage. Broken artefacts are Many objects can’t be picked up or will slip. irreplaceable and can be lost to history forever. Credit: MT Engineering via YouTube. Limited awareness for pilots Cost and time pressures ROV operators can’t know how much force the High costs, due to arm applies, especially in low-visibility water materials, machining where the camera feed is the only signal, leading and transportation. If a gripper breaks, this to breakage. could result in a long Can’t control the force with feedback well. delay.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 9 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-09.webp" alt="Slide 9: INNO PAGE 7 (Inno) Team roles Kingsley Brainstorm innovations collaboration, Meet with companies. Sponsorship " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 7 (Inno) Team roles Kingsley Brainstorm innovations collaboration, Meet with companies. Sponsorship outreach Andre SoftSense innovation lead. FEA testing. Sponsorship outreach. Material evaluation (PA12-GF + ether- TPU). Sean Team brainstorm, collaboration, business outreach, material organization for innovation. Oliver Co-owner on prototype builds v1 + v2, drivetrain T_safe fix, hyperbaric pressure test. Subesh Research lead: existing manipulator survey + case studies. Owns expert cold-email outreach and follow-up letters. Patrick Morrison site visit attendee. Chris Bench-testing operator: ran the 4-finger versus 2-finger trials with the bone, anchor, vase, and chest objects, captured the 26 / 96 / 411 / 288 gf data. Aaron Created diagrams to explain and communicate what we did for innovations. Put together simple understandable summaries in the presentation with appropriate images. Leven Owns the photo / video evidence trail across the season. Innovations team collaboration, co-ran the 4- finger vs 2-finger trials with the bone with chris, chassis design with Oliver.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 10 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-10.webp" alt="Slide 10: GENERAL DOCS Project plan PAGE 9-11 Season-long Trello board spanning Sept 2025 - July 2026: Organised into 5 " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>GENERAL DOCS Project plan PAGE 9-11 Season-long Trello board spanning Sept 2025 - July 2026: Organised into 5 categories. Versions for each competition (Regionals, Nationals, Korea Open). Remade the plan as a team each competition. Each block of work was assigned to different team members.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 11 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-11.webp" alt="Slide 11: INNO PAGE 8 (Inno) Features Soft contact fingers Rotating finger platform Flexible TPU on fingertips. Fingers " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 8 (Inno) Features Soft contact fingers Rotating finger platform Flexible TPU on fingertips. Fingers rotate around a pivot. Distributes force across Allows grippers line up to artefact, object’s surface. increasing surface area that contacts the Lower maximum force. object. Reduces risk of breakage. Lowers local pressure and crush risk. Pressure sensing Modular printed kit Actuator measures current to calculate pressure. 3D printed, cheaper cost with USD$70 Warning preventing crushing. filament. Accounts for ambient water pressure. Modular, allowing swapping of broken Accounts for foam compressing under pressure. modules, spares, don’t have to wait for replacements. And different types of kits.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 12 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-12.webp" alt="Slide 12: “Stick with cheap 3D printed parts. Anyone INNO can buy filament anywhere, and the whole PAGE 34 (Inno) Materi" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>“Stick with cheap 3D printed parts. Anyone INNO can buy filament anywhere, and the whole PAGE 34 (Inno) Materials thing can be manufactured anywhere like a kit.” Tim MacDonald, subsea engineer. Material Pros Cons Titanium Very strong; excellent seawater Expensive; needs machining (not corrosion resistance printable); galvanic corrosion risk with dissimilar metals Anodised Lightweight; anodised layer Anodised coating can scratch/pit and Aluminium resists corrosion; machinable then corrodes; galvanic risk underwater; needs machining 3D printed Cheap; printable anywhere; Lower strength than metal; with plastic whole gripper ships as a performance depends heavily on buildable kit; no bought which filament; some grades warp or Credit: Sam.wainer hardware absorb water Nylon 12 Stiff with low creep; low water Needs a 45-60 C heated chamber; Carbon uptake; strong choice for rigid warps and shows poor layer adhesion Filled structural parts on the P1S; warp-prone on larger parts</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 13 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-13.webp" alt="Slide 13: INNO PAGE 34 (Inno) Final Materials Material Pros Cons TPU Bambu TPU Flexible TPU for the Fin Ray fingers; Too" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 34 (Inno) Final Materials Material Pros Cons TPU Bambu TPU Flexible TPU for the Fin Ray fingers; Too soft for rigid structural parts; 95A HF conforms and grips well; ether- only suited to the flexing fingers, not based grade survives long gears or housing immersion PA12-GF Stiff, low-creep and low water Glass fill is brittle - cracks instead of PETG uptake; the best all-round rigid yielding; not suitable for parts that material for the seawater duty must flex, like the snap pins cycle PETG-HF Ductile enough for the flexing snap Lower stiffness and strength than pins; prints fast; it tolerates the PA12-GF; only used for the one-time 2.78% insertion strain that would snap pins, not load-bearing parts PA12 crack PA12-GF ~ USD $70</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 14 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-14.webp" alt="Slide 14: INNO PAGE 28 (Inno) Pressure Sensing Original: Pressure sensors in conductive foam. David Howard: ambient wate" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 28 (Inno) Pressure Sensing Original: Pressure sensors in conductive foam. David Howard: ambient water pressure. Patrick Morrison: foam compressing, air bubbles shrink. Current (Amps) Already shown to work: Maxon, Schunk This improves sealing, reliability, overall consistency</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 15 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-15.webp" alt="Slide 15: INNO PAGE 13 (Inno) Finite Element Analysis We used FEA to Simulate: 2 families of fingers. Variations of desi" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 13 (Inno) Finite Element Analysis We used FEA to Simulate: 2 families of fingers. Variations of designs. Variety of objects. Grip textures. Thin 1.2 mm contact beam, tapered spine, 14 reversed-slant ribs.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 16 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-16.webp" alt="Slide 16: INNO PAGE 42 (Inno) Modular printed kit Features: Easily swap parts. 3D printed. Modular. Minimal tools requir" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 42 (Inno) Modular printed kit Features: Easily swap parts. 3D printed. Modular. Minimal tools required. Saving cost: Filament and printing is much cheaper than machining. Saving time: Crews can carry spares and swap broken ones. Or reprint mid-drive. Adaptability: Mounts Reach Bravo 7 wrist, ISO 9409 cobot flanges and the BlueROV2 chassis.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 17 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-17.webp" alt="Slide 17: INNO Video assembly guide PAGE 11 (Inno) Final Model Single degree of freedom four bar linked gripper. Fingers" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO Video assembly guide PAGE 11 (Inno) Final Model Single degree of freedom four bar linked gripper. Fingers splay ~18 deg outward as they open to fit larger items. The gearbox can flood and drain to match the pressure at 18 deg the depth. 1.5x and 2.0x scaled variants all generated and proven to work. 1x 2x Blue ROV Pressure Canister</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 18 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-18.webp" alt="Slide 18: INNO PAGE 44 (Inno) Electronics Power, 12V supply Connects over Wi-Fi Controllers Actuator tells us the curren" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 44 (Inno) Electronics Power, 12V supply Connects over Wi-Fi Controllers Actuator tells us the current, we can calculate force Smart servo Standard BlueROV tether bus</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 19 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-19.webp" alt="Slide 19: INNO Artefacts in a museum PAGE 5 &amp; 47 (Inno) Impact Groups: Archaeology teams. Museums. Marine biology. Envir" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO Artefacts in a museum PAGE 5 &amp; 47 (Inno) Impact Groups: Archaeology teams. Museums. Marine biology. Environmental impact. Credit: WorldHistoryPics.com via Picryl.com Affordability for accessibility. Marine biology - Coral Validation: Tim MacDonald (subsea engineer, DSV Limiting Factor). Patrick Morrison (WA Shipwrecks Museum). Credit: Francois Gohier via Getty Images</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 20 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-20.webp" alt="Slide 20: INNO Research &amp; Refinement PAGE 6 (Inno) Research Refining the problem Expert advice Artefact recovery. Narrow" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO Research &amp; Refinement PAGE 6 (Inno) Research Refining the problem Expert advice Artefact recovery. Narrowing the problem. Contacted companies and museums. Recovering artefacts. Material change. Needs ROV. Woodside and Tim MacDonald told Breaking and crush risk. Finding the issue. us to switch from metals to plastic. Pressure concentration. Crush risk. Museums explaining: No force feedback. Creating a solution. Why artefacts fragile. Problems with ROV grippers. Adaptive fingers. Safe handling. Pressure feedback. Validating the problem. Rigid. Corrosion. Researching the solution. Cost. Materials. Electronics.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 21 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-21.webp" alt="Slide 21: INNO PAGE 49 (Docs) Experts and Institutions 1 2 3 4 Nationals and PreNationals 1.Dr John McCarthy 2.Associat " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 49 (Docs) Experts and Institutions 1 2 3 4 Nationals and PreNationals 1.Dr John McCarthy 2.Associat Professor Jonathan Benjamin 3.Chelsea Wiseman 4.Michael O’Leary (UWA) 5 6 7 5.Jeremy Leach 6.Ingrid Ward 7.Hiro Yoshida 8.Australasian Institute for Maritime Archaeology 9.Minderoo-UWA Deep Sea Research 8 9 10 Centre 10.Western Australian Museum</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 22 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-22.webp" alt="Slide 22: INNO PAGE 49 (Docs) Experts and Institutions Post-nationals 1 2 3 4 17.Australian National Maritime 1.Tim MacD" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>INNO PAGE 49 (Docs) Experts and Institutions Post-nationals 1 2 3 4 17.Australian National Maritime 1.Tim MacDonald (Inkfish) [plastic call, Museum validated the novelty] 18.International Marine Contractors 2.Patrick Morrison (Curator of Maritime Association Heritage WA) 19.Schilling Robotics 3.David Howard (Principal Research Scientist at CSIRO) [depth-pressure problem] 20.TechnipFMC 5 6 7 8 9 21.UWA Engineering 4.Fiona Stachowiak [material risk, TRL, 22.Samsung reliability] 23.Bundaberg 5.Woodside Subsea Team 24.Curtin Underwater Sensing and 6.Elaine Pankhurst (Fugro Australia) [sponsor Robotics Lab + routed to tooling team] 25.CSIRO Oceans and Atmosphere 7.Simon (Fugro ROV manager) [channels 26.Australian Institute of Marine 10 11 12 13 opened] Science 8.Damien Singh (Total Marine Technology) 27.NOAA Ocean Exploration [sponsor + mentorship] 28.OpenROV 9.Paul (CEO of TMT) 29.Sofar Ocean 10.Ian Grant (Pulse Technology Hub) [sponsor 30.Monterey Bay Aquarium Research (bundled)] Institute 11.Connel (Oceaneering) 14 15 16 12.WA Robotics Education 13.Fugro 14.Pulse Technology Hub 15.EFFEE On Site Robotics [bundled sponsors] 16.CP Maritime</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 23 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-23.webp" alt="Slide 23: Communications" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Communications</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 24 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-24.webp" alt="Slide 24: Meeting with Pulse, Meeting with Woodside, leading in leading in subsea ROV systems Australia’s energy sector " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Meeting with Pulse, Meeting with Woodside, leading in leading in subsea ROV systems Australia’s energy sector Select Meetings Meeting with Effee, Leading expertise on Induction heating and Robotic Welding</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 25 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-25.webp" alt="Slide 25: 3. Internationals 1. Regionals 2. Nationals" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>3. Internationals 1. Regionals 2. Nationals</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 26 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-26.webp" alt="Slide 26: DEMO" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>DEMO</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 27 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-27.webp" alt="Slide 27: Robot Design Team # Team Name Judging Room Instructions Teamsshouldcommunicate to the judges their achievement" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Robot Design Team # Team Name Judging Room Instructions Teamsshouldcommunicate to the judges their achievement in each of the following criteria. This rubric should be filled out according to the Robot Design explanation. Judges are required to tick one box on each separate row to indicate the level the team has achieved. If the team EXCEEDS, a short comment in the exceeds column is required. BEGINNING DEVELOPING ACCOMPLISHED EXCEEDS 1 2 3 4 How hastheteamexceeded? IDENTIFY –Team determined which missions to attempt, explored building and coding resources, and sought guidance as needed. Minimal evidence of mission Partial evidence of mission Clear evidence of mission strategy strategy strategy Clear use of building or coding Minimal use of building or Some use of building or coding resources to support their coding resources resources mission strategy DESIGN – Team members worked collaboratively on their designs and developed the building and coding skills needed. TODO Minimal evidence that all team members contributedideas Partialevidencethatallteam memb erscontributedideas Clearevidencethatallteam members contributed ideas Fix red text Minimal evidence of building Partial evidence of building Clear evidence of building and coding skills in all team and coding skills in all team and coding skills in all team Fix referring to page on every slide members members members CREATE</p><p><em>This is a working canvas slide. The text above is the opening of what the slide carries; the rest is in the PDF.</em></p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 28 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-28.webp" alt="Slide 28: LEBOB FLL Team KOI34 - Perth, Western Australia ROBOT DESIGN" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>LEBOB FLL Team KOI34 - Perth, Western Australia ROBOT DESIGN</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 29 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-29.webp" alt="Slide 29: Part 1 PLANNING" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Part 1 PLANNING</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 30 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-30.webp" alt="Slide 30: Mission IDENTIFY PAGE 2 (Robot) Ranking" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Mission IDENTIFY PAGE 2 (Robot) Ranking</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 31 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-31.webp" alt="Slide 31: IDENTIFY Making IDENTIFY PAGE 2-4 (Robot) PAGE 3 (Robot) the Plan Collect boulders Push collector into home ar" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>IDENTIFY Making IDENTIFY PAGE 2-4 (Robot) PAGE 3 (Robot) the Plan Collect boulders Push collector into home area Fully passive here</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 32 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-32.webp" alt="Slide 32: IDENTIFY Iterations &amp; Goals PAGE 2-4 (Robot) Regionals (270) Nationals (340) Internationals (Max 545) Link to " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>IDENTIFY Iterations &amp; Goals PAGE 2-4 (Robot) Regionals (270) Nationals (340) Internationals (Max 545) Link to Mission version doc</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 33 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-33.webp" alt="Slide 33: IDENTIFY Final Plan PAGE 2-4 (Robot) Detailed plan with key. Clear for all team members. Multiple versions sto" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>IDENTIFY Final Plan PAGE 2-4 (Robot) Detailed plan with key. Clear for all team members. Multiple versions stored in shared document. Uses official game board document.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 34 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-34.webp" alt="Slide 34: IDENTIFY Resources PAGE 4-8 (Robot)" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>IDENTIFY Resources PAGE 4-8 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 35 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-35.webp" alt="Slide 35: Part 2 DESIGN" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Part 2 DESIGN</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 36 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-36.webp" alt="Slide 36: Team Roles DESIGN For Robot, Innovations and Documentation" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Team Roles DESIGN For Robot, Innovations and Documentation</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 37 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-37.webp" alt="Slide 37: Prototyping Prototyping allowed us to test different mechanisms and mission approaches. Helped us compare idea" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Prototyping Prototyping allowed us to test different mechanisms and mission approaches. Helped us compare ideas, evaluate effectiveness, and refine designs through testing. After exploring multiple options, we discussed them as a team and agreed on the most reliable and efficient solution. DESIGN PAGE 8-10 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 38 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-38.webp" alt="Slide 38: DESIGN Conflicts PAGE 8-10 (Robot) Order Example 1 Uneven workloads and communication issues. 2 Some members l" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>DESIGN Conflicts PAGE 8-10 (Robot) Order Example 1 Uneven workloads and communication issues. 2 Some members left out, others felt that some members weren’t doing any work. 3 Win internationals, so everyone had to contribute. Practice Judging with experienced seniors 4 Last time we just let them be, which we decided was a bad idea since less work would be done. 5 Making it more clear to all team members about work assignments and more discussions. 6 More follow-up is needed after discussions, members could forget.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 39 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-39.webp" alt="Slide 39: Organisation DESIGN PAGE 8-10 (Robot) We also used Trello for robot design. We use discord to communicate with" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Organisation DESIGN PAGE 8-10 (Robot) We also used Trello for robot design. We use discord to communicate with the team, including parents and mentors Sessions Attendance Communication Updates Todo Lists</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 40 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-40.webp" alt="Slide 40: DESIGN Building Skills PAGE 11-13 (Robot) Every team member contributed to the attachments for the runs. Each " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>DESIGN Building Skills PAGE 11-13 (Robot) Every team member contributed to the attachments for the runs. Each attachment was tested and considered before choosing to use or not use it. We collaborated to make sure attachments fit the robot properly and were useful in the runs. For example, the robot design was created by Oliver and Kingsley, but it was modified by Sean and Subesh.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 41 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-41.webp" alt="Slide 41: DESIGN Meeting Minutes PAGE 78 - 84 (Docs) Over the season we had many Member Attended Rate sessions for our t" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>DESIGN Meeting Minutes PAGE 78 - 84 (Docs) Over the season we had many Member Attended Rate sessions for our team. Andre Nijman 46 / 49 93.90% We recorded attendance to Oliver Liu 46 / 49 93.90% show commitment, teamwork, Sean Chan 46 / 49 93.90% and workload contribution Kingsley Wong 45 / 49 91.80% Shows that every team member Chris Wang 44 / 49 89.80% contributes research, building, Subesh 48 / 49 98.00% coding, and testing. Sukumuran Aaron Zhang 45 / 49 91.80% Leven Shi 45 / 49 91.80%</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 42 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-42.webp" alt="Slide 42: DESIGN Coding Skills PAGE 13 (Robot) School and personal projects. (Python simulations, games) Experienced mem" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>DESIGN Coding Skills PAGE 13 (Robot) School and personal projects. (Python simulations, games) Experienced members taught less- experienced members.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 43 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-43.webp" alt="Slide 43: DESIGN GitHub PAGE 9-10 (Robot) Public (open source and open license) so that other FLL teams can view and get" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>DESIGN GitHub PAGE 9-10 (Robot) Public (open source and open license) so that other FLL teams can view and get inspiration from our coding projects. Experienced programmers created a guide so all team members know how to use the code, how to run it, and how it works. Lebob Robotics GitHub to organise our repositories into a single account.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 44 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-44.webp" alt="Slide 44: Commits Using GitHub commits meant that we could see what, who, when and why code was changed, allowing for it" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Commits Using GitHub commits meant that we could see what, who, when and why code was changed, allowing for iteration and seeing improvement over time Conventional commits to standardise and ensure commits were clear. Branches so multiple people could work on different things, for ITERATE PAGE 17-19 (Robot) collaboration.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 45 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-45.webp" alt="Slide 45: Coding Contribution Every member contributed to a part in our code, shown by our GitHub contributors stats. Th" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Coding Contribution Every member contributed to a part in our code, shown by our GitHub contributors stats. These are the contributions to main. Andre: 61 Sean: 51 Aaron: 44 Chris: 28 Leven: 26 Oliver: 26 Kingsley: 26 Subesh: 26 ITERATE PAGE 17-19 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 46 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-46.webp" alt="Slide 46: Part 3 CREATE" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Part 3 CREATE</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 47 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-47.webp" alt="Slide 47: CREATE Code Planning Coding Python: Flexibility and Familiarity. PyBricks: Robot control. Organisation: Object" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>CREATE Code Planning Coding Python: Flexibility and Familiarity. PyBricks: Robot control. Organisation: Object Oriented Programming. Classes for types. Objects for instances. Organisation. Reusability. Plan 1. Classes, methods. 2. Functions. 3. Mission decorator.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 48 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-48.webp" alt="Slide 48: Imports and DB Class Importing: Allows control for components from pybricks (driving, rotating motors). Class " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Imports and DB Class Importing: Allows control for components from pybricks (driving, rotating motors). Class the robot for organisation: extends the built in DriveBase class, but adds extra functionaility. Custom functions: The default DriveBase class had limited functionality when we wanted to do something until stalled. These were useful for when the robot needed to drive up to CREATE PAGE 13-15 (Robot) something.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 49 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-49.webp" alt="Slide 49: Setup and Functions Defining hub:For configuring buttons and lights for the mission selector. Defining motors:" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Setup and Functions Defining hub:For configuring buttons and lights for the mission selector. Defining motors: For controlling motors, used documentation to specify the positive direction and the gear ratio, so we didn’t have to update numbers when changing gearbox. Mission decorator: For organising our missions, we used a decorator to put a pointer for each mission into a MISSIONS list. Reset robot: A helper function to reset the robot whenever we needed to reset to measure an angle, reset the speed between missions or stop the robot. CREATE PAGE 13-15 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 50 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-50.webp" alt="Slide 50: CREATE Mission (eg. 3) PAGE 13-15 (Robot) Mission decorator: Automatically puts this function into the MISSION" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>CREATE Mission (eg. 3) PAGE 13-15 (Robot) Mission decorator: Automatically puts this function into the MISSIONS list for the mission selector. Documentation and clarity: Docstrings for what missions this function does, and comments for what each line is for. So all team members knew what was happening. Wait=false: Motors running concurrently to save time. Time scarcity: Last robot game at nationals, we lost points due to running out of Changing speed: To save time, we went fast for simple time, so we focused on saving drives, and slow for when it needed to be precise. time and optimising missions. Arc: Also saves time, shorter distance. Duty cycle: We found this in the documentation, allowing us to use 100% power through the motor, for when a lot of force was required.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 51 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-51.webp" alt="Slide 51: Innovative Code Mission Autosave: This uses the hub’s non-volatile storage to save the next mission index befo" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Innovative Code Mission Autosave: This uses the hub’s non-volatile storage to save the next mission index before a run begins, so the robot can be ready to run the next mission if the code ends forcefully. This saves time so that technicians don’t need to reselect it from the mission menu. CREATE PAGE 13-15 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 52 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-52.webp" alt="Slide 52: CREATE Innovative Code PAGE 13-15 (Robot) Using PID (Proportional Integral Derivitive): To create smooth and a" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>CREATE Innovative Code PAGE 13-15 (Robot) Using PID (Proportional Integral Derivitive): To create smooth and accurate movements of arms, wheels etc. Uses the built-in gyro in the spike to account for errors on the mat, such as dust build up and random slippage.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 53 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-53.webp" alt="Slide 53: CREATE Engineering PAGE 11 (Robot) Principles For each attachment we based each of them on 3 engineering princ" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>CREATE Engineering PAGE 11 (Robot) Principles For each attachment we based each of them on 3 engineering principles: Simplicity Efficiency Reliability</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 54 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-54.webp" alt="Slide 54: Attachment One Innovative Mechanism #1 (Chungus) This mechanism is for run 1. It does these missions: M05: Who" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Attachment One Innovative Mechanism #1 (Chungus) This mechanism is for run 1. It does these missions: M05: Who Lived Here? M06: Forge M07: Heavy Lifting CREATE PAGE 12 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 55 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-55.webp" alt="Slide 55: Attachment Two Innovative Mechanism #2 (Sheet Metal) It does these missions: M08: Silo CREATE PAGE 12 (Robot)" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Attachment Two Innovative Mechanism #2 (Sheet Metal) It does these missions: M08: Silo CREATE PAGE 12 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 56 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-56.webp" alt="Slide 56: Attachment Three Innovative Mechanism #3 (Cerberus) This mechanism is for run 3. It does these missions: M10: " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Attachment Three Innovative Mechanism #3 (Cerberus) This mechanism is for run 3. It does these missions: M10: Tip the Scales M09: What’s on Sale? We used the video from Robotics Rules Competition to create the one way gate. CREATE PAGE 12 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 57 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-57.webp" alt="Slide 57: Attachment Four Innovative Mechanism #4 (Pitchfork) This mechanism is for run 4. It does these missions: M03: " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Attachment Four Innovative Mechanism #4 (Pitchfork) This mechanism is for run 4. It does these missions: M03: Mineshaft Explorer M04: Careful Recovery CREATE PAGE 12 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 58 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-58.webp" alt="Slide 58: Attachment Five Innovative Mechanism #5 (Dimentionally Transcendent Plasma Forge Dissection Apparatus) This me" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Attachment Five Innovative Mechanism #5 (Dimentionally Transcendent Plasma Forge Dissection Apparatus) This mechanism is for run 5. It does these missions: M01: Surface Brushing M02: Map Reveal CREATE PAGE 12 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 59 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-59.webp" alt="Slide 59: Attachment Six CREATE PAGE 13 (Robot) Innovative Mechanism #6 (Giraffe) It does these missions: M12: Salvage O" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Attachment Six CREATE PAGE 13 (Robot) Innovative Mechanism #6 (Giraffe) It does these missions: M12: Salvage Operation M11: Angler Artifacts M15: Site Marking 1/3 One motor controls the main movement of the arm, while the other rotates a set of gears on the arm to trigger more actions. Has multiple passive elements that don’t require motors to function.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 60 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-60.webp" alt="Slide 60: Attachment Seven Innovative Mechanism #7 (Vomit) This mechanism is for run 7. It does these missions: M13: Sta" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Attachment Seven Innovative Mechanism #7 (Vomit) This mechanism is for run 7. It does these missions: M13: Statue Rebuild M14: Forum M15: Site Marking 2/3 3/3 Opponent’s Minecart CREATE PAGE 12 (Robot)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 61 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-61.webp" alt="Slide 61: CREATE Fake Robot PAGE 13 (Robot) We built a skeleton bot so we could keep coding on the main robot with the a" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>CREATE Fake Robot PAGE 13 (Robot) We built a skeleton bot so we could keep coding on the main robot with the attachments already installed, while also developing and improving new mechanisms for other missions at the same time.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 62 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-62.webp" alt="Slide 62: Part 4 ITERATION" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Part 4 ITERATION</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 63 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-63.webp" alt="Slide 63: Iteration Timelapse As we iterated on code and mechanisms for robot design, we made many logs about what happe" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Iteration Timelapse As we iterated on code and mechanisms for robot design, we made many logs about what happened each time we ran the robot. E.g. 13:16:33 – run 2. We fixed the gearbox and ran it, but it misaligned with the mineshaft ITERATE PAGE 9-78 (Docs)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 64 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-64.webp" alt="Slide 64: ITERATE Robot Fixes PAGE 9-78 (Docs)" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>ITERATE Robot Fixes PAGE 9-78 (Docs)</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 65 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-65.webp" alt="Slide 65: ITERATE Base Robot Design PAGE 18 (Robot) Movement: 2 medium motors - wheels 1 non-friction nubs for balance A" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>ITERATE Base Robot Design PAGE 18 (Robot) Movement: 2 medium motors - wheels 1 non-friction nubs for balance Attachments: 2 large motors with gears Features: Low centre of gravity No hanging cables</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 66 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-66.webp" alt="Slide 66: ITERATE Gearbox Problems PAGE 19 (Robot) Iteration example #2 The gears weren’t meshing when placed perpendicu" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>ITERATE Gearbox Problems PAGE 19 (Robot) Iteration example #2 The gears weren’t meshing when placed perpendicularly, leading to the gears skipping and the mechanisms not actuating. We temporarily fixed this by adding locking beams that attach to the drivebase, however this increased attachment change times.</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 67 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-67.webp" alt="Slide 67: ITERATE New Gearbox PAGEITERATE 19 (Robot) Easy attachment switching and no gear slippage, on every attachment" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>ITERATE New Gearbox PAGEITERATE 19 (Robot) Easy attachment switching and no gear slippage, on every attachment Our new gearbox has gears that mesh in plane with each other We use 4 tooth gears for perpendicular transmission. We used Bricklink Studio 3.0</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 68 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-68.webp" alt="Slide 68: COMMUNICATION LEARNING PAGE 20-21 (Robot) An important part of FLL is learning, so we want to share what the m" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>COMMUNICATION LEARNING PAGE 20-21 (Robot) An important part of FLL is learning, so we want to share what the most impactful thing we&#x27;ve learnt from the season! Sean - PID Aaron - CAD, mechanical Subesh - CAD Kingsley - CAD Chris - Mechanical Andre - FEA Oliver - simplicity Leven - Programming</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 69 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-69.webp" alt="Slide 69: Thanks to Our Sponsors!" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Thanks to Our Sponsors!</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 70 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-70.webp" alt="Slide 70: Meeting with Woodside, leading in Australia’s energy sector Meeting with CP Maritime, THANK leading in subsea " width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>Meeting with Woodside, leading in Australia’s energy sector Meeting with CP Maritime, THANK leading in subsea ROV systems YOU Chris the builder</p></figcaption>
+        </figure>
+        <figure class="slide">
+          <div class="slide-num">Slide 71 of 71</div>
+          <img src="/img/docs/internationals-presentation/slide-71.webp" alt="Slide 71 of the Lebob Korea Open judging presentation" width="1400" height="788" loading="lazy" decoding="async">
+          <figcaption><p>This slide carries no extractable text.</p></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>

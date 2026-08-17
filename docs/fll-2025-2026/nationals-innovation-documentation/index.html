@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nationals Innovation Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
+  <meta name="description" content="The Lebob nationals innovation write up: four failure modes of industrial ROV grippers, the four part solution, FEA notes, bench results and expert feedback.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/nationals-innovation-documentation/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Nationals Innovation Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
+  <meta property="og:description" content="The Lebob nationals innovation write up: four failure modes of industrial ROV grippers, the four part solution, FEA notes, bench results and expert feedback.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/nationals-innovation-documentation/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Nationals Innovation Documentation",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/nationals-innovation-documentation/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Nationals Innovation Documentation",
+    "name": "Nationals Innovation Documentation",
+    "description": "The Lebob nationals innovation write up: four failure modes of industrial ROV grippers, the four part solution, FEA notes, bench results and expert feedback.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/nationals-innovation-documentation/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/nationals-innovation-documentation.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Nationals Innovation Documentation (PDF)",
+      "contentSize": "2.4 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Nationals · FLL Unearthed 2025</div>
+      <h1 class="page-title">Nationals Innovation Documentation</h1>
+      <p class="page-desc">The nationals revision of our innovation project. The problem is sharpened into four specific failure modes, the solution grows a fourth part, and expert feedback moves the design off metal and onto printed plastic.</p>
+      <a href="/files/fll-2025-2026/nationals-innovation-documentation.pdf" class="doc-download">Download the original PDF <span class="size">2.4 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#problem">The problem</a></li>
+          <li><a href="#fea">Finite element analysis</a></li>
+          <li><a href="#solution">Our solution</a></li>
+          <li><a href="#after-regionals">After regionals</a></li>
+          <li><a href="#testing">Testing and results</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#feedback">Feedback</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="problem">The problem</h2>
+
+        <p>Underwater archaeologists struggle to recover fragile artefacts from the seafloor because most ROV manipulator arms are designed for industrial work, not precision handling. These arms usually have two rigid metal fingers, no sensitivity control, and limited surface contact. That makes them clumsy when grabbing small, irregular or brittle objects. Archaeologists also suffer from equipment failures, and breakages can cost millions of dollars with the delivery costs.</p>
+        <ol>
+          <li><strong>High risk of breakage.</strong> Industrial grippers apply too much force with no feedback, so thin pottery, coral, bone fragments and delicate shapes often crack.</li>
+          <li><strong>Poor grip on odd shapes.</strong> Flat jaws cannot adapt to curved, tapered or uneven artefacts, so many items simply slip out or cannot be lifted at all.</li>
+          <li><strong>Limited awareness for pilots.</strong> Operators cannot feel how much force the arm is applying, especially in low visibility environments, which leads to accidental crushing or drops.</li>
+          <li><strong>Cost and time pressures.</strong> Archaeology generally takes millions of dollars to move all the equipment from a facility onto a ship and travel to the site. If any equipment breaks, or they did not bring the right tool, they may have to wait for the tools to arrive.</li>
+        </ol>
+        <p>Archaeologists need a tool that has been designed for fragile artefacts, not repurposed from oil and mining industries.</p>
+            <h2 id="fea">Finite element analysis</h2>
+
+        <p>Finite element analysis is a computational method that uses software to predict how a physical object will react to real world forces, vibrations, heat and fluid flow by breaking it down into millions of small finite elements. By applying mathematical equations to each element and then combining the results, FEA lets engineers simulate physical phenomena to test performance, predict whether something will break or wear out, and optimise a design without building physical prototypes.</p>
+        <p>This process takes a long time, which can reduce the feasibility of using it. In the stress plots the red parts show where the part is most stressed and the blue parts show where it is least stressed. Because the connection point is where the most stress occurs, the part bends a little downwards there.</p>
+        <p>Our arm uses four arms with pressure sensors and foam pads that prevent breakage and failure of collection. Because the FEA process was too long, at this stage we did not have results for our own arm, but we had some idea of what forces can affect it.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/nationals-innovation-documentation/p010-05.webp" alt="Finite element analysis stress plot of a manipulator finger showing high stress in red at the connection point" width="1220" height="610" loading="lazy" decoding="async">
+          <figcaption>An FEA stress plot. Red marks the most stressed regions and blue the least, with the connection point carrying the load.</figcaption>
+        </figure>
+
+            <h2 id="solution">Our solution</h2>
+
+        <p>Our design upgrades the standard ROV gripper by combining innovations that directly target the weaknesses found in current underwater arms and sea based archaeology.</p>
+        <h3>1. Adaptive soft-contact finger pads</h3>
+        <p>We add flexible foam pads to each fingertip so the arm no longer presses metal against artefacts. The soft pads spread the gripping force across a wider area, which lowers stress on fragile material. This reduces breakage risk and lets the arm safely handle smooth surfaces like vases, curved bones or rounded stone fragments.</p>
+        <h3>2. Embedded pressure-sensing system</h3>
+        <p>Under each foam pad is a calibrated pressure sensor. These sensors constantly measure how strongly the gripper is squeezing. The readings go straight to the pilot, and optionally into our auto-stop control code, which halts the actuator the moment pressure passes a chosen limit. Operators finally get an early warning before damaging something, and can set safe pressure presets for different artefacts such as coral, bone or clay.</p>
+        <h3>3. Rotating finger platform for full-surface contact</h3>
+        <p>All pads and pressure sensors are mounted on a rotating plate. This lets the gripper automatically align its pads to match the angle of the artefact, so more surface area touches the object. Rotation also reduces how precise the ROV's positioning needs to be. This was unfeasible for our scaled down design, but on a one to one model we would have incorporated it.</p>
+        <h3>4. A cheap, kit based modular claw</h3>
+        <p>This allows archaeologists to bring multiple copies of the claw on a mission, which reduces the chance of an equipment failure during the trip. Because it is made out of plastics, it also allows archaeologists to bring a small 3D printer with them and create custom grips and other tools when required, reducing the need for ship based transportation of tools and equipment.</p>
+        <p>Together, these four features turn a basic industrial gripper into an intelligent, adaptable archaeological tool.</p>
+            <h2 id="after-regionals">After regionals</h2>
+
+        <p>For our arm we had originally planned to use titanium or anodised aluminium. After regionals we called Tim MacDonald, a subsea engineer and deep sea ocean explorer. He said that titanium, or any metal, was too expensive for archaeology, and that 3D printed parts were more accessible, easier to produce and less expensive. He recommended nylon 12 with carbon fibre, or any plastic that did not absorb water or change its properties in cold or wet environments.</p>
+        <p>So we changed our material from titanium to nylon 12 CF. It is also quite cheap: 1 kg of filament costs around $100, compared with $160 of titanium if we compare the volumes.</p>
+        <p>We implemented the servo and pressure sensor into the claw to complete the prototype, and planned to secure all the joints with nuts and bolts. We could also implement a barometer to measure the outside water pressure, which we would use to improve the accuracy of our pressure sensor. We considered a DC motor instead of a servo because of the torque requirements, but we would lose the ability to control our angle, making it more difficult to control.</p>
+            <h2 id="testing">Testing and results</h2>
+
+        <p>We used the same four object set as at regionals: a pot, a treasure chest, a bone and an anchor.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Object</th><th>Attempts (4 fingers)</th><th>Attempts (2 fingers)</th><th>Pressure to grip</th></tr></thead>
+          <tbody><tr><td>Bone</td><td>2</td><td>4</td><td>26 gf</td></tr><tr><td>Anchor</td><td>5</td><td>4</td><td>96 gf</td></tr><tr><td>Vase</td><td>3</td><td>5</td><td>411 gf</td></tr><tr><td>Chest</td><td>3</td><td>3</td><td>288 gf</td></tr></tbody>
+        </table></div>
+
+            <h2 id="impact">Impact</h2>
+
+        <h3>Impact on others</h3>
+        <p>Our project would impact a wide variety of different professions and people. Other than the obvious, like an archaeologist, it could also impact engineering, science, infrastructure, oil, repair work, mining and geography. It would help all of these professions by improving the feasibility of doing work, the ease of doing work, and the ability to recover objects.</p>
+        <h3>Impact on the environment</h3>
+        <p>Our innovation project allows for easier retrieval of artefacts from places where damage may be caused, to the artefact or its surroundings. If a scientist is trying to pick up a delicate coral piece but accidentally applies too much pressure, a normal manipulator arm might crush it, whereas our soft foam pads would reduce the pressure and help the coral survive. We also use high quality corrosion resistant materials, which reduces the chance of fluid leaks and prevents toxic fluids such as oil from reaching the sea.</p>
+            <h2 id="feedback">Feedback</h2>
+
+        <h3>Changes made because of feedback</h3>
+        <p><strong>David Howard</strong> suggested a problem with our design. As the claw goes lower under the water, the outside pressure also increases. This could cause issues with the pressure sensing mechanism and reduce its reliability. To fix this we add a pressure sensor to the main body of the claw, which measures the outside water pressure, and then use our code to cancel out the difference to get correct pressure readings.</p>
+        <p><strong>Tim MacDonald</strong> brought up several key points. We should not use titanium or materials like it, as they are expensive and heavy, and should use plastics instead: specifically nylon 12 CF, or PTFE. He suggested using a connector to join the grabber to the arm mechanism. He suggested oil filled containers on our electronics to help resist water pressure, which creates a cheap pressure seal. Finally he explained how costly it can be to ship equipment to a site, which can run to millions of dollars. That changed our solution into a cheap kit that archaeologists could add 3D printed parts onto and bring multiple copies of, in case one broke.</p>
+
+        <h3>Notes from the call with Tim MacDonald</h3>
+        <p>We asked about how our arm compared with others, materials we should use, and how prevalent the problem is. His answers, as we recorded them:</p>
+        <ul>
+          <li>Soft jaw grippers already exist. They have two floppy bits of rubber and hold an object together with a sticky bit of silicone, but there is no force sensor. The pressure sensor takes it to the next level, and it is cheap and reliable.</li>
+          <li>The problem is prevalent in current underwater archaeology. Current solutions work and are fine, but they are all homemade, with people in the field doing the same thing we are: a 3D printed prototype with trial and error.</li>
+          <li>The main thing driving up cost is the housing for the electronics and making it waterproof. Put all the electrical parts in a box full of non-conductive oil, or run cables through clear garden hose filled with oil, and you end up with a really cheap pressure boundary. A box of air has to be thick and strong to withstand the pressure.</li>
+          <li>The biggest cost in archaeology is time. By the time you get to site you have probably spent millions of dollars, and if a suction gripper breaks because it has so many parts, it is all waste.</li>
+          <li>Suction grippers can be destructive with the force they apply and cannot pick up gelatinous things. Our arm increases reliability and is more relevant in archaeology because of the delicate things.</li>
+          <li>Stay with 3D printing because it is cheap, reproducible and easy to put together, and can be manufactured anywhere like a kit. He has used 3D printed parts all the way at the bottom of the Mariana Trench.</li>
+          <li>Nylon 12 with carbon fibre makes it more rigid. We want any plastic that does not absorb water and does not change its properties because of water. Nylon 6 absorbs a lot of water and will degrade over time. PTFE is also quite good.</li>
+          <li>There are a lot of other applications apart from marine archaeology: delicate deep sea coral, gelatinous animals, sediment samples.</li>
+          <li>Send a calendar invite to an expert so they have the chance to say no and suggest another time.</li>
+        </ul>
+
+        <h3>Outreach</h3>
+        <p>Experts emailed: Dr John McCarthy, Associate Professor Jonathan Benjamin, Chelsea Wiseman, Michael O'Leary (UWA), Jerem Leach, Ingrid Ward, Hiro Yoshida. Institutions emailed: the Australasian Institute for Maritime Archaeology, the Minderoo UWA Deep Sea Research Centre and the Western Australian Museum.</p>
+        <p>After regionals we mapped a wider list of targets by category: maritime archaeologists at UWA and the WA Museum Maritime Archaeology department; the underwater robotics and ROV industry including Fugro Australia, Woodside Energy, IMCA and Schilling Robotics or TechnipFMC; engineering and materials experts at UWA Engineering, Curtin University's Underwater Sensing and Robotics Lab and CSIRO Oceans and Atmosphere; marine conservation and soft handling specialists at AIMS and NOAA Ocean Exploration; and underwater robotics startups and research platforms including OpenROV or Sofar Ocean and MBARI.</p>
+          </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>

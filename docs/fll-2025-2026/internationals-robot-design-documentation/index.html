@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internationals Robot Design Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob</title>
+  <meta name="description" content="How Lebob built the Unearthed robot for the 2026 Korea Open. Mission strategy to a 545 point plan, seven attachments, the PyBricks code, a gearbox rebuild.">
+  <link rel="canonical" href="https://lebob.com.au/docs/fll-2025-2026/internationals-robot-design-documentation/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="Internationals Robot Design Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
+  <meta property="og:description" content="How Lebob built the Unearthed robot for the 2026 Korea Open. Mission strategy to a 545 point plan, seven attachments, the PyBricks code, a gearbox rebuild.">
+  <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/internationals-robot-design-documentation/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #F5C518; --accent-bright: #F5C518; --accent-light: rgba(245, 197, 24, 0.1);
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { color: var(--accent-bright) !important; }
+    img { opacity: 0.92; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 32px 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+  </style>
+  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FLL 2025–2026 Unearthed",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Internationals Robot Design Documentation",
+        "item": "https://lebob.com.au/docs/fll-2025-2026/internationals-robot-design-documentation/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Internationals Robot Design Documentation",
+    "name": "Internationals Robot Design Documentation",
+    "description": "How Lebob built the Unearthed robot for the 2026 Korea Open. Mission strategy to a 545 point plan, seven attachments, the PyBricks code, a gearbox rebuild.",
+    "url": "https://lebob.com.au/docs/fll-2025-2026/internationals-robot-design-documentation/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FLL 2025–2026 Unearthed",
+      "url": "https://lebob.com.au/docs/fll-2025-2026/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/fll-2025-2026/internationals-robot-design-documentation.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "Internationals Robot Design Documentation (PDF)",
+      "contentSize": "1.5 MB"
+    },
+    "image": "https://lebob.com.au/img/og-default.png",
+    "datePublished": "2026"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <div class="page-label">Internationals · 2026 Korea Open Invitational</div>
+      <h1 class="page-title">Internationals Robot Design Documentation</h1>
+      <p class="page-desc">Team Lebob #3236, robot design for the 2026 Korea Open Invitational. Mission strategy, the attachment library, the code architecture, and what repeated testing changed.</p>
+      <a href="/files/fll-2025-2026/internationals-robot-design-documentation.pdf" class="doc-download">Download the original PDF <span class="size">1.5 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#identify">Identify</a></li>
+          <li><a href="#design">Design</a></li>
+          <li><a href="#create">Create</a></li>
+          <li><a href="#iterate">Iterate</a></li>
+          <li><a href="#communicate">Communicate</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="identify">Identify</h2>
+
+        <h3>Our mission strategy</h3>
+        <p>Our first stage of mission planning is where we come together as a team to list all components of the robot game and rate each in distance and difficulty, a combination of programming and mechanical difficulty. Each was colour coded, green as easy and red as hard.</p>
+        <p>The purpose of the side column is so we could figure out which zone to launch the robot from to complete that mission, saving time. If a mission was difficult it was usually because either there were many actions or programming steps to complete it, or the mechanism required to complete it needed to be complicated or large.</p>
+        <p>This was important because we could then decide which missions were worth our time during early stages, and in what order. We also took into account how much each mission was worth in points and their proximity. For example, we combined missions near each other into one run.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p003-02.webp" alt="Mission planning table rating every Unearthed mission on distance, side and difficulty" width="372" height="548" loading="lazy" decoding="async">
+          <figcaption>The first stage of mission planning. Every mission in the robot game is listed and rated on distance and difficulty, colour coded green for easy and red for hard, with a side column recording which zone to launch from.</figcaption>
+        </figure>
+
+        <h4>Making the plan</h4>
+        <ol>
+          <li>We looked at the hardest missions first, which included M04: Mission Recovery.</li>
+          <li>To save time, we did M03: Minecart Explorer at the same time, since it was close by and simple.</li>
+          <li>We repeated these steps over all of our runs, grouping missions into 7 runs, eventually coming up with a mostly optimised plan.</li>
+          <li>After repeated testing, we made small modifications to our plan to make it more efficient, resulting in multiple iterations over time.</li>
+        </ol>
+        <h3>Runs</h3>
+        <p>We colour coded our runs based on an array of colours from the rainbow. We also coloured the starting positions of the robot in the home bases to ensure clarity, and in the internationals game plan we added a key.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p004-10.webp" alt="Competition field map with numbered mission models and colour coded robot paths overlaid" width="664" height="378" loading="lazy" decoding="async">
+          <figcaption>Run planning over the Unearthed field. Each run gets its own colour, and the launch position in the home base is coloured to match.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p005-16.webp" alt="Final run plan diagram annotated with a total of 545 points" width="693" height="484" loading="lazy" decoding="async">
+          <figcaption>The final run plan, 545 points. That was the maximum, and it was the goal we set at the start of the season and worked up to.</figcaption>
+        </figure>
+
+        <p>Our plan changed over the different stages of the competition. To get there we tried many different runs and different mechanisms over time, because we wanted to reduce time spent and achieve max points as our final goal. At the start of the season we decided on a simpler, achievable plan below max for regionals, and progressively increased the standard over the season towards internationals.</p>
+        <p>For the international plans we first used version one, which had too many separate launches and after testing proved to take too much time. We then decided on version two, which combined our launches to increase speed. Although we were quite happy with that result, after testing we found some missions were too long, so our third version grouped missions differently to increase speed, for example combining both Angler Artifacts and Careful Recovery.</p>
+        <h3>Coding resources</h3>
+        <p>We used the PyBricks and Python documentation to look up function definitions and different methods of controlling the robot through programs.</p>
+        <ul>
+          <li>For the heavy mission, the robot could not lift the arm since it was very long and was carrying a heavy object. We referred to the PyBricks documentation to see if there were any functions which allowed us to move the motor with more force. We found a <code>dc</code> function, duty cycle, which could send more power, up to 100 per cent, allowing us to complete the mission.</li>
+          <li>When first deciding on the programming language, the PyBricks and Python documentation clearly described what the system could provide for our robot, which allowed us to quickly decide on Python as a team. PyBricks runs directly on the hub rather than relying on a tablet or computer, it provides advanced models like drivebase and gyro drive base, and all our team members knew Python from school so it was not a large skill jump.</li>
+        </ul>
+        <h4>Advanced resources</h4>
+        <p>Another aspect of our team's coding skills comes from participation in an FRC robotics team which uses C++ and Java to program robots. Many of our team members learnt to program in those languages, which provided knowledge that those members could pass on. An example is our knowledge of object-oriented programming, where we use classes in our robot code because we learnt the base concepts through learning Java.</p>
+        <h4>Grok Academy</h4>
+        <p>For learning how to code in Python, many of our team members used Grok Academy in school and in their free time, improving their coding skills and allowing everyone to know how to control the robot.</p>
+        <h3>Building resources</h3>
+        <p>Building resources we used include watching YouTube videos on the missions so we could construct the routes for our mission plan, and using BrickLink Studio and its documentation to CAD our LEGO mechanisms. We also talked to more experienced teams that achieved high points in robot games from our state, such as BrickToThe Future and TidalTumble Robotics.</p>
+        <p>From <em>FLL Robot Keeps Drifting? Here's Why (and How to Fix It)</em> by Next Level Teacher, which explains the code and mechanical failures that cause FLL robots to drift left and right, the main change we implemented was to lower the centre of gravity of the robot and switch the wheels to thicker ones with tyres.</p>
+        <p>From <em>AWESOME One-way Door Designs for your FLL Robot</em> by RoboticsRulesCompetition, we took one-way door mechanisms into the build for Mission 7: Heavy Lifting and Mission 10: Scale Pan. Before, we were using arms that could not hold the objects properly and sometimes let them escape. The one-way gate allowed the objects to enter the mechanisms but not escape.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p009-22.webp" alt="Screenshot of BrickLink Studio with a LEGO gearbox assembly open in the 3D workspace" width="959" height="569" loading="lazy" decoding="async">
+          <figcaption>CAD in BrickLink Studio 3.0. Designing the gearbox in CAD improved clarity between team members and gave us cleaner images for the documentation and presentation.</figcaption>
+        </figure>
+
+        <p>We also asked TidalTumble Robotics, a past FLL team who have achieved high standards in robot games many times, about accurate turning and movement, and requested them to take a look at our code. That helped us improve our own robot by implementing their suggestion of using dynamic acceleration in robot movement.</p>
+            <h2 id="design">Design</h2>
+
+        <h3>Contribution of team members</h3>
+        <p><strong>Brainstorming as a team.</strong> Brainstorming allowed every team member to share their opinions on which missions we should attempt and which ones seemed too difficult to pursue. Even a single suggestion often sparked a chain reaction, with others building on the idea, refining it, or proposing alternatives until we identified the most effective approach.</p>
+        <p><strong>Conflicts as a team.</strong> Even though many of our team members already knew each other well, conflicts came up during discussions, especially during high-pressure situations in the last few weeks leading up to the competition. Instead of avoiding conflict, we allowed everyone to express their opinions and used it as an opportunity to create the best solution for everyone. At the start of the season we resolved issues informally, but as the season continued we built a plan for identifying and resolving them.</p>
+        <div class="doc-table-wrap"><table>
+          <thead><tr><th>Our steps</th><th>Example</th></tr></thead>
+          <tbody><tr><td>Identify the issue.</td><td>Uneven workloads and communication issues.</td></tr><tr><td>Let each member explain their view.</td><td>Some members felt left out, others felt that some members weren't doing any work.</td></tr><tr><td>Focus on team goals over personal preferences.</td><td>Win internationals, so everyone had to contribute.</td></tr><tr><td>Use past experience or data wherever possible.</td><td>Last time we just let them be, which we decided was a bad idea since less work would be done.</td></tr><tr><td>Agree on what to do in the future.</td><td>Making it more clear to all team members about work assignments, and more discussions.</td></tr><tr><td>Reflect on what could be improved.</td><td>More follow-up is needed after discussions, members could forget.</td></tr></tbody>
+        </table></div>
+
+        <p><strong>Prototyping.</strong> Prototyping enabled our team to experiment with a variety of mechanisms and approaches for completing different missions. We evaluated multiple concepts, compared their effectiveness, and refined our ideas based on testing results.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p011-25.webp" alt="Robot attachment being tested on the Unearthed competition mat" width="402" height="226" loading="lazy" decoding="async">
+          <figcaption>Testing mechanisms and making changes through observation. Most design decisions on this robot were settled on the mat, not on paper.</figcaption>
+        </figure>
+
+        <p><strong>GitHub.</strong> We used GitHub as our main platform for managing code and tracking changes. It allowed all team members to work on the code at the same time and know what other team members were doing.</p>
+        <ul>
+          <li>Because everyone can contribute, it allows newer members to learn by doing while still keeping our work organised and version controlled.</li>
+          <li>Experienced team members created a guide so others can understand how to use GitHub effectively, from making commits and pull requests to contributing on the code.</li>
+          <li>All our repositories are public, which means other FLL teams can explore our robot code, website projects and pathfinding experiments for inspiration. They all live in our Lebob-Robotics GitHub organisation.</li>
+          <li>Parallel work lets all members contribute to coding simultaneously, and reverting code lets us go back to past versions through commits.</li>
+        </ul>
+        <p><strong>Discord and Trello.</strong> We used a combination of Discord and Trello to keep all of our team members, parents and mentors informed and organised throughout the season: sharing session schedules, coordinating attendance, communicating plans and changes, posting updates on sponsorships, outreach, notes and goals, and sharing photos and files.</p>
+        <h3>Building skills</h3>
+        <p>Each person created around one attachment used within the runs. Despite not all of them being used, they were considered and tested before deciding not to use them. For each attachment we based the design on three engineering principles:</p>
+        <ul>
+          <li><strong>Simplicity.</strong> We keep our attachments simple but reliable, so they complete missions consistently and are easy to maintain if they break. We focus on passive mechanisms, which complete missions without a motor, reducing the need for gearboxes and freeing the limited motors for other missions in the same run.</li>
+          <li><strong>Efficiency.</strong> Attachments complete missions quickly and in combination with others, to reduce overall run time. Instead of designing mechanisms that handle one task slowly, we group compatible missions together and build attachments that perform multiple actions in a single trip.</li>
+          <li><strong>Reliability.</strong> We build with strong safety margins so attachments operate without missing game items. We use hardstops to physically limit movement and set the mechanism to a determined place found by trial and error, and we rely on sensors built into the hub to keep the heading accurate.</li>
+        </ul>
+        <h4>The gearbox</h4>
+        <p>Holes around gears for easy attachment and a reduction gear ratio so that we can increase torque. Attachments have pins in the bottom so that we can slip them in and out easily. The attachments are driven by two large motors with small 12-tooth gears.</p>
+        <h4>The attachment library</h4>
+        <ul>
+          <li><strong>Attachment 1</strong> is for run 1, completing three missions with three moving parts. The longest trident-like arm grabs the heavy artifact, the cage collects and brings back the boulders, and the last mechanism flips over the plant surface. It does this all in one motion and then returns, bringing the artifact and the boulders back with it.</li>
+          <li><strong>Attachment 2</strong> is solely for the silo mission. The large arm smacks down on the lever to launch out the planted gears with strength. The gear for this attachment is changed so there are fewer but bigger teeth, allowing a larger torque to be created.</li>
+          <li><strong>Attachment 3</strong> does two missions with two arms. The right arm knocks down the bucket and latches onto the back of the marketplace to lift it after the robot moves back. The left arm rotates on an axis so it can catch onto the scalepan to pull it out.</li>
+          <li><strong>Attachment 4</strong> uses two yellow prongs to precisely grab the artifact from under the mineshaft rails, while the other arm completes the minecart mission by raising the rails.</li>
+          <li><strong>Attachment 5</strong> is used for run 5. The yellow arm picks up the artifact through the grey ring, and the other two arms push and rotate the other blocks of land.</li>
+          <li><strong>Attachment 6</strong> is for run 6, completing two missions simultaneously. The longest arm carries gears at the end to reach over the shipwreck, jamming into the gears of angler artifacts and turning them. The arms at the bottom complete the shipwreck mission passively, and a passive mechanism releases the flag into the mission on return.</li>
+          <li><strong>Attachment 7</strong> is for run 7, completing three missions. The right arm does the statue and picks up the opposing team's minecart, placing it in the forum. The left arm places one of the site markings down, while a passive second arm is released to place another. The collection at the front holds all of the objects placed in the forum.</li>
+        </ul>
+        <p><strong>The fake robot.</strong> We created a skeleton bot for making the mechanisms. It let us code on the real robot with the mechanisms we already had, while making improvements or new mechanisms for other missions at the same time.</p>
+            <h2 id="create">Create</h2>
+
+        <h3>Innovative code and sensor use</h3>
+        <p>We based our code on programming principles to ensure our code is robust, readable, maintainable and modular.</p>
+        <ul>
+          <li><strong>Robust.</strong> Ensuring the code is impossible to break or crash.</li>
+          <li><strong>Readable.</strong> Making sure all team members can read our code, achieved through using classes to group drivebase functions.</li>
+          <li><strong>Maintainable.</strong> Detailed comments and functions used all over the code to keep it easy to maintain.</li>
+          <li><strong>Modular.</strong> Multiple files in our codebase and many modules imported, to keep the code short and re-use existing code.</li>
+        </ul>
+        <p><strong>Using PID.</strong> PID stands for proportional integral derivative, used to create smooth and accurate movements of arms and wheels. Because we used PyBricks, we can set the drive base to use the built-in gyro in the Spike to align our movement for better accuracy, as the module already implements PID. We also created our own PID controller in our nationals code for more accurate turning, but found that the in-built one was sufficient.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p016-39.webp" alt="Screenshot of the robot PID controller source code" width="1181" height="537" loading="lazy" decoding="async">
+          <figcaption>Our PID code. It runs inside the drive and turn functions so the robot holds an accurate heading.</figcaption>
+        </figure>
+
+        <p><strong>Resetting the angle of the mechanism motors.</strong> We made a function called move until stalled, which moves the motor at a certain speed until it is unable to move physically at all. This lets us align the motor to a certain surface for better accuracy, and means people do not need to set the mechanism to the right position in the pit stops.</p>
+        <p><strong>Automatically updating menu using decorators.</strong> We used a decorator to automatically add new run functions to our robot menu, which saves time when coding runs.</p>
+        <p><strong>Our own mission selector.</strong> We created our own menu in code to have the features that we wanted, which also let us change and adapt it however we wanted.</p>
+        <p><strong>Mission autosave.</strong> This uses the hub's non-volatile storage to save the next mission index before a run begins, so the robot is ready to run the next mission if the code ends forcefully. It translates the mission number to binary and stores it on the hub, which saves time because technicians do not need to reselect it from the mission menu.</p>
+        <h3>How our code works</h3>
+        <p>This system uses object-oriented programming to keep the robot's code organised and efficient. A <code>LebobDriveBase</code> class manages motors, drive settings, gyrometer and arm movements. The <code>MissionControl</code> class provides a user interface on the hub, letting users select missions during matches, and it also manages animations, gyro resets, drive profiles and timing. Missions are added with an <code>@mission()</code> decorator, and each mission function leverages Robot helpers for reliable driving, turning and arm control.</p>
+        <h3>The two attachments we think are most innovative</h3>
+        <p><strong>Attachment one</strong> is innovative because it uses a single gearbox to power three separate arms at the same time. Each arm is designed to move in sync with the others, allowing the robot to complete multiple mission actions in one motion. Combining three mechanisms into one coordinated system increased efficiency on the field. It also supports the mission strategy we set out at the start, where we save time by doing missions at the same time.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p017-42.webp" alt="Photograph of attachment one mounted on the robot above the competition mat" width="276" height="487" loading="lazy" decoding="async">
+          <figcaption>Attachment one. One gearbox, three arms, three mission actions in a single motion.</figcaption>
+        </figure>
+
+        <p><strong>Attachment six</strong> uses two separate gearboxes to perform a single coordinated task. One gearbox controls the vertical movement of the main arm, lifting it up and down, while the second rotates a set of gears through a long axle to trigger additional actions. On the right side, a passive arm automatically pulls the sand back as the robot reverses, requiring no extra motors. At the front, another passive element drops the flag into the ship as the robot drives forward, and the left side extends outward to push the ship into position.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p018-43.webp" alt="Photograph of attachment six with its long geared arm and passive side mechanisms" width="980" height="668" loading="lazy" decoding="async">
+          <figcaption>Attachment six. Two gearboxes plus three passive elements, completing multiple mission steps in one smooth sequence.</figcaption>
+        </figure>
+
+            <h2 id="iterate">Iterate</h2>
+
+        <h3>Repeated testing of robot and code</h3>
+        <p><strong>Logging.</strong> We created logs for most runs we tested on our robot, describing what happened and how we fixed it in real time after every test.</p>
+        <p><strong>GitHub commits.</strong> We used the commit message system to track changes and allow collaboration, so everyone could contribute to code. We ensured all team members followed a naming convention for consistency, and used multiple branches for working on different sections of the code. Over time we accumulated many commits, which let all team members see how our code changed and backtrack to old code if newer code broke.</p>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p019-44.webp" alt="Screenshot of the GitHub commit history for the robot code repository" width="1360" height="562" loading="lazy" decoding="async">
+          <figcaption>Our commit history, 500 or more commits deep. It doubles as the progressive testing record for the code.</figcaption>
+        </figure>
+
+        <h3>Improvements based on testing</h3>
+        <p><strong>Base robot.</strong> We tested several iterations, trying different friction-reducing supports like a plastic bulb and a caster ball to see which gave the most consistent and stable movement without swerving. Our final design used two medium motors for the wheels and two non-friction wheels for balance, with two large motors and gears powering the attachments. We kept the centre of gravity low and avoided hanging cables to make the robot more reliable during runs.</p>
+        <p><strong>Gearbox.</strong> Something we noticed after our regional competition was that changing the attachments on our gearbox was extremely tedious, and it was limiting the points we could get. Most of our time went into changing the attachments rather than the robot getting points. We did not have time before nationals to change the gearbox, because changing it would mean restarting the robot and its code. After the competition we developed different versions against four criteria:</p>
+        <ul>
+          <li><strong>Perpendicular transmission.</strong> Arms should be able to rotate horizontally.</li>
+          <li><strong>Vertical transmission.</strong> The robot should be able to rotate arms vertically.</li>
+          <li><strong>Reliable gear meshing.</strong> The gears should reliably mesh and should not skip under large loads.</li>
+          <li><strong>Easy attachment switching.</strong> The pairs of gearboxes should slide on and off without the need for additional locks.</li>
+        </ul>
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p021-47.webp" alt="CAD render of the new gearbox design" width="404" height="308" loading="lazy" decoding="async">
+          <figcaption>The new gearbox. It was rebuilt against four criteria, and the one that mattered most was that the pairs should slide on and off without additional locks.</figcaption>
+        </figure>
+
+        <figure class="doc-figure">
+          <img src="/img/docs/internationals-robot-design-documentation/p021-48.webp" alt="CAD render of the old gearbox design it replaced" width="524" height="319" loading="lazy" decoding="async">
+          <figcaption>The old gearbox for comparison. Swapping attachments on this one was tedious enough that most of our pit time went into it rather than into scoring.</figcaption>
+        </figure>
+
+        <p><strong>Code.</strong> To ensure our runs were consistent, we constantly improved our code and mechanisms after running them repeatedly. It was very slow, but we ended up with consistent runs which can be run multiple times without failing.</p>
+            <h2 id="communicate">Communicate</h2>
+
+        <blockquote>It's about the friends we made along the way.<cite>Kingsley</cite></blockquote>
+        <p>This was what we learnt in FLL: to achieve a lot, but also know that we cannot be perfect, and we just need to do our best.</p>
+        <ul>
+          <li><strong>Working together.</strong> As a team we learned how to support each other and stay connected, even when things got tough, like physical sicknesses or power outages.</li>
+          <li><strong>Division of work.</strong> Splitting up tasks works much better than having too many people crowd around one job. It kept us organised, efficient and a lot less stressed.</li>
+          <li><strong>Gracious professionalism.</strong> Throughout the season we practised GP by helping rookie teams in our competitions and in our school club.</li>
+          <li><strong>Healthy work environment.</strong> We focused on making a space where everyone felt comfortable, supported and included.</li>
+          <li><strong>No big changes.</strong> Last year we rebuilt the whole robot before nationals and ran out of time to code it properly, which is why we lost. This year we adjusted the path instead, which meant far less recoding.</li>
+          <li><strong>Documentation.</strong> In the past we did not keep proper records of our testing or progress. This season we kept a real logbook, which gave us clear proof of what we tried, what worked, and how we improved.</li>
+          <li><strong>Communication.</strong> Communication used to be messy, but using both WhatsApp and Discord made sharing updates, photos and announcements far more organised.</li>
+          <li><strong>Organisation.</strong> Trello helped us keep track of tasks and see what needed to be done.</li>
+        </ul>
+        <h3>Comments from the team</h3>
+        <p><strong>Sean.</strong> I am proud of how good our robot turned out, considering the short amount of time we had to build it. We achieved an amazing score. One thing I learnt throughout this journey was PID, creating my own custom PID controller for robot code, but we didn't use it.</p>
+        <p><strong>Andre.</strong> I really appreciated our team's effort this semester, everyone put their best work into this. I learned FEA and how it can simulate stress on designs to point out possible issues, such as weak points prone to breakage.</p>
+        <p><strong>Kingsley.</strong> I am very proud of making the robot and some of its attachments. Our teammates collaborated and worked very well together as well as listening and interpreting different things. Over the season I improved at CAD, especially while doing it for the innovations project.</p>
+        <p><strong>Chris.</strong> I am very happy to work on the robot this year, and having the chance to work on the robot allowed me to expand on my existing knowledge and abilities of making mechanisms.</p>
+        <p><strong>Leven.</strong> I am glad that I was able to gain this experience, as it was only my second year of robotics, being able to contribute ideas to all aspects of our project, designing a mechanism, working on documents, and being on the board operating the robot in nationals.</p>
+        <p><strong>Oliver.</strong> I think our team collaborated very well, and we all cooperated to complete the mission to the best of our ability. I learned how to express ideas simply and I can also use this skill in presentations outside of school.</p>
+        <p><strong>Aaron.</strong> I think that my team helped me understand the code that they wrote, told me what errors to fix, and collaborated well across all categories in general. The group chats made it easy to be organised and to communicate. I learned how to CAD in Onshape and how to design complex mechanisms to do multiple things at once.</p>
+        <p><strong>Subesh.</strong> I believe that our team worked cohesively throughout this semester, despite setbacks with delays in receiving the mission models. I learnt how to CAD using Onshape so that I can use this skill in engineering and design outside of FLL, like school and FRC.</p>
+          </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · 93 Beauchamp Loop, Perth WA</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>
