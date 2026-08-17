@@ -391,6 +391,13 @@
     }
     .project-card:hover .project-link { gap: 8px; }
 
+    .project-card-links {
+      display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 12px;
+    }
+    .project-card-links .project-link { margin-top: 0; }
+    .project-link--alt { color: var(--muted); }
+    .project-link--alt:hover { color: var(--accent); }
+
     /* ─── TECH STACK ─── */
     .stack-grid {
       display: grid;
@@ -764,13 +771,16 @@
           </div>
           <span class="project-link">Robot docs →</span>
         </a>
-        <a href="https://github.com/AndreNijman/softsense" target="_blank" rel="noopener" class="project-card">
+        <div class="project-card">
           <div>
             <h3>SoftSense Manipulator</h3>
             <p>Our self-sensing soft gripper for ROV manipulation, prize winner at the 2026 Korea Open. Fin Ray TPU fingers, a flooded gear drive, and grip force read from the motor's current. The CAD, FEA, firmware and docs are all public.</p>
           </div>
-          <span class="project-link">github.com →</span>
-        </a>
+          <div class="project-card-links">
+            <a href="/projects/softsense/" class="project-link">Read the writeup →</a>
+            <a href="https://github.com/AndreNijman/softsense" target="_blank" rel="noopener" class="project-link project-link--alt">github.com →</a>
+          </div>
+        </div>
         <a href="/docs/" class="project-card">
           <div>
             <h3>Engineering Notebook</h3>
