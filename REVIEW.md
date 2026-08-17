@@ -148,3 +148,59 @@ at all, because none is evidenced.
 
 **Action:** supply the regionals, nationals and Korea Open competition dates. The
 results table on `/about/` cannot be complete without them.
+
+## Phase 4 — /about/
+
+### FTC team number is not recorded anywhere
+
+There is no occurrence of an FTC team number in the repository or in any of the
+eight season PDFs, and no occurrence of the strings "FTC" or "Tech Challenge" in
+the PDFs at all. The programmes table on `/about/` therefore reads:
+
+| Programme | Team number |
+| --- | --- |
+| FIRST LEGO League (FLL) | 3236 |
+| FIRST Tech Challenge (FTC) | To be issued |
+
+**Action:** supply the FTC number and the table row can be completed. It is also
+worth adding to the `identifier` array in the `AboutPage` JSON-LD, next to the
+FLL number and the ABN, so the two programme identities are machine readable.
+
+### Founding year is not evidenced
+
+No document states when the team was founded. What is evidenced is only relative:
+the nationals robot design journal has a "How we improved from last year" section
+describing a nationals appearance in the previous season, and Leven Shi writes
+that 2025/26 was "only my second year of robotics". That establishes at least one
+prior season but not a founding year, so no founding year is stated on the page.
+
+**Action:** supply the founding year.
+
+### Two results rows are incomplete
+
+The results table carries three rows and five of the fifteen cells read
+"Not recorded", because the source documents do not give competition dates or
+locations for the regional and national events. See the Phase 3 dates note above.
+
+The regional row records "Progressed to nationals" rather than a placing, because
+no placing at regionals is stated anywhere. The team demonstrably went on to
+nationals, so the progression itself is safe to state; the finishing position is not.
+
+**Action:** supply the event names, locations, dates and placings for regionals and
+nationals. This is the single highest-value correction in this file. A complete
+results table is exactly the kind of content that gets quoted back by search and
+answer engines, and right now three fifths of it is missing.
+
+### Mentor names
+
+`Jade & Kaelie` are named as mentors on the home page crew grid and are carried
+through to `/about/` on that basis. No surname appears anywhere, and no mentor is
+named in any PDF.
+
+**Action:** confirm whether full names should be published.
+
+### The SoftSense link is a forward reference
+
+`/about/` links twice to `/projects/softsense/`, which is created in the next
+phase. Between the Phase 4 and Phase 5 deploys those two links resolve to the 404
+page. This is by design in the build order and is resolved by the Phase 5 merge.
