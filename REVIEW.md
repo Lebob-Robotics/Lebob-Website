@@ -146,13 +146,24 @@ The competition dates are not in the PDFs, so they were researched externally an
 cross-checked against the team's own logs. All three are now stated on the site as
 plain fact, and the hedging language has been removed everywhere.
 
-**Regionals: Sunday 30 November 2025, Perth.**
-The nationals log opens with "1st of December (one day after regionals) - Monday".
-1 December 2025 was a Monday, so the regional was Sunday 30 November 2025. This is
-also inside the official FIRST LEGO League window for UNEARTHED regional tournaments,
-which opened on 29 November 2025. The specific venue is still unknown; WA regionals in
-that window run at Bunbury, Aquinas College, Woodvale and Darling Range, so the table
-says "Perth, Western Australia" rather than naming one.
+**Regionals: Sunday 30 November 2025, Aquinas College, Salter Point.**
+Venue confirmed by Andre on 2026-08-17, and corroborated from three directions. The
+nationals log opens with "1st of December (one day after regionals) - Monday", and
+1 December 2025 was a Monday, which puts the regional on Sunday 30 November 2025.
+Aquinas College Perth posted "What an incredible day at the 2025 FIRST LEGO League,
+proudly hosted by Aquinas on Sunday". A visiting school, Kirwan State High, described
+"the First Lego League Regional Tournament at Aquinas College" on the same weekend. And
+the date sits inside the official FIRST LEGO League window for UNEARTHED regional
+tournaments, which opened 29 November 2025.
+
+One deliberate restraint: FIRST Australia lists the Aquinas College event under the name
+**Salter Point Regional**, but that naming is confirmed for the 2026 running of it, not
+the 2025 one. The site therefore says "FIRST LEGO League regional tournament" at
+"Aquinas College, Salter Point, Perth", which is fully verified and just as specific,
+rather than asserting an event name for a year it has not been checked against.
+
+**Action, one minute of work:** if the 2025 event was also called the Salter Point
+Regional, say so and the event name can be used directly.
 
 **Nationals: Saturday 13 December 2025, Curtin University, Bentley.**
 Two independent Curtin University posts state it: "The FIRST Lego League WA national
@@ -236,7 +247,7 @@ regional is stated anywhere. The advancement is a fact, so it is safe to state; 
 position is not, so it is not claimed.
 
 **Action, minor:** if you finished first or second at the regional, say so and that
-cell can be upgraded. Also worth naming the regional venue if you remember it.
+cell can be upgraded. The regional venue is now confirmed as Aquinas College.
 
 ### The award name in Jeonju is the last real gap
 
