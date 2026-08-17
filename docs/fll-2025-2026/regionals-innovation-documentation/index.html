@@ -11,7 +11,7 @@
   <meta property="og:title" content="Regionals Innovation Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
   <meta property="og:description" content="Lebob&#x27;s regionals innovation write up for FLL Unearthed. The CTD 4000 manipulator concept, the underwater archaeology problem, research and bench results.">
   <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/">
-  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_AU">
@@ -56,6 +56,16 @@
     .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
 
     .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .crumbs {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px; list-style: none;
+    }
+    .crumbs a { color: var(--muted); transition: color 0.15s; }
+    .crumbs a:hover { color: var(--accent); }
+    .crumbs li::after { content: '/'; margin-left: 8px; color: var(--border); }
+    .crumbs li:last-child::after { content: ''; }
+    .crumbs [aria-current] { color: var(--fg); }
     .back-link {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
@@ -189,6 +199,19 @@
     @media (max-width: 480px) { .container { padding: 0 16px; } }
 
     /* ─── ARTICLE (generated document pages) ─── */
+    .doc-pager {
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .doc-pager a {
+      max-width: 46%; font-size: 15px; line-height: 1.45; color: var(--fg-dark);
+    }
+    .doc-pager a:hover { color: var(--accent); }
+    .doc-pager .lbl {
+      display: block; font-family: var(--font-mono); font-size: 12px;
+      font-weight: 500; color: var(--muted); margin-bottom: 4px;
+    }
+    .doc-pager .next { text-align: right; margin-left: auto; }
     .doc-article { max-width: 780px; }
     .doc-article h2 {
       font-family: var(--font-display);
@@ -287,7 +310,12 @@
       .doc-article h2 { margin-top: 36px; }
     }
   </style>
+  <link rel="next" href="https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1b1e">
   <link rel="stylesheet" href="/polish.css">
   <script src="/polish.js" defer></script>
   <script type="application/ld+json">
@@ -326,6 +354,7 @@
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
+    "dateModified": "2026-08-17",
     "headline": "Regionals Innovation Documentation",
     "name": "Regionals Innovation Documentation",
     "description": "Lebob's regionals innovation write up for FLL Unearthed. The CTD 4000 manipulator concept, the underwater archaeology problem, research and bench results.",
@@ -353,7 +382,7 @@
       "name": "Regionals Innovation Documentation (PDF)",
       "contentSize": "1.3 MB"
     },
-    "image": "https://lebob.com.au/img/og-default.png"
+    "image": "https://lebob.com.au/img/og-default.jpg"
   }
   </script>
 </head>
@@ -382,7 +411,9 @@
 
   <header class="page-header">
     <div class="container">
-      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <nav aria-label="Breadcrumb">
+        <ol class="crumbs"><li><a href="/">Home</a></li><li><a href="/docs/">Docs</a></li><li><a href="/docs/fll-2025-2026/">FLL 2025–26</a></li><li><span aria-current="page">Regionals Innovation Documentation</span></li></ol>
+      </nav>
       <div class="page-label">Regionals · FLL Unearthed 2025</div>
       <h1 class="page-title">Regionals Innovation Documentation</h1>
       <p class="page-desc">Our first innovation write up of the Unearthed season. It sets out the underwater archaeology problem, the research behind it, and the Claw Testing Design 4000 concept we took to regionals.</p>
@@ -523,6 +554,9 @@
         <p>On durability, the script notes that the Schilling Titan 4 has been tested under full load for 250,000 underwater cycles with minimal wear, and that our prototype should have a lifespan of around 7 years with major part replacements every 2 years.</p>
         <p>The two customer parts state the use case plainly. One is an archaeologist recovering artefacts from shipwrecks who had trouble picking up loose rocks from the seabed with currents making positioning difficult. The other is a scientist who uses ROV manipulator arms to pick up small animals such as coral, and runs the risk of damaging or killing them because there is no direct form of pressure sensor to show how much force is being applied.</p>
           </div>
+      <nav class="doc-pager" aria-label="Season documents">
+        <a class="next" href="/docs/fll-2025-2026/nationals-general-documentation/"><span class="lbl">Next &rarr;</span>Nationals General Documentation</a>
+      </nav>
     </div>
   </section>
 

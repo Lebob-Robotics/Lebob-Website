@@ -11,7 +11,7 @@
   <meta property="og:title" content="About Lebob &mdash; FLL Team 3236, Perth, Western Australia">
   <meta property="og:description" content="Lebob is a school robotics team in Perth, Western Australia. FIRST LEGO League team 3236 and a FIRST Tech Challenge team. Team members, results and contact.">
   <meta property="og:url" content="https://lebob.com.au/about/">
-  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_AU">
@@ -56,6 +56,16 @@
     .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
 
     .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .crumbs {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px; list-style: none;
+    }
+    .crumbs a { color: var(--muted); transition: color 0.15s; }
+    .crumbs a:hover { color: var(--accent); }
+    .crumbs li::after { content: '/'; margin-left: 8px; color: var(--border); }
+    .crumbs li:last-child::after { content: ''; }
+    .crumbs [aria-current] { color: var(--fg); }
     .back-link {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
@@ -301,7 +311,11 @@
       .doc-article h2 { margin-top: 36px; }
     }
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1b1e">
   <link rel="stylesheet" href="/polish.css">
   <script src="/polish.js" defer></script>
   <script type="application/ld+json">
@@ -334,7 +348,7 @@
     "description": "Lebob is a school robotics team from Perth, Western Australia. We compete in FIRST LEGO League as team 3236 and in FIRST Tech Challenge. In the 2025/26 Unearthed season we were Western Australian National Champions and competed at the 2026 Korea Open Invitational.",
     "primaryImageOfPage": {
       "@type": "ImageObject",
-      "contentUrl": "https://lebob.com.au/img/og-default.png",
+      "contentUrl": "https://lebob.com.au/img/og-default.jpg",
       "width": 1200,
       "height": 630
     },
@@ -484,6 +498,94 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Lebob?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lebob is a school robotics team from Perth, Western Australia, made up of eight students from Perth Modern School. The team competes in FIRST LEGO League and FIRST Tech Challenge, building competition robots and running an engineering research project alongside the robot each season."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Lebob based?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lebob is based in Perth, Western Australia. The team is drawn from Perth Modern School and competes at Western Australian events, including the regional tournament at Aquinas College in Salter Point and the National Championship West at Curtin University's Bentley campus."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are Lebob's team numbers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lebob is FIRST LEGO League team 3236 and FIRST Tech Challenge team 37323. FIRST issues a separate number for each programme. At the 2026 Korea Open Invitational the organisers also allocated the entry code KOI34, which applied to that event only and is not a team number."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What did Lebob win in the 2025/26 season?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lebob won the FIRST LEGO League National Championship West at Curtin University on 13 December 2025, taking the Western Australian national title in the UNEARTHED season. That result took the team to the Korea Open Invitational in Jeonju, South Korea, where its innovation project SoftSense won a prize."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is SoftSense?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SoftSense is Lebob's innovation project: a 3D printed soft gripper that bolts onto an existing ROV manipulator arm so archaeologists can lift fragile artefacts off the seabed without crushing them. It has no force sensor. It reads grip force from the actuator's own motor current instead."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does SoftSense measure grip force without a sensor?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SoftSense reads the actuator's motor current, multiplies by the torque constant, and traces that back through the drivetrain to recover an estimated tip force. That removes every wire and connector from the fingertip, which is the part hardest to seal underwater, and the same channel also protects the printed gears."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many people are in the team?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Eight students and two mentors. The students are Kingsley Wong, Sean Chan, Oliver Liu, Leven Shi, Subesh Sukumaran, Yuxin Chris Wang, Aaron Zhang and Andre Nijman. Jade and Kaelie mentor and coach the team, holding observer roles rather than voting roles in team decisions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Lebob's work public?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. All eight competition documents from the 2025/26 season are published in full on this site alongside the original PDFs, the robot code and the SoftSense CAD, simulation and firmware are open source on GitHub, and the repositories sit in the public Lebob-Robotics organisation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which programmes and season does Lebob compete in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lebob competes in FIRST LEGO League Challenge and FIRST Tech Challenge. The 2025/26 FIRST LEGO League season was UNEARTHED, themed on archaeology, which is why the team's innovation project addresses recovering fragile artefacts from shipwrecks and the seafloor."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I sponsor Lebob?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Email team@lebob.com.au. There are four sponsorship tiers starting from $500, plus in kind support such as equipment, materials and professional mentorship, which is recognised at the tier matching its value. Every sponsorship is invoiced, so it goes through your books as a marketing expense."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <nav class="nav">
@@ -510,6 +612,9 @@
 
   <header class="page-header">
     <div class="container">
+      <nav aria-label="Breadcrumb">
+        <ol class="crumbs"><li><a href="/">Home</a></li><li><span aria-current="page">About</span></li></ol>
+      </nav>
       <div class="page-label">About &middot; who we are</div>
       <h1 class="page-title">About Lebob.</h1>
       <p class="page-desc">Lebob is a school robotics team from Perth, Western Australia. We compete in FIRST LEGO League as team 3236 and in FIRST Tech Challenge. In the 2025/26 Unearthed season we were Western Australian National Champions and competed at the 2026 Korea Open Invitational.</p>
@@ -607,6 +712,29 @@
         <a href="/projects/softsense/">Read the full write up</a>, or go straight to the
         <a href="/docs/fll-2025-2026/internationals-innovation-documentation/">engineering
         documentation</a>.</p>
+
+        <h2 id="faq">Common questions</h2>
+        <h3>What is Lebob?</h3>
+        <p>Lebob is a school robotics team from Perth, Western Australia, made up of eight students from Perth Modern School. The team competes in FIRST LEGO League and FIRST Tech Challenge, building competition robots and running an engineering research project alongside the robot each season.</p>
+        <h3>Where is Lebob based?</h3>
+        <p>Lebob is based in Perth, Western Australia. The team is drawn from Perth Modern School and competes at Western Australian events, including the regional tournament at Aquinas College in Salter Point and the National Championship West at Curtin University's Bentley campus.</p>
+        <h3>What are Lebob's team numbers?</h3>
+        <p>Lebob is FIRST LEGO League team 3236 and FIRST Tech Challenge team 37323. FIRST issues a separate number for each programme. At the 2026 Korea Open Invitational the organisers also allocated the entry code KOI34, which applied to that event only and is not a team number.</p>
+        <h3>What did Lebob win in the 2025/26 season?</h3>
+        <p>Lebob won the FIRST LEGO League National Championship West at Curtin University on 13 December 2025, taking the Western Australian national title in the UNEARTHED season. That result took the team to the Korea Open Invitational in Jeonju, South Korea, where its innovation project SoftSense won a prize.</p>
+        <h3>What is SoftSense?</h3>
+        <p>SoftSense is Lebob's innovation project: a 3D printed soft gripper that bolts onto an existing ROV manipulator arm so archaeologists can lift fragile artefacts off the seabed without crushing them. It has no force sensor. It reads grip force from the actuator's own motor current instead.</p>
+        <h3>How does SoftSense measure grip force without a sensor?</h3>
+        <p>SoftSense reads the actuator's motor current, multiplies by the torque constant, and traces that back through the drivetrain to recover an estimated tip force. That removes every wire and connector from the fingertip, which is the part hardest to seal underwater, and the same channel also protects the printed gears.</p>
+        <h3>How many people are in the team?</h3>
+        <p>Eight students and two mentors. The students are Kingsley Wong, Sean Chan, Oliver Liu, Leven Shi, Subesh Sukumaran, Yuxin Chris Wang, Aaron Zhang and Andre Nijman. Jade and Kaelie mentor and coach the team, holding observer roles rather than voting roles in team decisions.</p>
+        <h3>Is Lebob's work public?</h3>
+        <p>Yes. All eight competition documents from the 2025/26 season are published in full on this site alongside the original PDFs, the robot code and the SoftSense CAD, simulation and firmware are open source on GitHub, and the repositories sit in the public Lebob-Robotics organisation.</p>
+        <h3>Which programmes and season does Lebob compete in?</h3>
+        <p>Lebob competes in FIRST LEGO League Challenge and FIRST Tech Challenge. The 2025/26 FIRST LEGO League season was UNEARTHED, themed on archaeology, which is why the team's innovation project addresses recovering fragile artefacts from shipwrecks and the seafloor.</p>
+        <h3>How do I sponsor Lebob?</h3>
+        <p>Email team@lebob.com.au. There are four sponsorship tiers starting from $500, plus in kind support such as equipment, materials and professional mentorship, which is recognised at the tier matching its value. Every sponsorship is invoiced, so it goes through your books as a marketing expense.</p>
+
 
         <h2 id="contact">Contact</h2>
         <p>Email <a href="mailto:team@lebob.com.au">team@lebob.com.au</a>.</p>

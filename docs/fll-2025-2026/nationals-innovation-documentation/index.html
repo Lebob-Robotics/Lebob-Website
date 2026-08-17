@@ -11,7 +11,7 @@
   <meta property="og:title" content="Nationals Innovation Documentation &mdash; FLL 2025&ndash;2026 &mdash; Lebob">
   <meta property="og:description" content="The Lebob nationals innovation write up: four failure modes of industrial ROV grippers, the four part solution, FEA notes, bench results and expert feedback.">
   <meta property="og:url" content="https://lebob.com.au/docs/fll-2025-2026/nationals-innovation-documentation/">
-  <meta property="og:image" content="https://lebob.com.au/img/og-default.png">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="en_AU">
@@ -56,6 +56,16 @@
     .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
 
     .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .crumbs {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px; list-style: none;
+    }
+    .crumbs a { color: var(--muted); transition: color 0.15s; }
+    .crumbs a:hover { color: var(--accent); }
+    .crumbs li::after { content: '/'; margin-left: 8px; color: var(--border); }
+    .crumbs li:last-child::after { content: ''; }
+    .crumbs [aria-current] { color: var(--fg); }
     .back-link {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
@@ -189,6 +199,19 @@
     @media (max-width: 480px) { .container { padding: 0 16px; } }
 
     /* ─── ARTICLE (generated document pages) ─── */
+    .doc-pager {
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .doc-pager a {
+      max-width: 46%; font-size: 15px; line-height: 1.45; color: var(--fg-dark);
+    }
+    .doc-pager a:hover { color: var(--accent); }
+    .doc-pager .lbl {
+      display: block; font-family: var(--font-mono); font-size: 12px;
+      font-weight: 500; color: var(--muted); margin-bottom: 4px;
+    }
+    .doc-pager .next { text-align: right; margin-left: auto; }
     .doc-article { max-width: 780px; }
     .doc-article h2 {
       font-family: var(--font-display);
@@ -287,7 +310,13 @@
       .doc-article h2 { margin-top: 36px; }
     }
   </style>
+  <link rel="prev" href="https://lebob.com.au/docs/fll-2025-2026/nationals-robot-design-journal/">
+  <link rel="next" href="https://lebob.com.au/docs/fll-2025-2026/internationals-general-documentation/">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1b1e">
   <link rel="stylesheet" href="/polish.css">
   <script src="/polish.js" defer></script>
   <script type="application/ld+json">
@@ -326,6 +355,7 @@
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
+    "dateModified": "2026-08-17",
     "headline": "Nationals Innovation Documentation",
     "name": "Nationals Innovation Documentation",
     "description": "The Lebob nationals innovation write up: four failure modes of industrial ROV grippers, the four part solution, FEA notes, bench results and expert feedback.",
@@ -353,7 +383,7 @@
       "name": "Nationals Innovation Documentation (PDF)",
       "contentSize": "2.4 MB"
     },
-    "image": "https://lebob.com.au/img/og-default.png"
+    "image": "https://lebob.com.au/img/og-default.jpg"
   }
   </script>
 </head>
@@ -382,7 +412,9 @@
 
   <header class="page-header">
     <div class="container">
-      <a href="/docs/fll-2025-2026/" class="back-link">&larr; FLL 2025&ndash;2026 season</a>
+      <nav aria-label="Breadcrumb">
+        <ol class="crumbs"><li><a href="/">Home</a></li><li><a href="/docs/">Docs</a></li><li><a href="/docs/fll-2025-2026/">FLL 2025–26</a></li><li><span aria-current="page">Nationals Innovation Documentation</span></li></ol>
+      </nav>
       <div class="page-label">Nationals · FLL Unearthed 2025</div>
       <h1 class="page-title">Nationals Innovation Documentation</h1>
       <p class="page-desc">The nationals revision of our innovation project. The problem is sharpened into four specific failure modes, the solution grows a fourth part, and expert feedback moves the design off metal and onto printed plastic.</p>
@@ -480,6 +512,10 @@
         <p>Experts emailed: Dr John McCarthy, Associate Professor Jonathan Benjamin, Chelsea Wiseman, Michael O'Leary (UWA), Jerem Leach, Ingrid Ward, Hiro Yoshida. Institutions emailed: the Australasian Institute for Maritime Archaeology, the Minderoo UWA Deep Sea Research Centre and the Western Australian Museum.</p>
         <p>After regionals we mapped a wider list of targets by category: maritime archaeologists at UWA and the WA Museum Maritime Archaeology department; the underwater robotics and ROV industry including Fugro Australia, Woodside Energy, IMCA and Schilling Robotics or TechnipFMC; engineering and materials experts at UWA Engineering, Curtin University's Underwater Sensing and Robotics Lab and CSIRO Oceans and Atmosphere; marine conservation and soft handling specialists at AIMS and NOAA Ocean Exploration; and underwater robotics startups and research platforms including OpenROV or Sofar Ocean and MBARI.</p>
           </div>
+      <nav class="doc-pager" aria-label="Season documents">
+        <a class="prev" href="/docs/fll-2025-2026/nationals-robot-design-journal/"><span class="lbl">&larr; Previous</span>Nationals Robot Design Journal</a>
+        <a class="next" href="/docs/fll-2025-2026/internationals-general-documentation/"><span class="lbl">Next &rarr;</span>Internationals General Documentation</a>
+      </nav>
     </div>
   </section>
 
