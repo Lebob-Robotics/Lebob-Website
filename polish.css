@@ -129,10 +129,12 @@
 }
 .cta-btn:active { transform: scale(0.97); }
 
-.contact-email {
+.contact-email,
+.tier-max-cta {
   transition: background-color 140ms ease, color 140ms ease, transform 160ms var(--ease-out);
 }
-.contact-email:active { transform: scale(0.97); }
+.contact-email:active,
+.tier-max-cta:active { transform: scale(0.97); }
 
 .doc-ext-link {
   transition: border-color 140ms ease, background-color 140ms ease,
@@ -160,6 +162,7 @@
 .highlight-card,
 .project-card,
 .tier-card,
+.tier-max,
 .where-card,
 .doc-item,
 .sponsor-card,
@@ -292,6 +295,7 @@
   .js-reveal .crew-card,
   .js-reveal .project-card,
   .js-reveal .tier-card,
+  .js-reveal .tier-max,
   .js-reveal .where-card,
   .js-reveal .doc-item,
   .js-reveal .masonry-item,
@@ -333,6 +337,7 @@
   .nav-cta:active,
   .cta-btn:active,
   .contact-email:active,
+  .tier-max-cta:active,
   .doc-ext-link:active,
   .nav-hamburger:active,
   .lightbox-close:active,
