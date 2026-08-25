@@ -1,10 +1,14 @@
 # Lebob
 
-> Lebob is a school robotics team from Perth, Western Australia. It competes in
-> FIRST LEGO League as team 3236 and in FIRST Tech Challenge as team 37323. In the
-> 2025/26 UNEARTHED season it won the FIRST LEGO League National Championship West
-> at Curtin University and went on to the Korea Open Invitational in Jeonju, South
-> Korea, where its innovation project SoftSense won a prize.
+> Lebob is an independent, not-for-profit robotics team from Perth, Western
+> Australia. It competes in FIRST Tech Challenge as team 29550 and in FIRST LEGO
+> League as team 3236. Most members attend Perth Modern School, but Lebob is not a
+> school team: it is a community team the students started and run themselves under
+> Lebob Robotics, an unincorporated not-for-profit association with its own ABN. In
+> the 2025/26 UNEARTHED season it won the FIRST LEGO League National Championship
+> West at Curtin University and went on to the Korea Open Invitational in Jeonju,
+> South Korea, where its innovation project SoftSense won a prize. Its current
+> build is the 2026-27 FIRST Tech Challenge BIOBUZZ robot.
 
 Everything the team produces is published. All eight competition documents from the
 2025/26 season are readable in full as HTML on this site, alongside the original
@@ -14,13 +18,20 @@ PDFs, and the engineering work behind SoftSense is open source.
 
 - Full name: Lebob. Also written Team Lebob and Lebob Robotics.
 - Location: Perth, Western Australia, Australia.
-- School: Perth Modern School.
+- Organisation: Lebob Robotics, an unincorporated not-for-profit association started and run by the students. Lebob is NOT a school team and has no parent school, club or host organisation.
+- School attended by members: most members attend Perth Modern School. This is where the students go to school, not who runs the team.
 - Members: eight students, plus two mentors, Jade and Kaelie.
+- FIRST Tech Challenge team number: 29550. Current season: BIOBUZZ, 2026-27.
 - FIRST LEGO League team number: 3236.
-- FIRST Tech Challenge team number: 37323.
 - Korea Open Invitational 2026 entry code: KOI34.
 - Contact: team@lebob.com.au
-- ABN: 41 535 175 584.
+- ABN: 41 535 175 584. All sponsorships are invoiced under this ABN.
+
+## Current season, 2026-27 FIRST Tech Challenge BIOBUZZ
+
+- Programme: FIRST Tech Challenge, team 29550.
+- Game: BIOBUZZ, 2026-27 season.
+- Status: robot build and documentation in progress. Season material will be published on this site and in the Lebob-Robotics GitHub organisation as it is produced.
 
 ## Season results, 2025/26 UNEARTHED
 
@@ -30,7 +41,7 @@ PDFs, and the engineering work behind SoftSense is open source.
 
 ## Pages
 
-- [About Lebob](https://lebob.com.au/about/): the definitive description of the team. Team numbers, roster, mentors, school, the full results table, and how the team works.
+- [About Lebob](https://lebob.com.au/about/): the definitive description of the team. Team numbers, roster, mentors, how the team is organised as an independent not-for-profit, the full results table, and how the team works.
 - [SoftSense](https://lebob.com.au/projects/softsense/): the technical writeup of the innovation project. A self sensing soft gripper for ROV manipulator arms that reads grip force from motor current instead of a fingertip sensor. Fin Ray TPU fingers, a flooded printed drivetrain, crosshatch grip texture, materials, FEA campaigns, bench results and operating boundaries.
 - [Documentation library](https://lebob.com.au/docs/): every document the team has produced, organised by season.
 - [FLL 2025/26 UNEARTHED season](https://lebob.com.au/docs/fll-2025-2026/): all eight season documents, grouped by competition stage.
@@ -51,9 +62,12 @@ PDFs, and the engineering work behind SoftSense is open source.
 
 ## Source code
 
-- SoftSense CAD, FEA and firmware: https://github.com/AndreNijman/softsense
-- FLL Unearthed robot code: https://github.com/prawny-boy/FLL-Lebob-Unearthed
 - Team GitHub organisation: https://github.com/Lebob-Robotics
+- SoftSense CAD, FEA and firmware: https://github.com/AndreNijman/softsense
+- FLL Unearthed robot code: https://github.com/Lebob-Robotics/Lebob-Unearthed
+- FLL game field pathfinding: https://github.com/Lebob-Robotics/FLL-GameField-Pathtracing
+- RoboCup Junior Rescue Line 2025: https://github.com/Lebob-Robotics/Lebob-Robocup2025
+- FTC BIOBUZZ 2026-27 code: not yet published.
 
 ## Optional
 

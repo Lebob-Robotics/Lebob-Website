@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lebob — FLL &amp; FTC Robotics Team</title>
-  <meta name="description" content="Lebob is a FIRST LEGO League and FIRST Tech Challenge robotics team in Perth, Western Australia. We build competition robots and research soft grippers.">
+  <title>Lebob — FTC &amp; FLL Robotics Team</title>
+  <meta name="description" content="Lebob is an independent, not-for-profit FIRST Tech Challenge and FIRST LEGO League robotics team in Perth, Western Australia. We build competition robots and research soft grippers.">
   <link rel="canonical" href="https://lebob.com.au/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Lebob">
-  <meta property="og:title" content="Lebob — FLL &amp; FTC Robotics Team">
-  <meta property="og:description" content="Lebob is a FIRST LEGO League and FIRST Tech Challenge robotics team in Perth, Western Australia. We build competition robots and research soft grippers.">
+  <meta property="og:title" content="Lebob — FTC &amp; FLL Robotics Team">
+  <meta property="og:description" content="Lebob is an independent, not-for-profit FIRST Tech Challenge and FIRST LEGO League robotics team in Perth, Western Australia. We build competition robots and research soft grippers.">
   <meta property="og:url" content="https://lebob.com.au/">
   <meta property="og:image" content="https://lebob.com.au/img/og-default.jpg">
   <meta property="og:image:width" content="1200">
@@ -398,6 +398,18 @@
     .project-link--alt { color: var(--muted); }
     .project-link--alt:hover { color: var(--accent); }
 
+    .project-card--current { border-color: var(--accent); }
+    .project-tag {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .project-tag--past { color: var(--muted); }
+
     /* ─── TECH STACK ─── */
     .stack-grid {
       display: grid;
@@ -553,7 +565,7 @@
     "logo": "https://lebob.com.au/img/lebob-logo.webp",
     "image": "https://lebob.com.au/img/og-default.jpg",
     "email": "team@lebob.com.au",
-    "description": "Lebob is a FIRST LEGO League and FIRST Tech Challenge robotics team based in Perth, Western Australia.",
+    "description": "Lebob is an independent, not-for-profit FIRST Tech Challenge and FIRST LEGO League robotics team based in Perth, Western Australia. Most members attend Perth Modern School, but the team is not run by a school: it is organised under Lebob Robotics, an unincorporated not-for-profit association the students set up themselves.",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Perth",
@@ -574,12 +586,12 @@
       {
         "@type": "PropertyValue",
         "name": "FIRST Tech Challenge team number",
-        "value": "37323"
+        "value": "29550"
       }
     ],
     "sameAs": [
       "https://github.com/AndreNijman/softsense",
-      "https://github.com/prawny-boy/FLL-Lebob-Unearthed"
+      "https://github.com/Lebob-Robotics/Lebob-Unearthed"
     ],
     "memberOf": {
       "@type": "Organization",
@@ -692,7 +704,7 @@
       <h1>LEBOB</h1>
       <p class="hero-tagline">Robots that compete. <em>Ideas that inspire.</em></p>
       <div class="hero-meta">
-        <span>FLL &amp; FTC Team</span>
+        <span>Independent FTC &amp; FLL Team</span>
         <span class="dot"></span>
         <span>Perth, Western Australia</span>
       </div>
@@ -787,13 +799,15 @@
       <div class="section-label">02 · about / whoami</div>
       <h2 class="section-title">Who we are</h2>
       <div class="about-text">
-        <p><strong>Lebob is an international FIRST LEGO League and FIRST Tech Challenge team based in Perth, Western Australia.</strong> We engineer robots, research soft-robotic mechanisms, and ship our work as documentation others can learn from.</p>
+        <p><strong>Lebob is an independent, not-for-profit robotics team based in Perth, Western Australia.</strong> We compete internationally in FIRST Tech Challenge as team 29550 and in FIRST LEGO League as team 3236. We engineer robots, research soft-robotic mechanisms, and ship our work as documentation others can learn from.</p>
+        <br>
+        <p><strong>We are not a school team.</strong> Most of us attend Perth Modern School, but the school does not run or fund us. We started Lebob ourselves and run it under <strong>Lebob Robotics</strong>, an unincorporated not-for-profit association with its own ABN. We register, raise our own sponsorship and make our own calls. <a href="/about/#how-we-are-organised">More on how we are organised →</a></p>
         <br>
         <p>Eight members, two mentors, one shared workshop. Our goal is turning ideas into real, working prototypes through teamwork, and then sharing them with the rest of the engineering world.</p>
         <br>
         <p style="font-style:italic; color:var(--accent);">"the workshop is home."</p>
         <br>
-        <p>We competed in the Unearthed season and built SoftSense, our innovation project: a soft gripper for ROV manipulation. It won a prize at the 2026 Korea Open, and the full engineering record is now <a href="https://github.com/AndreNijman/softsense" target="_blank" rel="noopener">public on GitHub</a>. The goal: software, mechanisms, and a team that work well and feel right.</p>
+        <p>We are currently building for the 2026&ndash;27 FIRST Tech Challenge <strong>BIOBUZZ</strong> season. Before that we competed in the FLL Unearthed season and built SoftSense, our innovation project: a soft gripper for ROV manipulation. It won a prize at the 2026 Korea Open, and the full engineering record is now <a href="https://github.com/AndreNijman/softsense" target="_blank" rel="noopener">public on GitHub</a>. The goal: software, mechanisms, and a team that work well and feel right.</p>
       </div>
     </div>
   </section>
@@ -804,8 +818,17 @@
       <div class="section-label">03 · projects / ~/src</div>
       <h2 class="section-title">What we're working on</h2>
       <div class="projects-grid">
+        <a href="/about/#team-numbers" class="project-card project-card--current">
+          <div>
+            <span class="project-tag">Current season · FTC 29550</span>
+            <h3>FTC BIOBUZZ Robot</h3>
+            <p>Our 2026&ndash;27 FIRST Tech Challenge build as team 29550. Chassis, scoring mechanisms and autonomous routines for the BIOBUZZ game. Design notes and code will be published here and on GitHub as the season runs.</p>
+          </div>
+          <span class="project-link">Team details →</span>
+        </a>
         <a href="/docs/fll-2025-2026/?q=robot" class="project-card">
           <div>
+            <span class="project-tag project-tag--past">2025/26 season · FLL 3236</span>
             <h3>FLL Unearthed Robot</h3>
             <p>Spike Prime build with custom attachments tuned to the 2025/26 Unearthed game. Modular mounts, calibrated drive base, and autonomous mission programs that score reliably under competition pressure.</p>
           </div>
@@ -828,9 +851,10 @@
           </div>
           <span class="project-link">All docs →</span>
         </a>
-        <a href="https://github.com/prawny-boy/FLL-Lebob-Unearthed" target="_blank" rel="noopener" class="project-card">
+        <a href="https://github.com/Lebob-Robotics/Lebob-Unearthed" target="_blank" rel="noopener" class="project-card">
           <div>
-            <h3>FLL-Lebob-Unearthed</h3>
+            <span class="project-tag project-tag--past">2025/26 season · FLL 3236</span>
+            <h3>Lebob-Unearthed</h3>
             <p>Mission code and autonomous routines for our 2025/26 robot. Open-source on GitHub. Pull requests welcome from other teams looking to share strategy or tools.</p>
           </div>
           <span class="project-link">github.com →</span>
@@ -919,7 +943,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-left">
-        © 2025–2026 Lebob — FLL &amp; FTC Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br>
+        © 2025–2026 Lebob — FTC &amp; FLL Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br>
         <a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · Perth, Western Australia
       </div>
       <ul class="footer-links">
