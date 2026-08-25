@@ -89,9 +89,11 @@ as a running header, which confirmed the FLL team number.
 There is **no occurrence of "FTC" or "Tech Challenge" in any of the eight PDFs**, so the
 FTC number could not be sourced from the documents.
 
-**Supplied by Andre, 2026-08-17: the FTC team number is 37323.** Both numbers are now on
-`/about/` and in the `identifier` array of both the home page `Organization` block and the
-`AboutPage` block. No action outstanding.
+**Supplied by Andre, 2026-08-17: the FTC team number is 37323.**
+**Corrected by Andre, 2026-08-25: the FTC team number is 29550. 37323 was wrong and has
+been removed from the site.** Both numbers are now on `/about/` and in the `identifier`
+array of both the home page `Organization` block and the `AboutPage` block. No action
+outstanding.
 
 ### ~~Slide 1 of the presentation reads "FLL Team KOI34"~~ RESOLVED
 
@@ -197,13 +199,15 @@ JSON-LD with real `startDate` and `endDate` values.
 
 ### ~~FTC team number is not recorded anywhere~~ RESOLVED
 
-Supplied by Andre on 2026-08-17. The identifiers table on `/about/` now reads:
+Supplied by Andre on 2026-08-17, corrected by Andre on 2026-08-25 (the FTC number is
+29550, not 37323). The identifiers table on `/about/` now reads:
 
 | Identifier | Value |
 | --- | --- |
+| FIRST Tech Challenge team number | 29550 |
 | FIRST LEGO League team number | 3236 |
-| FIRST Tech Challenge team number | 37323 |
 | 2026 Korea Open Invitational entry code | KOI34 |
+| ABN (Lebob Robotics) | 41 535 175 584 |
 
 All three are machine readable: the two team numbers are in the `identifier` array of
 the home page `Organization` block and, with KOI34, in the `AboutPage` block.
