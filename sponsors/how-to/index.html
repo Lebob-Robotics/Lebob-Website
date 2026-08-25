@@ -97,6 +97,54 @@
     }
     .tier-examples li::before { content: '—  '; color: var(--accent); }
 
+    /* Top tier — deliberately not a column in the ladder above. */
+    .tier-max {
+      position: relative; overflow: hidden;
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+      column-gap: clamp(28px, 4vw, 48px);
+      padding: clamp(28px, 3.5vw, 40px);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-md);
+      background:
+        linear-gradient(135deg, rgba(245, 197, 24, 0.07), rgba(245, 197, 24, 0) 60%),
+        var(--surface);
+    }
+    .tier-max::before {
+      content: ''; position: absolute; inset: 0 0 auto 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), rgba(245, 197, 24, 0.12));
+    }
+    .tier-max-head { display: flex; flex-direction: column; align-items: flex-start; }
+    .tier-max h3 {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3.2vw, 34px); font-weight: 800;
+      letter-spacing: -0.6px; line-height: 1.1;
+      color: var(--fg-dark); margin-bottom: 6px;
+    }
+    .tier-max .tier-price { color: var(--accent); margin-bottom: 12px; }
+    .tier-max p { font-size: 15px; line-height: 1.6; color: var(--muted); margin-bottom: 20px; }
+    .tier-max-cta {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: auto;
+      font-family: var(--font-mono); font-size: 14px; font-weight: 500;
+      color: var(--accent); padding: 9px 18px;
+      border: 1px solid var(--accent); border-radius: var(--radius);
+      transition: background 0.15s, color 0.15s;
+    }
+    .tier-max-cta:hover { background: var(--accent); color: #1a1b1e; }
+    .tier-max-body { border-left: 1px solid var(--border); padding-left: clamp(28px, 4vw, 48px); }
+    .tier-max-body h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--muted); margin-bottom: 14px;
+    }
+    .tier-max-list {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2px clamp(20px, 3vw, 36px); list-style: none;
+    }
+    .tier-max-list li { font-size: 15px; line-height: 1.6; color: var(--fg); padding: 4px 0; }
+    .tier-max-list li::before { content: '—  '; color: var(--accent); }
+
     .where-grid {
       display: grid; grid-template-columns: repeat(2, 1fr);
       gap: 16px; margin-top: 24px;
@@ -151,10 +199,19 @@
       .tiers-grid { grid-template-columns: 1fr; }
       .options-grid { grid-template-columns: 1fr; }
       .where-grid { grid-template-columns: 1fr; }
+      .tier-max { grid-template-columns: 1fr; row-gap: 24px; }
+      .tier-max-cta { margin-top: 0; }
+      .tier-max-body {
+        border-left: none; padding-left: 0;
+        border-top: 1px solid var(--border); padding-top: 24px;
+      }
       .footer-inner { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
     }
-    @media (max-width: 480px) { .container { padding: 0 16px; } }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .tier-max-list { grid-template-columns: 1fr; }
+    }
   </style>
   <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
   <link rel="stylesheet" href="/polish.css">
@@ -185,7 +242,7 @@
     <div class="container">
       <div class="page-label">Sponsorships · how to help</div>
       <h1 class="page-title">How to sponsor us.</h1>
-      <p class="page-desc">Your support helps the team build better robots, travel to competitions, and share STEM with more students. Four tiers, from $500 up to season naming rights. Equipment and mentorship count just as much.</p>
+      <p class="page-desc">Your support helps the team build better robots, travel to competitions, and share STEM with more students. Five tiers, from $500 up to a multi-season partnership built from scratch. Equipment and mentorship count just as much.</p>
     </div>
   </header>
 
@@ -242,6 +299,32 @@
             <li>Top billing across everything we make</li>
             <li>Student site visits &amp; careers sessions</li>
             <li>Shaped with you, not off a list</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tier-max">
+        <div class="tier-max-head">
+          <div class="tier-num">05 · Enquire</div>
+          <h3>Enquire</h3>
+          <div class="tier-price">price on enquiry · multi-season</div>
+          <p>The ceiling. Above Platinum there is no list left to read from, so this one starts as a conversation instead of a number. Tell us what you want the partnership to do, and we'll scope it.</p>
+          <a href="mailto:team@lebob.com.au?subject=Enquire%20tier%20sponsorship" class="tier-max-cta">
+            Start the conversation
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+        <div class="tier-max-body">
+          <h4>Everything in Platinum, plus what it can't cover</h4>
+          <ul class="tier-max-list">
+            <li>A multi-season commitment, not one season at a time</li>
+            <li>Sole sponsor in your industry, held exclusively</li>
+            <li>Presenting partner on the team identity itself</li>
+            <li>Co-branded builds and commissioned projects</li>
+            <li>Early input on season planning and outreach</li>
+            <li>Anything else we can agree to and actually deliver</li>
           </ul>
         </div>
       </div>
@@ -313,6 +396,7 @@
         <li>All amounts are in AUD and exclude GST. Every sponsorship is invoiced, so it goes through your books as a marketing expense rather than a donation.</li>
         <li>Shirt logos have to be locked in before the season print run. Ask us for this season's cutoff date before you commit to a Silver tier or above.</li>
         <li>Logo placement on the robot is subject to the competition's branding rules, which set limits on size and position.</li>
+        <li>The Enquire tier is scoped case by case and normally runs across multiple seasons. Industry exclusivity is first come, first served, and we confirm the scope in writing before anything is invoiced.</li>
         <li>Tiers apply from the 2026&ndash;27 season onward. The organisations who backed us before we had a tier structure are listed permanently as <a href="/sponsors/" style="color:var(--accent)">Founding Supporters</a>.</li>
       </ul>
     </div>

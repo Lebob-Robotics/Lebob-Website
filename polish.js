@@ -11,7 +11,7 @@
   root.classList.add('js-reveal');
 
   var SELECTOR = [
-    '.highlight-card', '.crew-card', '.project-card', '.tier-card',
+    '.highlight-card', '.crew-card', '.project-card', '.tier-card', '.tier-max',
     '.where-card', '.doc-item', '.masonry-item', '.sponsor-card',
     '.section-title', '.section-label'
   ].join(',');
