@@ -28,9 +28,12 @@
       --muted: #8a8b83;
       --border: #36373c;
       --border-light: #2d2e33;
-      --accent: #F5C518;
-      --accent-bright: #F5C518;
-      --accent-light: rgba(245, 197, 24, 0.1);
+      /* Brand kit: yellow #FFF200, red #ED1C24. Red sits at 3.93:1 on this
+         background, so it fills shapes here and never sets type. */
+      --accent: #FFF200;
+      --accent-bright: #FFF200;
+      --accent-light: rgba(255, 242, 0, 0.1);
+      --red: #ED1C24;
       --placeholder: #606158;
       --cta-bg: #e5e6e0;
       --hover-bg: #28292e;
@@ -121,7 +124,7 @@
       font-weight: 600;
       transition: opacity 0.15s;
     }
-    .nav-cta:hover { opacity: 0.7; color: var(--accent-bright) !important; }
+    .nav-cta:hover { background: var(--accent); color: #000 !important; }
     img { opacity: 0.92; }
     .nav-hamburger {
       display: none;
@@ -484,9 +487,12 @@
     .cta-btn:hover { opacity: 0.7; color: var(--accent); }
 
     /* ─── FOOTER ─── */
+    /* The kit's section divider: the logo's own 8px squares. */
     .footer {
-      padding: 32px 0;
-      border-top: 1px solid var(--border);
+      padding: 40px 0 32px;
+      background-image: repeating-linear-gradient(90deg, var(--accent) 0 8px, transparent 8px 16px);
+      background-size: 100% 8px;
+      background-repeat: no-repeat;
     }
     .footer-inner {
       display: flex;
@@ -542,7 +548,7 @@
     }
   </style>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
-  <link rel="icon" href="/img/lebob-logo.webp" type="image/webp">
+  <link rel="icon" href="/logo/lebob-mark-primary.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#1a1b1e">
@@ -562,7 +568,7 @@
       "Lebob Robotics"
     ],
     "url": "https://lebob.com.au/",
-    "logo": "https://lebob.com.au/img/lebob-logo.webp",
+    "logo": "https://lebob.com.au/img/icon-512.png",
     "image": "https://lebob.com.au/img/og-default.jpg",
     "email": "team@lebob.com.au",
     "description": "Lebob is an independent, not-for-profit FIRST Tech Challenge and FIRST LEGO League robotics team based in Perth, Western Australia. Most members attend Perth Modern School, but the team is not run by a school: it is organised under Lebob Robotics, an unincorporated not-for-profit association the students set up themselves.",
@@ -667,7 +673,7 @@
   <nav class="nav">
     <div class="container nav-inner">
       <a href="/" class="nav-brand">
-        <img src="/img/lebob-logo.webp" alt="Lebob logo" width="2000" height="2000" decoding="async">
+        <img src="/logo/lebob-mark-primary.svg" alt="" width="88" height="90" decoding="async">
         <span>Lebob</span>
       </a>
       <ul class="nav-links">
@@ -700,7 +706,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <img src="/img/lebob-logo.webp" alt="Lebob mascot" class="hero-logo" width="2000" height="2000" decoding="async">
+      <img src="/logo/lebob-mark-primary.svg" alt="Lebob mascot" class="hero-logo" width="88" height="90" decoding="async">
       <h1>LEBOB</h1>
       <p class="hero-tagline">Robots that compete. <em>Ideas that inspire.</em></p>
       <div class="hero-meta">

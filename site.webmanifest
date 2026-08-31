@@ -1,7 +1,7 @@
 {
   "name": "Lebob",
   "short_name": "Lebob",
-  "description": "Lebob is a school robotics team from Perth, Western Australia, competing in FIRST LEGO League and FIRST Tech Challenge.",
+  "description": "Lebob is an independent, not-for-profit robotics team from Perth, Western Australia, competing in FIRST Tech Challenge and FIRST LEGO League.",
   "start_url": "/",
   "scope": "/",
   "display": "browser",
@@ -11,6 +11,6 @@
   "icons": [
     { "src": "/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/img/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/img/lebob-logo.webp", "sizes": "any", "type": "image/webp" }
+    { "src": "/logo/lebob-mark-primary.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }
