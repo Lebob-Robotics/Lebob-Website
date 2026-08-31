@@ -35,6 +35,8 @@
     .cta-btn:hover { color: var(--accent); }
     .sponsor-logo { background: #2a2b30; border-color: var(--border); }
     img { opacity: 0.92; }
+    /* The brand mark is flat colour, not a photo: 0.92 shifts #FFF200 off spec. */
+    .nav-brand img, .hero-logo { opacity: 1; }
     html { scroll-behavior: smooth; }
     body {
       font-family: var(--font-body); font-size: 16px; line-height: 1.5;
