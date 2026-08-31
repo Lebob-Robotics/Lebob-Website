@@ -525,9 +525,8 @@
         14 fine 1.6 mm ribs at 38 degrees with a reversed slant, tapering to a 2 mm tip. This is
         the generic adaptive-compliant slanted-rib truss principle, not the patented tooth-shape
         variant.</p>
-        <p>We did not print a hundred fingers and snap them one by one in a bucket of water.
-        We built a physics model and ran a design search through it, scoring every candidate
-        against a battery of seven object shapes and sizes, and only committed to a geometry
+        <p>We built a physics model and ran a design search through it, scoring each candidate
+        against a battery of seven object shapes and sizes, and committed to a geometry
         once it won in software.</p>
         <figure class="doc-figure">
           <img src="/img/docs/internationals-innovation-documentation/p022-11.webp" alt="Grid of finite element analysis results covering every Fin Ray finger design iteration" width="1346" height="1238" loading="lazy" decoding="async">
@@ -560,7 +559,7 @@
         Together they produced more than 700,000 model evaluations.</p>
         <figure class="doc-figure">
           <img src="/img/docs/internationals-innovation-documentation/p026-14.webp" alt="Sensitivity heatmap marking the winning texture family at each of 31 coefficient settings" width="1938" height="545" loading="lazy" decoding="async">
-          <figcaption>The sensitivity sweep. Every coefficient was perturbed to 0.5 and 1.5 times, and all seven families re-optimised at each of 31 settings. Concentric wins 31 of 31; among patterns that actually tile a finger blade, crosshatch wins 23 of 31.</figcaption>
+          <figcaption>The sensitivity sweep. We perturbed each coefficient to 0.5 and 1.5 times and re-optimised all seven families at each of 31 settings. Concentric wins 31 of 31; among patterns that tile a finger blade, crosshatch wins 23 of 31.</figcaption>
         </figure>
 
         <p>Concentric is the model's invariant winner and we did not ship it, on purpose and on
@@ -574,13 +573,13 @@
         contact patch rather than trapped under it.</p>
         <figure class="doc-figure">
           <img src="/img/docs/internationals-innovation-documentation/p028-18.webp" alt="Three dimensional render of the shipped crosshatch grip texture as a grid of square posts" width="1100" height="950" loading="lazy" decoding="async">
-          <figcaption>The shipped crosshatch geometry. The channels are drainage, not decoration.</figcaption>
+          <figcaption>The shipped crosshatch geometry. The channels drain the contact patch.</figcaption>
         </figure>
 
 
         <h2 id="sensing">Sensing force through the motor</h2>
-        <p>This is the idea the project is named after. There is no dedicated force sensor
-        anywhere on the gripper. It reads the actuator's motor current, multiplies by the torque
+        <p>The project takes its name from this. No dedicated force sensor sits anywhere on
+        the gripper. It reads the actuator's motor current, multiplies by the torque
         constant, and traces that back through the drivetrain to recover an estimated tip force.
         That is the same method force-controlled industrial and surgical grippers rely on.</p>
         <figure class="doc-figure">
@@ -588,27 +587,27 @@
           <figcaption>The forward sensing model. Command and readout share the same chain, so one drivetrain characterisation closes the loop: setting a current limit sets a force limit and the gear protection ceiling at once.</figcaption>
         </figure>
 
-        <p>For an underwater tool the payoff is hard to argue with. No fingertip wires running
-        through a flexing TPU finger, no fingertip connector to flood, no separate analogue front
-        end to seal.</p>
+        <p>That buys three things an underwater tool wants: no wires running through a flexing
+        TPU finger, no fingertip connector to flood, and no separate analogue front end to
+        seal.</p>
         <blockquote>If you have a force sensor in the motor, you've replaced one of the worst
         sealing problems with one of the easier ones.</blockquote>
-        <p>We did not start here. The first design put a calibrated conductive-foam pressure
-        sensor under each fingertip pad. Two independent pieces of expert feedback killed it.
+        <p>The first design put a calibrated conductive-foam pressure sensor under each
+        fingertip pad. Two reviewers, working independently, talked us out of it.
         David Howard at CSIRO pointed out that ambient water pressure rises about one atmosphere
         every ten metres, so a fingertip pressure sensor reads a squeeze that is not there and
-        needs a second ambient sensor plus a software correction just to recover the true value.
+        needs a second ambient sensor plus a software correction to recover the true value.
         Patrick Morrison pointed out that any foam or gas-filled pad compresses with depth as the
         air pockets inside it shrink, so a pad-based sensor drifts as the dive gets deeper.
-        Reading current sidesteps both: current tracks how hard the finger pushes the object, not
-        the water column above it.</p>
+        Current sidesteps both, because it tracks how hard the finger pushes the object rather
+        than the water column above it.</p>
         <p>Calibration is a dry bench job. A load cell at the contact face is the ground truth
         that turns the relative current signal into newtons: log current and force pairs at 8 to
         12 force levels over three cycles each to capture hysteresis and drivetrain friction,
         regress a quadratic to absorb the motor nonlinearity, and validate on blind weights.</p>
         <figure class="doc-figure">
           <img src="/img/docs/internationals-innovation-documentation/p031-19.webp" alt="Three charts tracing motor current through to tip force across three drivetrain configurations" width="1485" height="505" loading="lazy" decoding="async">
-          <figcaption>Motor current to tip force across three drivetrain configurations. The gear ceiling is what binds, not the servo.</figcaption>
+          <figcaption>Motor current to tip force across three drivetrain configurations. The gear ceiling binds first, well before the servo does.</figcaption>
         </figure>
 
         <p>The controller is one small board that travels with the gripper: an ESP32 driver board
@@ -625,11 +624,11 @@
         four M4 bolt holes.</p>
         <p>It is designed to flood. Drain and flood holes let water in and out so there is no
         trapped air and pressure equalises with depth. Every part is a single solid with exactly
-        one shell, and there is no enclosed void anywhere in the assembly. That is what makes it
-        safe to take deep: there is nothing to crush.</p>
+        one shell, and there is no enclosed void anywhere in the assembly. With no enclosed void,
+        depth has nothing to crush.</p>
         <p>The consequence is a procedure rather than a redesign. Submerge the gripper fingers
         down and let it soak so the flood paths clear.</p>
-        <p>Two things are non-negotiable. The sealing job falls entirely on the actuator, so even
+        <p>Two constraints hold whatever else changes. The sealing job falls on the actuator, so even
         an IP68 rated servo still needs a thin pressure canister, because IP68 is rated for one
         metre of freshwater while 30 metres is 3.1 bar plus seawater corrosion. And the motor
         current limit must be set to the safe gear torque in firmware, because without it a
@@ -655,9 +654,8 @@
 
         <p>An earlier specification called for carbon-filled Nylon 12. It was dropped because it
         needs a 45 to 60 degree heated chamber that our printer cannot hold, and it still absorbs
-        water. We will also be honest that PA12-GF is marginal on the same printer: glass-filled
-        nylon is warp-prone on the larger parts and wants a closed chamber, a brim, and a hot
-        nozzle over a hot bed.</p>
+        water. PA12-GF is marginal on the same printer too. Glass-filled nylon warps on the
+        larger parts and wants a closed chamber, a brim, and a hot nozzle over a hot bed.</p>
 
         <h2 id="results">Test results</h2>
         <h3>On the bench</h3>
@@ -673,8 +671,7 @@
 
         <p>Four fingers beat two on smooth or round shapes such as the vase, and on shapes with
         poor grip features such as the bone, and tie on shapes with regular features. When an
-        artefact has natural features for a rigid jaw to bite, you cannot really do better than
-        three attempts. When it is smooth or featureless, the four-pad layout wraps it and the
+        artefact has natural features for a rigid jaw to bite, three attempts is the ceiling. When it is smooth or featureless, the four-pad layout wraps it and the
         two-jaw layout slips off it.</p>
         <p>The grip pressures span an order of magnitude, from 26 gf on the bone to 411 gf on the
         vase. That is the empirical case for per-artefact presets: a single global threshold
@@ -710,8 +707,8 @@
         </figure>
 
         <h3>The binding limit</h3>
-        <p>The compact right-angle stage is the structural limit of the whole gripper, not the
-        servo. At the small radii the housing allows, printed teeth carry far less torque than
+        <p>The compact right-angle stage sets the structural limit of the whole gripper, ahead of
+        the servo. At the small radii the housing allows, printed teeth carry far less torque than
         the analysis probe load would need. The fix has three parts: strengthening the teeth,
         which is done and build-verified; a module and radius re-size, which is proposed and
         still needs clearance validation; and the motor current limit holding the safe ceiling
@@ -756,7 +753,7 @@
         <ul>
           <li><strong>Tim MacDonald, subsea engineer at Inkfish, formerly of the DSV Limiting
           Factor.</strong> Confirmed that soft-jaw and silicone-tipped grippers already exist, so
-          force feedback on a cheap printed gripper is the part that is actually new. That
+          force feedback on a cheap printed gripper is the new part. That
           reframed the whole project around sensing rather than softness. His economics argument
           is the source of the modular kit approach, and his materials steer set the constraint
           the whole material selection runs inside.</li>
@@ -799,15 +796,15 @@
           <li>The 12 N figure used throughout the finger analysis is a <strong>stress-probe
           load</strong> for ranking finger designs, not an operating force the drivetrain
           delivers. The printed right-angle stage caps input torque well below it.</li>
-          <li>The published safety margin was computed with elements that lock volumetrically
+          <li>We computed the published safety margin with elements that lock volumetrically
           near the incompressible limit. The locking-stable re-run puts the corrected margin
           nearer 3.8 to 5.7 times at the probe load, and around 120 to 365 times at the force the
-          drivetrain can actually deliver. The design call does not change; the absolute number
-          was wrong and has been corrected.</li>
+          drivetrain delivers. The design call does not change. We had the absolute number wrong
+          and have corrected it.</li>
           <li>The grip texture model is <strong>rank-only</strong>. Its literature gate is a
           sufficient-condition check, and the shipped pattern won only after a documented
           override of the model's raw winner.</li>
-          <li>The safe gear torque is a 2D upper bound. The right-angle stage is genuinely three
+          <li>The safe gear torque is a 2D upper bound. The right-angle stage is three
           dimensional, and straight-flank teeth will gall and edge-load in glass-filled nylon
           rather than roll cleanly. Printed coupon torque-to-failure tests are the ceiling that
           counts.</li>
@@ -840,7 +837,7 @@
 
   <footer class="footer">
     <div class="container footer-inner">
-      <div class="footer-left">© 2025–2026 Lebob — FTC &amp; FLL Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · Perth, Western Australia</div>
+      <div class="footer-left">© 2025–2026 Lebob · FTC &amp; FLL Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · Perth, Western Australia</div>
       <ul class="footer-links">
         <li><a href="/">Home</a></li>
         <li><a href="/about/">About</a></li><li><a href="/media/">Media</a></li>

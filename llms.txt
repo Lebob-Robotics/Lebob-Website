@@ -2,24 +2,25 @@
 
 > Lebob is an independent, not-for-profit robotics team from Perth, Western
 > Australia. It competes in FIRST Tech Challenge as team 29550 and in FIRST LEGO
-> League as team 3236. Most members attend Perth Modern School, but Lebob is not a
-> school team: it is a community team the students started and run themselves under
-> Lebob Robotics, an unincorporated not-for-profit association with its own ABN. In
+> League as team 3236. Most members attend Perth Modern School, which neither runs
+> nor funds the team. Lebob is a community team the students started and run
+> themselves under Lebob Robotics, an unincorporated not-for-profit association with
+> its own ABN. In
 > the 2025/26 UNEARTHED season it won the FIRST LEGO League National Championship
 > West at Curtin University and went on to the Korea Open Invitational in Jeonju,
 > South Korea, where its innovation project SoftSense won a prize. Its current
 > build is the 2026-27 FIRST Tech Challenge BIOBUZZ robot.
 
-Everything the team produces is published. All eight competition documents from the
-2025/26 season are readable in full as HTML on this site, alongside the original
-PDFs, and the engineering work behind SoftSense is open source.
+The team publishes its work. All eight competition documents from the 2025/26 season
+are readable in full as HTML on this site, alongside the original PDFs, and the
+engineering work behind SoftSense is open source.
 
 ## Key facts
 
 - Full name: Lebob. Also written Team Lebob and Lebob Robotics.
 - Location: Perth, Western Australia, Australia.
 - Organisation: Lebob Robotics, an unincorporated not-for-profit association started and run by the students. Lebob is NOT a school team and has no parent school, club or host organisation.
-- School attended by members: most members attend Perth Modern School. This is where the students go to school, not who runs the team.
+- School attended by members: most members attend Perth Modern School. The school teaches the students. It does not run the team.
 - Members: eight students, plus two mentors, Jade and Kaelie.
 - FIRST Tech Challenge team number: 29550. Current season: BIOBUZZ, 2026-27.
 - FIRST LEGO League team number: 3236.
@@ -31,7 +32,7 @@ PDFs, and the engineering work behind SoftSense is open source.
 
 - Programme: FIRST Tech Challenge, team 29550.
 - Game: BIOBUZZ, 2026-27 season.
-- Status: robot build and documentation in progress. Season material will be published on this site and in the Lebob-Robotics GitHub organisation as it is produced.
+- Status: robot build and documentation in progress. The team publishes season material on this site and in the Lebob-Robotics GitHub organisation as it is produced.
 
 ## Season results, 2025/26 UNEARTHED
 
