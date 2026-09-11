@@ -150,15 +150,16 @@
       background: var(--surface);
       padding: clamp(24px, 3.5vw, 36px);
       margin-top: 24px;
-      transition: border-color 0.15s, background-color 0.15s, transform 0.16s var(--ease-out);
+      transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s, transform 0.16s var(--ease-out);
       cursor: pointer;
     }
     .sponsor-card--platinum:hover {
       background: #2a2b30;
       border-color: #FFFFFF;
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08);
     }
     .sponsor-card--platinum:hover .sponsor-info h3 {
-      color: #E5E4E2;
+      color: #FFFFFF;
     }
     .sponsor-card--platinum:active {
       transform: scale(0.985);
@@ -179,14 +180,14 @@
       max-width: 680px;
     }
     .sponsor-tag--platinum {
-      background: #E5E4E2 !important;
-      color: #1a1b1e !important;
-      font-weight: 700 !important;
+      background: #FFFFFF !important;
+      color: #000 !important;
+      font-weight: 800 !important;
     }
     .sponsor-card--gold {
       display: flex;
       text-decoration: none;
-      border: 1px solid #FFD700;
+      border: 1px solid #B89742;
       background: var(--surface);
       padding: clamp(24px, 3.5vw, 36px);
       margin-top: 24px;
@@ -195,10 +196,10 @@
     }
     .sponsor-card--gold:hover {
       background: #2a2b30;
-      border-color: #FFEA00;
+      border-color: #D4AF37;
     }
     .sponsor-card--gold:hover .sponsor-info h3 {
-      color: var(--accent);
+      color: #D4AF37;
     }
     .sponsor-card--gold:active {
       transform: scale(0.985);
@@ -219,7 +220,7 @@
       max-width: 680px;
     }
     .sponsor-tag--gold {
-      background: #FFD700 !important;
+      background: #B89742 !important;
       color: #000 !important;
       font-weight: 700 !important;
     }
