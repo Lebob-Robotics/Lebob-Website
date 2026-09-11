@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sponsors · Lebob</title>
-  <meta name="description" content="The organisations backing Team Lebob, a Perth robotics team: Palantir Technologies (Platinum Sponsor), and founding supporters WA Robotics Education, Fugro, Pulse Technology Hub, EFFEE Robotics, CP Maritime and TMT Solves.">
+  <meta name="description" content="The organisations backing Team Lebob, a Perth robotics team: Palantir Technologies (Platinum Sponsor), WA Robotics Education (Silver Sponsor), and founding supporters WA Robotics Education, Fugro, Pulse Technology Hub, EFFEE Robotics, CP Maritime and TMT Solves.">
   <link rel="canonical" href="https://lebob.com.au/sponsors/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Lebob">
   <meta property="og:title" content="Sponsors · Lebob">
-  <meta property="og:description" content="The organisations backing Team Lebob, a Perth robotics team: Palantir Technologies (Platinum Sponsor), and founding supporters WA Robotics Education, Fugro, Pulse Technology Hub, EFFEE Robotics, CP Maritime and TMT Solves.">
+  <meta property="og:description" content="The organisations backing Team Lebob, a Perth robotics team: Palantir Technologies (Platinum Sponsor), WA Robotics Education (Silver Sponsor), and founding supporters WA Robotics Education, Fugro, Pulse Technology Hub, EFFEE Robotics, CP Maritime and TMT Solves.">
   <meta property="og:url" content="https://lebob.com.au/sponsors/">
   <meta property="og:image" content="https://lebob.com.au/img/og-default.jpg">
   <meta property="og:image:width" content="1200">
@@ -183,6 +183,46 @@
       color: #000 !important;
       font-weight: 700 !important;
     }
+    .sponsor-card--silver {
+      display: flex;
+      text-decoration: none;
+      border: 1px solid #9aa0a6;
+      background: var(--surface);
+      padding: clamp(24px, 3.5vw, 36px);
+      margin-top: 24px;
+      transition: border-color 0.15s, background-color 0.15s, transform 0.16s var(--ease-out);
+      cursor: pointer;
+    }
+    .sponsor-card--silver:hover {
+      background: #2a2b30;
+      border-color: #e5e6e0;
+    }
+    .sponsor-card--silver:hover .sponsor-info h3 {
+      color: var(--accent);
+    }
+    .sponsor-card--silver:active {
+      transform: scale(0.985);
+    }
+    .sponsor-card--silver .sponsor-logo {
+      width: clamp(140px, 16vw, 200px);
+      padding: 16px 20px;
+      background: #1e1f23;
+      border-color: var(--border);
+    }
+    .sponsor-card--silver .sponsor-info h3 {
+      font-size: clamp(20px, 2.5vw, 26px);
+      margin-bottom: 8px;
+    }
+    .sponsor-card--silver .sponsor-info p {
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 680px;
+    }
+    .sponsor-tag--silver {
+      background: #c8c9c2 !important;
+      color: #1a1b1e !important;
+      font-weight: 700 !important;
+    }
 
     .sponsor-invite {
       padding: clamp(48px, 6vw, 80px) 0;
@@ -223,7 +263,8 @@
       .nav-hamburger { display: block; }
       .sponsor-card { flex-direction: column; text-align: center; }
       .sponsor-logo { width: 150px; margin: 0 auto; }
-      .sponsor-card--platinum .sponsor-logo { width: 180px; margin: 0 auto; }
+      .sponsor-card--platinum .sponsor-logo,
+      .sponsor-card--silver .sponsor-logo { width: 180px; margin: 0 auto; }
       .footer-inner { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
     }
@@ -292,9 +333,26 @@
     </div>
   </section>
 
+  <section class="sponsor-featured section-border" id="silver-tier">
+    <div class="container">
+      <div class="section-label">02 · silver tier / ~/silver</div>
+      <h2 class="founding-heading">Silver Sponsor</h2>
+      <a href="https://warobotics.education/" target="_blank" rel="noopener" class="sponsor-card sponsor-card--silver">
+        <div class="sponsor-logo">
+          <img src="/img/wares-logo.webp" alt="WA Robotics Education (WARES) logo" width="400" height="83" decoding="async" loading="lazy">
+        </div>
+        <div class="sponsor-info">
+          <span class="sponsor-tag sponsor-tag--silver">Silver Sponsor</span>
+          <h3>WA Robotics Education</h3>
+          <p>WARES · Long-time backers of Western Australian robotics teams, supporting student innovation and access to competitive STEM programs.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <section class="sponsor-featured section-border" id="founding-supporters">
     <div class="container">
-      <div class="section-label">02 · founding supporters / ~/partners</div>
+      <div class="section-label">03 · founding supporters / ~/partners</div>
       <h2 class="founding-heading">Founding Supporters</h2>
       <p class="page-desc">Every organisation below backed us before we had a sponsorship structure at all, on a handshake and a walk-in. They keep the Founding Supporter badge permanently.</p>
       <div class="sponsors-grid">
