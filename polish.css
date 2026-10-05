@@ -195,7 +195,6 @@
 @media (hover: hover) and (pointer: fine) {
   .highlight-card:hover,
   .project-card:hover,
-  .tier-card:hover,
   .where-card:hover,
   .doc-item:hover,
   .sponsor-card:hover { transform: translateY(-3px); }
@@ -210,7 +209,6 @@
    source order so a press overrides the hover lift while held. */
 .highlight-card:active,
 .project-card:active,
-.tier-card:active,
 .where-card:active,
 .doc-item:active,
 .sponsor-card:active { transform: scale(0.98); }
@@ -326,7 +324,6 @@
 
   .highlight-card:hover,
   .project-card:hover,
-  .tier-card:hover,
   .where-card:hover,
   .doc-item:hover,
   .sponsor-card:hover,
@@ -343,7 +340,6 @@
   .lightbox-close:active,
   .highlight-card:active,
   .project-card:active,
-  .tier-card:active,
   .where-card:active,
   .doc-item:active,
   .sponsor-card:active,
