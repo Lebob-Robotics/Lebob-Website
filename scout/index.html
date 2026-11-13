@@ -832,17 +832,20 @@ function unsentPayloads() {
 }
 let qrList = [], qrIdx = 0;
 function makeQr(text) { const q = qrcode(0, "L"); q.addData(text); q.make(); return q; }
+// A phone camera reads a QR off another phone's screen reliably only up to about version 20 (850 bytes at level L).
+// The raw tap log alone pushes a match report to version 30-40, so it is left out of longer codes: the record
+// already carries the cycle stats computed from it, and Export file keeps the full log.
+const QR_MAX = 850;
 function showQr() {
   if (!qrList.length) { $("#qrInfo").textContent = "Nothing unsent."; $("#qrbox").innerHTML = ""; return; }
-  let q, note = "";
-  try { q = makeQr(qrList[qrIdx][1]); }
-  catch (e) {
-    // too long for one QR (long tap log or notes): send without the raw tap log; stats are already computed
+  let q, note = "", text = qrList[qrIdx][1];
+  if (text.length > QR_MAX) {
     const [table, id] = qrList[qrIdx][0].split("|");
-    const r = Object.assign({}, records(table).find(x => x[CFG.pk[table]] === id), {cycleLog: null});
-    try { q = makeQr(encodeRec(table, r)); note = " (tap log left out: use Export file for the full record)"; }
-    catch (e2) { $("#qrbox").innerHTML = ""; $("#qrInfo").textContent = "This record is too long for a QR code. Use Export file."; return; }
+    const r = records(table).find(x => x[CFG.pk[table]] === id);
+    if (r && r.cycleLog) { text = encodeRec(table, Object.assign({}, r, {cycleLog: null})); note = " (tap log left out: use Export file for the full record)"; }
   }
+  try { q = makeQr(text); }
+  catch (e) { $("#qrbox").innerHTML = ""; $("#qrInfo").textContent = "This record is too long for a QR code. Use Export file."; return; }
   $("#qrbox").innerHTML = q.createSvgTag({cellSize: 4, margin: 2, scalable: true});
   $("#qrInfo").textContent = `QR ${qrIdx + 1} of ${qrList.length}. The lead scans each one.${note}`;
 }
@@ -881,18 +884,40 @@ let scanStream = null;
 $("#lScan").addEventListener("click", async () => {
   const v = $("#lVideo");
   if (scanStream) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; v.classList.add("hidden"); $("#lScan").textContent = "Scan QR"; return; }
-  if (!("BarcodeDetector" in window)) { $("#lStatus").innerHTML = '<span class="err">This browser cannot scan QR codes (use Chrome on Android), or export a file instead.</span>'; return; }
+  const st = $("#lStatus");
+  if (!("BarcodeDetector" in window)) { st.innerHTML = '<span class="err">This browser cannot scan QR codes (use Chrome on Android), or export a file instead.</span>'; return; }
+  // Android's detector comes from Google Play services; when that is missing or updating, detect() fails on every frame
+  let det;
   try {
-    scanStream = await navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}});
-    v.srcObject = scanStream; v.classList.remove("hidden"); await v.play(); $("#lScan").textContent = "Stop scanning";
-    const det = new BarcodeDetector({formats: ["qr_code"]}); let last = "";
-    const loop = async () => {
-      if (!scanStream) return;
-      try { for (const c of await det.detect(v)) if (c.rawValue !== last && (/^LBS[12]:/.test(c.rawValue) || c.rawValue.startsWith("LBSS1:"))) { last = c.rawValue; c.rawValue.startsWith("LBSS1:") ? addSchedChunk(c.rawValue) : addText(c.rawValue); if (navigator.vibrate) navigator.vibrate(60); } } catch (e) { if (/older version/.test(e.message || "")) $("#lStatus").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
-      requestAnimationFrame(loop);
-    };
-    loop();
-  } catch (e) { $("#lStatus").innerHTML = '<span class="err">Camera blocked. Allow camera access or import a file.</span>'; scanStream = null; }
+    if (!(await BarcodeDetector.getSupportedFormats()).includes("qr_code")) throw new Error("qr_code not supported");
+    det = new BarcodeDetector({formats: ["qr_code"]});
+  } catch (e) { st.innerHTML = '<span class="err">This phone\'s QR reader is not available (update Google Play services, then restart Chrome). Import a file instead.</span>'; return; }
+  try {
+    // without a size Chrome often opens the camera at 640×480, too coarse for a dense code on another screen
+    scanStream = await navigator.mediaDevices.getUserMedia({video: {facingMode: {ideal: "environment"}, width: {ideal: 1920}, height: {ideal: 1080}}});
+  } catch (e) { st.innerHTML = '<span class="err">Camera blocked. Allow camera access or import a file.</span>'; scanStream = null; return; }
+  const track = scanStream.getVideoTracks()[0];
+  try { if (((track.getCapabilities && track.getCapabilities().focusMode) || []).includes("continuous")) await track.applyConstraints({advanced: [{focusMode: "continuous"}]}); } catch (e) { /* focus stays as the camera chose */ }
+  try { v.srcObject = scanStream; v.classList.remove("hidden"); await v.play(); }
+  catch (e) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; v.classList.add("hidden"); st.innerHTML = '<span class="err">The camera did not start. Try again, or import a file.</span>'; return; }
+  $("#lScan").textContent = "Stop scanning";
+  st.textContent = `Scanning (camera ${v.videoWidth}×${v.videoHeight}). Hold the code so it fills most of the picture.`;
+  let last = "", fails = 0;
+  const loop = async () => {
+    if (!scanStream) return;
+    let codes = [];
+    try { if (v.readyState >= 2) { codes = await det.detect(v); fails = 0; } }
+    catch (e) { if (++fails === 30) st.innerHTML = `<span class="err">The QR reader keeps failing (${esc(e.name || e.message || "error")}). Restart Chrome, or import a file.</span>`; }
+    for (const c of codes) {
+      const raw = c.rawValue;
+      if (raw === last || !(/^LBS[12]:/.test(raw) || raw.startsWith("LBSS1:"))) continue;
+      last = raw;
+      try { raw.startsWith("LBSS1:") ? addSchedChunk(raw) : addText(raw); if (navigator.vibrate) navigator.vibrate(60); }
+      catch (e) { st.innerHTML = `<span class="err">${/older version/.test(e.message || "") ? esc(e.message) : "Read a code but could not decode it. Show it again, or import a file."}</span>`; }
+    }
+    requestAnimationFrame(loop);
+  };
+  loop();
 });
 
 // ---------- schedule import / share ----------
