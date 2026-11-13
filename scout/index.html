@@ -43,7 +43,7 @@ textarea{min-height:64px;resize:vertical}
 #qrbox{display:flex;justify-content:center;background:#fff;border-radius:12px;padding:12px}#qrbox img,#qrbox svg{width:min(80vw,360px);height:auto}
 video{width:100%;border-radius:12px;background:#000}
 .scanbox{position:relative;margin-top:10px}.scanbox video{display:block}#lOverlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.flash{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;border-radius:12px;padding:16px;font-weight:800;font-size:clamp(30px,10vw,52px);line-height:1.1}.flash.show{display:flex}.flash small{font-size:16px;font-weight:700;letter-spacing:.04em}.flash.ok{background:color-mix(in srgb,var(--ok) 92%,transparent);color:#08140c}.flash.dup{background:color-mix(in srgb,var(--warn) 92%,transparent);color:#1a1200}.flash.bad{background:color-mix(in srgb,var(--red) 92%,transparent);color:#fff}
+.scanflash{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;border-radius:12px;padding:16px;font-weight:800;font-size:clamp(30px,10vw,52px);line-height:1.1}.scanflash.show{display:flex}.scanflash small{font-size:16px;font-weight:700;letter-spacing:.04em}.scanflash.ok{background:color-mix(in srgb,var(--ok) 92%,transparent);color:#08140c}.scanflash.dup{background:color-mix(in srgb,var(--warn) 92%,transparent);color:#1a1200}.scanflash.bad{background:color-mix(in srgb,var(--red) 92%,transparent);color:#fff}
 .foot{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;max-width:760px;margin:0 auto}
 .hidden{display:none!important}
 .btn,nav button{transition:transform .07s ease,filter .07s ease,background-color .15s ease;touch-action:manipulation;user-select:none;-webkit-user-select:none}
@@ -221,7 +221,7 @@ video{width:100%;border-radius:12px;background:#000}
   </div>
   <div class="card"><h2>Lead: collect</h2>
     <div class="row"><button class="btn primary" id="lScan">Scan QR</button><label class="btn" style="margin:0">Import file<input type="file" id="lFile" accept=".json,application/json" class="hidden" multiple></label></div>
-    <div id="lScanBox" class="scanbox hidden"><video id="lVideo" playsinline muted></video><canvas id="lOverlay"></canvas><div id="lFlash" class="flash" role="status" aria-live="assertive"></div></div>
+    <div id="lScanBox" class="scanbox hidden"><video id="lVideo" playsinline muted></video><canvas id="lOverlay"></canvas><div id="lFlash" class="scanflash" role="status" aria-live="assertive"></div></div>
     <div id="lLog" class="list" style="margin-top:8px"></div>
     <label for="lPaste">…or paste</label><textarea id="lPaste" placeholder="LBS2:… or exported JSON"></textarea>
     <button class="btn wide" id="lPasteGo">Add pasted</button>
@@ -257,7 +257,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "8f822c0";
+const APP_VERSION = "9522d6a";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -894,11 +894,11 @@ function beep(freq, ms) {
 // big full-screen-over-the-camera notice, so the lead cannot miss a read in a loud venue
 function flash(kind, top, big, sub) {
   const el = $("#lFlash");
-  el.className = "flash show " + kind;
+  el.className = "scanflash show " + kind;
   el.innerHTML = `<small>${esc(top)}</small><span>${esc(big)}</span>${sub ? `<small>${esc(sub)}</small>` : ""}`;
   if (navigator.vibrate) navigator.vibrate(kind === "ok" ? [90, 60, 90] : kind === "dup" ? 250 : [300, 100, 300]);
   if (kind === "ok") { beep(880, 90); setTimeout(() => beep(1320, 120), 110); } else if (kind === "dup") beep(660, 200); else beep(220, 400);
-  clearTimeout(flashTimer); flashTimer = setTimeout(() => { el.className = "flash"; }, kind === "ok" ? 1400 : 2200);
+  clearTimeout(flashTimer); flashTimer = setTimeout(() => { el.className = "scanflash"; }, kind === "ok" ? 1400 : 2200);
 }
 function recLabel(t, r) {
   const team = r.teamNumber ?? "?", by = r.scout || r.reporter ? " by " + (r.scout || r.reporter) : "";
@@ -983,11 +983,14 @@ $("#lScan").addEventListener("click", async () => {
     }
   };
   let last = "", fails = 0;
+  // on some phones the built-in reader's detect() never settles, which would freeze this loop: give it 1.5 s
+  const timed = pr => Promise.race([pr, new Promise((_, no) => setTimeout(() => no(new Error("timeout")), 1500))]);
   const loop = async () => {
     if (!scanStream) { oc.clearRect(0, 0, ov.width, ov.height); return; }
+    draw();
     let codes = [];
     if (v.readyState >= 2) {
-      if (det) { try { codes = await det.detect(v); fails = 0; } catch (e) { if (++fails >= 30) det = null; } }
+      if (det) { try { codes = await timed(det.detect(v)); fails = 0; } catch (e) { if (e.message === "timeout" || ++fails >= 30) { det = null; st.textContent = "Scanning (reader: backup). Keep the code inside the square."; } } }
       if (!codes.length && typeof jsQR === "function") { try { codes = backupScan(); } catch (e) { codes = []; } }
     }
     for (const c of codes) {
@@ -996,7 +999,6 @@ $("#lScan").addEventListener("click", async () => {
       if (raw === last) continue;
       last = raw; handleScan(raw);
     }
-    draw();
     requestAnimationFrame(loop);
   };
   loop();
