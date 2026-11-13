@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#121316">
+<title>Lebob Scout</title>
+<style>
+:root{--bg:#121316;--panel:#1c1d22;--panel2:#25262c;--line:#33343b;--fg:#e9e9e4;--muted:#9a9b94;--accent:#FFF200;--accent-ink:#121316;--red:#ED1C24;--blue:#2F7DF6;--ok:#3DCB6C;--warn:#F5A524}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f6f2;--panel:#ffffff;--panel2:#efefea;--line:#d9d9d2;--fg:#17181b;--muted:#5f605a;--accent:#FFF200;--accent-ink:#17181b}}
+:root[data-theme="light"]{--bg:#f6f6f2;--panel:#ffffff;--panel2:#efefea;--line:#d9d9d2;--fg:#17181b;--muted:#5f605a}
+*{box-sizing:border-box}html,body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px calc(8px) 16px;display:flex;align-items:center;gap:10px}
+header b{font-size:18px;letter-spacing:.3px}header .pill{margin-left:auto;font-size:12px;color:var(--muted)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:999px;padding:8px 14px;font-size:14px}
+nav button[aria-current="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+main{padding:12px 16px 120px;max-width:760px;margin:0 auto}
+section{display:none}section.on{display:block}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 12px}
+h2{font-size:15px;margin:0 0 10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+input,select,textarea{width:100%;font:inherit;color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px}
+textarea{min-height:64px;resize:vertical}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.btn{min-width:0;overflow-wrap:anywhere;text-align:center;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--panel2);color:var(--fg);border-radius:12px;padding:12px 14px;font:inherit;font-weight:600;min-height:48px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.wide{width:100%}.btn.small{min-height:36px;padding:6px 10px;font-size:14px}
+.btn.toggle[aria-pressed="true"]{background:var(--ok);color:#08140c;border-color:var(--ok)}
+.btn.hold[aria-pressed="true"]{background:var(--warn);color:#1a1200;border-color:var(--warn)}
+
+.tap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.tap .btn{min-height:68px;font-size:15px;flex-direction:column}
+.tap .btn small{font-weight:400;color:inherit;opacity:.75;font-size:12px}
+.timer{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.timer .clock{font:700 40px/1 ui-monospace,SFMono-Regular,Menlo,monospace}.timer .phase{font-weight:700;padding:4px 10px;border-radius:999px;background:var(--panel2)}
+.phase.auto{background:var(--accent);color:var(--accent-ink)}.phase.teleop{background:var(--blue);color:#fff}.phase.end{background:var(--red);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.stats div{background:var(--panel2);border-radius:10px;padding:6px;text-align:center}.stats b{display:block;font-size:20px}.stats span{font-size:11px;color:var(--muted)}
+.list{display:flex;flex-direction:column;gap:6px}.list .item{display:flex;justify-content:space-between;gap:8px;background:var(--panel2);border-radius:10px;padding:8px 10px;font-size:14px}
+.muted{color:var(--muted);font-size:13px}.err{color:var(--red)}.okc{color:var(--ok)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}.seg .btn{flex:1 1 auto;min-height:40px;padding:8px}
+.seg .btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.seg .btn.redA{background:color-mix(in srgb,var(--red) 28%,var(--panel2));border-color:var(--red);color:var(--fg)}.seg .btn.blueA{background:color-mix(in srgb,var(--blue) 28%,var(--panel2));border-color:var(--blue);color:var(--fg)}.seg .btn.redA[aria-pressed="true"]{background:var(--red);border-color:#fff;color:#fff;box-shadow:0 0 0 2px var(--red)}.seg .btn.blueA[aria-pressed="true"]{background:var(--blue);border-color:#fff;color:#fff;box-shadow:0 0 0 2px var(--blue)}
+#qrbox{display:flex;justify-content:center;background:#fff;border-radius:12px;padding:12px}#qrbox img,#qrbox svg{width:min(80vw,360px);height:auto}
+video{width:100%;border-radius:12px;background:#000}
+.foot{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;max-width:760px;margin:0 auto}
+.hidden{display:none!important}
+.btn,nav button{transition:transform .07s ease,filter .07s ease,background-color .15s ease;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.btn:active,nav button:active,.btn.down{transform:scale(.93);filter:brightness(1.25)}
+.btn.flash{animation:ring .45s ease-out}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,242,0,.95)}100%{box-shadow:0 0 0 16px rgba(255,242,0,0)}}
+.stats div.bump b{animation:bump .4s ease-out}
+@keyframes bump{0%{transform:scale(1.6);color:var(--accent)}100%{transform:scale(1)}}
+.lastev{margin:10px 0 0;min-height:24px;font-weight:700;font-size:15px;color:var(--fg);padding:4px 10px;border-radius:8px;background:var(--panel2)}
+.lastev.pop{animation:pop .5s ease-out}
+@keyframes pop{0%{background:var(--accent);color:var(--accent-ink)}100%{background:var(--panel2)}}
+@media (prefers-reduced-motion: reduce){.btn.flash,.stats div.bump b,.lastev.pop{animation:none}.btn:active,.btn.down{transform:none}}
+.list .item .txt{flex:1;min-width:0;overflow-wrap:anywhere}.list .item{align-items:center}.acts{display:flex;gap:6px;align-items:center;flex:0 0 auto}.acts .btn.small{min-height:32px;padding:4px 8px;font-size:13px}
+.pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.pick .btn{flex-direction:column;gap:0;min-height:56px}.pick .btn small{font-weight:400;font-size:12px;opacity:.85}
+.pick .btn.redA{background:color-mix(in srgb,var(--red) 28%,var(--panel2));border-color:var(--red)}.pick .btn.blueA{background:color-mix(in srgb,var(--blue) 28%,var(--panel2));border-color:var(--blue)}
+.pick .btn.redA[aria-pressed="true"]{background:var(--red);border-color:#fff;color:#fff;box-shadow:0 0 0 2px var(--red)}.pick .btn.blueA[aria-pressed="true"]{background:var(--blue);border-color:#fff;color:#fff;box-shadow:0 0 0 2px var(--blue)}
+.cov{display:grid;grid-template-columns:44px repeat(4,minmax(0,1fr));gap:4px;align-items:stretch}.cov>div{border-radius:8px;padding:6px 2px;text-align:center;font-size:13px;background:var(--panel2);min-width:0;overflow:hidden;overflow-wrap:anywhere}
+.cov .mn{font-weight:700;color:var(--muted);display:flex;align-items:center;justify-content:center}.cov .c{border:1px solid var(--line)}.cov .c.red{border-color:var(--red)}.cov .c.blue{border-color:var(--blue)}
+.cov .c.ok{background:color-mix(in srgb,var(--ok) 30%,var(--panel2))}.cov .c.dup{background:color-mix(in srgb,var(--warn) 45%,var(--panel2))}.cov .c.miss{cursor:pointer}.cov small{color:var(--muted);font-size:11px}
+.pairs{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tap .pairs .btn{min-height:78px;font-size:16px}
+.btn.pollen{border-color:#e0c200;background:color-mix(in srgb,#FFF200 20%,var(--panel2))}.btn.nectar{border-color:#e08a2e;background:color-mix(in srgb,#e08a2e 24%,var(--panel2))}
+.btn.pollen.strong{background:#FFF200;color:#121316;border-color:#FFF200}.btn.nectar.strong{background:#e08a2e;color:#121316;border-color:#e08a2e}
+#schedQrBox{display:flex;justify-content:center;background:#fff;border-radius:12px;padding:12px}#schedQrBox svg{width:min(80vw,360px);height:auto}
+.endg{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border:1px dashed var(--line);border-radius:12px;padding:8px}.endg h3{grid-column:1/-1;margin:0;font-size:13px;letter-spacing:.08em;color:var(--muted)}.endg #bTPark{grid-column:1/-1}
+.tap.late .endg{order:-3;border:2px solid var(--red)}.tap.late .endg h3{color:var(--red)}.tap.late .endg .btn{min-height:84px}.tap.late .pairs{order:-2}
+.timer{position:sticky;top:0;z-index:5;background:var(--panel);padding:6px 0;align-items:center}.timer #mUndo{min-height:48px;padding:8px 18px;font-size:16px;font-weight:700}
+#startField{touch-action:none;user-select:none;-webkit-user-select:none;outline:0}#startField svg{cursor:grab}
+#startFs,#startFlip{white-space:nowrap}#startClose,#tlClose{display:none}.fsx{position:fixed;top:10px;right:10px;z-index:101;min-height:44px;padding:8px 16px;font-weight:700}
+#startWrap.fs{position:fixed;inset:0;z-index:100;background:var(--bg);padding:10px;overflow:auto;display:flex;flex-direction:column;align-items:center}
+#startWrap.fs #startField{width:100%;display:flex;justify-content:center}#startWrap.fs #startField svg{max-width:none;width:min(100%,calc((100vh - 200px)*640/520))}
+#startWrap.fs .row{max-width:min(100%,calc((100vh - 200px)*640/520));width:100%}#startWrap.fs #startClose{display:inline-flex}#startWrap.fs #startFs{display:none}
+.sum .stats{grid-template-columns:repeat(4,1fr)}.sum h3{margin:12px 0 6px;font-size:13px;letter-spacing:.08em;color:var(--muted)}.sum svg{width:100%;height:auto;display:block;border-radius:10px}
+.tlwrap{margin-top:4px}.tlhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.tlhead h3{margin:12px 0 6px}.tlscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tlwrap .tdot{cursor:pointer}.tlpanel{background:var(--panel2);border-radius:10px;padding:10px;margin-top:8px}.tlpanel .ttl{font-weight:600;margin-bottom:8px}.tlpanel .btns{display:flex;flex-wrap:wrap;gap:6px}.tlpanel .btn.small{min-height:36px;padding:4px 12px;font-size:14px}
+.tl .edit{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.tl .edit label{margin:0}.tl .edit .row{grid-column:1/-1}
+.tlwrap.fs{position:fixed;inset:0;z-index:100;background:var(--bg);padding:10px;overflow:auto;margin:0}.tlwrap.fs #tlClose{display:inline-flex}.tlwrap.fs #tlOpen{display:none}.sum .tlwrap.fs .tlscroll svg{width:max(100%,1700px)}
+#startField{margin-top:6px}#startField svg{width:100%;max-width:440px;height:auto;display:block;touch-action:manipulation;border-radius:10px}#startField text{font-family:system-ui,sans-serif;pointer-events:none}
+</style>
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"></head>
+<body>
+<header><b>Lebob Scout</b><span class="muted" id="hdrEvent"></span><span class="pill" id="hdrQueue"></span></header>
+<nav id="tabs">
+  <button data-tab="match" aria-current="true">Match</button>
+  <button data-tab="coverage">Coverage</button>
+  <button data-tab="pit">Pit</button>
+  <button data-tab="breakage">Breakage</button>
+  <button data-tab="sync">Sync</button>
+  <button data-tab="settings">Settings</button>
+</nav>
+<main>
+<!-- MATCH -->
+<section id="tab-match" class="on">
+  <div class="card" id="mSetup">
+    <h2>Match setup</h2>
+    <div class="row">
+      <div><label for="mNum">Qual match #</label><input id="mNum" type="number" inputmode="numeric" min="1"><select id="mSel" class="hidden"></select></div>
+      <div><label for="mTeam">Team #</label><input id="mTeam" type="number" inputmode="numeric" min="1"></div>
+    </div>
+    <div class="pick hidden" id="mPick"></div>
+    <label>Alliance</label>
+    <div class="seg"><button class="btn redA" data-alliance="RED" aria-pressed="false">Red</button><button class="btn blueA" data-alliance="BLUE" aria-pressed="false">Blue</button></div>
+    <label>Start position</label><input type="hidden" id="mStart"><input type="hidden" id="mStartV">
+    <div id="startWrap">
+    <div id="startField" tabindex="0" aria-label="Start position: drag the dot along your wall, or use the arrow keys"></div>
+    <div class="row" style="align-items:center;margin-top:6px"><p class="muted" id="startCap" style="flex:1;margin:0"></p><button type="button" class="btn small" id="startFlip">Rotate view</button><button type="button" class="btn small" id="startFs">⛶ Fullscreen</button></div>
+    <button type="button" class="btn primary fsx" id="startClose">✕ Exit fullscreen</button>
+    </div>
+    <p class="muted" id="mHint"></p>
+    
+    <button class="btn primary wide" id="mGo">Start match timer</button>
+  </div>
+  <div class="card hidden" id="mLive">
+    <div class="timer"><span class="phase" id="mPhase">AUTO</span><span class="clock" id="mClock">0:30</span><button class="btn small" id="mUndo">Undo</button></div>
+    <div class="stats"><div><b id="sAuto">0</b><span>AUTO scored</span></div><div><b id="sTele">0</b><span>HIVE scored</span></div><div><b id="sMiss">0</b><span>missed</span></div><div><b id="sCyc">–</b><span>cycle s</span></div></div>
+    <p class="lastev" id="mLast" aria-live="polite">Tap the buttons as things happen.</p>
+    <div id="autoPad" class="tap" style="margin-top:12px">
+      <button class="btn toggle" id="bLeave" aria-pressed="false">LEAVE<small>off wall</small></button>
+      <button class="btn pollen strong" data-ev="auto-score" data-piece="pollen">+ Scored<small>POLLEN</small></button>
+      <button class="btn" data-ev="auto-miss">+ Missed</button>
+      <button class="btn pollen" data-ev="auto-intake-garden" data-piece="pollen">Intake<small>POLLEN · GARDEN</small></button>
+      <button class="btn pollen" data-ev="auto-intake-flower" data-piece="pollen">Intake<small>POLLEN · FLOWER</small></button>
+      <button class="btn toggle" id="bAPark" aria-pressed="false">AUTO PARK</button>
+      <button class="btn toggle" id="bAutoOk" aria-pressed="true">Auto as planned</button>
+      <button class="btn" id="bSkipAuto">Skip to TELEOP</button>
+    </div>
+    <div id="telePad" class="tap hidden" style="margin-top:12px">
+      <div class="pairs">
+        <button class="btn pollen" data-ev="intake-ground" data-piece="pollen">Intake<small>POLLEN · GROUND</small></button>
+        <button class="btn nectar" data-ev="intake-ground" data-piece="nectar">Intake<small>NECTAR · GROUND</small></button>
+        <button class="btn pollen" data-ev="intake-flower" data-piece="pollen">Intake<small>POLLEN · FLOWER</small></button>
+        <button class="btn nectar" data-ev="intake-flower" data-piece="nectar">Intake<small>NECTAR · FLOWER</small></button>
+        <button class="btn pollen strong" data-ev="score" data-piece="pollen">Score<small>POLLEN · HIVE</small></button>
+        <button class="btn nectar strong" data-ev="score" data-piece="nectar">Score<small>NECTAR · HIVE</small></button>
+      </div>
+      
+      <button class="btn" data-ev="miss">Miss</button>
+      <button class="btn hold" id="bDef" aria-pressed="false">Defending<small>tap on/off</small></button>
+      <button class="btn hold" id="bDefd" aria-pressed="false">Defended<small>tap on/off</small></button>
+      <button class="btn" data-ev="garden">GARDEN +1<small>element in GARDEN</small></button>
+      <button class="btn" data-ev="minor">+ Minor foul</button>
+      <button class="btn" data-ev="major">+ Major foul</button>
+      <button class="btn toggle" id="bBroke" aria-pressed="false">Broke down</button>
+      <div class="endg">
+        <h3>ENDGAME · last 60 s</h3>
+        <button class="btn" data-ev="flower-nectar">NECTAR<small>into FLOWER</small></button>
+        <button class="btn" data-ev="flower-pollen">POLLEN<small>into FLOWER</small></button>
+        <button class="btn toggle" id="bTPark" aria-pressed="false">TELEOP PARK</button>
+      </div>
+      <button class="btn" id="bEnd">End match</button>
+    </div>
+  </div>
+  <div class="card hidden" id="mPost">
+    <h2>After the match</h2>
+    <div class="sum" id="mSummary"></div>
+    <div class="row"><div><label for="pPiece">Pieces scored</label><select id="pPiece"><option value="pollen">POLLEN</option><option value="nectar">NECTAR</option><option value="both">Both</option><option value="none">None</option></select></div>
+    <div><label for="pZone">Shot from</label><select id="pZone"></select></div></div>
+    <label for="pAutoPath">AUTO path / notes</label><input id="pAutoPath" placeholder="e.g. shot 4 from near wall, swept GARDEN">
+    <label for="pZones">Preferred zones (multi)</label><select id="pZones" multiple size="4"></select>
+    <div class="row"><div><label for="pDefType">Defence type</label><select id="pDefType"></select></div><div><label for="pDefTarget">Defended team #</label><input id="pDefTarget" type="number" inputmode="numeric"></div></div>
+    <label>Defence effect</label><div class="seg" id="pDefEff"></div>
+    <div class="row"><div><label for="pReact">When defended they…</label><select id="pReact"></select></div><div><label for="pFoulTypes">Foul types</label><input id="pFoulTypes" placeholder="pin, loading zone…"></div></div>
+    <label>Driver skill (1 weak – 5 elite)</label><div class="seg" id="pSkill"></div>
+    <div class="row"><div><label for="pSide">Side of field</label><select id="pSide"><option value="">–</option><option>left</option><option>right</option><option>both</option></select></div><div><label for="pChanged">Changed plan when blocked</label><select id="pChanged"><option value="">–</option><option value="true">Yes</option><option value="false">No</option></select></div></div>
+    <label for="pCoord">Coordination with partner</label><input id="pCoord" placeholder="e.g. each cycled one side">
+    <label for="pNotes">Notes (reliability, anything odd)</label><textarea id="pNotes"></textarea>
+    <div class="row" style="margin-top:12px"><button class="btn" id="pDiscard">Discard</button><button class="btn primary" id="pSave">Save report</button></div>
+  </div>
+  <div class="card"><h2>Saved on this phone</h2><div class="list" id="mList"></div></div>
+</section>
+
+<!-- COVERAGE -->
+<section id="tab-coverage"><div class="card"><h2>Coverage</h2>
+  <p class="muted">Which robots in which matches have a report on this phone. On the lead's phone that is everything collected so far. Tap a missing cell to start that match.</p>
+  <p id="covSum"></p>
+  <label style="display:flex;gap:8px;align-items:center;color:var(--fg)"><input type="checkbox" id="covGaps" style="width:auto"> Only matches with gaps</label>
+  <div id="covGrid" class="cov" style="margin-top:10px"></div>
+</div></section>
+
+<!-- PIT -->
+<section id="tab-pit"><form class="card" id="fPit"><h2>Pit scouting</h2>
+  <div class="row"><div><label>Team #</label><input name="teamNumber" type="number" inputmode="numeric" required></div><div><label>Drivetrain</label><select name="drivetrain" data-enum="DRIVETRAINS"></select></div></div>
+  <label>Robot archetype</label><select name="archetype" data-enum="ARCHETYPES"></select>
+  <div class="row3"><div><label>HIVE</label><select name="canHive" data-bool></select></div><div><label>FLOWER</label><select name="canFlower" data-bool></select></div><div><label>NECTAR</label><select name="canNectar" data-bool></select></div></div>
+  <div class="row3"><div><label>Floor intake</label><select name="canFloorIntake" data-bool></select></div><div><label>FLOWER intake</label><select name="canFlowerIntake" data-bool></select></div><div><label>Plays defence</label><select name="canDefend" data-bool></select></div></div>
+  <div class="row3"><div><label>AUTO leave</label><select name="autoLeave" data-bool></select></div><div><label>AUTO park</label><select name="autoPark" data-bool></select></div><div><label>AUTO TIPS claimed</label><input name="autoTipsClaimed" type="number" step="0.5" inputmode="decimal"></div></div>
+  <label>AUTO routines they have</label><input name="autoRoutines" placeholder="e.g. 4-ball near, park-only">
+  <div class="row"><div><label>Preferred start</label><select name="preferredStart" data-enum="START_POSITIONS"></select></div><div><label>Claimed cycle (s)</label><input name="claimedCycleSeconds" type="number" inputmode="decimal"></div></div>
+  <label>Claimed TIPS / match</label><input name="claimedTipsPerMatch" type="number" step="0.5" inputmode="decimal">
+  <div class="row"><div><label>Height (in)</label><input name="heightInches" type="number" inputmode="decimal"></div><div><label>Weight (kg)</label><input name="weightKg" type="number" inputmode="decimal"></div></div>
+  <label>Known issues</label><input name="knownIssues"><label>Notes</label><textarea name="notes"></textarea>
+  <button class="btn primary wide" style="margin-top:12px">Save pit report</button></form>
+  <div class="card"><h2>Saved</h2><div class="list" id="pitList"></div></div></section>
+
+<!-- BREAKAGE -->
+<section id="tab-breakage"><form class="card" id="fBreak"><h2>Breakage (ours or theirs)</h2>
+  <div class="row"><div><label>Team #</label><input name="teamNumber" type="number" inputmode="numeric" required></div><div><label>Match # (blank = practice/pit)</label><input name="matchNumber" type="number" inputmode="numeric"></div></div>
+  <div class="row"><div><label>Phase</label><select name="phase" data-enum="PHASES"></select></div><div><label>Field location</label><select name="fieldLocation" data-enum="FIELD_ZONES"></select></div></div>
+  <div class="row"><div><label>Mechanism</label><input name="mechanism" placeholder="intake, launcher, drive…"></div><div><label>Component</label><input name="component" placeholder="belt, servo horn…"></div></div>
+  <div class="row"><div><label>Failure type</label><select name="failureType" data-enum="FAILURE_TYPES"></select></div><div><label>Severity</label><select name="severity"><option value="0">0 no effect</option><option value="1">1 brief, self-recovered</option><option value="2">2 reduced / lost cycles</option><option value="3">3 unavailable for a while</option><option value="4">4 immobilised / match over</option></select></div></div>
+  <label>Symptoms (what you saw)</label><input name="symptoms"><label>Robot was doing…</label><input name="actionBefore">
+  <div class="row"><div><label>Suspected cause</label><select name="cause" data-enum="CAUSES"></select></div><div><label>Confidence</label><select name="causeConfidence" data-enum="CONFIDENCE"></select></div></div>
+  <div class="row3"><div><label>Seconds lost</label><input name="lostSeconds" type="number" inputmode="numeric"></div><div><label>Recovered</label><select name="recovered" data-bool></select></div><div><label>Repair min</label><input name="repairMinutes" type="number" inputmode="numeric"></div></div>
+  <div class="row"><div><label>Happened before</label><select name="happenedBefore" data-bool></select></div><div><label>Recurrence</label><select name="recurrence"><option>unknown</option><option>low</option><option>medium</option><option>high</option></select></div></div>
+  <label>Fix applied</label><input name="fix"><label>Spare used</label><input name="spareUsed"><label>Evidence (photo name / video timestamp)</label><input name="evidence">
+  <button class="btn primary wide" style="margin-top:12px">Save breakage</button></form>
+  <div class="card"><h2>Saved</h2><div class="list" id="breakList"></div></div></section>
+
+<!-- SYNC -->
+<section id="tab-sync">
+  <div class="card"><h2>Send to the lead</h2>
+    <p class="muted">No Wi-Fi or hotspot needed (E301). Show each QR to the lead's phone, or export a file.</p>
+    <div class="row"><button class="btn primary" id="sQr">Show QR codes</button><button class="btn" id="sFile">Export file</button></div>
+    <div id="qrWrap" class="hidden" style="margin-top:12px"><div id="qrbox"></div><div class="row" style="margin-top:8px"><button class="btn" id="qrPrev">Prev</button><button class="btn" id="qrNext">Next</button></div><p class="muted" id="qrInfo"></p></div>
+    <button class="btn wide" style="margin-top:8px" id="sMark">Mark everything as sent</button>
+  </div>
+  <div class="card"><h2>Lead: collect</h2>
+    <div class="row"><button class="btn primary" id="lScan">Scan QR</button><label class="btn" style="margin:0">Import file<input type="file" id="lFile" accept=".json,application/json" class="hidden" multiple></label></div>
+    <video id="lVideo" class="hidden" playsinline muted></video>
+    <label for="lPaste">…or paste</label><textarea id="lPaste" placeholder="LBS2:… or exported JSON"></textarea>
+    <button class="btn wide" id="lPasteGo">Add pasted</button>
+    <p class="muted" id="lStatus"></p>
+    <h3 style="margin:14px 0 6px">Foundry import</h3>
+    <p class="muted">Export the collected scouting reports as a JSON file, then import that file into Foundry on the laptop. The export includes match, pit and breakage reports.</p>
+    <button class="btn primary wide" id="lExport">Export all reports for Foundry</button>
+    <p class="muted">On the Foundry laptop, use the scouting import workflow to load the exported <code>lebob-scouting-*.json</code> file and update the model.</p>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section id="tab-settings"><div class="card"><h2>This phone</h2>
+  <label for="cEvent">Event code</label><input id="cEvent" placeholder="AUPEQ" autocapitalize="characters">
+  <label for="cScout">Scout initials (no full names)</label><input id="cScout" maxlength="4" autocapitalize="characters">
+  <label for="cSched">Schedule (optional): paste lines "match,red1,red2,blue1,blue2"</label><textarea id="cSched" placeholder="1,1234,5678,9012,3456"></textarea>
+  <label for="cNames">Team names (optional): paste lines "number,name"</label><textarea id="cNames" placeholder="1234,Robo Bees"></textarea>
+  <div class="row" style="margin-top:8px"><label class="btn" style="margin:0">Import schedule file<input type="file" id="cSchedFile" accept=".json,.txt,.csv,application/json,text/plain" class="hidden"></label><button type="button" class="btn" id="cSchedQr">Share by QR</button></div>
+  <div id="schedQr" class="hidden" style="margin-top:12px"><div id="schedQrBox"></div><p class="muted" id="schedQrInfo"></p></div>
+  <p class="muted" id="cSchedInfo">To receive a schedule by QR, use Sync → Scan QR.</p>
+  <button class="btn primary wide" id="cSave">Save settings</button>
+  <p class="muted" id="cInfo"></p>
+  <button class="btn wide" id="cVib" style="margin-top:16px">Test vibration</button>
+  <p class="muted" id="cVibInfo"></p>
+  <button class="btn wide" id="cWipe" style="margin-top:16px">Delete all data on this phone</button>
+</div></section>
+</main>
+
+<script>/* qrcode-generator 1.4.4, (c) Kazuhiko Arase, MIT licence */
+var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(l=4*u+17),e(0,0),e(l-7,0),e(0,l-7),i(),o(),v(t,r),7<=u&&h(t),null==n&&(n=w(u,f,c)),d(n,r)}var u=t,f=y[r],g=null,l=0,n=null,c=[],s={},e=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||l<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||l<=r+n||(g[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},o=function(){for(var t=8;t<l-8;t+=1)null==g[t][6]&&(g[t][6]=t%2==0);for(var r=8;r<l-8;r+=1)null==g[6][r]&&(g[6][r]=r%2==0)},i=function(){for(var t=B.getPatternPosition(u),r=0;r<t.length;r+=1)for(var e=0;e<t.length;e+=1){var n=t[r],o=t[e];if(null==g[n][o])for(var i=-2;i<=2;i+=1)for(var a=-2;a<=2;a+=1)g[n+i][o+a]=-2==i||2==i||-2==a||2==a||0==i&&0==a}},h=function(t){for(var r=B.getBCHTypeNumber(u),e=0;e<18;e+=1){var n=!t&&1==(r>>e&1);g[Math.floor(e/3)][e%3+l-8-3]=n}for(e=0;e<18;e+=1){n=!t&&1==(r>>e&1);g[e%3+l-8-3][Math.floor(e/3)]=n}},v=function(t,r){for(var e=f<<3|r,n=B.getBCHTypeInfo(e),o=0;o<15;o+=1){var i=!t&&1==(n>>o&1);o<6?g[o][8]=i:o<8?g[o+1][8]=i:g[l-15+o][8]=i}for(o=0;o<15;o+=1){i=!t&&1==(n>>o&1);o<8?g[8][l-o-1]=i:o<9?g[8][15-o-1+1]=i:g[8][15-o-1]=i}g[l-8][8]=!t},d=function(t,r){for(var e=-1,n=l-1,o=7,i=0,a=B.getMaskFunction(r),u=l-1;0<u;u-=2)for(6==u&&(u-=1);;){for(var f=0;f<2;f+=1)if(null==g[n][u-f]){var c=!1;i<t.length&&(c=1==(t[i]>>>o&1)),a(n,u-f)&&(c=!c),g[n][u-f]=c,-1==(o-=1)&&(i+=1,o=7)}if((n+=e)<0||l<=n){n-=e,e=-e;break}}},w=function(t,r,e){for(var n=b.getRSBlocks(t,r),o=M(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=C(i[u],l.getLength()-1).mod(l);a[u]=new Array(l.getLength()-1);for(g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=0<=s?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};s.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=x(t);break;case"Alphanumeric":e=m(t);break;case"Byte":e=L(t);break;case"Kanji":e=D(t);break;default:throw"mode:"+r}c.push(e),n=null},s.isDark=function(t,r){if(t<0||l<=t||r<0||l<=r)throw t+","+r;return g[t][r]},s.getModuleCount=function(){return l},s.make=function(){if(u<1){for(var t=1;t<40;t++){for(var r=b.getRSBlocks(t,f),e=M(),n=0;n<c.length;n++){var o=c[n];e.put(o.getMode(),4),e.put(o.getLength(),B.getLengthInBits(o.getMode(),t)),o.write(e)}var i=0;for(n=0;n<r.length;n++)i+=r[n].dataCount;if(e.getLengthInBits()<=8*i)break}u=t}a(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){a(!0,e);var n=B.getLostPoint(s);(0==e||n<t)&&(t=n,r=e)}return r}())},s.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<s.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<s.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=s.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},s.createSvgTag=function(t,r,e,n){var o={};"object"==typeof t&&(t=(o=t).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,f,c=s.getModuleCount()*t+2*r,g="";for(f="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",g+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',g+=o.scalable?"":' width="'+c+'px" height="'+c+'px"',g+=' viewBox="0 0 '+c+" "+c+'" ',g+=' preserveAspectRatio="xMinYMin meet"',g+=n.text||e.text?' role="img" aria-labelledby="'+p([n.id,e.id].join(" ").trim())+'"':"",g+=">",g+=n.text?'<title id="'+p(n.id)+'">'+p(n.text)+"</title>":"",g+=e.text?'<description id="'+p(e.id)+'">'+p(e.text)+"</description>":"",g+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',g+='<path d="',a=0;a<s.getModuleCount();a+=1)for(u=a*t+r,i=0;i<s.getModuleCount();i+=1)s.isDark(a,i)&&(g+="M"+(i*t+r)+","+u+f);return g+='" stroke="transparent" fill="black"/>',g+="</svg>"},s.createDataURL=function(o,t){o=o||2,t=void 0===t?4*o:t;var r=s.getModuleCount()*o+2*t,i=t,a=r-t;return I(r,r,function(t,r){if(i<=t&&t<a&&i<=r&&r<a){var e=Math.floor((t-i)/o),n=Math.floor((r-i)/o);return s.isDark(n,e)?0:1}return 1})},s.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=s.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=s.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=p(e),o+='"'),o+="/>"};var p=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return s.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*s.getModuleCount()+2*t,u=t,f=a-t,c={"██":"█","█ ":"▀"," █":"▄","  ":" "},g={"██":"▀","█ ":"▀"," █":" ","  ":" "},l="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<f&&u<=r&&r<f&&s.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<f&&u<=r+1&&r+1<f&&s.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",l+=t<1&&f<=r+1?g[i]:c[i];l+="\n"}return a%2&&0<t?l.substring(0,l.length-a-1)+Array(1+a).join("▀"):l.substring(0,l.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=s.getModuleCount()*t+2*r,u=r,f=a-r,c=Array(t+1).join("██"),g=Array(t+1).join("  "),l="",h="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),h="",n=0;n<a;n+=1)i=1,u<=n&&n<f&&u<=e&&e<f&&s.isDark(o,Math.floor((n-u)/t))&&(i=0),h+=i?c:g;for(o=0;o<t;o+=1)l+=h+"\n"}return l.substring(0,l.length-1)},s.renderTo2dContext=function(t,r){r=r||2;for(var e=s.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=s.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},s}i.stringToBytes=(i.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,i.createStringToBytes=function(u,f){var i=function(){function t(){var t=r.read();if(-1==t)throw"eof";return t}for(var r=S(u),e=0,n={};;){var o=r.read();if(-1==o)break;var i=t(),a=t()<<8|t();n[String.fromCharCode(o<<8|i)]=a,e+=1}if(e!=f)throw e+" != "+f;return n}(),a="?".charCodeAt(0);return function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);if(n<128)r.push(n);else{var o=i[t.charAt(e)];"number"==typeof o?(255&o)==o?r.push(o):(r.push(o>>>8),r.push(255&o)):r.push(a)}}return r}};var r,t,a=1,u=2,o=4,f=8,y={L:1,M:0,Q:3,H:2},e=0,n=1,c=2,g=3,l=4,h=5,s=6,v=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],(t={}).getBCHTypeInfo=function(t){for(var r=t<<10;0<=d(r)-d(1335);)r^=1335<<d(r)-d(1335);return 21522^(t<<10|r)},t.getBCHTypeNumber=function(t){for(var r=t<<12;0<=d(r)-d(7973);)r^=7973<<d(r)-d(7973);return t<<12|r},t.getPatternPosition=function(t){return r[t-1]},t.getMaskFunction=function(t){switch(t){case e:return function(t,r){return(t+r)%2==0};case n:return function(t,r){return t%2==0};case c:return function(t,r){return r%3==0};case g:return function(t,r){return(t+r)%3==0};case l:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case h:return function(t,r){return t*r%2+t*r%3==0};case s:return function(t,r){return(t*r%2+t*r%3)%2==0};case v:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},t.getErrorCorrectPolynomial=function(t){for(var r=C([1],0),e=0;e<t;e+=1)r=r.multiply(C([1,w.gexp(e)],0));return r},t.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case o:case f:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case o:return 16;case f:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case o:return 16;case f:return 12;default:throw"mode:"+t}}},t.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);5<i&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},t);function d(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r}var w=function(){for(var r=new Array(256),e=new Array(256),t=0;t<8;t+=1)r[t]=1<<t;for(t=8;t<256;t+=1)r[t]=r[t-4]^r[t-5]^r[t-6]^r[t-8];for(t=0;t<255;t+=1)e[r[t]]=t;var n={glog:function(t){if(t<1)throw"glog("+t+")";return e[t]},gexp:function(t){for(;t<0;)t+=255;for(;256<=t;)t-=255;return r[t]}};return n}();function C(n,o){if(void 0===n.length)throw n.length+"/"+o;var r=function(){for(var t=0;t<n.length&&0==n[t];)t+=1;for(var r=new Array(n.length-t+o),e=0;e<n.length-t;e+=1)r[e]=n[e+t];return r}(),i={getAt:function(t){return r[t]},getLength:function(){return r.length},multiply:function(t){for(var r=new Array(i.getLength()+t.getLength()-1),e=0;e<i.getLength();e+=1)for(var n=0;n<t.getLength();n+=1)r[e+n]^=w.gexp(w.glog(i.getAt(e))+w.glog(t.getAt(n)));return C(r,0)},mod:function(t){if(i.getLength()-t.getLength()<0)return i;for(var r=w.glog(i.getAt(0))-w.glog(t.getAt(0)),e=new Array(i.getLength()),n=0;n<i.getLength();n+=1)e[n]=i.getAt(n);for(n=0;n<t.getLength();n+=1)e[n]^=w.gexp(w.glog(t.getAt(n))+r);return C(e,0).mod(t)}};return i}function p(){var e=[],o={writeByte:function(t){e.push(255&t)},writeShort:function(t){o.writeByte(t),o.writeByte(t>>>8)},writeBytes:function(t,r,e){r=r||0,e=e||t.length;for(var n=0;n<e;n+=1)o.writeByte(t[n+r])},writeString:function(t){for(var r=0;r<t.length;r+=1)o.writeByte(t.charCodeAt(r))},toByteArray:function(){return e},toString:function(){var t="";t+="[";for(var r=0;r<e.length;r+=1)0<r&&(t+=","),t+=e[r];return t+="]"}};return o}var k,A,b=(k=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],(A={}).getRSBlocks=function(t,r){var e=function(t,r){switch(r){case y.L:return k[4*(t-1)+0];case y.M:return k[4*(t-1)+1];case y.Q:return k[4*(t-1)+2];case y.H:return k[4*(t-1)+3];default:return}}(t,r);if(void 0===e)throw"bad rs block @ typeNumber:"+t+"/errorCorrectionLevel:"+r;for(var n,o,i=e.length/3,a=[],u=0;u<i;u+=1)for(var f=e[3*u+0],c=e[3*u+1],g=e[3*u+2],l=0;l<f;l+=1)a.push((n=g,o=void 0,(o={}).totalCount=c,o.dataCount=n,o));return a},A),M=function(){var e=[],n=0,o={getBuffer:function(){return e},getAt:function(t){var r=Math.floor(t/8);return 1==(e[r]>>>7-t%8&1)},put:function(t,r){for(var e=0;e<r;e+=1)o.putBit(1==(t>>>r-e-1&1))},getLengthInBits:function(){return n},putBit:function(t){var r=Math.floor(n/8);e.length<=r&&e.push(0),t&&(e[r]|=128>>>n%8),n+=1}};return o},x=function(t){var r=a,n=t,e={getMode:function(){return r},getLength:function(t){return n.length},write:function(t){for(var r=n,e=0;e+2<r.length;)t.put(o(r.substring(e,e+3)),10),e+=3;e<r.length&&(r.length-e==1?t.put(o(r.substring(e,e+1)),4):r.length-e==2&&t.put(o(r.substring(e,e+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return e},m=function(t){var r=u,n=t,e={getMode:function(){return r},getLength:function(t){return n.length},write:function(t){for(var r=n,e=0;e+1<r.length;)t.put(45*o(r.charAt(e))+o(r.charAt(e+1)),11),e+=2;e<r.length&&t.put(o(r.charAt(e)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return e},L=function(t){var r=o,e=i.stringToBytes(t),n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=0;r<e.length;r+=1)t.put(e[r],8)}};return n},D=function(t){var r=f,e=i.stringToBytesFuncs.SJIS;if(!e)throw"sjis not supported.";!function(){var t=e("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=e(t),n={getMode:function(){return r},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return n},S=function(t){var e=t,n=0,o=0,i=0,r={read:function(){for(;i<8;){if(n>=e.length){if(0==i)return-1;throw"unexpected end of file./"+i}var t=e.charAt(n);if(n+=1,"="==t)return i=0,-1;t.match(/^\s$/)||(o=o<<6|a(t.charCodeAt(0)),i+=6)}var r=o>>>i-8&255;return i-=8,r}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return r},I=function(t,r,e){for(var n=function(t,r){var n=t,o=r,l=new Array(t*r),e={setPixel:function(t,r,e){l[r*n+t]=e},write:function(t){t.writeString("GIF87a"),t.writeShort(n),t.writeShort(o),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(n),t.writeShort(o),t.writeByte(0);var r=i(2);t.writeByte(2);for(var e=0;255<r.length-e;)t.writeByte(255),t.writeBytes(r,e,255),e+=255;t.writeByte(r.length-e),t.writeBytes(r,e,r.length-e),t.writeByte(0),t.writeString(";")}},i=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,o=h(),i=0;i<r;i+=1)o.add(String.fromCharCode(i));o.add(String.fromCharCode(r)),o.add(String.fromCharCode(e));var a=p(),u=function(t){var e=t,n=0,o=0,r={write:function(t,r){if(t>>>r!=0)throw"length over";for(;8<=n+r;)e.writeByte(255&(t<<n|o)),r-=8-n,t>>>=8-n,n=o=0;o|=t<<n,n+=r},flush:function(){0<n&&e.writeByte(o)}};return r}(a);u.write(r,n);var f=0,c=String.fromCharCode(l[f]);for(f+=1;f<l.length;){var g=String.fromCharCode(l[f]);f+=1,o.contains(c+g)?c+=g:(u.write(o.indexOf(c),n),o.size()<4095&&(o.size()==1<<n&&(n+=1),o.add(c+g)),c=g)}return u.write(o.indexOf(c),n),u.write(e,n),u.flush(),a.toByteArray()},h=function(){var r={},e=0,n={add:function(t){if(n.contains(t))throw"dup key:"+t;r[t]=e,e+=1},size:function(){return e},indexOf:function(t){return r[t]},contains:function(t){return void 0!==r[t]}};return n};return e}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=p();n.write(a);for(var u=function(){function e(t){a+=String.fromCharCode(r(63&t))}var n=0,o=0,i=0,a="",t={},r=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return t.writeByte=function(t){for(n=n<<8|255&t,o+=8,i+=1;6<=o;)e(n>>>o-6),o-=6},t.flush=function(){if(0<o&&(e(n<<6-o),o=n=0),i%3!=0)for(var t=3-i%3,r=0;r<t;r+=1)a+="="},t.toString=function(){return a},t}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return i}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||57344<=n?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});</script>
+<script>
+"use strict";
+const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
+const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
+const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
+
+// ---------- storage (survives private mode by falling back to memory) ----------
+const mem = {};
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("lbs:" + k); return v == null ? (k in mem ? mem[k] : d) : JSON.parse(v); } catch (e) { return k in mem ? mem[k] : d; } },
+  set(k, v) { mem[k] = v; try { localStorage.setItem("lbs:" + k, JSON.stringify(v)); } catch (e) {} }
+};
+const settings = () => store.get("settings", {eventCode: "AUPEQ", scout: "", device: uid().slice(0, 6), schedule: {}});
+function saveSettings(s) { store.set("settings", s); renderHeader(); }
+function uid() { return (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)).replace(/-/g, ""); }
+function nowIso() { return new Date().toISOString().slice(0, 19); }
+function records(table) { return store.get("t:" + table, []); }
+function putRecord(table, rec) {
+  const all = records(table).filter(r => r[CFG.pk[table]] !== rec[CFG.pk[table]]);
+  all.push(rec); store.set("t:" + table, all);
+  const q = store.get("unsent", []); if (!q.includes(table + "|" + rec[CFG.pk[table]])) q.push(table + "|" + rec[CFG.pk[table]]); store.set("unsent", q);
+  renderHeader(); renderLists();
+}
+
+// ---------- header / tabs ----------
+function renderHeader() {
+  const s = settings();
+  $("#hdrEvent").textContent = s.eventCode + (s.scout ? " · " + s.scout : "");
+  $("#hdrQueue").textContent = store.get("unsent", []).length + " unsent";
+}
+$$("#tabs button").forEach(b => b.addEventListener("click", () => {
+  $$("#tabs button").forEach(x => x.setAttribute("aria-current", x === b ? "true" : "false"));
+  $$("main section").forEach(sec => sec.classList.toggle("on", sec.id === "tab-" + b.dataset.tab));
+  try { sessionStorage.setItem("lbs:tab", b.dataset.tab); } catch (e) {}
+}));
+
+// ---------- form helpers ----------
+function fillSelect(sel, values, blank = true) {
+  sel.innerHTML = (blank ? '<option value="">–</option>' : "") + values.map(v => `<option value="${v}">${v}</option>`).join("");
+}
+$$("select[data-enum]").forEach(s => fillSelect(s, CFG.enums[s.dataset.enum]));
+$$("select[data-bool]").forEach(s => s.innerHTML = '<option value="">–</option><option value="true">Yes</option><option value="false">No</option>');
+fillSelect($("#pZone"), CFG.enums.FIELD_ZONES);
+fillSelect($("#pZones"), CFG.enums.FIELD_ZONES, false);
+fillSelect($("#pDefType"), CFG.enums.DEFENCE_TYPES, false);
+fillSelect($("#pReact"), CFG.enums.DEFENCE_REACTIONS, false);
+function scale(el, n, start = 1) {
+  el.innerHTML = Array.from({length: n}, (_, i) => `<button type="button" class="btn" aria-pressed="false" data-v="${i + start}">${i + start}</button>`).join("");
+  el.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; $$("button", el).forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); });
+}
+const scaleVal = el => { const b = $('button[aria-pressed="true"]', el); return b ? Number(b.dataset.v) : null; };
+scale($("#pDefEff"), 4, 0); scale($("#pSkill"), 5);
+
+function typed(table, field, raw) {
+  const t = CFG.fields[table][field];
+  if (raw === "" || raw == null) return null;
+  if (t === "integer" || t === "long") { const n = parseInt(raw, 10); return isNaN(n) ? null : n; }
+  if (t === "double") { const n = parseFloat(raw); return isNaN(n) ? null : n; }
+  if (t === "boolean") return raw === true || raw === "true";
+  return String(raw);
+}
+function formRecord(form, table) {
+  const s = settings(), rec = {};
+  for (const el of form.elements) if (el.name) rec[el.name] = typed(table, el.name, el.value);
+  $$("[data-scale]", form).forEach(el => rec[el.dataset.scale] = scaleVal(el));
+  if ("eventCode" in CFG.fields[table]) rec.eventCode = s.eventCode;
+  if ("scout" in CFG.fields[table]) rec.scout = s.scout || null;
+  if ("reporter" in CFG.fields[table]) rec.reporter = s.scout || null;
+  if ("createdAt" in CFG.fields[table]) rec.createdAt = nowIso();
+  if ("updatedAt" in CFG.fields[table]) rec.updatedAt = nowIso();
+  rec[CFG.pk[table]] = `${s.device}-${uid().slice(0, 10)}`;
+  return rec;
+}
+function wireForm(id, table, after) {
+  $(id).addEventListener("submit", e => {
+    e.preventDefault();
+    const rec = formRecord(e.target, table);
+    if (table === "scout_breakages" && rec.matchNumber) rec.matchKey = `${settings().eventCode}-q${rec.matchNumber}`;
+    delete rec.matchNumber;
+    putRecord(table, rec); e.target.reset();
+    buzz([40, 60, 120]);
+    const btn = e.target.querySelector("button:not([type=button])"); if (btn) { const t = btn.textContent; btn.textContent = "Saved ✓"; setTimeout(() => btn.textContent = t, 1500); }
+    if (after) after(rec);
+  });
+}
+wireForm("#fPit", "scout_pit_reports"); wireForm("#fBreak", "scout_breakages");
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const teamName = n => (settings().names || {})[n] || "";
+const tl = n => n == null ? "?" : n + (teamName(n) ? " " + esc(teamName(n)) : "");
+function renderLists() {
+  const unsent = new Set(store.get("unsent", []));
+  const line = (table, r, text) => {
+    const id = r[CFG.pk[table]], u = unsent.has(table + "|" + id);
+    return `<div class="item"><span class="txt">${text}</span><span class="acts"><span class="${u ? "muted" : "okc"}">${u ? "unsent" : "sent"}</span><button type="button" class="btn small" data-act="edit" data-t="${table}" data-id="${esc(id)}">Edit</button><button type="button" class="btn small" data-act="del" data-t="${table}" data-id="${esc(id)}">Delete</button></span></div>`;
+  };
+  $("#mList").innerHTML = records("scout_match_reports").slice(-30).reverse().map(r => line("scout_match_reports", r, `Q${r.matchNumber} · ${tl(r.teamNumber)} · ${r.hiveScored ?? 0} scored`)).join("") || '<span class="muted">None yet</span>';
+  $("#pitList").innerHTML = records("scout_pit_reports").slice(-30).reverse().map(r => line("scout_pit_reports", r, `${tl(r.teamNumber)} · ${esc(r.archetype || "")}`)).join("") || '<span class="muted">None yet</span>';
+  $("#breakList").innerHTML = records("scout_breakages").slice(-30).reverse().map(r => line("scout_breakages", r, `${tl(r.teamNumber)} · ${esc(r.component || r.mechanism || "")} · sev ${r.severity ?? "?"}`)).join("") || '<span class="muted">None yet</span>';
+  renderCoverage();
+}
+
+// edit / delete a saved report (an edit keeps its id and re-queues it, so a re-send overwrites the lead's copy)
+function editRecord(table, rec) {
+  const ask = (label, cur) => { const v = prompt(label, cur ?? ""); return v === null ? null : v.trim(); };
+  const upd = Object.assign({}, rec);
+  if (table === "scout_match_reports") {
+    const n = ask("Match number", rec.matchNumber); if (n === null) return;
+    const t = ask("Team number", rec.teamNumber); if (t === null) return;
+    const a = ask("Alliance (RED or BLUE)", rec.alliance); if (a === null) return;
+    const num = parseInt(n, 10), team = parseInt(t, 10), al = a.toUpperCase();
+    if (!num || !team || !["RED", "BLUE"].includes(al)) { alert("Needs a match number, a team number and RED or BLUE."); return; }
+    Object.assign(upd, {matchNumber: num, matchKey: `${rec.eventCode}-q${num}`, teamNumber: team, alliance: al});
+  } else {
+    const t = ask("Team number", rec.teamNumber); if (t === null) return;
+    const team = parseInt(t, 10); if (!team) { alert("Needs a team number."); return; }
+    upd.teamNumber = team;
+  }
+  if ("updatedAt" in CFG.fields[table]) upd.updatedAt = nowIso();
+  putRecord(table, upd);
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const table = b.dataset.t, id = b.dataset.id, pk = CFG.pk[table], rec = records(table).find(r => r[pk] === id); if (!rec) return;
+  if (b.dataset.act === "del") {
+    const sent = !store.get("unsent", []).includes(table + "|" + id);
+    if (!confirm("Delete this report?" + (sent ? "\nIt was already sent: the lead keeps their copy until they delete it too." : ""))) return;
+    store.set("t:" + table, records(table).filter(r => r[pk] !== id));
+    store.set("unsent", store.get("unsent", []).filter(k => k !== table + "|" + id));
+    renderHeader(); renderLists();
+  } else editRecord(table, rec);
+});
+
+// ---------- coverage: schedule vs reports ----------
+function renderCoverage() {
+  const s = settings(), nm = s.names || {}, sch = s.schedule, nums = Object.keys(sch).map(Number).sort((a, b) => a - b);
+  const grid = $("#covGrid"), sum = $("#covSum");
+  if (!nums.length) { grid.innerHTML = ""; sum.textContent = "Paste the match schedule in Settings to see which robots in which matches have a report."; return; }
+  const reps = records("scout_match_reports").filter(r => r.eventCode === s.eventCode), cnt = {};
+  for (const r of reps) { const k = r.matchNumber + "|" + r.teamNumber; cnt[k] = (cnt[k] || 0) + 1; }
+  const onlyGaps = $("#covGaps").checked;
+  let slots = 0, have = 0, dup = 0, rows = "";
+  for (const n of nums) {
+    const cells = sch[n].map((tm, i) => { const c = cnt[n + "|" + tm] || 0; slots++; if (c) have++; if (c > 1) dup++; return [tm, i, c]; });
+    if (onlyGaps && cells.every(([, , c]) => c === 1)) continue;
+    rows += `<div class="mn">Q${n}</div>` + cells.map(([tm, i, c]) => `<div class="c ${i < 2 ? "red" : "blue"} ${c === 0 ? "miss" : c > 1 ? "dup" : "ok"}" role="button" data-cm="${n}" data-ct="${tm}"><b>${tm}</b><br>${c === 0 ? "–" : c === 1 ? "✓" : "×" + c}${nm[tm] ? `<br><small>${esc(nm[tm])}</small>` : ""}</div>`).join("");
+  }
+  const stray = reps.filter(r => sch[r.matchNumber] && !sch[r.matchNumber].includes(r.teamNumber)).length, noSch = reps.filter(r => !sch[r.matchNumber]).length;
+  sum.textContent = `${have} of ${slots} robot-matches have a report · ${slots - have} missing · ${dup} with more than one` + (stray ? ` · ${stray} for a team not in that match (check team numbers)` : "") + (noSch ? ` · ${noSch} for matches not in the schedule` : "");
+  grid.innerHTML = rows || '<p class="muted" style="grid-column:1/-1">No gaps.</p>';
+}
+$("#covGaps").addEventListener("change", renderCoverage);
+$("#covGrid").addEventListener("click", e => {
+  const c = e.target.closest("[data-cm]"); if (!c || (M && !M.ended)) return;
+  $("#mNum").value = c.dataset.cm; $("#mTeam").value = c.dataset.ct;
+  $("#mNum").dispatchEvent(new Event("input")); $("#mTeam").dispatchEvent(new Event("input"));
+  $('#tabs button[data-tab="match"]').click();
+});
+
+// ---------- match scouting ----------
+let M = null, timerId = null;
+const AUTO = 30, TRANS = 8, TELE = 120, ENDGAME = 60;   // FLOWER scoring opens with 1:00 left (manual 10.5.2, G410)
+const isLate = () => elapsed() >= AUTO + TRANS + TELE - ENDGAME;
+$$("[data-alliance]").forEach(b => b.addEventListener("click", () => $$("[data-alliance]").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"))));
+// ---------- start position: G304 says the ROBOT starts on its own half, touching the perimeter wall,
+// not in the LOADING ZONE, not touching a FLOWER. So the only choice is a spot along that wall:
+// one slider, 0..200, running from the centre line on the LOADING side, round the outer wall, to the centre line on the GARDEN side.
+// Canonical frame = manual Figure 10-2 / 11-1 (RED left, x/y 0..1). BLUE is the same path turned 180°, so a zone means the same for both.
+let startV = null, startFlip = false, startSig = "";
+const SVW = 640, SVH = 520, SFX = 80, SFY = 20, SFS = 480;
+// slider units: 0-50 top wall (centre line -> corner), 50-150 outer wall, 150-200 bottom wall (corner -> centre line)
+// no-go (approximate, from the figures): FLOWER touch zones and the LOADING ZONE; the referee has the final say.
+const START_OK = [[0, 9], [23, 67], [83, 109], [123, 200]];
+const START_ZONES = [[0, 9, "loading-centre"], [23, 49, "loading-corner"], [50, 67, "outer-loading"], [83, 109, "outer-mid"], [123, 149, "outer-garden"], [150, 169, "garden-corner"], [170, 200, "garden-centre"]];
+const ZONE_TXT = {"loading-centre": "LOADING side, by the centre line", "loading-corner": "LOADING side, FLOWER to corner", "outer-loading": "outer wall, corner to LOADING ZONE",
+  "outer-mid": "outer wall, LOADING ZONE to FLOWER", "outer-garden": "outer wall, FLOWER to GARDEN corner", "garden-corner": "GARDEN corner", "garden-centre": "GARDEN side, by the centre line"};
+const startAlliance = () => ($('[data-alliance][aria-pressed="true"]') || {dataset: {}}).dataset.alliance || "";
+const startLegal = v => START_OK.some(([a, b]) => v >= a && v <= b);
+function startSnap(v) {
+  v = Math.max(0, Math.min(200, Math.round(v))); if (startLegal(v)) return v;
+  let best = 0, bd = 1e9; for (const [a, b] of START_OK) for (const c of [a, b]) if (Math.abs(c - v) < bd) { bd = Math.abs(c - v); best = c; }
+  return best;
+}
+const startZone = v => (START_ZONES.find(([a, b]) => v >= a && v <= b) || [])[2] || null;
+const zoneText = z => ZONE_TXT[z] || z;
+const startXY = v => v <= 50 ? {x: 0.5 - v / 100, y: 0} : v <= 150 ? {x: 0, y: v / 100 - 0.5} : {x: v / 100 - 1.5, y: 1};
+function startNearest(x, y) { let best = 0, bd = 1e9; for (let v = 0; v <= 200; v++) { const p = startXY(v), d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; best = v; } } return best; }
+function setStart(v) {
+  startV = v; $("#mStart").value = startZone(v) || ""; $("#mStartV").value = v; startSig = ""; drawStart();
+}
+function drawStart() {
+  const al = startAlliance();
+  const sig = al + "|" + startFlip + "|" + startV;
+  if (sig === startSig) return; startSig = sig;
+  const fl = startFlip, X = v => SFX + (fl ? 1 - v : v) * SFS, Y = v => SFY + (fl ? 1 - v : v) * SFS;
+  const R = (x0, y0, x1, y1, a) => `<rect x="${Math.min(X(x0), X(x1))}" y="${Math.min(Y(y0), Y(y1))}" width="${Math.abs(X(x1) - X(x0))}" height="${Math.abs(Y(y1) - Y(y0))}" ${a}/>`;
+  const T = (x, y, lines, a = "") => `<text x="${X(x)}" y="${Y(y) - (lines.length - 1) * 5.5}" text-anchor="middle" font-size="10" fill="#fff" ${a}>${lines.map((l, i) => `<tspan x="${X(x)}" dy="${i ? 11 : 0}">${l}</tspan>`).join("")}</text>`;
+  const RED = "#e5484d", BLUE = "#3e7bfa", col = al === "BLUE" ? BLUE : RED, turn = p => al === "BLUE" ? {x: 1 - p.x, y: 1 - p.y} : p;
+  let s = `<svg viewBox="0 0 ${SVW} ${SVH}" role="img" aria-label="Field diagram showing where the robot may start along its wall"><rect width="${SVW}" height="${SVH}" fill="#15161a"/>`;
+  s += R(-1 / 6, 0, 0, 1, `fill="${RED}" fill-opacity=".16"`) + R(1, 0, 7 / 6, 1, `fill="${BLUE}" fill-opacity=".16"`);
+  s += R(0, 0, 1, 1, 'fill="#3d404a" stroke="#9aa0ac" stroke-width="2"');
+  for (let i = 1; i < 6; i++) s += `<path d="M${X(i / 6)} ${Y(0)}V${Y(1)}M${X(0)} ${Y(i / 6)}H${X(1)}" stroke="#52555f" stroke-width="1"/>`;
+  s += R(0, 0.17, 0.1, 0.33, `fill="${RED}" fill-opacity=".14" stroke="${RED}" stroke-width="2"`) + T(0.05, 0.25, ["LOADING", "ZONE"], 'font-size="8"');
+  s += R(0.9, 0.67, 1, 0.83, `fill="${BLUE}" fill-opacity=".14" stroke="${BLUE}" stroke-width="2"`) + T(0.95, 0.75, ["LOADING", "ZONE"], 'font-size="8"');
+  s += R(-0.1, 0.45, -0.02, 0.55, `fill="${RED}"`) + R(1.02, 0.45, 1.1, 0.55, `fill="${BLUE}"`);
+  s += T(-1 / 12, 0.33, ["RED", "ALLIANCE", "AREA"], 'font-weight="700"') + T(1 + 1 / 12, 0.33, ["BLUE", "ALLIANCE", "AREA"], 'font-weight="700"');
+  s += R(0.35, 0.33, 0.49, 0.67, `fill="${RED}" fill-opacity=".35" stroke="${RED}" stroke-width="2" rx="8"`) + R(0.51, 0.33, 0.65, 0.67, `fill="${BLUE}" fill-opacity=".35" stroke="${BLUE}" stroke-width="2" rx="8"`) + T(0.42, 0.5, ["HIVE"]) + T(0.58, 0.5, ["HIVE"]);
+  s += R(0.01, 0.97, 0.19, 1, `fill="${RED}"`) + T(0.1, 0.94, ["RED GARDEN"], 'font-size="9"') + R(0.81, 0, 0.99, 0.03, `fill="${BLUE}"`) + T(0.9, 0.07, ["BLUE GARDEN"], 'font-size="9"');
+  for (const [fx, fy, dx, dy] of [[0.03, 0.66, 1, 0], [0.97, 0.33, -1, 0], [0.34, 0.02, 0, 1], [0.66, 0.98, 0, -1]]) {
+    const sx = fl ? -1 : 1, anchor = dx ? (dx * sx > 0 ? "start" : "end") : "middle";
+    s += `<circle cx="${X(fx)}" cy="${Y(fy)}" r="8" fill="#ffc107" stroke="#000" stroke-width="1"/><text x="${X(fx) + dx * sx * 13}" y="${Y(fy) + (dy ? dy * (fl ? -1 : 1) * 15 : 3)}" text-anchor="${anchor}" font-size="9" fill="#fff">FLOWER</text>`;
+  }
+  if (al) {
+    const mine = al === "RED" ? [0, 0.5] : [0.5, 1], other = al === "RED" ? [0.5, 1] : [0, 0.5];
+    s += R(other[0], 0, other[1], 1, 'fill="#000" fill-opacity=".5"');
+    const pts = []; for (let v = 0; v <= 200; v += 2) { const q = turn(startXY(v)); pts.push(`${X(q.x).toFixed(1)},${Y(q.y).toFixed(1)}`); }
+    s += `<polyline points="${pts.join(" ")}" fill="none" stroke="#e6e8ee" stroke-opacity=".55" stroke-width="3" stroke-linejoin="round"/>`;
+  }
+  if (startV !== null) { const q = turn(startXY(startV)); s += `<circle cx="${X(q.x)}" cy="${Y(q.y)}" r="15" fill="${col}" stroke="#fff" stroke-width="3"/><circle cx="${X(q.x)}" cy="${Y(q.y)}" r="3" fill="#fff"/>`; }
+  $("#startField").innerHTML = s + "</svg>";
+  $("#startCap").textContent = !al ? "Pick the alliance first." : startV === null ? `Drag the dot along your wall (or tap it). It snaps to a legal spot (G304).`
+    : `Start: ${zoneText(startZone(startV))}.`;
+}
+// tap on the diagram = nearest legal wall spot. x,y are 0..1 across the field as the scout sees it (before "Rotate view" is undone by the caller)
+function pickStart(x, y) {
+  const al = startAlliance(); if (!al || x < 0 || x > 1 || y < 0 || y > 1) return false;
+  const cx = al === "BLUE" ? 1 - x : x, cy = al === "BLUE" ? 1 - y : y;
+  if (cx > 0.5) return false;                       // other alliance's half
+  setStart(startSnap(startNearest(cx, cy))); return true;
+}
+let startDown = false;
+function startAt(e) {
+  const svg = $("#startField svg"); if (!svg) return;
+  const r = svg.getBoundingClientRect(); if (!r.width) return;
+  let x = ((e.clientX - r.left) / r.width * SVW - SFX) / SFS, y = ((e.clientY - r.top) / r.height * SVH - SFY) / SFS;
+  if (startFlip) { x = 1 - x; y = 1 - y; }
+  if (!pickStart(x, y) && startAlliance() && !startDown) $("#startCap").textContent = `That is the other alliance's half. Use the ${startAlliance()} half.`;
+}
+$("#startField").addEventListener("pointerdown", e => { startDown = true; startAt(e); });
+$("#startField").addEventListener("pointermove", e => { if (startDown) startAt(e); });
+addEventListener("pointerup", () => { startDown = false; }); addEventListener("pointercancel", () => { startDown = false; });
+$("#startField").addEventListener("click", e => { if (e.detail === 0 || !("PointerEvent" in window)) startAt(e); });   // pointer events cover touch and mouse; this is the fallback
+$("#startField").addEventListener("keydown", e => {
+  const d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0; if (!d || !startAlliance()) return;
+  e.preventDefault(); let v = startV === null ? (d > 0 ? -1 : 201) : startV; do v += d; while (v >= 0 && v <= 200 && !startLegal(v)); if (v >= 0 && v <= 200) setStart(v);
+});
+$("#startFlip").addEventListener("click", () => { startFlip = !startFlip; drawStart(); });
+function startFs(on) {
+  $("#startWrap").classList.toggle("fs", on);
+  try { if (on && $("#startWrap").requestFullscreen) $("#startWrap").requestFullscreen().catch(() => {}); else if (!on && document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+}
+$("#startFs").addEventListener("click", () => startFs(true));
+$("#startClose").addEventListener("click", () => startFs(false));
+addEventListener("keydown", e => { if (e.key === "Escape") { if ($("#startWrap").classList.contains("fs")) startFs(false); if (tlFs) { tlFs = false; if (M && M.ended) renderSummary(); } } });
+document.addEventListener("fullscreenchange", () => { if (!document.fullscreenElement) $("#startWrap").classList.remove("fs"); });
+document.addEventListener("click", () => setTimeout(drawStart, 0));
+drawStart();
+
+// once a schedule is loaded the match number is a dropdown; "Other…" brings the number box back (replays, practice)
+function nextMatch(nums) {
+  const s = settings(), mine = records("scout_match_reports").filter(r => r.eventCode === s.eventCode && (!s.scout || r.scout === s.scout)).map(r => r.matchNumber);
+  const last = mine.length ? Math.max(...mine) : 0;
+  return nums.find(n => n > last) ?? nums[0];
+}
+function syncMatchSel() {
+  const nums = Object.keys(settings().schedule).map(Number).sort((a, b) => a - b), sel = $("#mSel"), inp = $("#mNum");
+  if (!nums.length) { sel.classList.add("hidden"); inp.classList.remove("hidden"); return; }
+  if (sel.dataset.sig !== nums.join()) { sel.innerHTML = nums.map(n => `<option value="${n}">Q${n}</option>`).join("") + '<option value="">Other…</option>'; sel.dataset.sig = nums.join(); }
+  if (inp.value === "" && sel.dataset.other !== "1") inp.value = nextMatch(nums);
+  const inSch = nums.includes(Number(inp.value)), other = sel.dataset.other === "1" || !inSch;
+  sel.classList.remove("hidden"); sel.value = inSch && !other ? inp.value : "";
+  inp.classList.toggle("hidden", !other);
+}
+$("#mSel").addEventListener("change", e => {
+  const v = e.target.value; e.target.dataset.other = v === "" ? "1" : "";
+  $("#mNum").value = v; $("#mTeam").value = ""; suggestTeam();
+});
+function suggestTeam() {
+  syncMatchSel();
+  const s = settings(), n = $("#mNum").value, sch = s.schedule[n], box = $("#mPick"), nm = s.names || {}, t = Number($("#mTeam").value);
+  if (!sch) {
+    box.classList.add("hidden"); box.innerHTML = "";
+    let h = n && Object.keys(s.schedule).length ? `Q${n} is not in the schedule.` : "";
+    if (nm[t]) h += (h ? " " : "") + `${t} = ${nm[t]}`;
+    $("#mHint").textContent = h; return;
+  }
+  box.innerHTML = sch.map((tm, i) => `<button type="button" class="btn ${i < 2 ? "redA" : "blueA"}" data-pick="${i}" aria-pressed="${tm === t}">${tm}<small>${esc(nm[tm] || (i < 2 ? "Red " : "Blue ") + (i % 2 + 1))}</small></button>`).join("");
+  box.classList.remove("hidden"); $("#mHint").textContent = "";
+}
+$("#mPick").addEventListener("click", e => {
+  const b = e.target.closest("[data-pick]"), sch = settings().schedule[$("#mNum").value]; if (!b || !sch) return;
+  const i = Number(b.dataset.pick);
+  $("#mTeam").value = sch[i];
+  $$("[data-alliance]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.alliance === (i < 2 ? "RED" : "BLUE"))));
+  suggestTeam();
+});
+$("#mNum").addEventListener("input", suggestTeam);
+$("#mTeam").addEventListener("input", suggestTeam);
+$("#mTeam").addEventListener("input", () => {
+  const sch = settings().schedule[$("#mNum").value], t = Number($("#mTeam").value);
+  if (sch) { const i = sch.indexOf(t); if (i >= 0) $$("[data-alliance]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.alliance === (i < 2 ? "RED" : "BLUE")))); }
+});
+$("#mGo").addEventListener("click", () => {
+  const num = Number($("#mNum").value), team = Number($("#mTeam").value), al = $('[data-alliance][aria-pressed="true"]');
+  if (!num || !team || !al) { $("#mHint").innerHTML = '<span class="err">Match #, team # and alliance are needed.</span>'; return; }
+  const sch0 = settings().schedule[num];
+  if (sch0) {
+    const i = sch0.indexOf(team), exp = i < 0 ? null : i < 2 ? "RED" : "BLUE";
+    const msg = i < 0 ? `Team ${team} is not in Q${num} per the schedule (${sch0.join(", ")}).` : exp !== al.dataset.alliance ? `Team ${team} is ${exp} in Q${num} per the schedule, not ${al.dataset.alliance}.` : "";
+    if (msg && !confirm(msg + " Start anyway?")) return;
+  }
+  if (records("scout_match_reports").some(r => r.eventCode === settings().eventCode && r.matchNumber === num && r.teamNumber === team) && !confirm(`Q${num} team ${team} already has a report on this phone. Scout it again?`)) return;
+  M = {num, team, alliance: al.dataset.alliance, start: $("#mStart").value, startV: startV, w0: Date.now(), log: [], leave: false, apark: false, tpark: false, autoOk: true,
+       broke: false, def: null, defd: null, defSec: 0, defdSec: 0, minor: 0, major: 0, parkAt: null, skip: 0};
+  $("#mSetup").classList.add("hidden"); $("#mLive").classList.remove("hidden"); $("#mPost").classList.add("hidden");
+  ["#bLeave", "#bAPark", "#bDef", "#bDefd", "#bBroke", "#bTPark"].forEach(id => $(id).setAttribute("aria-pressed", "false"));
+  $("#bAutoOk").setAttribute("aria-pressed", "true");
+  clearInterval(timerId); timerId = setInterval(tick, 200); tick();
+});
+const elapsed = () => (Date.now() - M.w0) / 1000 + M.skip;
+let lastPersist = "";
+function persistM() { const s = JSON.stringify(M); if (s === lastPersist) return; lastPersist = s; store.set("live", M); }
+function phaseAt(t) { return t < AUTO ? "AUTO" : t < AUTO + TRANS ? "TRANSITION" : t < AUTO + TRANS + TELE ? "TELEOP" : "DONE"; }
+function tick() {
+  if (!M) return;
+  const t = elapsed(), ph = phaseAt(t);
+  let left = ph === "AUTO" ? AUTO - t : ph === "TRANSITION" ? AUTO + TRANS - t : AUTO + TRANS + TELE - t;
+  left = Math.max(0, left);
+  $("#mClock").textContent = `${Math.floor(left / 60)}:${String(Math.floor(left % 60)).padStart(2, "0")}`;
+  const late = ph === "TELEOP" && left <= ENDGAME, p = $("#mPhase"); p.textContent = late ? "ENDGAME" : ph; p.className = "phase " + (ph === "AUTO" ? "auto" : ph === "TELEOP" ? (late ? "end" : "teleop") : "");
+  $("#telePad").classList.toggle("late", late);
+  $("#autoPad").classList.toggle("hidden", !(ph === "AUTO" || ph === "TRANSITION"));
+  $("#telePad").classList.toggle("hidden", ph === "AUTO" || ph === "TRANSITION");
+  const c = counts();
+  const show = (id, v) => { const el = $(id); if (el.textContent !== String(v)) { el.textContent = v; const d = el.parentElement; d.classList.remove("bump"); void d.offsetWidth; d.classList.add("bump"); } };
+  show("#sAuto", c.autoScored); show("#sTele", c.hiveScored); show("#sMiss", c.hiveMissed);
+  show("#sCyc", c.cycleSecondsMedian ? c.cycleSecondsMedian.toFixed(1) : "–");
+  if (ph === "DONE") endMatch();
+  persistM();
+}
+// ---- tap feedback: vibration + visible press on every button, fired on touch-down so it feels instant ----
+const BUZZ = {"score": [40], "auto-score": [40], "miss": [20, 60, 20], "auto-miss": [20, 60, 20], "intake-ground": [18], "intake-flower": [18],
+  "auto-intake-garden": [18], "auto-intake-flower": [18], "garden": [28], "flower-nectar": [28], "flower-pollen": [28], "minor": [70, 50, 70], "major": [120, 60, 120]};
+const CAN_VIBRATE = typeof navigator.vibrate === "function";
+function buzz(p) { try { return CAN_VIBRATE ? navigator.vibrate(p) : false; } catch (e) { return false; } }
+let pendingBuzz = null;
+function patternFor(b) {
+  if (b.dataset.ev) return BUZZ[b.dataset.ev] || [25];
+  if (b.hasAttribute("aria-pressed") && (b.classList.contains("toggle") || b.classList.contains("hold")))
+    return b.getAttribute("aria-pressed") === "true" ? [20, 40, 20] : [60];   // turning off : turning on
+  if (b.closest("nav")) return [10];
+  return [25];
+}
+document.addEventListener("pointerdown", e => {
+  const b = e.target.closest(".btn, nav button");
+  if (!b || b.disabled) return;
+  b.classList.add("down");
+  b.classList.remove("flash"); void b.offsetWidth; b.classList.add("flash");
+  // Chrome only lets a page vibrate after the user has interacted with it; a touch-down on the very first
+  // tap does not count yet, so retry on the completed tap (click) in that case.
+  const p = patternFor(b);
+  pendingBuzz = buzz(p) ? null : p;
+}, {passive: true});
+document.addEventListener("click", () => { if (pendingBuzz) { buzz(pendingBuzz); pendingBuzz = null; } }, true);
+["pointerup", "pointercancel", "pointerleave"].forEach(t => document.addEventListener(t, e => {
+  const b = e.target.closest && e.target.closest(".btn, nav button"); if (b) b.classList.remove("down");
+}, {passive: true}));
+const LABEL = {"auto-score": "AUTO scored", "auto-miss": "AUTO missed", "score": "Scored in HIVE", "miss": "Missed", "intake-ground": "Intake from GROUND", "intake-flower": "Intake from FLOWER", "intake": "Intake",
+  "auto-intake-garden": "AUTO intake from GARDEN", "auto-intake-flower": "AUTO intake from FLOWER", "garden": "GARDEN +1", "flower-nectar": "NECTAR into FLOWER", "flower-pollen": "POLLEN into FLOWER", "minor": "Minor foul", "major": "Major foul",
+  "leave-on": "LEAVE", "leave-off": "LEAVE removed", "auto-park-on": "AUTO PARK", "auto-park-off": "AUTO PARK removed",
+  "teleop-park-on": "TELEOP PARK", "teleop-park-off": "TELEOP PARK removed", "broke-on": "Broke down", "broke-off": "Broke down removed",
+"def-start": "Defending started", "def-stop": "Defending stopped",
+  "defd-start": "Being defended", "defd-stop": "No longer defended"};
+function lastAction(text) {
+  const el = $("#mLast"); if (!el) return;
+  el.textContent = `${text} · ${$("#mClock").textContent} left`;
+  el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
+}
+function log(ev, piece) { if (!M) return; const t = Math.round(elapsed() * 10) / 10; M.log.push(piece ? [t, ev, piece] : [t, ev]); tick(); lastAction("✓ " + (LABEL[ev] || ev) + (piece ? " " + piece.toUpperCase() : ""));
+  if (/^flower-(nectar|pollen)$/.test(ev) && !isLate()) $("#mLast").textContent += " · before 1:00 left: counts, but G410 penalty risk"; }
+$$("[data-ev]").forEach(b => b.addEventListener("click", () => {
+  const ev = b.dataset.ev;
+  if (ev === "minor") M.minor++; else if (ev === "major") M.major++;
+  log(ev, b.dataset.piece);
+}));
+function toggle(id, key, ev) { $(id).addEventListener("click", e => { if (!M) return; M[key] = !M[key]; e.currentTarget.setAttribute("aria-pressed", String(M[key])); if (ev) log(ev + (M[key] ? "-on" : "-off")); else lastAction((M[key] ? "✓ " : "✗ ") + e.currentTarget.textContent.trim()); if (key === "tpark" && M.tpark) M.parkAt = elapsed(); }); }
+toggle("#bLeave", "leave", "leave"); toggle("#bAPark", "apark", "auto-park");
+toggle("#bBroke", "broke", "broke"); toggle("#bTPark", "tpark", "teleop-park"); toggle("#bAutoOk", "autoOk");
+function hold(id, key, secKey) { $(id).addEventListener("click", e => { if (!M) return; if (M[key] == null) { M[key] = elapsed(); log(key + "-start"); } else { M[secKey] += elapsed() - M[key]; M[key] = null; log(key + "-stop"); } e.currentTarget.setAttribute("aria-pressed", String(M[key] != null)); }); }
+hold("#bDef", "def", "defSec"); hold("#bDefd", "defd", "defdSec");
+$("#bSkipAuto").addEventListener("click", () => { if (M && elapsed() < AUTO + TRANS) M.skip += AUTO + TRANS - elapsed(); tick(); });
+$("#bEnd").addEventListener("click", endMatch);
+const TOG = {"leave": ["leave", "#bLeave"], "auto-park": ["apark", "#bAPark"], "broke": ["broke", "#bBroke"], "teleop-park": ["tpark", "#bTPark"]};
+const HOLD = {"def": ["def", "defSec", "#bDef"], "defd": ["defd", "defdSec", "#bDefd"]};
+function undoState(ev, ut) {
+  const m = ev.match(/^(.+)-(on|off)$/);
+  if (m && TOG[m[1]]) { const [key, id] = TOG[m[1]]; M[key] = m[2] === "off"; $(id).setAttribute("aria-pressed", String(M[key])); if (key === "tpark") M.parkAt = M[key] ? M.parkAt : null; return; }
+  const h = ev.match(/^(def|defd)-(start|stop)$/);
+  if (!h) return;
+  const [key, secKey, id] = HOLD[h[1]];
+  if (h[2] === "start") M[key] = null;
+  else { const st = [...M.log].reverse().find(x => x[1] === h[1] + "-start"); if (st) { M[secKey] -= ut - st[0]; M[key] = st[0]; } }
+  $(id).setAttribute("aria-pressed", String(M[key] != null));
+}
+$("#mUndo").addEventListener("click", () => { if (!M || !M.log.length) { lastAction("Nothing to undo"); return; } const [ut, ev, pc] = M.log.pop(); if (ev === "minor") M.minor--; if (ev === "major") M.major--; undoState(ev, ut); tick(); lastAction("↶ Undid: " + (LABEL[ev] || ev) + (pc ? " " + pc.toUpperCase() : "")); });
+
+function median(xs) { if (!xs.length) return null; const s = [...xs].sort((a, b) => a - b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; }
+function counts() {
+  const L = M ? M.log : [], inAuto = t => t < AUTO + TRANS;
+  const c = {autoScored: 0, autoMissed: 0, hiveScored: 0, hiveMissed: 0, garden: 0, nectar: 0, pollenF: 0, autoGardenIn: 0, autoFlowerIn: 0, groundIn: 0, flowerIn: 0};
+  for (const [t, e] of L) {
+    if (e === "auto-score") c.autoScored++; else if (e === "auto-miss") c.autoMissed++;
+    else if (e === "score") (inAuto(t) ? c.autoScored++ : c.hiveScored++); else if (e === "miss") (inAuto(t) ? c.autoMissed++ : c.hiveMissed++);
+    else if (e === "auto-intake-garden") c.autoGardenIn++; else if (e === "auto-intake-flower") c.autoFlowerIn++;
+    else if (e === "intake-ground") c.groundIn++; else if (e === "intake-flower") c.flowerIn++;
+    else if (e === "garden") c.garden++; else if (e === "flower-nectar") c.nectar++; else if (e === "flower-pollen") c.pollenF++;
+  }
+  // cycles: shot bursts separated by an intake (same rule as lebob_scout.scouting.cycle_stats)
+  const shots = L.filter(([t, e]) => (e === "score" || e === "miss") && !inAuto(t)).map(x => x[0]);
+  const intakes = L.filter(([, e]) => e.startsWith("intake")).map(x => x[0]);
+  const bursts = shots.length ? [shots[0]] : [];
+  for (const t of shots.slice(1)) if (intakes.some(i => bursts[bursts.length - 1] < i && i < t)) bursts.push(t);
+  const cyc = bursts.slice(1).map((t, i) => t - bursts[i]);
+  c.cycles = bursts.length; const md = median(cyc); c.cycleSecondsMedian = md == null ? null : Math.round(md * 10) / 10;
+  return c;
+}
+function setPiece() {
+  const got = new Set(M.log.filter(x => /score$/.test(x[1]) && x[2]).map(x => x[2]));
+  $("#pPiece").value = got.has("pollen") && got.has("nectar") ? "both" : got.has("pollen") ? "pollen" : got.has("nectar") ? "nectar" : "none";
+}
+const EVCOL = {"score": "#FFF200", "auto-score": "#FFF200", "miss": "#ED1C24", "auto-miss": "#ED1C24", "intake-ground": "#2F7DF6", "intake-flower": "#2F7DF6", "intake": "#2F7DF6",
+  "auto-intake-garden": "#2F7DF6", "auto-intake-flower": "#2F7DF6", "garden": "#3DCB6C", "flower-nectar": "#e08a2e", "flower-pollen": "#e08a2e", "minor": "#F5A524", "major": "#ff4d4d"};
+const EVLANE = e => /^(auto-)?(score|miss)$/.test(e) ? 0 : /^(auto-)?intake/.test(e) || e === "garden" || /^flower-/.test(e) ? 1 : 2;
+const mmss = x => `${Math.floor(x / 60)}:${String(Math.floor(x % 60)).padStart(2, "0")}`;
+function clockAt(t) {
+  const ph = phaseAt(t), left = ph === "AUTO" ? AUTO - t : ph === "TRANSITION" ? AUTO + TRANS - t : AUTO + TRANS + TELE - t;
+  const late = ph === "TELEOP" && left <= ENDGAME;
+  return `${late ? "ENDGAME" : ph === "DONE" ? "END" : ph} ${mmss(Math.max(0, left))}`;
+}
+// ---- the timeline can be corrected after the match: edit / delete / add an event, then every total is recomputed from the log
+let tlEdit = null;   // index being edited, "new", or null
+const PHASE_END = {AUTO: AUTO, TELEOP: AUTO + TRANS + TELE};   // no TRANSITION: nothing can be placed in the 8 s gap
+const PHASE_LEN = {AUTO: AUTO, TELEOP: TELE};
+function parseClock(txt) { const m = String(txt).trim().match(/^(\d+):([0-5]?\d)$/) || String(txt).trim().match(/^()(\d+)$/); return m ? (m[1] ? +m[1] * 60 : 0) + +m[2] : null; }
+function recompute() {
+  M.log.sort((a, b) => a[0] - b[0]);
+  const END = M.endT == null ? AUTO + TRANS + TELE : M.endT, last = {}, open = {def: null, defd: null}; M.defSec = 0; M.defdSec = 0; M.minor = 0; M.major = 0; M.parkAt = null;
+  for (const [t, e] of M.log) {
+    let m = e.match(/^(.+)-(on|off)$/);
+    if (m && TOG[m[1]]) { last[m[1]] = m[2] === "on"; if (m[1] === "teleop-park") M.parkAt = m[2] === "on" ? t : null; continue; }
+    m = e.match(/^(def|defd)-(start|stop)$/);
+    if (m) { const sec = m[1] === "def" ? "defSec" : "defdSec"; if (m[2] === "start") { if (open[m[1]] == null) open[m[1]] = t; } else if (open[m[1]] != null) { M[sec] += t - open[m[1]]; open[m[1]] = null; } continue; }
+    if (e === "minor") M.minor++; else if (e === "major") M.major++;
+  }
+  for (const k of ["def", "defd"]) if (open[k] != null) M[k === "def" ? "defSec" : "defdSec"] += Math.max(0, END - open[k]);
+  for (const id in TOG) { const [key] = TOG[id]; M[key] = !!last[id]; }
+  setPiece(); persistM();
+}
+function tlForm(i) {
+  const cur = i === "new" ? null : M.log[i], t0 = cur ? cur[0] : 0, ph0 = t0 < AUTO + TRANS ? "AUTO" : "TELEOP", rem = Math.min(PHASE_LEN[ph0], Math.max(0, PHASE_END[ph0] - t0));
+  const opt = (v, l, sel) => `<option value="${v}"${sel ? " selected" : ""}>${l}</option>`;
+  const evs = Object.keys(LABEL).filter(k => k !== "intake").map(k => opt(k, LABEL[k], cur && cur[1] === k)).join("");
+  const pcs = [["", "–"], ["pollen", "POLLEN"], ["nectar", "NECTAR"]].map(([v, l]) => opt(v, l, (cur && cur[2] || "") === v)).join("");
+  const phs = Object.keys(PHASE_END).map(k => opt(k, k, k === ph0)).join("");
+  return `<div class="item"><div class="edit" data-i="${i}"><div><label>What happened</label><select class="tlEv">${evs}</select></div><div><label>Piece</label><select class="tlPc">${pcs}</select></div>`
+    + `<div><label>Phase</label><select class="tlPh">${phs}</select></div><div><label>Clock left (m:ss)</label><input class="tlT" value="${mmss(rem)}" inputmode="numeric"></div>`
+    + `<p class="err hidden tlErr" style="grid-column:1/-1;margin:0"></p><div class="row"><button class="btn small primary tlOk" type="button">Save</button><button class="btn small tlNo" type="button">Cancel</button></div></div></div>`;
+}
+let tlSel = null, tlFs = false;   // tlSel = the selected log row (kept by reference, so it survives re-sorting)
+const selIdx = () => tlSel ? M.log.indexOf(tlSel) : -1;
+$("#mSummary").addEventListener("click", e => {
+  if (!M || !M.ended) return;
+  const dot = e.target.closest("[data-dot]");
+  if (dot) { tlSel = M.log[+dot.dataset.dot] || null; tlEdit = null; renderSummary(); return; }
+  const b = e.target.closest("button"); if (!b) return;
+  const c = b.classList, i = selIdx(), TOT = AUTO + TRANS + TELE;
+  if (c.contains("tlOpen")) { tlFs = true; renderSummary(); }
+  else if (c.contains("tlClose")) { tlFs = false; renderSummary(); }
+  else if (c.contains("tlPrev") || c.contains("tlNext")) { const n = i < 0 ? (c.contains("tlNext") ? 0 : M.log.length - 1) : i + (c.contains("tlNext") ? 1 : -1); tlSel = M.log[n] || tlSel; tlEdit = null; renderSummary(); }
+  else if (c.contains("tlEarly") || c.contains("tlLate")) { if (i < 0) return; { const late = c.contains("tlLate"); let nt = Math.min(TOT, Math.max(0, Math.round((tlSel[0] + (late ? 1 : -1)) * 10) / 10)); if (nt > AUTO && nt < AUTO + TRANS) nt = late ? AUTO + TRANS : AUTO; tlSel[0] = nt; } recompute(); renderSummary(); }
+  else if (c.contains("tlEd")) { if (i >= 0) { tlEdit = i; renderSummary(); } }
+  else if (c.contains("tlDel")) { if (i >= 0 && confirm("Delete this event?")) { M.log.splice(i, 1); tlSel = M.log[Math.min(i, M.log.length - 1)] || null; tlEdit = null; recompute(); renderSummary(); } }
+  else if (c.contains("tlAdd")) { tlEdit = "new"; renderSummary(); }
+  else if (c.contains("tlNo")) { tlEdit = null; renderSummary(); }
+  else if (c.contains("tlOk")) {
+    const f = b.closest(".edit"), ph = f.querySelector(".tlPh").value, rem = parseClock(f.querySelector(".tlT").value);
+    if (rem == null || rem > PHASE_LEN[ph]) { const er = f.querySelector(".tlErr"); er.textContent = `Enter a time like 1:30, not more than ${mmss(PHASE_LEN[ph])} for ${ph}.`; er.classList.remove("hidden"); return; }
+    const ev = f.querySelector(".tlEv").value, pc = f.querySelector(".tlPc").value, t = Math.round((PHASE_END[ph] - rem) * 10) / 10, row = pc ? [t, ev, pc] : [t, ev];
+    if (f.dataset.i === "new") M.log.push(row); else M.log[+f.dataset.i] = row;
+    tlSel = row; tlEdit = null; recompute(); renderSummary();
+  }
+});
+function renderSummary() {
+  const c = counts(), TOT = AUTO + TRANS + TELE, L = M.log, E = x => String(x).replace(/[<>&]/g, "");
+  const tile = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
+  let h = `<div class="stats">${tile(c.autoScored, "AUTO scored")}${tile(c.autoMissed, "AUTO missed")}${tile(c.hiveScored, "HIVE scored")}${tile(c.hiveMissed, "missed")}`
+    + `${tile(c.groundIn + c.autoGardenIn, "GROUND/GARDEN intakes")}${tile(c.flowerIn + c.autoFlowerIn, "FLOWER intakes")}${tile(c.garden, "GARDEN +1")}${tile(`${c.nectar}+${c.pollenF}`, "FLOWER nectar+pollen")}`
+    + `${tile(c.cycles, "cycles")}${tile(c.cycleSecondsMedian ? c.cycleSecondsMedian.toFixed(1) + "s" : "–", "median cycle")}${tile(Math.round(M.defSec) + "s", "defending")}${tile(Math.round(M.defdSec) + "s", "defended")}</div>`;
+  const flags = [["LEAVE", M.leave], ["AUTO PARK", M.apark], ["TELEOP PARK", M.tpark], ["broke down", M.broke]].map(([n, v]) => `<span>${n}: ${v ? "yes" : "no"}</span>`);
+  flags.push(`<span>fouls: ${M.minor} minor / ${M.major} major</span>`); if (M.start) flags.push(`<span>start: ${E(zoneText(M.start))}</span>`);
+  h += `<div class="sumflags">${flags.join("")}</div>`;
+  const W = 640, X = t => 10 + Math.min(t, TOT) / TOT * (W - 20), lanes = [34, 52, 70];
+  let sv = `<svg viewBox="0 0 ${W} 112" role="img" aria-label="Timeline of the match"><rect width="${W}" height="112" fill="#15161a"/>`
+    + `<rect x="${X(0)}" y="8" width="${X(AUTO) - X(0)}" height="12" fill="#3a3d47"/><rect x="${X(AUTO + TRANS)}" y="8" width="${X(TOT - ENDGAME) - X(AUTO + TRANS)}" height="12" fill="#2a2c33"/><rect x="${X(TOT - ENDGAME)}" y="8" width="${X(TOT) - X(TOT - ENDGAME)}" height="12" fill="#3a3d47"/>`
+    + `<g font-size="9" fill="#e6e8ee" font-family="system-ui,sans-serif"><text x="${X(0) + 4}" y="17">AUTO</text><text x="${X(AUTO + TRANS) + 4}" y="17">TELEOP</text><text x="${X(TOT - ENDGAME) + 4}" y="17">ENDGAME (last 1:00)</text></g>`;
+  for (const T of [0, AUTO, AUTO + TRANS, TOT - ENDGAME, TOT]) sv += `<path d="M${X(T)} 22V80" stroke="#3b3e47" stroke-width="1"/>`;
+  const open = {};
+  for (const [t, e] of L) { const m = e.match(/^(def|defd)-(start|stop)$/); if (!m) continue;
+    if (m[2] === "start") open[m[1]] = t; else if (open[m[1]] != null) { sv += `<rect x="${X(open[m[1]])}" y="${m[1] === "def" ? 82 : 92}" width="${Math.max(2, X(t) - X(open[m[1]]))}" height="7" fill="#9aa0ac" fill-opacity="${m[1] === "def" ? 1 : .55}"/>`; open[m[1]] = null; } }
+  for (const k in open) if (open[k] != null) sv += `<rect x="${X(open[k])}" y="${k === "def" ? 82 : 92}" width="${Math.max(2, X(TOT) - X(open[k]))}" height="7" fill="#9aa0ac" fill-opacity="${k === "def" ? 1 : .55}"/>`;
+  const laneY = e => /^def-/.test(e) ? 85.5 : /^defd-/.test(e) ? 95.5 : lanes[EVLANE(e)];
+  L.forEach(([t, e], i) => { const on = L[i] === tlSel, hollow = /^(auto-)?miss$/.test(e), c = on ? "#fff" : "#c9ccd4"; sv += `<g class="tdot" data-dot="${i}"><circle cx="${X(t)}" cy="${laneY(e)}" r="12" fill="transparent"/><circle cx="${X(t)}" cy="${laneY(e)}" r="${on ? 7.5 : 5.5}" fill="${hollow ? "#15161a" : c}" stroke="${c}" stroke-width="${on ? 3 : 1.8}"/></g>`; });
+  sv += `</svg>`;
+  const sel = selIdx(), cur = sel >= 0 ? M.log[sel] : null;
+  let panel;
+  if (tlEdit === "new") panel = tlForm("new");
+  else if (tlEdit != null && cur) panel = tlForm(sel);
+  else if (cur) panel = `<div class="tlpanel"><div class="ttl">${E(clockAt(cur[0]))} · ${E(LABEL[cur[1]] || cur[1])}${cur[2] ? " " + E(cur[2].toUpperCase()) : ""}</div><div class="btns"><button class="btn small tlPrev" type="button">◀ Prev</button><button class="btn small tlNext" type="button">Next ▶</button>`
+    + `<button class="btn small tlEarly" type="button" aria-label="1 second earlier">−1s</button><button class="btn small tlLate" type="button" aria-label="1 second later">+1s</button><button class="btn small tlEd" type="button">Edit</button><button class="btn small tlDel" type="button">Delete</button></div></div>`;
+  else panel = `<div class="tlpanel muted">${L.length ? "Tap a dot on the timeline to change it." : "No actions were logged."}</div>`;
+  h += `<div class="tlwrap tl${tlFs ? " fs" : ""}"><div class="tlhead"><h3>MATCH TIMELINE</h3><span><button class="btn small tlOpen" id="tlOpen" type="button">⛶ Fullscreen</button><button class="btn small primary fsx tlClose" id="tlClose" type="button">✕ Exit fullscreen</button></span></div>`
+    + `<div class="tlscroll">${sv}</div><p class="muted" style="margin:6px 0 0">Rows: shots (filled = scored, hollow = missed) · pickups, FLOWER, GARDEN · fouls and toggles · bars: defending (solid), being defended (faint).</p>${panel}`
+    + `<button class="btn small tlAdd" type="button" style="margin-top:8px">+ Add a missed event</button></div>`;
+  $("#mSummary").innerHTML = h;
+}
+function endMatch() {
+  if (!M || M.ended) return;
+  M.ended = true; M.endT = Math.min(elapsed(), AUTO + TRANS + TELE); clearInterval(timerId);
+  if (M.def != null) { M.defSec += elapsed() - M.def; M.def = null; }
+  if (M.defd != null) { M.defdSec += elapsed() - M.defd; M.defd = null; }
+  $("#mLive").classList.add("hidden"); $("#mPost").classList.remove("hidden");
+  renderSummary(); setPiece(); $("#pDefTarget").value = ""; $$("#pDefEff button, #pSkill button").forEach(b => b.setAttribute("aria-pressed", "false"));
+  persistM();
+}
+function resetMatch() { startV = null; $("#mStartV").value = ""; $("#mStart").value = ""; startSig = ""; M = null; lastPersist = ""; store.set("live", null); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden"); $("#mNum").value = Number($("#mNum").value || 0) + 1; $("#mTeam").value = ""; suggestTeam(); }
+$("#pDiscard").addEventListener("click", () => { if (confirm("Discard this match report?")) resetMatch(); });
+$("#pSave").addEventListener("click", () => {
+  const s = settings(), c = counts(), tbl = "scout_match_reports";
+  const end = AUTO + TRANS + TELE;
+  const rec = {
+    reportId: `${s.device}-${uid().slice(0, 10)}`, eventCode: s.eventCode, matchKey: `${s.eventCode}-q${M.num}`, matchNumber: M.num,
+    teamNumber: M.team, alliance: M.alliance, scout: s.scout || null, source: "tap", createdAt: nowIso(),
+    startPosition: M.start || null, startWallPos: M.startV == null ? null : M.startV, autoLeave: M.leave, autoPath: $("#pAutoPath").value || null, autoScoreZone: null,
+    autoLaunched: c.autoScored + c.autoMissed, autoScored: c.autoScored, autoPark: M.apark, autoWorkedAsPlanned: M.autoOk,
+    pieceType: $("#pPiece").value || null, hiveScored: c.hiveScored, hiveMissed: c.hiveMissed, autoGardenIntakes: c.autoGardenIn, autoFlowerIntakes: c.autoFlowerIn, cycles: c.cycles,
+    cycleSecondsMedian: c.cycleSecondsMedian, intakeSecondsMedian: null, travelSecondsMedian: null, shootSecondsMedian: null,
+    flowerIntake: c.flowerIn > 0, groundIntakes: c.groundIn, flowerIntakes: c.flowerIn, scoreZone: $("#pZone").value || null,
+    preferredZones: $$("#pZones option").filter(o => o.selected).map(o => o.value).join("|") || null,
+    gardenPlaced: c.garden, teleopPark: M.tpark, flowerNectarPlaced: c.nectar, flowerPollenPlaced: c.pollenF,
+    endgameStartRemaining: M.parkAt ? Math.max(0, Math.round(end - M.parkAt)) : null,
+    defenceSeconds: Math.round(M.defSec), defenceType: M.defSec > 2 ? ($("#pDefType").value || null) : "none",
+    defenceTarget: typed(tbl, "defenceTarget", $("#pDefTarget").value), defenceEffect: scaleVal($("#pDefEff")),
+    defenceFoulsDrawn: null, defendedSeconds: Math.round(M.defdSec),
+    defenceReaction: M.defdSec > 2 ? ($("#pReact").value || null) : "not-defended",
+    changedPlanWhenBlocked: typed(tbl, "changedPlanWhenBlocked", $("#pChanged").value),
+    minorFouls: M.minor, majorFouls: M.major, foulTypes: $("#pFoulTypes").value || null, brokeDown: M.broke,
+    disconnectSeconds: null, driverSkill: scaleVal($("#pSkill")), sideOfField: $("#pSide").value || null,
+    coordinationNote: $("#pCoord").value || null, cycleLog: JSON.stringify(M.log), notes: $("#pNotes").value || null,
+  };
+  putRecord(tbl, rec); resetMatch(); buzz([40, 60, 120]);
+  $("#mHint").innerHTML = `<span class="okc">Saved Q${rec.matchNumber} · ${rec.teamNumber}. Ready for the next match.</span>`;
+});
+
+// ---------- QR export / import ----------
+// Compact payload: "LBS2:" + base64url(JSON [tableCode, [values in CFG.order[table] order]])
+function encodeRec(table, r) {
+  const arr = [CODE_OF[table], CFG.order[table].map(f => r[f] ?? null)];
+  return "LBS2:" + btoa(unescape(encodeURIComponent(JSON.stringify(arr)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+function decodeRec(text) {
+  // LBS2 added fields to CFG.order; an LBS1 code from an older app would land values in the wrong fields
+  if (/^LBS1:/.test(text.trim())) throw new Error("This QR code is from an older version of the app. Update that phone's app, then show the code again.");
+  const b = text.trim().replace(/^LBS2:/, "").replace(/-/g, "+").replace(/_/g, "/");
+  const [code, vals] = JSON.parse(decodeURIComponent(escape(atob(b + "===".slice((b.length + 3) % 4)))));
+  const table = TABLE_CODES[code]; const r = {}; CFG.order[table].forEach((f, i) => r[f] = vals[i]);
+  return [table, r];
+}
+function unsentPayloads() {
+  return store.get("unsent", []).map(k => { const [table, id] = k.split("|"); const r = records(table).find(x => x[CFG.pk[table]] === id); return r ? [k, encodeRec(table, r)] : null; }).filter(Boolean);
+}
+let qrList = [], qrIdx = 0;
+function makeQr(text) { const q = qrcode(0, "L"); q.addData(text); q.make(); return q; }
+function showQr() {
+  if (!qrList.length) { $("#qrInfo").textContent = "Nothing unsent."; $("#qrbox").innerHTML = ""; return; }
+  let q, note = "";
+  try { q = makeQr(qrList[qrIdx][1]); }
+  catch (e) {
+    // too long for one QR (long tap log or notes): send without the raw tap log; stats are already computed
+    const [table, id] = qrList[qrIdx][0].split("|");
+    const r = Object.assign({}, records(table).find(x => x[CFG.pk[table]] === id), {cycleLog: null});
+    try { q = makeQr(encodeRec(table, r)); note = " (tap log left out: use Export file for the full record)"; }
+    catch (e2) { $("#qrbox").innerHTML = ""; $("#qrInfo").textContent = "This record is too long for a QR code. Use Export file."; return; }
+  }
+  $("#qrbox").innerHTML = q.createSvgTag({cellSize: 4, margin: 2, scalable: true});
+  $("#qrInfo").textContent = `QR ${qrIdx + 1} of ${qrList.length}. The lead scans each one.${note}`;
+}
+$("#sQr").addEventListener("click", () => { qrList = unsentPayloads(); qrIdx = 0; $("#qrWrap").classList.remove("hidden"); showQr(); });
+$("#qrPrev").addEventListener("click", () => { qrIdx = Math.max(0, qrIdx - 1); showQr(); });
+$("#qrNext").addEventListener("click", () => { qrIdx = Math.min(qrList.length - 1, qrIdx + 1); showQr(); });
+function download(name, obj) {
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(obj)], {type: "application/json"}));
+  a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function bundle(onlyUnsent) {
+  const s = settings(), un = new Set(store.get("unsent", [])), out = {format: "lebob-scouting/1", device: s.device, exportedAt: nowIso(), tables: {}};
+  for (const table of Object.values(TABLE_CODES)) out.tables[table] = records(table).filter(r => !onlyUnsent || un.has(table + "|" + r[CFG.pk[table]]));
+  return out;
+}
+$("#sFile").addEventListener("click", () => download(`lebob-scouting-${settings().device}-${Date.now()}.json`, bundle(false)));
+$("#sMark").addEventListener("click", () => { if (confirm("Mark all records as sent?")) { store.set("unsent", []); renderHeader(); renderLists(); } });
+
+// lead side: everything scanned lands in this phone's own tables
+function ingest(table, r) {
+  const pk = CFG.pk[table]; const all = records(table); const i = all.findIndex(x => x[pk] === r[pk]);
+  if (i >= 0) all[i] = r; else all.push(r); store.set("t:" + table, all); return i < 0;
+}
+let seen = 0;
+function addText(text) {
+  text = text.trim(); let added = 0;
+  if (text.startsWith("LBSS1:")) { text.split(/\s+/).forEach(addSchedChunk); return; }
+  if (text.startsWith("{")) { const b = JSON.parse(text); for (const [t, rows] of Object.entries(b.tables || {})) for (const r of rows) added += ingest(t, r); }
+  else for (const line of text.split(/\s+/).filter(Boolean)) { const [t, r] = decodeRec(line); added += ingest(t, r); }
+  seen += added; $("#lStatus").textContent = `${seen} new records collected this session.`; renderLists();
+}
+$("#lPasteGo").addEventListener("click", () => { try { addText($("#lPaste").value); $("#lPaste").value = ""; } catch (e) { $("#lStatus").innerHTML = `<span class="err">${/older version/.test(e.message || "") ? esc(e.message) : "Could not read that."}</span>`; } });
+$("#lFile").addEventListener("change", async e => { for (const f of e.target.files) { try { addText(await f.text()); } catch (err) { $("#lStatus").innerHTML = `<span class="err">${f.name}: not a scouting export.</span>`; } } });
+$("#lExport").addEventListener("click", () => download(`lebob-scouting-all-${Date.now()}.json`, bundle(false)));
+let scanStream = null;
+$("#lScan").addEventListener("click", async () => {
+  const v = $("#lVideo");
+  if (scanStream) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; v.classList.add("hidden"); $("#lScan").textContent = "Scan QR"; return; }
+  if (!("BarcodeDetector" in window)) { $("#lStatus").innerHTML = '<span class="err">This browser cannot scan QR codes (use Chrome on Android), or export a file instead.</span>'; return; }
+  try {
+    scanStream = await navigator.mediaDevices.getUserMedia({video: {facingMode: "environment"}});
+    v.srcObject = scanStream; v.classList.remove("hidden"); await v.play(); $("#lScan").textContent = "Stop scanning";
+    const det = new BarcodeDetector({formats: ["qr_code"]}); let last = "";
+    const loop = async () => {
+      if (!scanStream) return;
+      try { for (const c of await det.detect(v)) if (c.rawValue !== last && (/^LBS[12]:/.test(c.rawValue) || c.rawValue.startsWith("LBSS1:"))) { last = c.rawValue; c.rawValue.startsWith("LBSS1:") ? addSchedChunk(c.rawValue) : addText(c.rawValue); if (navigator.vibrate) navigator.vibrate(60); } } catch (e) { if (/older version/.test(e.message || "")) $("#lStatus").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+      requestAnimationFrame(loop);
+    };
+    loop();
+  } catch (e) { $("#lStatus").innerHTML = '<span class="err">Camera blocked. Allow camera access or import a file.</span>'; scanStream = null; }
+});
+
+// ---------- schedule import / share ----------
+// text: lines "match,red1,red2,blue1,blue2" plus optional "number,name" lines, or a lebob-schedule/1 JSON file
+function parseSchedule(text) {
+  text = text.trim(); const out = {schedule: {}, names: {}, event: null};
+  if (text.startsWith("{")) {
+    const j = JSON.parse(text); out.event = j.event || j.e || null;
+    for (const [k, v] of Object.entries(j.matches || j.m || {})) if (Array.isArray(v) && v.length >= 4) out.schedule[Number(k)] = v.slice(0, 4).map(Number);
+    for (const [k, v] of Object.entries(j.names || j.n || {})) out.names[Number(k)] = String(v);
+  } else for (const line of text.split(/\r?\n/)) {
+    const cells = line.split(/[,\t;]/).map(x => x.trim()), nums = cells.map(Number);
+    if (cells.length >= 5 && nums.slice(0, 5).every(n => Number.isFinite(n) && n > 0)) out.schedule[nums[0]] = nums.slice(1, 5);
+    else { const m = line.match(/^\s*(\d+)\s*[,\t;]\s*(.+?)\s*$/); if (m) out.names[Number(m[1])] = m[2]; }
+  }
+  if (!Object.keys(out.schedule).length) throw new Error("no matches found");
+  return out;
+}
+function applySchedule(p) {
+  const s = settings();
+  s.schedule = p.schedule; if (Object.keys(p.names).length) s.names = Object.assign({}, s.names || {}, p.names);
+  if (p.event) s.eventCode = String(p.event).toUpperCase();
+  saveSettings(s); loadSettingsForm(); renderLists(); suggestTeam();
+  return `Imported ${Object.keys(p.schedule).length} matches and ${Object.keys(p.names).length} team names for ${s.eventCode}.`;
+}
+$("#cSchedFile").addEventListener("change", async e => {
+  const info = $("#cSchedInfo");
+  try { info.className = "muted"; info.textContent = applySchedule(parseSchedule(await e.target.files[0].text())); }
+  catch (err) { info.innerHTML = '<span class="err">Could not read that schedule file.</span>'; }
+  e.target.value = "";
+});
+// share by QR: the schedule is split into short QR codes that cycle on screen; the other phone reads them via Sync → Scan QR
+function schedChunks() {
+  const s = settings(), j = {e: s.eventCode, m: s.schedule, n: s.names || {}};
+  const b = btoa(unescape(encodeURIComponent(JSON.stringify(j)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  const parts = b.match(/.{1,300}/g) || [];
+  return parts.map((p, i) => `LBSS1:${i + 1}/${parts.length}:${p}`);
+}
+let schedTimer = null;
+$("#cSchedQr").addEventListener("click", () => {
+  clearInterval(schedTimer);
+  const box = $("#schedQr"), info = $("#schedQrInfo");
+  if (!box.classList.contains("hidden")) { box.classList.add("hidden"); return; }
+  if (!Object.keys(settings().schedule).length) { $("#cSchedInfo").innerHTML = '<span class="err">No schedule loaded to share.</span>'; return; }
+  const list = schedChunks(); let i = 0;
+  const show = () => { $("#schedQrBox").innerHTML = makeQr(list[i]).createSvgTag({cellSize: 4, margin: 2, scalable: true}); info.textContent = `Schedule QR ${i + 1} of ${list.length}. On the other phone: Sync → Scan QR, and keep pointing at this until all ${list.length} are read.`; i = (i + 1) % list.length; };
+  box.classList.remove("hidden"); show(); if (list.length > 1) schedTimer = setInterval(show, 1500);
+});
+const schedGot = {}; let schedDone = 0;
+function addSchedChunk(txt) {
+  const m = txt.match(/^LBSS1:(\d+)\/(\d+):(.+)$/); if (!m || Date.now() - schedDone < 8000) return;
+  const i = Number(m[1]), n = Number(m[2]), st = $("#lStatus");
+  if (schedGot.n !== n) { for (const k of Object.keys(schedGot)) delete schedGot[k]; schedGot.n = n; }
+  schedGot[i] = m[3];
+  const have = Object.keys(schedGot).filter(k => k !== "n").length;
+  if (have < n) { st.textContent = `Schedule QR: ${have} of ${n} parts read…`; return; }
+  try {
+    const b = Array.from({length: n}, (_, k) => schedGot[k + 1]).join("").replace(/-/g, "+").replace(/_/g, "/");
+    const j = JSON.parse(decodeURIComponent(escape(atob(b + "===".slice((b.length + 3) % 4)))));
+    st.textContent = applySchedule(parseSchedule(JSON.stringify(j))); schedDone = Date.now();
+  } catch (e) { st.innerHTML = '<span class="err">Schedule QR could not be read. Scan all the parts again.</span>'; }
+  for (const k of Object.keys(schedGot)) delete schedGot[k];
+}
+
+// ---------- settings ----------
+function loadSettingsForm() { const s = settings(); $("#cNames").value = Object.entries(s.names || {}).map(([k, v]) => k + "," + v).join("\n"); $("#cEvent").value = s.eventCode; $("#cScout").value = s.scout; $("#cSched").value = Object.entries(s.schedule).map(([k, v]) => [k, ...v].join(",")).join("\n"); $("#cInfo").textContent = `Device id ${s.device}`; }
+$("#cSave").addEventListener("click", () => {
+  const s = settings(); s.eventCode = ($("#cEvent").value || "AUPEQ").toUpperCase().trim(); s.scout = $("#cScout").value.toUpperCase().trim().slice(0, 4);
+  s.schedule = {}; for (const line of $("#cSched").value.split(/\n/)) { const p = line.split(/[,\s]+/).map(Number).filter(n => !isNaN(n)); if (p.length >= 5) s.schedule[p[0]] = p.slice(1, 5); }
+  s.names = {}; for (const line of $("#cNames").value.split(/\n/)) { const m = line.match(/^\s*(\d+)\s*[,\t]\s*(.+?)\s*$/); if (m) s.names[Number(m[1])] = m[2]; }
+  saveSettings(s); renderLists(); suggestTeam(); $("#cInfo").textContent = `Saved. ${Object.keys(s.schedule).length} scheduled matches. Device id ${s.device}`;
+});
+$("#cWipe").addEventListener("click", () => { if (confirm("Delete ALL scouting data on this phone? Export first if unsure.")) { try { Object.keys(localStorage).filter(k => k.startsWith("lbs:t:") || k === "lbs:unsent").forEach(k => localStorage.removeItem(k)); } catch (e) {} for (const k of Object.keys(mem)) if (k.startsWith("t:") || k === "unsent") delete mem[k]; renderHeader(); renderLists(); } });
+$("#cVib").addEventListener("click", () => {
+  const el = $("#cVibInfo");
+  if (!CAN_VIBRATE) { el.innerHTML = '<span class="err">This browser cannot vibrate (Firefox removed vibration in 2024; iPhones never had it). Use Chrome or Samsung Internet on Android. Visual feedback still works.</span>'; return; }
+  const ok = buzz([200, 100, 200]);
+  el.innerHTML = ok ? 'Vibration sent (two buzzes). Felt nothing? Turn on <b>Settings → Sound & vibration → Vibration & haptics / Touch feedback</b>, and turn off silent mode, Do Not Disturb and battery saver.'
+                    : '<span class="err">The browser blocked vibration. Tap anywhere on the page once, then try again.</span>';
+});
+window.addEventListener("beforeunload", e => { if (M && !M.ended) { e.preventDefault(); e.returnValue = ""; } });
+
+if (!store.get("settings", null)) saveSettings(settings());
+(function resumeMatch() {
+  const sv = store.get("live", null); if (!sv || !sv.w0) return;
+  M = sv; lastPersist = JSON.stringify(M);
+  $("#mSetup").classList.add("hidden");
+  const press = (id, on) => $(id).setAttribute("aria-pressed", String(!!on));
+  press("#bLeave", M.leave); press("#bAPark", M.apark); press("#bDef", M.def != null); press("#bDefd", M.defd != null);
+  press("#bBroke", M.broke); press("#bTPark", M.tpark); press("#bAutoOk", M.autoOk);
+  if (M.ended) { renderSummary(); setPiece(); $("#mPost").classList.remove("hidden"); return; }
+  $("#mLive").classList.remove("hidden"); timerId = setInterval(tick, 200); tick();
+  lastAction(`Resumed Q${M.num} · ${M.team}`);
+})();
+loadSettingsForm(); renderHeader(); renderLists(); suggestTeam();
+
+try { const t = sessionStorage.getItem("lbs:tab"); if (t) $(`#tabs button[data-tab="${t}"]`)?.click(); } catch (e) {}
+</script>
+<script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script></body>
+</html>
