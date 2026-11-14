@@ -117,7 +117,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .phase.teleop{background:transparent;color:var(--fg-dark);border-color:var(--blue)}
 .phase.end{background:transparent;color:var(--fg-dark);border-color:var(--red)}
 .stats b{font-variant-numeric:tabular-nums;color:var(--fg-dark)}
-.cov small{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.02em}
+.cov small{display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font:400 11px/1.25 'IBM Plex Sans',system-ui,sans-serif;overflow-wrap:normal;word-break:normal;hyphens:auto;margin-top:2px}
 .tap.late .endg h3{color:var(--fg-dark)}
 .cov .mn,.list .item .okc,.list .item .muted{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:12px}
 .okc{color:var(--ok-text)}
@@ -125,6 +125,13 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .err::before{content:"";display:inline-block;width:8px;height:8px;background:var(--red);margin-right:8px;vertical-align:1px}
 @keyframes bump{0%{transform:scale(1.6);color:var(--label)}100%{transform:scale(1)}}
 .editnote{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--accent);background:var(--panel2);color:var(--fg-dark);font-size:14px}
+/* themed checkbox */
+label.check{display:flex;align-items:center;gap:10px;min-height:44px;margin:4px 0;color:var(--fg-dark);font-size:15px;font-weight:500;cursor:pointer;user-select:none}
+input[type="checkbox"]{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:22px;height:22px;margin:0;padding:0;border:2px solid var(--muted);border-radius:3px;background:var(--panel2);display:grid;place-content:center;cursor:pointer;transition:background-color .12s,border-color .12s}
+input[type="checkbox"]::after{content:"";width:6px;height:11px;border:solid var(--accent-ink);border-width:0 3px 3px 0;transform:translateY(-1px) rotate(45deg) scale(0);transition:transform .12s ease-out}
+input[type="checkbox"]:checked{background:var(--accent);border-color:var(--accent)}
+input[type="checkbox"]:checked::after{transform:translateY(-1px) rotate(45deg) scale(1)}
+label.check:hover input[type="checkbox"]:not(:checked){border-color:var(--fg-dark)}
 /* sync */
 .qrcount{font:500 14px/1.3 'IBM Plex Mono',ui-monospace,monospace;text-align:center;color:var(--fg-dark);margin:8px 0;font-variant-numeric:tabular-nums}
 .receipt{margin-top:10px;padding:12px;border:2px solid var(--accent);border-radius:6px;background:var(--panel2)}
@@ -188,7 +195,6 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
 <header><span class="brand"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABaCAYAAAA8XZE/AAAE5UlEQVR42u2dPZLjIBCFgdIFbKcKHfkOE2/qbO+yB9i7bDbpxr6DI4VKPVu1F9AmgxczDTRNI0CCKleN7ZF/Pj09mqbBQlTSHuN5eYznRWysqVrgHu+T6C2Tape/4nnbooqLXPI22K3CVSUu+T1ZgupwG7MF3yUP2cLWvXfYsnL1STvNkzRP4GmeZFOAIXgfl/Pzi3DBjVX58T6Jj8v5eZy+36SCcynXhAqdRAiqfu7jcn6536RF+ABi4Zpqt8G6jjfh2fft5zbhwWupXisxBq4PuMt2uHx6yHn5U9SLUb0N17YArJpd76V9mwPykFNl3A2yBdt3MZ4bsp9qFIxVGddJs+H5lAw9l/LZVgXMFXZRQjlItSFwMZ0f99U3tJCutMG4/sbYC6RwCG4xDy6ZS6CqC1K5CdplIY/L/5FgcwrW9oBVr095lP7A5+f2SFDUlE2LCfJryKzlfn9V85fjUK/Y65xcbOeU+7Pkit1Vzt6eq0NbI1EDQeZ434G7h+eGsaYtaMjme6aGagNXyJQDhE45lgAOZfgoTVKT3bXEwrlOLFc+QsZ4b015Vt8goiYFD61X3dQeusle0kSbacFayCB6I88LPi7hhJCkJqT3pOLQ3KBPzarbQprPH++TON4n59yesov1Olz6SYAgK1O1HS4/ZNWx5IWsWupoWoTcFSwK5YNLFMqVygfnzBWrviZiBQX36CGfD6veMRWck0vxn5gqnVLzZasAPs2TLPUF9mBNPUwrBdicD+t+mghY24QN9DRPknNFDjSJuRsFa5CcE369WTMaLqineZKPS1oqc682g+7kUqONvQ5mVh1o7CnnrCdMowDHqngLnVpqsil6Vhnrx77VQN0imJWsraElNad8VrOeguzBlE5PQ461mZaVn9TJUSFTQJdKtKeeXAzgxbqxhG+t2Ebs57PLrUKjteV2u7088Pb2Bh6XUlPh6gRL2gN1v4sYwE+4n1DF7XYzAS/2a6SWXJVc8sqxvQI0Gg4C1nDt9vvHdyGEEN9+/vryOq1XCPlqg2O3P5AOz/0C0tUgwC0XEHIVXrsAL0ig6GrNltTMDdc7knOB/DO/g48fxqvIlYlrFa6puAUL0tU+AcuUTTC2BvdFwbFAKYMScwV7DaDXmFx4UXAK5JCCa1N0TtVCCpaQTbj8lUPtPkXnHGCsPSVmvskCgXN1Xvb/xioYG1/WuPaNLR9swtVA9WOH8crq266tvXy7+8WODktM5KIS7ibIP/M7CPnz8SVFxdgttrStUI4tCVgexutiKxVSqQlZFNjrsqWSAoWMDnrjBuzz1xD01J9s2FIF0ICNcW3rcJ0E8xI3vTI2O5U6L1ZqQ+ZgsscRfqEUfhiv4jGevdtnUTZGigFlrysuEZp5AXtiXGzCR/oWUVOn8EOgoJFh6RDNmQ+mxrfGiZA5dkuBRmE2WPtKKR1xJAO2wzlMVo2ziNCeOK0thBtiAdYWwtVebjvEKNWEHIomUkuvdjPQgKBS4e6xoT0YsoPA/0nqzze0aAUsnRxWudjUpbld2JZsgVybZmbOciR19KIbDdMs2G51TXV08R+357oufXPlU8tFLElxcCBMk9jZi9Dlb1pJa1YxEEZp5P0vU7xVK938ha1mFZwDJEeWK1b5tXqwdNxEzmkgyjF9MxGG34QLJfU75J3/2PU/OGthNQlDJvoAAAAASUVORK5CYII=" alt="" width="88" height="90"><span>Lebob Scout</span></span><span class="hdrmeta" id="hdrEvent"></span><span class="pill" id="hdrQueue"></span><button type="button" class="btn thbtn" id="thBtn" aria-label="Switch light or dark mode"></button></header>
 <nav id="tabs">
   <button data-tab="match" aria-current="true">Match</button>
-  <button data-tab="coverage">Coverage</button>
   <button data-tab="teams">Teams</button>
   <button data-tab="pit">Pit</button>
   <button data-tab="breakage">Breakage</button>
@@ -276,14 +282,6 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
   <div class="card"><h2>Saved on this phone</h2><div class="list" id="mList"></div></div>
 </section>
 
-<!-- COVERAGE -->
-<section id="tab-coverage"><div class="card"><h2>Coverage</h2>
-  <p class="muted">Which robots in which matches have a report on this phone. On the lead's phone that is everything collected so far. Tap a missing cell to start that match.</p>
-  <p id="covSum"></p>
-  <label style="display:flex;gap:8px;align-items:center;color:var(--fg)"><input type="checkbox" id="covGaps" style="width:auto"> Only matches with gaps</label>
-  <div id="covGrid" class="cov" style="margin-top:10px"></div>
-</div></section>
-
 <!-- TEAMS: scouting status per team (not strategy) -->
 <section id="tab-teams">
   <div class="card"><h2>Scouting status</h2><div class="stats" id="tSum"></div><p class="muted" id="tNote" style="margin:10px 0 0"></p></div>
@@ -291,6 +289,12 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
     <input id="tQ" type="search" placeholder="Find a team (number or name)" autocomplete="off" aria-label="Find a team">
     <div class="seg" id="tFilt" style="margin-top:8px"><button type="button" class="btn" data-f="all" aria-pressed="true">All</button><button type="button" class="btn" data-f="need" aria-pressed="false">Needs scouting</button><button type="button" class="btn" data-f="mine" aria-pressed="false">Scouted by me</button></div>
     <div id="tList" class="tlist" style="margin-top:10px"></div>
+  </div>
+  <div class="card" id="covCard"><h2>Match coverage</h2>
+    <p class="muted" style="margin-top:0">Which robots in which matches have a report on this phone. On the lead's phone that is everything collected so far. Tap a missing cell to scout that match.</p>
+    <p id="covSum"></p>
+    <label class="check"><input type="checkbox" id="covGaps"><span>Only matches with gaps</span></label>
+    <div id="covGrid" class="cov" style="margin-top:10px"></div>
   </div>
   <div class="card"><h2>Scouts</h2><p class="muted" style="margin-top:0">Reports on this phone, by scout. On the lead's phone that is everything collected.</p><div class="list" id="tScouts"></div></div>
 </section>
@@ -384,7 +388,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "9ebb9bc";
+const APP_VERSION = "f44f39b";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
