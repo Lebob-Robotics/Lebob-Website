@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#121316">
+<meta name="theme-color" content="#1a1b1e">
 <title>Lebob Scout</title>
 <script>try{var t=JSON.parse(localStorage.getItem("lbs:theme"));if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
-:root{--bg:#121316;--panel:#1c1d22;--panel2:#25262c;--line:#33343b;--fg:#e9e9e4;--muted:#9a9b94;--accent:#FFF200;--accent-ink:#121316;--red:#ED1C24;--blue:#2F7DF6;--ok:#3DCB6C;--warn:#F5A524}
-@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f6f2;--panel:#ffffff;--panel2:#efefea;--line:#d9d9d2;--fg:#17181b;--muted:#5f605a;--accent:#FFF200;--accent-ink:#17181b}}
-:root[data-theme="light"]{--bg:#f6f6f2;--panel:#ffffff;--panel2:#efefea;--line:#d9d9d2;--fg:#17181b;--muted:#5f605a;--accent:#FFF200;--accent-ink:#17181b}
+/* lebob.com.au site tokens (dark). Brand colours: yellow #FFF200, red #ED1C24 (red fills shapes, never body text).
+   Light: yellow fills only (1.2:1 on white), so labels and focus rings go dark. Blue is the BLUE alliance, not brand. */
+:root{--bg:#1a1b1e;--panel:#242529;--panel2:#1f2024;--hover:#28292e;--line:#36373c;--fg:#c8c9c2;--fg-dark:#e5e6e0;--muted:#8a8b83;--accent:#FFF200;--accent-ink:#1a1b1e;--label:#FFF200;--focus:#FFF200;--red:#ED1C24;--blue:#2F7DF6;--ok:#3DCB6C;--ok-text:#3DCB6C;--warn:#F5A524}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f4f4f0;--panel:#ffffff;--panel2:#f4f4f0;--hover:#ebebe6;--line:#d6d6cf;--fg:#2a2b2f;--fg-dark:#1a1b1e;--muted:#5f605a;--label:#1a1b1e;--focus:#1a1b1e;--ok-text:#1d7a3a}}
+:root[data-theme="light"]{--bg:#f4f4f0;--panel:#ffffff;--panel2:#f4f4f0;--hover:#ebebe6;--line:#d6d6cf;--fg:#2a2b2f;--fg-dark:#1a1b1e;--muted:#5f605a;--label:#1a1b1e;--focus:#1a1b1e;--ok-text:#1d7a3a}
 header .thbtn{flex:0 0 auto;min-height:36px;min-width:36px;padding:4px 10px;font-size:18px;line-height:1}
 *{box-sizing:border-box}html,body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px calc(8px) 16px;display:flex;align-items:center;gap:10px}
@@ -84,10 +86,49 @@ video{width:100%;border-radius:12px;background:#000}
 .tlwrap.fs{position:fixed;inset:0;z-index:100;background:var(--bg);padding:10px;overflow:auto;margin:0}.tlwrap.fs #tlClose{display:inline-flex}.tlwrap.fs #tlOpen{display:none}.sum .tlwrap.fs .tlscroll svg{width:max(100%,1700px)}
 #startField{margin-top:6px}#startField svg{width:100%;max-width:440px;height:auto;display:block;touch-action:manipulation;border-radius:10px}#startField text{font-family:system-ui,sans-serif;pointer-events:none}
 .stepper{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;gap:6px;align-items:stretch}.stepper .btn{min-height:44px;padding:0;font-size:22px;line-height:1}.stepper input{text-align:center;padding:10px 4px;-moz-appearance:textfield}.stepper input::-webkit-inner-spin-button,.stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+
+/* ---- lebob.com.au look: IBM Plex (self-hosted on lebob.com.au; system fonts elsewhere), 4-6px corners, mono labels */
+@font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('/fonts/ibm-plex-sans-var-latin.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/ibm-plex-mono-500-latin.woff2') format('woff2')}
+html,body{font:16px/1.5 'IBM Plex Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+header{padding:10px 16px;gap:12px}
+.brand{display:flex;align-items:center;gap:8px;color:var(--fg-dark);font-weight:700;font-size:17px;letter-spacing:-.01em;white-space:nowrap}
+.brand img{width:30px;height:auto;image-rendering:pixelated;opacity:1}
+.hdrmeta,header .pill{font:500 12px/1.2 'IBM Plex Mono',ui-monospace,Menlo,monospace;color:var(--muted);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+header .thbtn{border-radius:4px}
+nav{gap:4px;padding:8px 16px}
+nav button{border-radius:4px;background:transparent;border-color:var(--line);color:var(--fg);font:500 14px/1 'IBM Plex Sans',system-ui,sans-serif;padding:10px 12px}
+nav button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.card{border-radius:6px;padding:16px;border-color:var(--line)}
+h2,.sum h3,.endg h3,#tab-sync h3{font:500 13px/1.3 'IBM Plex Mono',ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--label);margin:0 0 12px}
+label{font-weight:500;color:var(--muted)}
+input,select,textarea{border-radius:4px;background:var(--panel2);border-color:var(--line);color:var(--fg-dark)}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
+.btn{border-radius:4px;background:var(--panel2);border-color:var(--line);color:var(--fg-dark);font-weight:600}
+.btn:hover{background:var(--hover)}
+.btn.primary,.btn.primary:hover{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.seg .btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.list .item,.lastev,.stats div,.cov>div,.tlpanel,#qrbox,#schedQrBox,video,#startField svg,.sum svg{border-radius:4px}
+.endg{border-radius:6px}
+.timer .clock{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-weight:500;font-variant-numeric:tabular-nums;color:var(--fg-dark)}
+.timer .phase{border-radius:4px;font:500 13px/1.2 'IBM Plex Mono',ui-monospace,Menlo,monospace;letter-spacing:.05em;padding:6px 10px;border:2px solid transparent}
+.phase.teleop{background:transparent;color:var(--fg-dark);border-color:var(--blue)}
+.phase.end{background:transparent;color:var(--fg-dark);border-color:var(--red)}
+.stats b{font-variant-numeric:tabular-nums;color:var(--fg-dark)}
+.cov small{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.02em}
+.tap.late .endg h3{color:var(--fg-dark)}
+.cov .mn,.list .item .okc,.list .item .muted{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;font-size:12px}
+.okc{color:var(--ok-text)}
+.err{color:var(--fg-dark)}
+.err::before{content:"";display:inline-block;width:8px;height:8px;background:var(--red);margin-right:8px;vertical-align:1px}
+@keyframes bump{0%{transform:scale(1.6);color:var(--label)}100%{transform:scale(1)}}
+.editnote{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--accent);background:var(--panel2);color:var(--fg-dark);font-size:14px}
+.foot-brand{margin:28px 0 0;padding-top:20px;background-image:repeating-linear-gradient(90deg,var(--accent) 0 8px,transparent 8px 16px);background-size:100% 8px;background-repeat:no-repeat;font:500 12px/1.4 'IBM Plex Mono',ui-monospace,Menlo,monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
 </style>
-<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"></head>
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Scout"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
 <body>
-<header><b>Lebob Scout</b><span class="muted" id="hdrEvent"></span><span class="pill" id="hdrQueue"></span><button type="button" class="btn thbtn" id="thBtn" aria-label="Switch light or dark mode"></button></header>
+<header><span class="brand"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABaCAYAAAA8XZE/AAAE5UlEQVR42u2dPZLjIBCFgdIFbKcKHfkOE2/qbO+yB9i7bDbpxr6DI4VKPVu1F9AmgxczDTRNI0CCKleN7ZF/Pj09mqbBQlTSHuN5eYznRWysqVrgHu+T6C2Tape/4nnbooqLXPI22K3CVSUu+T1ZgupwG7MF3yUP2cLWvXfYsnL1STvNkzRP4GmeZFOAIXgfl/Pzi3DBjVX58T6Jj8v5eZy+36SCcynXhAqdRAiqfu7jcn6536RF+ABi4Zpqt8G6jjfh2fft5zbhwWupXisxBq4PuMt2uHx6yHn5U9SLUb0N17YArJpd76V9mwPykFNl3A2yBdt3MZ4bsp9qFIxVGddJs+H5lAw9l/LZVgXMFXZRQjlItSFwMZ0f99U3tJCutMG4/sbYC6RwCG4xDy6ZS6CqC1K5CdplIY/L/5FgcwrW9oBVr095lP7A5+f2SFDUlE2LCfJryKzlfn9V85fjUK/Y65xcbOeU+7Pkit1Vzt6eq0NbI1EDQeZ434G7h+eGsaYtaMjme6aGagNXyJQDhE45lgAOZfgoTVKT3bXEwrlOLFc+QsZ4b015Vt8goiYFD61X3dQeusle0kSbacFayCB6I88LPi7hhJCkJqT3pOLQ3KBPzarbQprPH++TON4n59yesov1Olz6SYAgK1O1HS4/ZNWx5IWsWupoWoTcFSwK5YNLFMqVygfnzBWrviZiBQX36CGfD6veMRWck0vxn5gqnVLzZasAPs2TLPUF9mBNPUwrBdicD+t+mghY24QN9DRPknNFDjSJuRsFa5CcE369WTMaLqineZKPS1oqc682g+7kUqONvQ5mVh1o7CnnrCdMowDHqngLnVpqsil6Vhnrx77VQN0imJWsraElNad8VrOeguzBlE5PQ461mZaVn9TJUSFTQJdKtKeeXAzgxbqxhG+t2Ebs57PLrUKjteV2u7088Pb2Bh6XUlPh6gRL2gN1v4sYwE+4n1DF7XYzAS/2a6SWXJVc8sqxvQI0Gg4C1nDt9vvHdyGEEN9+/vryOq1XCPlqg2O3P5AOz/0C0tUgwC0XEHIVXrsAL0ig6GrNltTMDdc7knOB/DO/g48fxqvIlYlrFa6puAUL0tU+AcuUTTC2BvdFwbFAKYMScwV7DaDXmFx4UXAK5JCCa1N0TtVCCpaQTbj8lUPtPkXnHGCsPSVmvskCgXN1Xvb/xioYG1/WuPaNLR9swtVA9WOH8crq266tvXy7+8WODktM5KIS7ibIP/M7CPnz8SVFxdgttrStUI4tCVgexutiKxVSqQlZFNjrsqWSAoWMDnrjBuzz1xD01J9s2FIF0ICNcW3rcJ0E8xI3vTI2O5U6L1ZqQ+ZgsscRfqEUfhiv4jGevdtnUTZGigFlrysuEZp5AXtiXGzCR/oWUVOn8EOgoJFh6RDNmQ+mxrfGiZA5dkuBRmE2WPtKKR1xJAO2wzlMVo2ziNCeOK0thBtiAdYWwtVebjvEKNWEHIomUkuvdjPQgKBS4e6xoT0YsoPA/0nqzze0aAUsnRxWudjUpbld2JZsgVybZmbOciR19KIbDdMs2G51TXV08R+357oufXPlU8tFLElxcCBMk9jZi9Dlb1pJa1YxEEZp5P0vU7xVK938ha1mFZwDJEeWK1b5tXqwdNxEzmkgyjF9MxGG34QLJfU75J3/2PU/OGthNQlDJvoAAAAASUVORK5CYII=" alt="" width="88" height="90"><span>Lebob Scout</span></span><span class="hdrmeta" id="hdrEvent"></span><span class="pill" id="hdrQueue"></span><button type="button" class="btn thbtn" id="thBtn" aria-label="Switch light or dark mode"></button></header>
 <nav id="tabs">
   <button data-tab="match" aria-current="true">Match</button>
   <button data-tab="coverage">Coverage</button>
@@ -186,7 +227,7 @@ video{width:100%;border-radius:12px;background:#000}
 </div></section>
 
 <!-- PIT -->
-<section id="tab-pit"><form class="card" id="fPit"><h2>Pit scouting</h2>
+<section id="tab-pit"><form class="card" id="fPit"><h2>Pit scouting</h2><p class="editnote hidden"></p>
   <div class="row"><div><label>Team #</label><input name="teamNumber" type="number" inputmode="numeric" required></div><div><label>Drivetrain</label><select name="drivetrain" data-enum="DRIVETRAINS"></select></div></div>
   <label>Robot archetype</label><select name="archetype" data-enum="ARCHETYPES"></select>
   <div class="row3"><div><label>HIVE</label><select name="canHive" data-bool></select></div><div><label>FLOWER</label><select name="canFlower" data-bool></select></div><div><label>NECTAR</label><select name="canNectar" data-bool></select></div></div>
@@ -197,11 +238,11 @@ video{width:100%;border-radius:12px;background:#000}
   <div class="row"><div><label>Preferred start</label><select name="preferredStart" data-enum="START_POSITIONS"></select></div><div><label>Claimed cycle (s)</label><input name="claimedCycleSeconds" type="number" inputmode="decimal" data-step="1"></div></div>
     <div class="row"><div><label>Height (in)</label><input name="heightInches" type="number" inputmode="decimal" data-step="1"></div><div><label>Weight (kg)</label><input name="weightKg" type="number" inputmode="decimal" data-step="0.5"></div></div>
   <label>Known issues</label><input name="knownIssues"><label>Notes</label><textarea name="notes"></textarea>
-  <button class="btn primary wide" style="margin-top:12px">Save pit report</button></form>
+  <button class="btn primary wide" style="margin-top:12px" data-label="Save pit report">Save pit report</button><button type="button" class="btn wide hidden" data-cancel style="margin-top:8px">Cancel editing</button></form>
   <div class="card"><h2>Saved</h2><div class="list" id="pitList"></div></div></section>
 
 <!-- BREAKAGE -->
-<section id="tab-breakage"><form class="card" id="fBreak"><h2>Breakage (ours or theirs)</h2>
+<section id="tab-breakage"><form class="card" id="fBreak"><h2>Breakage (ours or theirs)</h2><p class="editnote hidden"></p>
   <div class="row"><div><label>Team #</label><input name="teamNumber" type="number" inputmode="numeric" required></div><div><label>Match # (blank = practice/pit)</label><input name="matchNumber" type="number" inputmode="numeric"></div></div>
   <div class="row"><div><label>Phase</label><select name="phase" data-enum="PHASES"></select></div><div><label>Field location</label><select name="fieldLocation" data-enum="FIELD_ZONES"></select></div></div>
   <div class="row"><div><label>Mechanism</label><input name="mechanism" placeholder="intake, launcher, drive…"></div><div><label>Component</label><input name="component" placeholder="belt, servo horn…"></div></div>
@@ -211,7 +252,7 @@ video{width:100%;border-radius:12px;background:#000}
   <div class="row"><div><label>Seconds lost</label><input name="lostSeconds" type="number" inputmode="numeric" data-step="5"></div><div><label>Repair min</label><input name="repairMinutes" type="number" inputmode="numeric" data-step="5"></div></div>
   <div class="row3"><div><label>Recovered</label><select name="recovered" data-bool></select></div><div><label>Seen before</label><select name="happenedBefore" data-bool></select></div><div><label>Recurrence</label><select name="recurrence"><option>unknown</option><option>low</option><option>medium</option><option>high</option></select></div></div>
   <label>Fix applied</label><input name="fix"><label>Spare used</label><input name="spareUsed"><label>Evidence (photo name / video timestamp)</label><input name="evidence">
-  <button class="btn primary wide" style="margin-top:12px">Save breakage</button></form>
+  <button class="btn primary wide" style="margin-top:12px" data-label="Save breakage">Save breakage</button><button type="button" class="btn wide hidden" data-cancel style="margin-top:8px">Cancel editing</button></form>
   <div class="card"><h2>Saved</h2><div class="list" id="breakList"></div></div></section>
 
 <!-- SYNC -->
@@ -256,6 +297,7 @@ video{width:100%;border-radius:12px;background:#000}
   <p class="muted" id="cVibInfo"></p>
   <button class="btn wide" id="cWipe" style="margin-top:16px">Delete all data on this phone</button>
 </div></section>
+<footer class="foot-brand">Lebob Scout · FTC team 29550 · <span id="ftVer"></span></footer>
 </main>
 
 <script>/* qrcode-generator 1.4.4, (c) Kazuhiko Arase, MIT licence */
@@ -265,7 +307,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "7a434a6";
+const APP_VERSION = "639f8dc";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -303,7 +345,7 @@ function applyTheme() {
 function setTheme(t) { store.set("theme", t); applyTheme(); redrawSvgs(); }
 // colours for the drawn SVGs (field diagram, match timeline): presentation attributes cannot use CSS variables
 const SVGC = {
-  dark: {bg: "#15161a", field: "#3d404a", edge: "#9aa0ac", grid: "#52555f", text: "#fff", shade: "#000", shadeOp: ".5", path: "#e6e8ee", pathOp: ".55",
+  dark: {bg: "#1d1e21", field: "#3d404a", edge: "#9aa0ac", grid: "#52555f", text: "#fff", shade: "#000", shadeOp: ".5", path: "#e6e8ee", pathOp: ".55",
          ph1: "#3a3d47", ph2: "#2a2c33", label: "#e6e8ee", tick: "#3b3e47", bar: "#9aa0ac", dot: "#c9ccd4", dotOn: "#fff"},
   light: {bg: "#e9eae4", field: "#d3d5cd", edge: "#6b6f78", grid: "#bcbfb6", text: "#17181b", shade: "#fff", shadeOp: ".6", path: "#17181b", pathOp: ".45",
           ph1: "#cdd0c7", ph2: "#dcded7", label: "#17181b", tick: "#bcbfb6", bar: "#6b6f78", dot: "#5f605a", dotOn: "#17181b"}};
@@ -384,16 +426,51 @@ $$("input[data-step]").forEach(inp => {
     b.addEventListener("click", () => { const v = Math.max(0, Math.round(((parseFloat(inp.value) || 0) + d * step) * 100) / 100); inp.value = v; }); return b; };
   box.append(mk(-1, "−"), inp, mk(1, "+"));
 });
+// pit and breakage reports are edited in their own form: Edit loads the report, Save changes updates the same report
+// (same id, author, event and time, so the lead's copy is overwritten on the next send), and it is queued again
+const FORM_OF = {scout_pit_reports: "#fPit", scout_breakages: "#fBreak"};
+function endEdit(form) {
+  delete form.dataset.editId; form.reset();
+  const save = $("button[data-label]", form); save.textContent = save.dataset.label;
+  $("[data-cancel]", form).classList.add("hidden"); $(".editnote", form).classList.add("hidden");
+}
+function startEdit(table, rec) {
+  const form = $(FORM_OF[table]), pk = CFG.pk[table], id = rec[pk];
+  const typed = [...form.elements].some(el => el.name && el.tagName !== "SELECT" && el.value !== "");
+  if (form.dataset.editId !== id && typed && !confirm("Replace what is in the form with this report?")) return;
+  form.reset();
+  for (const el of form.elements) {
+    if (!el.name) continue;
+    const v = el.name === "matchNumber" ? (String(rec.matchKey || "").match(/-q(\d+)$/) || [])[1] : rec[el.name];
+    el.value = v == null ? "" : String(v);
+  }
+  form.dataset.editId = id;
+  $("button[data-label]", form).textContent = "Save changes";
+  $("[data-cancel]", form).classList.remove("hidden");
+  const note = $(".editnote", form); note.classList.remove("hidden");
+  note.textContent = `Editing the report for ${rec.teamNumber ?? "?"}${teamName(rec.teamNumber) ? " " + teamName(rec.teamNumber) : ""}` + (rec.createdAt ? `, saved ${new Date(rec.createdAt + "Z").toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"})}` : "") + ".";
+  $(`#tabs button[data-tab="${table === "scout_pit_reports" ? "pit" : "breakage"}"]`).click();
+  form.scrollIntoView({block: "start", behavior: "smooth"});
+}
 function wireForm(id, table, after) {
+  $(id).addEventListener("click", e => { if (e.target.closest("[data-cancel]")) endEdit(e.currentTarget); });
   $(id).addEventListener("submit", e => {
     e.preventDefault();
     if (!ensureScout()) return;
-    const rec = formRecord(e.target, table);
-    if (table === "scout_breakages" && rec.matchNumber) rec.matchKey = `${settings().eventCode}-q${rec.matchNumber}`;
+    const form = e.target, pk = CFG.pk[table], fresh = formRecord(form, table);
+    const old = form.dataset.editId ? records(table).find(r => r[pk] === form.dataset.editId) : null;
+    let rec = fresh;
+    if (old) {   // keep id, author, event and time; take every field the form holds
+      rec = Object.assign({}, old);
+      for (const el of form.elements) if (el.name) rec[el.name] = fresh[el.name];
+      if ("updatedAt" in CFG.fields[table]) rec.updatedAt = nowIso();
+    }
+    if (table === "scout_breakages") rec.matchKey = rec.matchNumber ? `${old ? old.eventCode : settings().eventCode}-q${rec.matchNumber}` : (old ? null : rec.matchKey);
     delete rec.matchNumber;
-    putRecord(table, rec); e.target.reset();
+    putRecord(table, rec);
     buzz([40, 60, 120]);
-    const btn = e.target.querySelector("button:not([type=button])"); if (btn) { const t = btn.textContent; btn.textContent = "Saved ✓"; setTimeout(() => btn.textContent = t, 1500); }
+    if (old) endEdit(form); else form.reset();
+    const btn = $("button[data-label]", form); if (btn) { btn.textContent = old ? "Changes saved ✓" : "Saved ✓"; setTimeout(() => { if (!form.dataset.editId) btn.textContent = btn.dataset.label; }, 1500); }
     if (after) after(rec);
   });
 }
@@ -441,8 +518,9 @@ document.addEventListener("click", e => {
     if (!confirm("Delete this report?" + (sent ? "\nIt was already sent: the lead keeps their copy until they delete it too." : ""))) return;
     store.set("t:" + table, records(table).filter(r => r[pk] !== id));
     store.set("unsent", store.get("unsent", []).filter(k => k !== table + "|" + id));
+    const f = FORM_OF[table] && $(FORM_OF[table]); if (f && f.dataset.editId === id) endEdit(f);
     renderHeader(); renderLists();
-  } else editRecord(table, rec);
+  } else if (FORM_OF[table]) startEdit(table, rec); else editRecord(table, rec);
 });
 
 // ---------- coverage: schedule vs reports ----------
@@ -1198,6 +1276,7 @@ if (!store.get("settings", null)) saveSettings(settings());
   lastAction(`Resumed Q${M.num} · ${M.team}`);
 })();
 loadSettingsForm(); renderHeader(); renderLists(); suggestTeam(); webSchedule(false);
+$("#ftVer").textContent = "v" + APP_VERSION;
 (async function keepStorage() {
   const el = $("#cStore"), sto = navigator.storage;
   if (!sto || !sto.persist) { el.textContent = "Storage: this browser cannot promise to keep the data. Send reports to the lead often."; return; }
