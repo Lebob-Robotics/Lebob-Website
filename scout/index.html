@@ -125,6 +125,28 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .err::before{content:"";display:inline-block;width:8px;height:8px;background:var(--red);margin-right:8px;vertical-align:1px}
 @keyframes bump{0%{transform:scale(1.6);color:var(--label)}100%{transform:scale(1)}}
 .pithint{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--warn);background:var(--panel2);color:var(--fg-dark);font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}.pithint.hidden{display:none}
+/* live pad */
+.pad{margin-top:8px}
+.psec{margin:0 0 10px}.psec h3{font:500 12px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.06em;color:var(--label);margin:0 0 6px}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.pgrid .btn{min-height:56px;font-size:15px}
+#bTPark{grid-column:1/-1;min-height:64px;font-size:17px}
+.scols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.scol{display:flex;flex-direction:column;gap:6px}.scol h3{text-align:center;margin:0}
+.srow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:6px}
+.ogrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}.ogrid .btn{min-height:60px}
+.ogrid #bBroke{grid-column:1/-1;min-height:52px}
+.btn.ctr{min-height:76px;padding:8px 10px;justify-content:space-between;text-align:left;gap:6px}
+.btn.ctr .cl{display:flex;flex-direction:column;min-width:0;line-height:1.1}
+.btn.ctr .cl small{font:500 11px/1.2 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.05em;opacity:.85}
+.btn.ctr .cl b{font-size:17px;font-weight:700;letter-spacing:.01em}
+.btn.ctr .cl em{font-style:normal;font-size:11px;font-weight:500;display:none}
+.btn.ctr .cn{flex:0 0 auto;font:700 30px/1 'IBM Plex Sans',system-ui,sans-serif;font-variant-numeric:tabular-nums;min-width:1.2em;text-align:right}
+.ogrid .btn.ctr{min-height:60px}.ogrid .btn.ctr .cn{font-size:22px}.ogrid .btn.ctr .cl b{font-size:14px}
+.btn.ctr.off,.btn.ctr:disabled{opacity:.35;filter:saturate(.3)}.btn.ctr.off .cl em{display:block}
+.btn.ctr.miss{border-color:var(--red)}
+.cn.cbump{animation:cbump .35s ease-out}
+@keyframes cbump{0%{transform:scale(1.5)}100%{transform:scale(1)}}
+.lastev{margin:8px 0 0;min-height:22px;font-size:14px;padding:4px 10px}
 .bigstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .bigstats div{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:14px 8px;text-align:center}
 .bigstats b{display:block;font:700 34px/1.05 'IBM Plex Sans',system-ui,sans-serif;color:var(--fg-dark);font-variant-numeric:tabular-nums}
@@ -244,42 +266,46 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
   </div>
   <div class="card hidden" id="mLive">
     <div class="timer"><span class="phase" id="mPhase">AUTO</span><span class="clock" id="mClock">0:30</span><button class="btn small" id="mUndo">Undo</button></div>
-    <div class="stats"><div><b id="sAuto">0</b><span>AUTO scored</span></div><div><b id="sTele">0</b><span>HIVE scored</span></div><div><b id="sMiss">0</b><span>missed</span></div><div><b id="sCyc">–</b><span>cycle s</span></div></div>
     <p class="lastev" id="mLast" aria-live="polite">Tap a button each time the robot does something.</p>
-    <div id="autoPad" class="tap" style="margin-top:12px">
-      <button class="btn toggle" id="bLeave" aria-pressed="false">LEAVE<small>off wall</small></button>
-      <button class="btn pollen strong" data-ev="auto-score" data-piece="pollen">+ Scored<small>POLLEN</small></button>
-      <button class="btn" data-ev="auto-miss">+ Missed</button>
-      <button class="btn pollen" data-ev="auto-intake-garden" data-piece="pollen">Intake<small>POLLEN · GARDEN</small></button>
-      <button class="btn pollen" data-ev="auto-intake-flower" data-piece="pollen">Intake<small>POLLEN · FLOWER</small></button>
-      <button class="btn toggle" id="bAPark" aria-pressed="false">AUTO PARK</button>
-      <button class="btn toggle" id="bAutoOk" aria-pressed="true">Auto as planned</button>
-      <button class="btn" id="bSkipAuto">Skip to TELEOP</button>
-    </div>
-    <div id="telePad" class="tap hidden" style="margin-top:12px">
-      <div class="pairs">
-        <button class="btn pollen" data-ev="intake-ground" data-piece="pollen">Intake<small>POLLEN · GROUND</small></button>
-        <button class="btn nectar" data-ev="intake-ground" data-piece="nectar">Intake<small>NECTAR · GROUND</small></button>
-        <button class="btn pollen" data-ev="intake-flower" data-piece="pollen">Intake<small>POLLEN · FLOWER</small></button>
-        <button class="btn nectar" data-ev="intake-flower" data-piece="nectar">Intake<small>NECTAR · FLOWER</small></button>
-        <button class="btn pollen strong" data-ev="score" data-piece="pollen">Score<small>POLLEN · HIVE</small></button>
-        <button class="btn nectar strong" data-ev="score" data-piece="nectar">Score<small>NECTAR · HIVE</small></button>
+    <div class="pad">
+      <div class="psec" id="secPeriod"><h3 id="secPeriodT">AUTO</h3>
+        <div class="pgrid">
+          <button class="btn toggle" id="bLeave" aria-pressed="false">LEAVE</button>
+          <button class="btn toggle" id="bAPark" aria-pressed="false">AUTO PARK</button>
+          <button class="btn toggle" id="bAutoOk" aria-pressed="true">Auto as planned</button>
+          <button class="btn toggle hidden" id="bTPark" aria-pressed="false">TELEOP PARK</button>
+        </div>
       </div>
-      
-      <button class="btn" data-ev="miss">Miss</button>
-      <button class="btn hold" id="bDef" aria-pressed="false">Defending<small>tap on/off</small></button>
-      <button class="btn hold" id="bDefd" aria-pressed="false">Defended<small>tap on/off</small></button>
-      <button class="btn" data-ev="garden">GARDEN +1<small>element in GARDEN</small></button>
-      <button class="btn" data-ev="minor">+ Minor foul</button>
-      <button class="btn" data-ev="major">+ Major foul</button>
-      <button class="btn toggle" id="bBroke" aria-pressed="false">Broke down</button>
-      <div class="endg">
-        <h3>ENDGAME · last 60 s</h3>
-        <button class="btn" data-ev="flower-nectar">NECTAR<small>into FLOWER</small></button>
-        <button class="btn" data-ev="flower-pollen">POLLEN<small>into FLOWER</small></button>
-        <button class="btn toggle" id="bTPark" aria-pressed="false">TELEOP PARK</button>
+      <div class="psec" id="secScore">
+        <div class="scols">
+          <div class="scol"><h3>POLLEN</h3>
+            <button class="btn ctr pollen" data-k="p-ground"><span class="cl"><small>INTAKE</small><b data-l>GROUND</b></span><span class="cn">0</span></button>
+            <button class="btn ctr pollen" data-k="p-fin"><span class="cl"><small>INTAKE</small><b>FLOWER</b></span><span class="cn">0</span></button>
+            <button class="btn ctr pollen strong" data-k="p-hive"><span class="cl"><small>SCORE</small><b>HIVE</b></span><span class="cn">0</span></button>
+            <button class="btn ctr pollen strong" data-k="p-flower"><span class="cl"><small>SCORE</small><b>FLOWER</b><em>opens at 1:00</em></span><span class="cn">0</span></button>
+          </div>
+          <div class="scol"><h3>NECTAR</h3>
+            <button class="btn ctr nectar" data-k="n-ground"><span class="cl"><small>INTAKE</small><b>GROUND</b></span><span class="cn">0</span></button>
+            <button class="btn ctr nectar" data-k="n-fin"><span class="cl"><small>INTAKE</small><b>FLOWER</b></span><span class="cn">0</span></button>
+            <button class="btn ctr nectar strong" data-k="n-hive"><span class="cl"><small>SCORE</small><b>HIVE</b></span><span class="cn">0</span></button>
+            <button class="btn ctr nectar strong" data-k="n-flower"><span class="cl"><small>SCORE</small><b>FLOWER</b><em>opens at 1:00</em></span><span class="cn">0</span></button>
+          </div>
+        </div>
+        <div class="srow">
+          <button class="btn ctr miss" data-k="miss"><span class="cl"><small>SHOT</small><b>MISSED</b></span><span class="cn">0</span></button>
+          <button class="btn ctr" data-k="garden"><span class="cl"><small>INTO</small><b>GARDEN</b></span><span class="cn">0</span></button>
+        </div>
       </div>
-      <button class="btn" id="bEnd">End match</button>
+      <div class="psec" id="secOther"><h3>OTHER</h3>
+        <div class="ogrid">
+          <button class="btn ctr" data-k="minor"><span class="cl"><small>FOUL</small><b>MINOR</b></span><span class="cn">0</span></button>
+          <button class="btn ctr" data-k="major"><span class="cl"><small>FOUL</small><b>MAJOR</b></span><span class="cn">0</span></button>
+          <button class="btn hold ctr" id="bDef" aria-pressed="false"><span class="cl"><small>TAP ON / OFF</small><b>DEFENDING</b></span><span class="cn" id="cDef">0s</span></button>
+          <button class="btn hold ctr" id="bDefd" aria-pressed="false"><span class="cl"><small>TAP ON / OFF</small><b>DEFENDED</b></span><span class="cn" id="cDefd">0s</span></button>
+          <button class="btn toggle" id="bBroke" aria-pressed="false">Broke down</button>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="bSkipAuto">Skip to TELEOP</button><button class="btn" id="bEnd">End match</button></div>
     </div>
   </div>
   <div class="card hidden" id="mPost">
@@ -412,7 +438,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"},"points":{"LEAVE":3,"AUTO_PARK":5,"TELEOP_PARK":5,"HIVE_TIP":20,"TIP_THRESHOLD_ESTIMATE":7.5,"GARDEN_ELEMENT":1,"OWNED_FLOWER_ELEMENT":2,"MINOR_FOUL":5,"MAJOR_FOUL":20}};
-const APP_VERSION = "3d43db5";
+const APP_VERSION = "83424f3";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -1109,6 +1135,7 @@ $("#mGo").addEventListener("click", () => {
   ["#bLeave", "#bAPark", "#bDef", "#bDefd", "#bBroke", "#bTPark"].forEach(id => $(id).setAttribute("aria-pressed", "false"));
   $("#bAutoOk").setAttribute("aria-pressed", "true");
   clearInterval(timerId); timerId = setInterval(tick, 200); tick();
+  $("#mLive").scrollIntoView({block: "start"});
 });
 const elapsed = () => (Date.now() - M.w0) / 1000 + M.skip;
 let lastPersist = "";
@@ -1121,16 +1148,51 @@ function tick() {
   left = Math.max(0, left);
   $("#mClock").textContent = `${Math.floor(left / 60)}:${String(Math.floor(left % 60)).padStart(2, "0")}`;
   const late = ph === "TELEOP" && left <= ENDGAME, p = $("#mPhase"); p.textContent = late ? "ENDGAME" : ph; p.className = "phase " + (ph === "AUTO" ? "auto" : ph === "TELEOP" ? (late ? "end" : "teleop") : "");
-  $("#telePad").classList.toggle("late", late);
-  $("#autoPad").classList.toggle("hidden", !(ph === "AUTO" || ph === "TRANSITION"));
-  $("#telePad").classList.toggle("hidden", ph === "AUTO" || ph === "TRANSITION");
-  const c = counts();
-  const show = (id, v) => { const el = $(id); if (el.textContent !== String(v)) { el.textContent = v; const d = el.parentElement; d.classList.remove("bump"); void d.offsetWidth; d.classList.add("bump"); } };
-  show("#sAuto", c.autoScored); show("#sTele", c.hiveScored); show("#sMiss", c.hiveMissed);
-  show("#sCyc", c.cycleSecondsMedian ? c.cycleSecondsMedian.toFixed(1) : "–");
+  updatePad(ph === "AUTO" || ph === "TRANSITION" ? "auto" : late ? "end" : "tele");
   if (ph === "DONE") endMatch();
   persistM();
 }
+// ---- the live pad: each button logs the event for the period it is in, and shows how often that happened this period
+// (AUTO counts AUTO; TELEOP and ENDGAME count from the start of TELEOP). FLOWER scoring opens with 1:00 left (G410).
+const PAD = {
+  "p-ground": {auto: ["auto-intake-garden", "pollen"], tele: ["intake-ground", "pollen"]},
+  "p-fin": {auto: ["auto-intake-flower", "pollen"], tele: ["intake-flower", "pollen"]},
+  "p-hive": {auto: ["auto-score", "pollen"], tele: ["score", "pollen"]},
+  "p-flower": {end: ["flower-pollen"]},
+  "n-ground": {tele: ["intake-ground", "nectar"]},
+  "n-fin": {tele: ["intake-flower", "nectar"]},
+  "n-hive": {tele: ["score", "nectar"]},
+  "n-flower": {end: ["flower-nectar"]},
+  "miss": {auto: ["auto-miss"], tele: ["miss"]},
+  "garden": {auto: ["garden"], tele: ["garden"]},
+  "minor": {all: ["minor"]},
+  "major": {all: ["major"]},
+};
+let padPeriod = "auto";
+const padMap = (k, per) => { const d = PAD[k]; return d.all || d[per] || (per === "end" ? d.tele : null); };
+function padCount(k, per) {
+  const m = padMap(k, per); if (!m || !M) return 0;
+  const [ev, piece] = m, from = per === "auto" || PAD[k].all || PAD[k].end ? 0 : AUTO + TRANS, to = per === "auto" ? AUTO + TRANS : Infinity;
+  return M.log.filter(([t, e, pc]) => e === ev && (!piece || pc === piece) && t >= from && t < to).length;
+}
+function updatePad(per) {
+  if (per !== padPeriod) { padPeriod = per; $$(".pad .btn.ctr .cn").forEach(n => n.dataset.v = ""); }
+  $("#secPeriodT").textContent = per === "auto" ? "AUTO" : per === "end" ? "ENDGAME" : "TELEOP";
+  ["#bLeave", "#bAPark", "#bAutoOk"].forEach(id => $(id).classList.toggle("hidden", per !== "auto"));
+  $("#bTPark").classList.toggle("hidden", per !== "end");
+  $("#secPeriod").classList.toggle("hidden", per === "tele");
+  $("#bSkipAuto").classList.toggle("hidden", per !== "auto");   // nothing period-specific between AUTO and the last minute
+  $("[data-k='p-ground'] [data-l]").textContent = per === "auto" ? "GARDEN" : "GROUND";
+  for (const b of $$(".pad [data-k]")) {
+    const k = b.dataset.k, on = !!padMap(k, per);
+    b.disabled = !on; b.classList.toggle("off", !on);
+    const n = $(".cn", b), v = String(padCount(k, per));
+    if (n.dataset.v !== v) { if (n.dataset.v) { n.classList.remove("cbump"); void n.offsetWidth; n.classList.add("cbump"); } n.dataset.v = v; n.textContent = v; }
+  }
+  const secs = (key, run) => Math.round(M[key] + (M[run] != null ? elapsed() - M[run] : 0)) + "s";
+  $("#cDef").textContent = secs("defSec", "def"); $("#cDefd").textContent = secs("defdSec", "defd");
+}
+
 // ---- tap feedback: vibration + visible press on every button, fired on touch-down so it feels instant ----
 const BUZZ = {"score": [40], "auto-score": [40], "miss": [20, 60, 20], "auto-miss": [20, 60, 20], "intake-ground": [18], "intake-flower": [18],
   "auto-intake-garden": [18], "auto-intake-flower": [18], "garden": [28], "flower-nectar": [28], "flower-pollen": [28], "minor": [70, 50, 70], "major": [120, 60, 120]};
@@ -1138,7 +1200,7 @@ const CAN_VIBRATE = typeof navigator.vibrate === "function";
 function buzz(p) { try { return CAN_VIBRATE ? navigator.vibrate(p) : false; } catch (e) { return false; } }
 let pendingBuzz = null;
 function patternFor(b) {
-  if (b.dataset.ev) return BUZZ[b.dataset.ev] || [25];
+  if (b.dataset.k) { const m = padMap(b.dataset.k, padPeriod); return (m && BUZZ[m[0]]) || [25]; }
   if (b.hasAttribute("aria-pressed") && (b.classList.contains("toggle") || b.classList.contains("hold")))
     return b.getAttribute("aria-pressed") === "true" ? [20, 40, 20] : [60];   // turning off : turning on
   if (b.closest("nav")) return [10];
@@ -1157,7 +1219,7 @@ document.addEventListener("pointerdown", e => {
 document.addEventListener("click", () => { if (pendingBuzz) { buzz(pendingBuzz); pendingBuzz = null; } }, true);
 // one-shot animations: remove the class when the animation ends, or showing the screen again replays it
 document.addEventListener("animationend", e => {
-  const el = e.target; el.classList.remove("flash", "pop", "tab-in-r", "tab-in-l");
+  const el = e.target; el.classList.remove("flash", "pop", "tab-in-r", "tab-in-l", "cbump");
   if (e.animationName === "bump" && el.parentElement) el.parentElement.classList.remove("bump");
 }, true);
 ["pointerup", "pointercancel", "pointerleave"].forEach(t => document.addEventListener(t, e => {
@@ -1174,14 +1236,14 @@ function lastAction(text) {
   el.textContent = `${text} · ${$("#mClock").textContent} left`;
   el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
 }
-function log(ev, piece) { if (!M) return; const t = Math.round(elapsed() * 10) / 10; M.log.push(piece ? [t, ev, piece] : [t, ev]); tick(); lastAction("✓ " + (LABEL[ev] || ev) + (piece ? " " + piece.toUpperCase() : ""));
-  if (/^flower-(nectar|pollen)$/.test(ev) && !isLate()) $("#mLast").textContent += " · before 1:00 left: counts, but G410 penalty risk"; }
-$$("[data-ev]").forEach(b => b.addEventListener("click", () => {
-  const ev = b.dataset.ev;
-  if (ev === "minor") M.minor++; else if (ev === "major") M.major++;
-  log(ev, b.dataset.piece);
+function log(ev, piece) { if (!M) return; const t = Math.round(elapsed() * 10) / 10; M.log.push(piece ? [t, ev, piece] : [t, ev]); tick(); lastAction("✓ " + (LABEL[ev] || ev) + (piece ? " " + piece.toUpperCase() : "")); }
+$$(".pad [data-k]").forEach(b => b.addEventListener("click", () => {
+  if (!M) return;
+  const m = padMap(b.dataset.k, padPeriod); if (!m) return;
+  if (m[0] === "minor") M.minor++; else if (m[0] === "major") M.major++;
+  log(m[0], m[1]);
 }));
-function toggle(id, key, ev) { $(id).addEventListener("click", e => { if (!M) return; M[key] = !M[key]; e.currentTarget.setAttribute("aria-pressed", String(M[key])); if (ev) log(ev + (M[key] ? "-on" : "-off")); else lastAction((M[key] ? "✓ " : "✗ ") + e.currentTarget.textContent.trim()); if (key === "tpark" && M.tpark) M.parkAt = elapsed(); }); }
+function toggle(id, key, ev) { $(id).addEventListener("click", e => { if (!M) return; M[key] = !M[key]; e.currentTarget.setAttribute("aria-pressed", String(M[key])); if (ev) log(ev + (M[key] ? "-on" : "-off")); else lastAction((M[key] ? "✓ " : "✗ ") + ($(".cl b", e.currentTarget) || e.currentTarget).textContent.trim()); if (key === "tpark" && M.tpark) M.parkAt = elapsed(); }); }
 toggle("#bLeave", "leave", "leave"); toggle("#bAPark", "apark", "auto-park");
 toggle("#bBroke", "broke", "broke"); toggle("#bTPark", "tpark", "teleop-park"); toggle("#bAutoOk", "autoOk");
 function hold(id, key, secKey) { $(id).addEventListener("click", e => { if (!M) return; if (M[key] == null) { M[key] = elapsed(); log(key + "-start"); } else { M[secKey] += elapsed() - M[key]; M[key] = null; log(key + "-stop"); } e.currentTarget.setAttribute("aria-pressed", String(M[key] != null)); }); }
