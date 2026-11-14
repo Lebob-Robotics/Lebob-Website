@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#121316">
 <title>Lebob Scout</title>
+<script>try{var t=JSON.parse(localStorage.getItem("lbs:theme"));if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
 :root{--bg:#121316;--panel:#1c1d22;--panel2:#25262c;--line:#33343b;--fg:#e9e9e4;--muted:#9a9b94;--accent:#FFF200;--accent-ink:#121316;--red:#ED1C24;--blue:#2F7DF6;--ok:#3DCB6C;--warn:#F5A524}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f6f6f2;--panel:#ffffff;--panel2:#efefea;--line:#d9d9d2;--fg:#17181b;--muted:#5f605a;--accent:#FFF200;--accent-ink:#17181b}}
-:root[data-theme="light"]{--bg:#f6f6f2;--panel:#ffffff;--panel2:#efefea;--line:#d9d9d2;--fg:#17181b;--muted:#5f605a}
+:root[data-theme="light"]{--bg:#f6f6f2;--panel:#ffffff;--panel2:#efefea;--line:#d9d9d2;--fg:#17181b;--muted:#5f605a;--accent:#FFF200;--accent-ink:#17181b}
+header .thbtn{flex:0 0 auto;min-height:36px;min-width:36px;padding:4px 10px;font-size:18px;line-height:1}
 *{box-sizing:border-box}html,body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px calc(8px) 16px;display:flex;align-items:center;gap:10px}
 header b{font-size:18px;letter-spacing:.3px}header .pill{margin-left:auto;font-size:12px;color:var(--muted)}
@@ -84,7 +86,7 @@ video{width:100%;border-radius:12px;background:#000}
 </style>
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"></head>
 <body>
-<header><b>Lebob Scout</b><span class="muted" id="hdrEvent"></span><span class="pill" id="hdrQueue"></span></header>
+<header><b>Lebob Scout</b><span class="muted" id="hdrEvent"></span><span class="pill" id="hdrQueue"></span><button type="button" class="btn thbtn" id="thBtn" aria-label="Switch light or dark mode"></button></header>
 <nav id="tabs">
   <button data-tab="match" aria-current="true">Match</button>
   <button data-tab="coverage">Coverage</button>
@@ -235,6 +237,8 @@ video{width:100%;border-radius:12px;background:#000}
 
 <!-- SETTINGS -->
 <section id="tab-settings"><div class="card"><h2>This phone</h2>
+  <label>Appearance</label>
+  <div class="seg" id="cTheme"><button type="button" class="btn" data-th="system" aria-pressed="false">System</button><button type="button" class="btn" data-th="light" aria-pressed="false">Light</button><button type="button" class="btn" data-th="dark" aria-pressed="false">Dark</button></div>
   <label for="cEvent">Event code</label><input id="cEvent" placeholder="AUPEQ" autocapitalize="characters">
   <label for="cScout">Scout initials (no full names)</label><input id="cScout" maxlength="4" autocapitalize="characters">
   <label for="cSched">Schedule (optional): paste lines "match,red1,red2,blue1,blue2"</label><textarea id="cSched" placeholder="1,1234,5678,9012,3456"></textarea>
@@ -257,7 +261,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "9522d6a";
+const APP_VERSION = "74e34c3";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -279,6 +283,33 @@ function putRecord(table, rec) {
   const q = store.get("unsent", []); if (!q.includes(table + "|" + rec[CFG.pk[table]])) q.push(table + "|" + rec[CFG.pk[table]]); store.set("unsent", q);
   renderHeader(); renderLists();
 }
+
+// ---------- theme: "system" follows the phone; light/dark override it (per phone, saved straight away) ----------
+const darkMq = matchMedia("(prefers-color-scheme: dark)");
+const themePref = () => { const t = store.get("theme", "system"); return t === "light" || t === "dark" ? t : "system"; };
+const themeNow = () => themePref() === "system" ? (darkMq.matches ? "dark" : "light") : themePref();
+function applyTheme() {
+  const pref = themePref(), now = themeNow(), root = document.documentElement;
+  if (pref === "system") delete root.dataset.theme; else root.dataset.theme = pref;
+  $$("#cTheme [data-th]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.th === pref)));
+  const b = $("#thBtn"); b.textContent = now === "dark" ? "☀" : "☾";
+  b.setAttribute("aria-label", now === "dark" ? "Switch to light mode" : "Switch to dark mode"); b.title = b.getAttribute("aria-label");
+  $('meta[name="theme-color"]').setAttribute("content", getComputedStyle(root).getPropertyValue("--bg").trim() || "#121316");
+}
+function setTheme(t) { store.set("theme", t); applyTheme(); redrawSvgs(); }
+// colours for the drawn SVGs (field diagram, match timeline): presentation attributes cannot use CSS variables
+const SVGC = {
+  dark: {bg: "#15161a", field: "#3d404a", edge: "#9aa0ac", grid: "#52555f", text: "#fff", shade: "#000", shadeOp: ".5", path: "#e6e8ee", pathOp: ".55",
+         ph1: "#3a3d47", ph2: "#2a2c33", label: "#e6e8ee", tick: "#3b3e47", bar: "#9aa0ac", dot: "#c9ccd4", dotOn: "#fff"},
+  light: {bg: "#e9eae4", field: "#d3d5cd", edge: "#6b6f78", grid: "#bcbfb6", text: "#17181b", shade: "#fff", shadeOp: ".6", path: "#17181b", pathOp: ".45",
+          ph1: "#cdd0c7", ph2: "#dcded7", label: "#17181b", tick: "#bcbfb6", bar: "#6b6f78", dot: "#5f605a", dotOn: "#17181b"}};
+const svgc = () => SVGC[themeNow()];
+function redrawSvgs() { startSig = ""; drawStart(); if (M && M.ended) renderSummary(); }
+$("#thBtn").addEventListener("click", () => setTheme(themeNow() === "dark" ? "light" : "dark"));
+$("#cTheme").addEventListener("click", e => { const b = e.target.closest("[data-th]"); if (b) setTheme(b.dataset.th); });
+const onSysTheme = () => { applyTheme(); redrawSvgs(); };
+darkMq.addEventListener ? darkMq.addEventListener("change", onSysTheme) : darkMq.addListener(onSysTheme);
+applyTheme();
 
 // ---------- header / tabs ----------
 function renderHeader() {
@@ -448,16 +479,16 @@ function setStart(v) {
 }
 function drawStart() {
   const al = startAlliance();
-  const sig = al + "|" + startFlip + "|" + startV;
+  const P = svgc(), sig = al + "|" + startFlip + "|" + startV + "|" + P.bg;
   if (sig === startSig) return; startSig = sig;
   const fl = startFlip, X = v => SFX + (fl ? 1 - v : v) * SFS, Y = v => SFY + (fl ? 1 - v : v) * SFS;
   const R = (x0, y0, x1, y1, a) => `<rect x="${Math.min(X(x0), X(x1))}" y="${Math.min(Y(y0), Y(y1))}" width="${Math.abs(X(x1) - X(x0))}" height="${Math.abs(Y(y1) - Y(y0))}" ${a}/>`;
-  const T = (x, y, lines, a = "") => `<text x="${X(x)}" y="${Y(y) - (lines.length - 1) * 5.5}" text-anchor="middle" font-size="10" fill="#fff" ${a}>${lines.map((l, i) => `<tspan x="${X(x)}" dy="${i ? 11 : 0}">${l}</tspan>`).join("")}</text>`;
+  const T = (x, y, lines, a = "") => `<text x="${X(x)}" y="${Y(y) - (lines.length - 1) * 5.5}" text-anchor="middle" font-size="10" fill="${P.text}" ${a}>${lines.map((l, i) => `<tspan x="${X(x)}" dy="${i ? 11 : 0}">${l}</tspan>`).join("")}</text>`;
   const RED = "#e5484d", BLUE = "#3e7bfa", col = al === "BLUE" ? BLUE : RED, turn = p => al === "BLUE" ? {x: 1 - p.x, y: 1 - p.y} : p;
-  let s = `<svg viewBox="0 0 ${SVW} ${SVH}" role="img" aria-label="Field diagram showing where the robot may start along its wall"><rect width="${SVW}" height="${SVH}" fill="#15161a"/>`;
+  let s = `<svg viewBox="0 0 ${SVW} ${SVH}" role="img" aria-label="Field diagram showing where the robot may start along its wall"><rect width="${SVW}" height="${SVH}" fill="${P.bg}"/>`;
   s += R(-1 / 6, 0, 0, 1, `fill="${RED}" fill-opacity=".16"`) + R(1, 0, 7 / 6, 1, `fill="${BLUE}" fill-opacity=".16"`);
-  s += R(0, 0, 1, 1, 'fill="#3d404a" stroke="#9aa0ac" stroke-width="2"');
-  for (let i = 1; i < 6; i++) s += `<path d="M${X(i / 6)} ${Y(0)}V${Y(1)}M${X(0)} ${Y(i / 6)}H${X(1)}" stroke="#52555f" stroke-width="1"/>`;
+  s += R(0, 0, 1, 1, `fill="${P.field}" stroke="${P.edge}" stroke-width="2"`);
+  for (let i = 1; i < 6; i++) s += `<path d="M${X(i / 6)} ${Y(0)}V${Y(1)}M${X(0)} ${Y(i / 6)}H${X(1)}" stroke="${P.grid}" stroke-width="1"/>`;
   s += R(0, 0.17, 0.1, 0.33, `fill="${RED}" fill-opacity=".14" stroke="${RED}" stroke-width="2"`) + T(0.05, 0.25, ["LOADING", "ZONE"], 'font-size="8"');
   s += R(0.9, 0.67, 1, 0.83, `fill="${BLUE}" fill-opacity=".14" stroke="${BLUE}" stroke-width="2"`) + T(0.95, 0.75, ["LOADING", "ZONE"], 'font-size="8"');
   s += R(-0.1, 0.45, -0.02, 0.55, `fill="${RED}"`) + R(1.02, 0.45, 1.1, 0.55, `fill="${BLUE}"`);
@@ -466,13 +497,13 @@ function drawStart() {
   s += R(0.01, 0.97, 0.19, 1, `fill="${RED}"`) + T(0.1, 0.94, ["RED GARDEN"], 'font-size="9"') + R(0.81, 0, 0.99, 0.03, `fill="${BLUE}"`) + T(0.9, 0.07, ["BLUE GARDEN"], 'font-size="9"');
   for (const [fx, fy, dx, dy] of [[0.03, 0.66, 1, 0], [0.97, 0.33, -1, 0], [0.34, 0.02, 0, 1], [0.66, 0.98, 0, -1]]) {
     const sx = fl ? -1 : 1, anchor = dx ? (dx * sx > 0 ? "start" : "end") : "middle";
-    s += `<circle cx="${X(fx)}" cy="${Y(fy)}" r="8" fill="#ffc107" stroke="#000" stroke-width="1"/><text x="${X(fx) + dx * sx * 13}" y="${Y(fy) + (dy ? dy * (fl ? -1 : 1) * 15 : 3)}" text-anchor="${anchor}" font-size="9" fill="#fff">FLOWER</text>`;
+    s += `<circle cx="${X(fx)}" cy="${Y(fy)}" r="8" fill="#ffc107" stroke="#000" stroke-width="1"/><text x="${X(fx) + dx * sx * 13}" y="${Y(fy) + (dy ? dy * (fl ? -1 : 1) * 15 : 3)}" text-anchor="${anchor}" font-size="9" fill="${P.text}">FLOWER</text>`;
   }
   if (al) {
     const mine = al === "RED" ? [0, 0.5] : [0.5, 1], other = al === "RED" ? [0.5, 1] : [0, 0.5];
-    s += R(other[0], 0, other[1], 1, 'fill="#000" fill-opacity=".5"');
+    s += R(other[0], 0, other[1], 1, `fill="${P.shade}" fill-opacity="${P.shadeOp}"`);
     const pts = []; for (let v = 0; v <= 200; v += 2) { const q = turn(startXY(v)); pts.push(`${X(q.x).toFixed(1)},${Y(q.y).toFixed(1)}`); }
-    s += `<polyline points="${pts.join(" ")}" fill="none" stroke="#e6e8ee" stroke-opacity=".55" stroke-width="3" stroke-linejoin="round"/>`;
+    s += `<polyline points="${pts.join(" ")}" fill="none" stroke="${P.path}" stroke-opacity="${P.pathOp}" stroke-width="3" stroke-linejoin="round"/>`;
   }
   if (startV !== null) { const q = turn(startXY(startV)); s += `<circle cx="${X(q.x)}" cy="${Y(q.y)}" r="15" fill="${col}" stroke="#fff" stroke-width="3"/><circle cx="${X(q.x)}" cy="${Y(q.y)}" r="3" fill="#fff"/>`; }
   $("#startField").innerHTML = s + "</svg>";
@@ -749,7 +780,7 @@ $("#mSummary").addEventListener("click", e => {
   }
 });
 function renderSummary() {
-  const c = counts(), TOT = AUTO + TRANS + TELE, L = M.log, E = x => String(x).replace(/[<>&]/g, "");
+  const c = counts(), TOT = AUTO + TRANS + TELE, L = M.log, E = x => String(x).replace(/[<>&]/g, ""), P = svgc();
   const tile = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
   let h = `<div class="stats">${tile(c.autoScored, "AUTO scored")}${tile(c.autoMissed, "AUTO missed")}${tile(c.hiveScored, "HIVE scored")}${tile(c.hiveMissed, "missed")}`
     + `${tile(c.groundIn + c.autoGardenIn, "GROUND/GARDEN intakes")}${tile(c.flowerIn + c.autoFlowerIn, "FLOWER intakes")}${tile(c.garden, "GARDEN +1")}${tile(`${c.nectar}+${c.pollenF}`, "FLOWER nectar+pollen")}`
@@ -758,16 +789,16 @@ function renderSummary() {
   flags.push(`<span>fouls: ${M.minor} minor / ${M.major} major</span>`); if (M.start) flags.push(`<span>start: ${E(zoneText(M.start))}</span>`);
   h += `<div class="sumflags">${flags.join("")}</div>`;
   const W = 640, X = t => 10 + Math.min(t, TOT) / TOT * (W - 20), lanes = [34, 52, 70];
-  let sv = `<svg viewBox="0 0 ${W} 112" role="img" aria-label="Timeline of the match"><rect width="${W}" height="112" fill="#15161a"/>`
-    + `<rect x="${X(0)}" y="8" width="${X(AUTO) - X(0)}" height="12" fill="#3a3d47"/><rect x="${X(AUTO + TRANS)}" y="8" width="${X(TOT - ENDGAME) - X(AUTO + TRANS)}" height="12" fill="#2a2c33"/><rect x="${X(TOT - ENDGAME)}" y="8" width="${X(TOT) - X(TOT - ENDGAME)}" height="12" fill="#3a3d47"/>`
-    + `<g font-size="9" fill="#e6e8ee" font-family="system-ui,sans-serif"><text x="${X(0) + 4}" y="17">AUTO</text><text x="${X(AUTO + TRANS) + 4}" y="17">TELEOP</text><text x="${X(TOT - ENDGAME) + 4}" y="17">ENDGAME (last 1:00)</text></g>`;
-  for (const T of [0, AUTO, AUTO + TRANS, TOT - ENDGAME, TOT]) sv += `<path d="M${X(T)} 22V80" stroke="#3b3e47" stroke-width="1"/>`;
+  let sv = `<svg viewBox="0 0 ${W} 112" role="img" aria-label="Timeline of the match"><rect width="${W}" height="112" fill="${P.bg}"/>`
+    + `<rect x="${X(0)}" y="8" width="${X(AUTO) - X(0)}" height="12" fill="${P.ph1}"/><rect x="${X(AUTO + TRANS)}" y="8" width="${X(TOT - ENDGAME) - X(AUTO + TRANS)}" height="12" fill="${P.ph2}"/><rect x="${X(TOT - ENDGAME)}" y="8" width="${X(TOT) - X(TOT - ENDGAME)}" height="12" fill="${P.ph1}"/>`
+    + `<g font-size="9" fill="${P.label}" font-family="system-ui,sans-serif"><text x="${X(0) + 4}" y="17">AUTO</text><text x="${X(AUTO + TRANS) + 4}" y="17">TELEOP</text><text x="${X(TOT - ENDGAME) + 4}" y="17">ENDGAME (last 1:00)</text></g>`;
+  for (const T of [0, AUTO, AUTO + TRANS, TOT - ENDGAME, TOT]) sv += `<path d="M${X(T)} 22V80" stroke="${P.tick}" stroke-width="1"/>`;
   const open = {};
   for (const [t, e] of L) { const m = e.match(/^(def|defd)-(start|stop)$/); if (!m) continue;
-    if (m[2] === "start") open[m[1]] = t; else if (open[m[1]] != null) { sv += `<rect x="${X(open[m[1]])}" y="${m[1] === "def" ? 82 : 92}" width="${Math.max(2, X(t) - X(open[m[1]]))}" height="7" fill="#9aa0ac" fill-opacity="${m[1] === "def" ? 1 : .55}"/>`; open[m[1]] = null; } }
-  for (const k in open) if (open[k] != null) sv += `<rect x="${X(open[k])}" y="${k === "def" ? 82 : 92}" width="${Math.max(2, X(TOT) - X(open[k]))}" height="7" fill="#9aa0ac" fill-opacity="${k === "def" ? 1 : .55}"/>`;
+    if (m[2] === "start") open[m[1]] = t; else if (open[m[1]] != null) { sv += `<rect x="${X(open[m[1]])}" y="${m[1] === "def" ? 82 : 92}" width="${Math.max(2, X(t) - X(open[m[1]]))}" height="7" fill="${P.bar}" fill-opacity="${m[1] === "def" ? 1 : .55}"/>`; open[m[1]] = null; } }
+  for (const k in open) if (open[k] != null) sv += `<rect x="${X(open[k])}" y="${k === "def" ? 82 : 92}" width="${Math.max(2, X(TOT) - X(open[k]))}" height="7" fill="${P.bar}" fill-opacity="${k === "def" ? 1 : .55}"/>`;
   const laneY = e => /^def-/.test(e) ? 85.5 : /^defd-/.test(e) ? 95.5 : lanes[EVLANE(e)];
-  L.forEach(([t, e], i) => { const on = L[i] === tlSel, hollow = /^(auto-)?miss$/.test(e), c = on ? "#fff" : "#c9ccd4"; sv += `<g class="tdot" data-dot="${i}"><circle cx="${X(t)}" cy="${laneY(e)}" r="12" fill="transparent"/><circle cx="${X(t)}" cy="${laneY(e)}" r="${on ? 7.5 : 5.5}" fill="${hollow ? "#15161a" : c}" stroke="${c}" stroke-width="${on ? 3 : 1.8}"/></g>`; });
+  L.forEach(([t, e], i) => { const on = L[i] === tlSel, hollow = /^(auto-)?miss$/.test(e), c = on ? P.dotOn : P.dot; sv += `<g class="tdot" data-dot="${i}"><circle cx="${X(t)}" cy="${laneY(e)}" r="12" fill="transparent"/><circle cx="${X(t)}" cy="${laneY(e)}" r="${on ? 7.5 : 5.5}" fill="${hollow ? P.bg : c}" stroke="${c}" stroke-width="${on ? 3 : 1.8}"/></g>`; });
   sv += `</svg>`;
   const sel = selIdx(), cur = sel >= 0 ? M.log[sel] : null;
   let panel;
