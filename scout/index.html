@@ -166,6 +166,11 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 :root:not([data-motion="off"]) .mtable[open] table{animation:fadeIn .18s}
 ol.steps{margin:8px 0 12px;padding-left:22px;color:var(--fg);font-size:14px}ol.steps li{margin:4px 0}
 .notehelp{margin:2px 0 2px}.notelist{margin:0 0 8px;padding-left:20px;color:var(--muted);font-size:13px}.notelist li{margin:2px 0}
+.dd-map{padding:8px 8px 0}.dd-map svg{display:block;width:100%;height:auto;max-height:42vh;margin:0 auto;border-radius:4px;cursor:pointer;touch-action:manipulation}
+.dd-maphint{margin:4px 12px 6px;font-size:12px}
+.dd-map,.dd-maphint{flex:0 0 auto}.dd-panel.hasmap .dd-list{min-height:110px;flex:1 1 auto}.dd-panel:not(.sheet) .dd-map svg{max-height:min(230px,28vh)}.dd-foot{flex:0 0 auto}
+.dd-panel.sheet.hasmap{max-height:92vh}
+.edithead{margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .editnote{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--accent);background:var(--panel2);color:var(--fg-dark);font-size:14px}
 /* themed checkbox */
 label.check{display:flex;align-items:center;gap:10px;min-height:44px;margin:4px 0;color:var(--fg-dark);font-size:15px;font-weight:500;cursor:pointer;user-select:none}
@@ -310,11 +315,17 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
     </div>
   </div>
   <div class="card hidden" id="mPost">
-    <h2>After the match</h2>
+    <h2 id="mPostTitle">After the match</h2>
+    <div id="mEditHead" class="edithead hidden">
+      <p class="editnote" id="mEditNote"></p>
+      <div class="row"><div><label for="eNum">Qual match #</label><input id="eNum" type="number" inputmode="numeric" min="1"></div><div><label for="eTeam">Team #</label><input id="eTeam" type="number" inputmode="numeric" min="1"></div></div>
+      <label>Alliance</label>
+      <div class="seg" id="eAl"><button type="button" class="btn redA" data-eal="RED" aria-pressed="false">Red</button><button type="button" class="btn blueA" data-eal="BLUE" aria-pressed="false">Blue</button></div>
+    </div>
     <div class="sum" id="mSummary"></div>
-    <label for="pZone">Shot from</label><select id="pZone"></select>
+    <label for="pZone">Shot from (multi)</label><select id="pZone" multiple data-map="zones"></select>
     <label for="pAutoPath">AUTO path / notes</label><input id="pAutoPath" placeholder="e.g. shot 4 from near wall, swept GARDEN">
-    <label for="pZones">Preferred zones (multi)</label><select id="pZones" multiple size="4"></select>
+    <label for="pZones">Preferred zones (multi)</label><select id="pZones" multiple data-map="zones"></select>
     <label for="pNotes">Notes</label>
     <p class="muted notehelp" id="pNotesHelp">Write about:</p>
     <ul class="notelist"><li>defence they played: what kind, and how much it slowed the other robot</li><li>how they handled being defended</li><li>driver skill</li><li>how they worked with their partner</li><li>anything that broke or looked odd</li></ul>
@@ -435,7 +446,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"},"points":{"LEAVE":3,"AUTO_PARK":5,"TELEOP_PARK":5,"HIVE_TIP":20,"TIP_THRESHOLD_ESTIMATE":7.5,"GARDEN_ELEMENT":1,"OWNED_FLOWER_ELEMENT":2,"MINOR_FOUL":5,"MAJOR_FOUL":20}};
-const APP_VERSION = "be48e66";
+const APP_VERSION = "e666807";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -541,9 +552,10 @@ function ddClose(refocus) {
 function ddOpen(anchor, items, o) {
   ddClose(false);
   const mobile = ddMobile(), back = document.createElement("div"), panel = document.createElement("div");
-  back.className = "dd-back" + (mobile ? " sheet" : ""); panel.className = "dd-panel" + (mobile ? " sheet" : "");
+  back.className = "dd-back" + (mobile ? " sheet" : ""); panel.className = "dd-panel" + (mobile ? " sheet" : "") + (o.map ? " hasmap" : "");
   panel.setAttribute("role", "dialog"); panel.setAttribute("aria-label", o.title || "Choose");
   panel.innerHTML = (mobile ? `<div class="dd-head"><span>${esc(o.title || "Choose")}</span><button type="button" class="btn small dd-x">${o.multi ? "Done" : "Close"}</button></div>` : "")
+    + (o.map ? '<div class="dd-map"></div><p class="muted dd-maphint">Tap an area of the field to choose it.</p>' : "")
     + (o.search ? `<input class="dd-q" type="search" placeholder="${esc(o.placeholder || "Search")}" autocomplete="off" aria-label="${esc(o.placeholder || "Search")}">` : "")
     + `<div class="dd-list" role="listbox" aria-label="${esc(o.title || "Choose")}"${o.multi ? ' aria-multiselectable="true"' : ""}></div>`
     + (o.multi && !mobile ? `<div class="dd-foot"><button type="button" class="btn small dd-x">Done</button></div>` : "");
@@ -557,12 +569,18 @@ function ddOpen(anchor, items, o) {
       + `<span class="dd-l">${esc(it.label)}</span>${it.sub ? `<span class="dd-s">${esc(it.sub)}</span>` : ""}</button>`).join("")
       || '<p class="muted dd-none">Nothing matches.</p>';
   };
-  draw(); if (q) q.addEventListener("input", draw);
-  list.addEventListener("click", e => {
-    const b = e.target.closest(".dd-opt"); if (!b) return;
-    const it = shown[+b.dataset.i];
-    if (o.multi) { it.selected = !it.selected; b.setAttribute("aria-selected", String(it.selected)); o.onPick(it.value, it.selected); }
+  const mapEl = o.map ? $(".dd-map", panel) : null;
+  const drawMap = () => { if (mapEl) mapEl.innerHTML = o.map.svg(new Set(items.filter(it => it.selected).map(it => it.value))); };
+  draw(); drawMap(); if (q) q.addEventListener("input", draw);
+  const pick = it => {
+    if (o.multi) { it.selected = !it.selected; o.onPick(it.value, it.selected); draw(); drawMap(); }
     else { o.onPick(it.value, true); ddClose(true); }
+  };
+  list.addEventListener("click", e => { const b = e.target.closest(".dd-opt"); if (b) pick(shown[+b.dataset.i]); });
+  if (mapEl) mapEl.addEventListener("click", e => {
+    const svg = $("svg", mapEl); if (!svg) return;
+    const v = o.map.hit(e, svg), it = v && items.find(x => x.value === v);
+    if (it) pick(it);
   });
   panel.addEventListener("click", e => { if (e.target.closest(".dd-x")) ddClose(true); });
   back.addEventListener("click", () => ddClose(true));
@@ -570,7 +588,7 @@ function ddOpen(anchor, items, o) {
   if (!mobile) {   // under the button, or above it when there is more room there
     const r = anchor.getBoundingClientRect(), below = innerHeight - r.bottom - 12, above = r.top - 12, up = below < 240 && above > below, w = Math.max(r.width, 240);
     panel.style.left = Math.max(8, Math.min(r.left, innerWidth - w - 8)) + "px"; panel.style.width = w + "px";
-    panel.style.maxHeight = Math.max(160, Math.min(380, up ? above : below)) + "px";
+    panel.style.maxHeight = Math.max(160, Math.min(o.map ? 640 : 380, up ? above : below)) + "px";
     if (up) { panel.style.bottom = (innerHeight - r.top + 4) + "px"; panel.classList.add("up"); } else panel.style.top = (r.bottom + 4) + "px";
   }
   anchor.setAttribute("aria-expanded", "true");
@@ -592,6 +610,53 @@ function ddOpen(anchor, items, o) {
   if (q && !mobile) q.focus(); else (chosen || $(".dd-opt", list) || panel).focus();   // on a phone, no keyboard until they tap the search box
   if (chosen) chosen.scrollIntoView({block: "nearest"});
 }
+// ---------- field map for the zone lists: shows the chosen zones; tap an area to choose it ----------
+// Same frame as the start diagram (manual Figure 10-2): RED on the left, x/y 0..1. OWN / OPP follow the alliance being
+// scouted. Check against Figure 10-2: the app takes the bottom edge as the audience side (audience FLOWER at the
+// bottom, scoring FLOWER at the top); swap the two entries below if the manual says otherwise.
+const ZFLOWER = {"red-flower": [0.03, 0.66], "blue-flower": [0.97, 0.33], "audience-flower": [0.66, 0.98], "scoring-flower": [0.34, 0.02]};
+const ZONE_SHORT = {"red-flower": "RED", "blue-flower": "BLUE", "audience-flower": "AUD.", "scoring-flower": "SCOR."};
+const curAlliance = () => M && M.editId ? (($('#eAl [aria-pressed="true"]') || {dataset: {}}).dataset.eal || M.alliance) : (M && M.alliance) || "RED";
+function zoneAt(x, y, al) {
+  if (x < -0.06 || x > 1.06 || y < -0.06 || y > 1.06) return null;
+  for (const [z, [fx, fy]] of Object.entries(ZFLOWER)) if ((x - fx) ** 2 + (y - fy) ** 2 < 0.075 ** 2) return z;
+  const red = al !== "BLUE", inR = (x0, y0, x1, y1) => x >= x0 && x <= x1 && y >= y0 && y <= y1;
+  if (inR(-0.06, 0.12, 0.15, 0.38)) return red ? "own-loading-zone" : "opp-loading-zone";
+  if (inR(0.85, 0.62, 1.06, 0.88)) return red ? "opp-loading-zone" : "own-loading-zone";
+  if (inR(-0.06, 0.9, 0.25, 1.06) || inR(0.75, -0.06, 1.06, 0.1)) return "garden";
+  if (inR(0.33, 0.31, 0.67, 0.69)) return "centre-hive";
+  return (x < 0.5) === red ? "own-half" : "opp-half";
+}
+const ZM = {pad: 30, size: 500};   // svg units: field drawn at pad..pad+size
+function zoneMapSvg(chosen, al) {
+  const P = svgc(), red = al !== "BLUE", S = ZM.size, O = ZM.pad, X = v => O + v * S, Y = X, on = z => chosen.has(z);
+  const fillOn = 'fill="#FFF200" fill-opacity=".62"', RED = "#e5484d", BLUE = "#3e7bfa";
+  const R = (x0, y0, x1, y1, a) => `<rect x="${X(x0)}" y="${Y(y0)}" width="${(x1 - x0) * S}" height="${(y1 - y0) * S}" ${a}/>`;
+  const T = (x, y, txt, a = "") => `<text x="${X(x)}" y="${Y(y)}" text-anchor="middle" dominant-baseline="middle" font-size="17" font-weight="700" fill="${P.text}" ${a}>${txt}</text>`;
+  const ownL = red ? [0, 0.5] : [0.5, 1], oppL = red ? [0.5, 1] : [0, 0.5];
+  let s = `<svg viewBox="0 0 ${S + 2 * O} ${S + 2 * O}" role="img" aria-label="Field map: tap an area to choose it"><rect width="${S + 2 * O}" height="${S + 2 * O}" fill="${P.bg}"/>`;
+  s += R(ownL[0], 0, ownL[1], 1, on("own-half") ? fillOn : `fill="${P.field}"`) + R(oppL[0], 0, oppL[1], 1, on("opp-half") ? fillOn : `fill="${P.field}" fill-opacity=".7"`);
+  s += `<rect x="${X(0)}" y="${Y(0)}" width="${S}" height="${S}" fill="none" stroke="${P.edge}" stroke-width="3"/><path d="M${X(0.5)} ${Y(0)}V${Y(1)}" stroke="${P.edge}" stroke-width="2" stroke-dasharray="8 6"/>`;
+  s += T((ownL[0] + ownL[1]) / 2, 0.2, "OWN HALF") + T((oppL[0] + oppL[1]) / 2, 0.8, "OPP HALF");
+  s += R(0.35, 0.33, 0.65, 0.67, (on("centre-hive") ? fillOn : `fill="${P.bg}" fill-opacity=".35"`) + ` stroke="${P.edge}" stroke-width="2" rx="10"`) + T(0.5, 0.5, "HIVE");
+  const lz = (x0, y0, own) => R(x0, y0, x0 + 0.12, y0 + 0.2, (on(own ? "own-loading-zone" : "opp-loading-zone") ? fillOn : `fill="${P.bg}" fill-opacity=".35"`) + ` stroke="${x0 < 0.5 ? RED : BLUE}" stroke-width="3"`)
+    + T(x0 + 0.06, y0 + 0.1, "LZ", 'font-size="15"');
+  s += lz(0, 0.15, red) + lz(0.88, 0.65, !red);
+  const gd = on("garden") ? fillOn : `fill="${P.bg}" fill-opacity=".35"`;
+  s += R(0, 0.92, 0.22, 1, gd + ` stroke="${RED}" stroke-width="3"`) + R(0.78, 0, 1, 0.08, gd + ` stroke="${BLUE}" stroke-width="3"`) + T(0.11, 0.96, "GARDEN", 'font-size="13"') + T(0.89, 0.04, "GARDEN", 'font-size="13"');
+  for (const [z, [fx, fy]] of Object.entries(ZFLOWER)) {
+    s += `<circle cx="${X(fx)}" cy="${Y(fy)}" r="26" fill="${on(z) ? "#FFF200" : "#ffc107"}" fill-opacity="${on(z) ? 1 : .55}" stroke="${on(z) ? "#121316" : P.edge}" stroke-width="${on(z) ? 4 : 2}"/>`
+      + `<text x="${X(fx)}" y="${Y(fy)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#121316">${ZONE_SHORT[z]}</text>`;
+  }
+  return s + "</svg>";
+}
+function zoneMap() {
+  return {
+    svg: chosen => zoneMapSvg(chosen, curAlliance()),
+    hit: (e, svg) => { const r = svg.getBoundingClientRect(), k = (ZM.size + 2 * ZM.pad) / r.width;
+      return zoneAt(((e.clientX - r.left) * k - ZM.pad) / ZM.size, ((e.clientY - r.top) * k - ZM.pad) / ZM.size, curAlliance()); },
+  };
+}
 function ddSelect(sel) {
   if (sel.dataset.dd) return; sel.dataset.dd = "1";
   const btn = document.createElement("button"); btn.type = "button"; btn.className = "dd-btn";
@@ -608,7 +673,7 @@ function ddSelect(sel) {
   new MutationObserver(sync).observe(sel, {childList: true, subtree: true, attributes: true, attributeFilter: ["class", "disabled"]});
   sel.addEventListener("focus", () => btn.focus());
   btn.addEventListener("click", () => ddOpen(btn, [...sel.options].map(x => ({value: x.value, label: x.textContent, selected: x.selected})), {
-    title: ddLabel(sel), multi: sel.multiple, search: sel.options.length > 12,
+    title: ddLabel(sel), multi: sel.multiple, search: sel.options.length > 12 && !sel.dataset.map, map: sel.dataset.map === "zones" ? zoneMap() : null,
     onPick: (v, on) => {
       if (sel.multiple) { const x = [...sel.options].find(y => y.value === v); if (x) x.selected = on; } else sel.value = v;
       sel.dispatchEvent(new Event("change", {bubbles: true})); sync();
@@ -656,6 +721,7 @@ function ddInit() {
   // match setup: the four teams in that match when the schedule has it; otherwise every named team
   ddTeam($("#mTeam"), () => { const sch = settings().schedule[$("#mNum").value]; return sch ? slotTeams(sch, () => true) : allTeams(); });
   ddTeam($("#fPit [name=teamNumber]"), allTeams);
+  ddTeam($("#eTeam"), () => { const sch = settings().schedule[$("#eNum").value]; return sch ? slotTeams(sch, () => true) : allTeams(); });
   ddTeam($("#fBreak [name=teamNumber]"), allTeams);
   // defended team: the other alliance in this match first
 }
@@ -667,7 +733,7 @@ function fillSelect(sel, values, blank = true) {
 }
 $$("select[data-enum]").forEach(s => fillSelect(s, CFG.enums[s.dataset.enum]));
 $$("select[data-bool]").forEach(s => s.innerHTML = '<option value="">–</option><option value="true">Yes</option><option value="false">No</option>');
-fillSelect($("#pZone"), CFG.enums.FIELD_ZONES);
+fillSelect($("#pZone"), CFG.enums.FIELD_ZONES, false);
 fillSelect($("#pZones"), CFG.enums.FIELD_ZONES, false);
 function scale(el, n, start = 1) {
   el.innerHTML = Array.from({length: n}, (_, i) => `<button type="button" class="btn" aria-pressed="false" data-v="${i + start}">${i + start}</button>`).join("");
@@ -894,16 +960,10 @@ function renderLists() {
 
 // edit / delete a saved report (an edit keeps its id and re-queues it, so a re-send overwrites the lead's copy)
 function editRecord(table, rec) {
+  if (table === "scout_match_reports") { openMatchEdit(rec); return; }
   const ask = (label, cur) => { const v = prompt(label, cur ?? ""); return v === null ? null : v.trim(); };
   const upd = Object.assign({}, rec);
-  if (table === "scout_match_reports") {
-    const n = ask("Match number", rec.matchNumber); if (n === null) return;
-    const t = ask("Team number", rec.teamNumber); if (t === null) return;
-    const a = ask("Alliance (RED or BLUE)", rec.alliance); if (a === null) return;
-    const num = parseInt(n, 10), team = parseInt(t, 10), al = a.toUpperCase();
-    if (!num || !team || !["RED", "BLUE"].includes(al)) { alert("Enter a match number, a team number, and RED or BLUE."); return; }
-    Object.assign(upd, {matchNumber: num, matchKey: `${rec.eventCode}-q${num}`, teamNumber: team, alliance: al});
-  } else {
+  {
     const t = ask("Team number", rec.teamNumber); if (t === null) return;
     const team = parseInt(t, 10); if (!team) { alert("Enter a team number."); return; }
     upd.teamNumber = team;
@@ -1408,24 +1468,68 @@ function endMatch() {
   renderSummary(); ddRefresh();
   persistM();
 }
-function resetMatch() { startV = null; $("#mStartV").value = ""; $("#mStart").value = ""; startSig = ""; M = null; lastPersist = ""; store.set("live", null); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden");
+// a saved match report opens in the after-match screen: same summary, timeline and fields, plus match / team / alliance
+function setMulti(sel, joined) { const on = new Set(String(joined || "").split("|").filter(Boolean)); [...sel.options].forEach(o => { o.selected = on.has(o.value); }); sel.dispatchEvent(new Event("change")); }
+function showEditHead() {
+  const on = !!(M && M.editId);
+  $("#mEditHead").classList.toggle("hidden", !on);
+  $("#mPostTitle").textContent = on ? "Edit match report" : "After the match";
+  $("#pSave").textContent = on ? "Save changes" : "Save report";
+  $("#pDiscard").textContent = on ? "Cancel editing" : "Discard";
+  if (!on) return;
+  $$("#eAl [data-eal]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.eal === (M.editAl || M.alliance))));
+  $("#mEditNote").textContent = `Editing Q${M.num} · ${M.team}${teamName(M.team) ? " " + teamName(M.team) : ""}` + (M.editAt ? `, saved ${new Date(M.editAt + "Z").toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"})}` : "") + "."
+    + (M.hasLog ? "" : " This report has no tap log (an older app sent it), so the counts above can't change; the fields below still save.");
+}
+function openMatchEdit(rec) {
+  if (M && !M.ended) { alert("Finish or discard the match you are scouting first."); return; }
+  if (M && M.ended && !M.editId && !confirm("You have a match report you haven't saved. Discard it and edit this one?")) return;
+  let log = []; try { log = JSON.parse(rec.cycleLog || "[]") || []; } catch (e) { log = []; }
+  const end = AUTO + TRANS + TELE;
+  M = {num: rec.matchNumber, team: rec.teamNumber, alliance: rec.alliance || "RED", start: rec.startPosition || "", startV: rec.startWallPos, w0: Date.now(), log,
+       leave: !!rec.autoLeave, apark: !!rec.autoPark, tpark: !!rec.teleopPark, autoOk: rec.autoWorkedAsPlanned !== false, broke: !!rec.brokeDown,
+       def: null, defd: null, defSec: rec.defenceSeconds || 0, defdSec: rec.defendedSeconds || 0, minor: rec.minorFouls || 0, major: rec.majorFouls || 0,
+       parkAt: rec.endgameStartRemaining != null ? end - rec.endgameStartRemaining : null, skip: 0, ended: true, endT: end,
+       editId: rec.reportId, editAt: rec.createdAt || "", hasLog: log.length > 0};
+  if (M.hasLog) { const ok = M.autoOk; recompute(); M.autoOk = ok; }
+  tlSel = null; tlEdit = null; sumOpen = false;
+  $("#eNum").value = rec.matchNumber ?? ""; $("#eTeam").value = rec.teamNumber ?? "";
+  setMulti($("#pZone"), rec.scoreZone); setMulti($("#pZones"), rec.preferredZones);
+  $("#pAutoPath").value = rec.autoPath || ""; $("#pNotes").value = rec.notes || "";
+  $("#mSetup").classList.add("hidden"); $("#mLive").classList.add("hidden"); $("#mPost").classList.remove("hidden");
+  showEditHead(); renderSummary(); ddRefresh(); persistM();
+  $('#tabs button[data-tab="match"]').click();
+  $("#mPost").scrollIntoView({block: "start", behavior: motionOn() ? "smooth" : "auto"});
+}
+$("#eAl").addEventListener("click", e => { const b = e.target.closest("[data-eal]"); if (!b || !M) return; M.editAl = b.dataset.eal; showEditHead(); persistM(); });
+$("#eNum").addEventListener("input", () => ddRefresh());
+$("#eTeam").addEventListener("input", () => {   // picking a team from that match's schedule sets the alliance too
+  const sch = settings().schedule[$("#eNum").value], i = sch ? sch.indexOf(Number($("#eTeam").value)) : -1;
+  if (M && i >= 0) { M.editAl = i < 2 ? "RED" : "BLUE"; showEditHead(); persistM(); }
+});
+function resetMatch() { const wasEdit = !!(M && M.editId); startV = null; $("#mStartV").value = ""; $("#mStart").value = ""; startSig = ""; M = null; lastPersist = ""; store.set("live", null); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden");
   const timed = matchByTime(Object.keys(settings().schedule).map(Number).sort((a, b) => a - b)) != null;
-  mAuto = true; $("#mSel").dataset.other = ""; $("#mNum").value = timed ? "" : Number($("#mNum").value || 0) + 1; $("#mTeam").value = "";
-  ["#pAutoPath", "#pNotes", "#pZone"].forEach(id => { $(id).value = ""; });
-  $$("#pZones option").forEach(o => { o.selected = false; }); $("#pZones").dispatchEvent(new Event("change"));
-  suggestTeam(); }
-$("#pDiscard").addEventListener("click", () => { if (confirm("Discard this match report?")) resetMatch(); });
+  if (!wasEdit) { mAuto = true; $("#mSel").dataset.other = ""; $("#mNum").value = timed ? "" : Number($("#mNum").value || 0) + 1; $("#mTeam").value = ""; }
+  ["#pAutoPath", "#pNotes"].forEach(id => { $(id).value = ""; });
+  setMulti($("#pZone"), ""); setMulti($("#pZones"), "");
+  showEditHead(); suggestTeam(); }
+$("#pDiscard").addEventListener("click", () => { if (confirm(M && M.editId ? "Stop editing? Your changes won’t be saved." : "Discard this match report?")) resetMatch(); });
 $("#pSave").addEventListener("click", () => {
   const s = settings(), c = counts(), tbl = "scout_match_reports";
-  const end = AUTO + TRANS + TELE;
-  const rec = {
+  const end = AUTO + TRANS + TELE, old = M.editId ? records(tbl).find(r => r.reportId === M.editId) : null;
+  if (old) {   // match, team and alliance from the edit area
+    const num = parseInt($("#eNum").value, 10), team = parseInt($("#eTeam").value, 10), al = M.editAl || M.alliance;
+    if (!num || !team) { alert("Enter the qual match number and the team number."); return; }
+    M.num = num; M.team = team; M.alliance = al;
+  }
+  let rec = {
     reportId: `${s.device}-${uid().slice(0, 10)}`, eventCode: s.eventCode, matchKey: `${s.eventCode}-q${M.num}`, matchNumber: M.num,
     teamNumber: M.team, alliance: M.alliance, scout: s.scout || null, source: "tap", createdAt: nowIso(),
     startPosition: M.start || null, startWallPos: M.startV == null ? null : M.startV, autoLeave: M.leave, autoPath: $("#pAutoPath").value || null, autoScoreZone: null,
     autoLaunched: c.autoScored + c.autoMissed, autoScored: c.autoScored, autoPark: M.apark, autoWorkedAsPlanned: M.autoOk,
     pieceType: pieceType(), hiveScored: c.hiveScored, hiveMissed: c.hiveMissed, autoGardenIntakes: c.autoGardenIn, autoFlowerIntakes: c.autoFlowerIn, cycles: c.cycles,
     cycleSecondsMedian: c.cycleSecondsMedian, intakeSecondsMedian: null, travelSecondsMedian: null, shootSecondsMedian: null,
-    flowerIntake: c.flowerIn > 0, groundIntakes: c.groundIn, flowerIntakes: c.flowerIn, scoreZone: $("#pZone").value || null,
+    flowerIntake: c.flowerIn > 0, groundIntakes: c.groundIn, flowerIntakes: c.flowerIn, scoreZone: $$("#pZone option").filter(o => o.selected).map(o => o.value).join("|") || null,
     preferredZones: $$("#pZones option").filter(o => o.selected).map(o => o.value).join("|") || null,
     gardenPlaced: c.garden, teleopPark: M.tpark, flowerNectarPlaced: c.nectar, flowerPollenPlaced: c.pollenF,
     endgameStartRemaining: M.parkAt ? Math.max(0, Math.round(end - M.parkAt)) : null,
@@ -1438,8 +1542,14 @@ $("#pSave").addEventListener("click", () => {
     disconnectSeconds: null, driverSkill: null, sideOfField: null,
     coordinationNote: null, cycleLog: JSON.stringify(M.log), notes: $("#pNotes").value || null,
   };
+  if (old) {   // same report: keep its id, author, event and time; without a tap log keep its counts too
+    const FORM = ["matchNumber", "teamNumber", "alliance", "scoreZone", "preferredZones", "autoPath", "notes"];
+    const take = M.hasLog ? rec : Object.fromEntries(FORM.map(k => [k, rec[k]]));
+    rec = Object.assign({}, old, take, {reportId: old.reportId, eventCode: old.eventCode, scout: old.scout, createdAt: old.createdAt, source: old.source,
+      matchKey: `${old.eventCode}-q${rec.matchNumber}`});
+  }
   putRecord(tbl, rec); resetMatch(); buzz([40, 60, 120]);
-  $("#mHint").innerHTML = `<span class="okc">Saved Q${rec.matchNumber} · ${rec.teamNumber}. Ready for the next match.</span>`;
+  $("#mHint").innerHTML = `<span class="okc">${old ? "Saved changes to" : "Saved"} Q${rec.matchNumber} · ${rec.teamNumber}.${old ? "" : " Ready for the next match."}</span>`;
 });
 
 // ---------- QR export / import ----------
@@ -1912,7 +2022,7 @@ if (!store.get("settings", null)) saveSettings(settings());
   const press = (id, on) => $(id).setAttribute("aria-pressed", String(!!on));
   press("#bLeave", M.leave); press("#bAPark", M.apark); press("#bDef", M.def != null); press("#bDefd", M.defd != null);
   press("#bBroke", M.broke); press("#bTPark", M.tpark); press("#bAutoOk", M.autoOk);
-  if (M.ended) { renderSummary(); $("#mPost").classList.remove("hidden"); return; }
+  if (M.ended) { if (M.editId) { $("#eNum").value = M.num ?? ""; $("#eTeam").value = M.team ?? ""; } showEditHead(); renderSummary(); $("#mPost").classList.remove("hidden"); return; }
   $("#mLive").classList.remove("hidden"); timerId = setInterval(tick, 200); tick();
   lastAction(`Resumed Q${M.num} · ${M.team}`);
 })();
