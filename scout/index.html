@@ -165,6 +165,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .mtable .muted{padding:0 14px 12px}
 :root:not([data-motion="off"]) .mtable[open] table{animation:fadeIn .18s}
 ol.steps{margin:8px 0 12px;padding-left:22px;color:var(--fg);font-size:14px}ol.steps li{margin:4px 0}
+.notehelp{margin:2px 0 2px}.notelist{margin:0 0 8px;padding-left:20px;color:var(--muted);font-size:13px}.notelist li{margin:2px 0}
 .editnote{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--accent);background:var(--panel2);color:var(--fg-dark);font-size:14px}
 /* themed checkbox */
 label.check{display:flex;align-items:center;gap:10px;min-height:44px;margin:4px 0;color:var(--fg-dark);font-size:15px;font-weight:500;cursor:pointer;user-select:none}
@@ -311,17 +312,13 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
   <div class="card hidden" id="mPost">
     <h2>After the match</h2>
     <div class="sum" id="mSummary"></div>
-    <div class="row"><div><label for="pPiece">Pieces scored</label><select id="pPiece"><option value="pollen">POLLEN</option><option value="nectar">NECTAR</option><option value="both">Both</option><option value="none">None</option></select></div>
-    <div><label for="pZone">Shot from</label><select id="pZone"></select></div></div>
+    <label for="pZone">Shot from</label><select id="pZone"></select>
     <label for="pAutoPath">AUTO path / notes</label><input id="pAutoPath" placeholder="e.g. shot 4 from near wall, swept GARDEN">
     <label for="pZones">Preferred zones (multi)</label><select id="pZones" multiple size="4"></select>
-    <div class="row"><div><label for="pDefType">Defence type</label><select id="pDefType"></select></div><div><label for="pDefTarget">Defended team #</label><input id="pDefTarget" type="number" inputmode="numeric"></div></div>
-    <label>Defence effect</label><div class="seg" id="pDefEff"></div>
-    <div class="row"><div><label for="pReact">When defended they…</label><select id="pReact"></select></div><div><label for="pFoulTypes">Foul types</label><input id="pFoulTypes" placeholder="pin, loading zone…"></div></div>
-    <label>Driver skill (1 weak – 5 elite)</label><div class="seg" id="pSkill"></div>
-    <div class="row"><div><label for="pSide">Side of field</label><select id="pSide"><option value="">–</option><option>left</option><option>right</option><option>both</option></select></div><div><label for="pChanged">Changed plan when blocked</label><select id="pChanged"><option value="">–</option><option value="true">Yes</option><option value="false">No</option></select></div></div>
-    <label for="pCoord">Coordination with partner</label><input id="pCoord" placeholder="e.g. each cycled one side">
-    <label for="pNotes">Notes (reliability, anything odd)</label><textarea id="pNotes"></textarea>
+    <label for="pNotes">Notes</label>
+    <p class="muted notehelp" id="pNotesHelp">Write about:</p>
+    <ul class="notelist"><li>defence they played: what kind, and how much it slowed the other robot</li><li>how they handled being defended</li><li>driver skill</li><li>how they worked with their partner</li><li>anything that broke or looked odd</li></ul>
+    <textarea id="pNotes" rows="5" aria-describedby="pNotesHelp"></textarea>
     <div class="row" style="margin-top:12px"><button class="btn" id="pDiscard">Discard</button><button class="btn primary" id="pSave">Save report</button></div>
   </div>
   <div class="card"><h2>Saved on this phone</h2><div class="list" id="mList"></div></div>
@@ -438,7 +435,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"},"points":{"LEAVE":3,"AUTO_PARK":5,"TELEOP_PARK":5,"HIVE_TIP":20,"TIP_THRESHOLD_ESTIMATE":7.5,"GARDEN_ELEMENT":1,"OWNED_FLOWER_ELEMENT":2,"MINOR_FOUL":5,"MAJOR_FOUL":20}};
-const APP_VERSION = "83424f3";
+const APP_VERSION = "be48e66";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -661,7 +658,6 @@ function ddInit() {
   ddTeam($("#fPit [name=teamNumber]"), allTeams);
   ddTeam($("#fBreak [name=teamNumber]"), allTeams);
   // defended team: the other alliance in this match first
-  ddTeam($("#pDefTarget"), () => { const sch = M && settings().schedule[M.num]; return sch ? slotTeams(sch, i => (i < 2) !== (M.alliance === "RED")) : allTeams(); });
 }
 
 // ---------- form helpers ----------
@@ -673,14 +669,12 @@ $$("select[data-enum]").forEach(s => fillSelect(s, CFG.enums[s.dataset.enum]));
 $$("select[data-bool]").forEach(s => s.innerHTML = '<option value="">–</option><option value="true">Yes</option><option value="false">No</option>');
 fillSelect($("#pZone"), CFG.enums.FIELD_ZONES);
 fillSelect($("#pZones"), CFG.enums.FIELD_ZONES, false);
-fillSelect($("#pDefType"), CFG.enums.DEFENCE_TYPES, false);
-fillSelect($("#pReact"), CFG.enums.DEFENCE_REACTIONS, false);
 function scale(el, n, start = 1) {
   el.innerHTML = Array.from({length: n}, (_, i) => `<button type="button" class="btn" aria-pressed="false" data-v="${i + start}">${i + start}</button>`).join("");
   el.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; $$("button", el).forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); });
 }
 const scaleVal = el => { const b = $('button[aria-pressed="true"]', el); return b ? Number(b.dataset.v) : null; };
-scale($("#pDefEff"), 4, 0); scale($("#pSkill"), 5);
+
 
 function typed(table, field, raw) {
   const t = CFG.fields[table][field];
@@ -1284,9 +1278,10 @@ function counts() {
   c.cycles = bursts.length; const md = median(cyc); c.cycleSecondsMedian = md == null ? null : Math.round(md * 10) / 10;
   return c;
 }
-function setPiece() {
-  const got = new Set(M.log.filter(x => /score$/.test(x[1]) && x[2]).map(x => x[2]));
-  $("#pPiece").value = got.has("pollen") && got.has("nectar") ? "both" : got.has("pollen") ? "pollen" : got.has("nectar") ? "nectar" : "none";
+// which pieces the robot scored, from the tap log (HIVE or FLOWER)
+function pieceType() {
+  const got = new Set(M.log.filter(x => /score$|^flower-/.test(x[1])).map(x => x[2] || x[1].replace("flower-", "")));
+  return got.has("pollen") && got.has("nectar") ? "both" : got.has("pollen") ? "pollen" : got.has("nectar") ? "nectar" : "none";
 }
 const EVCOL = {"score": "#FFF200", "auto-score": "#FFF200", "miss": "#ED1C24", "auto-miss": "#ED1C24", "intake-ground": "#2F7DF6", "intake-flower": "#2F7DF6", "intake": "#2F7DF6",
   "auto-intake-garden": "#2F7DF6", "auto-intake-flower": "#2F7DF6", "garden": "#3DCB6C", "flower-nectar": "#e08a2e", "flower-pollen": "#e08a2e", "minor": "#F5A524", "major": "#ff4d4d"};
@@ -1314,7 +1309,7 @@ function recompute() {
   }
   for (const k of ["def", "defd"]) if (open[k] != null) M[k === "def" ? "defSec" : "defdSec"] += Math.max(0, END - open[k]);
   for (const id in TOG) { const [key] = TOG[id]; M[key] = !!last[id]; }
-  setPiece(); persistM();
+  persistM();
 }
 function tlForm(i) {
   const cur = i === "new" ? null : M.log[i], t0 = cur ? cur[0] : 0, ph0 = t0 < AUTO + TRANS ? "AUTO" : "TELEOP", rem = Math.min(PHASE_LEN[ph0], Math.max(0, PHASE_END[ph0] - t0));
@@ -1410,15 +1405,14 @@ function endMatch() {
   if (M.def != null) { M.defSec += elapsed() - M.def; M.def = null; }
   if (M.defd != null) { M.defdSec += elapsed() - M.defd; M.defd = null; }
   $("#mLive").classList.add("hidden"); $("#mPost").classList.remove("hidden");
-  renderSummary(); setPiece(); $("#pDefTarget").value = ""; ddRefresh(); $$("#pDefEff button, #pSkill button").forEach(b => b.setAttribute("aria-pressed", "false"));
+  renderSummary(); ddRefresh();
   persistM();
 }
 function resetMatch() { startV = null; $("#mStartV").value = ""; $("#mStart").value = ""; startSig = ""; M = null; lastPersist = ""; store.set("live", null); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden");
   const timed = matchByTime(Object.keys(settings().schedule).map(Number).sort((a, b) => a - b)) != null;
   mAuto = true; $("#mSel").dataset.other = ""; $("#mNum").value = timed ? "" : Number($("#mNum").value || 0) + 1; $("#mTeam").value = "";
-  ["#pAutoPath", "#pDefTarget", "#pFoulTypes", "#pCoord", "#pNotes", "#pZone", "#pDefType", "#pReact", "#pSide", "#pChanged"].forEach(id => { $(id).value = ""; });
+  ["#pAutoPath", "#pNotes", "#pZone"].forEach(id => { $(id).value = ""; });
   $$("#pZones option").forEach(o => { o.selected = false; }); $("#pZones").dispatchEvent(new Event("change"));
-  $$("#pDefEff button, #pSkill button").forEach(b => b.setAttribute("aria-pressed", "false"));
   suggestTeam(); }
 $("#pDiscard").addEventListener("click", () => { if (confirm("Discard this match report?")) resetMatch(); });
 $("#pSave").addEventListener("click", () => {
@@ -1429,20 +1423,20 @@ $("#pSave").addEventListener("click", () => {
     teamNumber: M.team, alliance: M.alliance, scout: s.scout || null, source: "tap", createdAt: nowIso(),
     startPosition: M.start || null, startWallPos: M.startV == null ? null : M.startV, autoLeave: M.leave, autoPath: $("#pAutoPath").value || null, autoScoreZone: null,
     autoLaunched: c.autoScored + c.autoMissed, autoScored: c.autoScored, autoPark: M.apark, autoWorkedAsPlanned: M.autoOk,
-    pieceType: $("#pPiece").value || null, hiveScored: c.hiveScored, hiveMissed: c.hiveMissed, autoGardenIntakes: c.autoGardenIn, autoFlowerIntakes: c.autoFlowerIn, cycles: c.cycles,
+    pieceType: pieceType(), hiveScored: c.hiveScored, hiveMissed: c.hiveMissed, autoGardenIntakes: c.autoGardenIn, autoFlowerIntakes: c.autoFlowerIn, cycles: c.cycles,
     cycleSecondsMedian: c.cycleSecondsMedian, intakeSecondsMedian: null, travelSecondsMedian: null, shootSecondsMedian: null,
     flowerIntake: c.flowerIn > 0, groundIntakes: c.groundIn, flowerIntakes: c.flowerIn, scoreZone: $("#pZone").value || null,
     preferredZones: $$("#pZones option").filter(o => o.selected).map(o => o.value).join("|") || null,
     gardenPlaced: c.garden, teleopPark: M.tpark, flowerNectarPlaced: c.nectar, flowerPollenPlaced: c.pollenF,
     endgameStartRemaining: M.parkAt ? Math.max(0, Math.round(end - M.parkAt)) : null,
-    defenceSeconds: Math.round(M.defSec), defenceType: M.defSec > 2 ? ($("#pDefType").value || null) : "none",
-    defenceTarget: typed(tbl, "defenceTarget", $("#pDefTarget").value), defenceEffect: scaleVal($("#pDefEff")),
+    defenceSeconds: Math.round(M.defSec), defenceType: M.defSec > 2 ? null : "none",
+    defenceTarget: null, defenceEffect: null,
     defenceFoulsDrawn: null, defendedSeconds: Math.round(M.defdSec),
-    defenceReaction: M.defdSec > 2 ? ($("#pReact").value || null) : "not-defended",
-    changedPlanWhenBlocked: typed(tbl, "changedPlanWhenBlocked", $("#pChanged").value),
-    minorFouls: M.minor, majorFouls: M.major, foulTypes: $("#pFoulTypes").value || null, brokeDown: M.broke,
-    disconnectSeconds: null, driverSkill: scaleVal($("#pSkill")), sideOfField: $("#pSide").value || null,
-    coordinationNote: $("#pCoord").value || null, cycleLog: JSON.stringify(M.log), notes: $("#pNotes").value || null,
+    defenceReaction: M.defdSec > 2 ? null : "not-defended",
+    changedPlanWhenBlocked: null,
+    minorFouls: M.minor, majorFouls: M.major, foulTypes: null, brokeDown: M.broke,
+    disconnectSeconds: null, driverSkill: null, sideOfField: null,
+    coordinationNote: null, cycleLog: JSON.stringify(M.log), notes: $("#pNotes").value || null,
   };
   putRecord(tbl, rec); resetMatch(); buzz([40, 60, 120]);
   $("#mHint").innerHTML = `<span class="okc">Saved Q${rec.matchNumber} · ${rec.teamNumber}. Ready for the next match.</span>`;
@@ -1918,7 +1912,7 @@ if (!store.get("settings", null)) saveSettings(settings());
   const press = (id, on) => $(id).setAttribute("aria-pressed", String(!!on));
   press("#bLeave", M.leave); press("#bAPark", M.apark); press("#bDef", M.def != null); press("#bDefd", M.defd != null);
   press("#bBroke", M.broke); press("#bTPark", M.tpark); press("#bAutoOk", M.autoOk);
-  if (M.ended) { renderSummary(); setPiece(); $("#mPost").classList.remove("hidden"); return; }
+  if (M.ended) { renderSummary(); $("#mPost").classList.remove("hidden"); return; }
   $("#mLive").classList.remove("hidden"); timerId = setInterval(tick, 200); tick();
   lastAction(`Resumed Q${M.num} · ${M.team}`);
 })();
