@@ -125,6 +125,25 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .err::before{content:"";display:inline-block;width:8px;height:8px;background:var(--red);margin-right:8px;vertical-align:1px}
 @keyframes bump{0%{transform:scale(1.6);color:var(--label)}100%{transform:scale(1)}}
 .editnote{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--accent);background:var(--panel2);color:var(--fg-dark);font-size:14px}
+/* sync */
+.qrcount{font:500 14px/1.3 'IBM Plex Mono',ui-monospace,monospace;text-align:center;color:var(--fg-dark);margin:8px 0;font-variant-numeric:tabular-nums}
+.receipt{margin-top:10px;padding:12px;border:2px solid var(--accent);border-radius:6px;background:var(--panel2)}
+.rc-top{margin:0 0 10px;font-weight:700;font-size:18px;color:var(--fg-dark)}
+#lRcQr{display:flex;justify-content:center;background:#fff;border-radius:4px;padding:12px}#lRcQr svg{width:min(80vw,360px);height:auto}
+.scanbox.paused video{opacity:.25}
+/* teams */
+.tlist{display:flex;flex-direction:column;gap:6px}
+.trow{border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:4px;background:var(--panel2)}.trow.need{border-left-color:var(--warn)}
+.trow summary{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;align-items:baseline;padding:10px 12px;cursor:pointer;list-style:none}
+.trow summary::-webkit-details-marker{display:none}
+.trow .tn{font-weight:700;color:var(--fg-dark);font-variant-numeric:tabular-nums}.trow .tname{color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .chips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.chip{font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.03em;padding:4px 6px;border-radius:3px;border:1px solid var(--line);color:var(--fg)}
+.chip.ok{border-color:color-mix(in srgb,var(--ok) 60%,var(--line));color:var(--ok-text)}.chip.warn{border-color:var(--warn);color:var(--fg-dark);background:color-mix(in srgb,var(--warn) 18%,transparent)}
+.trow .tbody{padding:0 12px 12px}
+.trow[open] summary{border-bottom:1px solid var(--line);margin-bottom:8px}
+:root:not([data-motion="off"]) .trow[open] .tbody{animation:fadeIn .18s}
+#tSum{grid-template-columns:repeat(4,1fr)}
 /* themed dropdowns */
 .dd-native{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;height:1px!important;padding:0!important;border:0!important;margin:0!important}
 .dd-wrap{position:relative}
@@ -170,6 +189,7 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
 <nav id="tabs">
   <button data-tab="match" aria-current="true">Match</button>
   <button data-tab="coverage">Coverage</button>
+  <button data-tab="teams">Teams</button>
   <button data-tab="pit">Pit</button>
   <button data-tab="breakage">Breakage</button>
   <button data-tab="sync">Sync</button>
@@ -264,6 +284,17 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
   <div id="covGrid" class="cov" style="margin-top:10px"></div>
 </div></section>
 
+<!-- TEAMS: scouting status per team (not strategy) -->
+<section id="tab-teams">
+  <div class="card"><h2>Scouting status</h2><div class="stats" id="tSum"></div><p class="muted" id="tNote" style="margin:10px 0 0"></p></div>
+  <div class="card"><h2>Teams</h2>
+    <input id="tQ" type="search" placeholder="Find a team (number or name)" autocomplete="off" aria-label="Find a team">
+    <div class="seg" id="tFilt" style="margin-top:8px"><button type="button" class="btn" data-f="all" aria-pressed="true">All</button><button type="button" class="btn" data-f="need" aria-pressed="false">Needs scouting</button><button type="button" class="btn" data-f="mine" aria-pressed="false">Scouted by me</button></div>
+    <div id="tList" class="tlist" style="margin-top:10px"></div>
+  </div>
+  <div class="card"><h2>Scouts</h2><p class="muted" style="margin-top:0">Reports on this phone, by scout. On the lead's phone that is everything collected.</p><div class="list" id="tScouts"></div></div>
+</section>
+
 <!-- PIT -->
 <section id="tab-pit"><form class="card" id="fPit"><h2>Pit scouting</h2><p class="editnote hidden"></p>
   <div class="row"><div><label>Team #</label><input name="teamNumber" type="number" inputmode="numeric" required></div><div><label>Drivetrain</label><select name="drivetrain" data-enum="DRIVETRAINS"></select></div></div>
@@ -296,16 +327,22 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
 <!-- SYNC -->
 <section id="tab-sync">
   <div class="card"><h2>Send to the lead</h2>
-    <p class="muted">No Wi-Fi or hotspot needed (E301). Show each QR to the lead's phone, or export a file.</p>
-    <div class="row"><button class="btn primary" id="sQr">Show QR codes</button><button class="btn" id="sFile">Export file</button></div>
-    <div id="qrWrap" class="hidden" style="margin-top:12px"><div id="qrbox"></div><div class="row" style="margin-top:8px"><button class="btn" id="qrPrev">Prev</button><button class="btn" id="qrNext">Next</button></div><p class="muted" id="qrInfo"></p></div>
-    <button class="btn wide" style="margin-top:8px" id="sMark">Mark everything as sent</button>
+    <p class="muted">No Wi-Fi or hotspot needed (E301). 1: Show codes and hold this phone up to the lead's camera; the codes change by themselves. 2: When the lead's phone says ALL READ, scan the lead's receipt. Only what the lead got is marked sent.</p>
+    <div class="row"><button class="btn primary" id="sQr" data-label="Show codes">Show codes</button><button class="btn" id="sReceipt" data-label="Scan the lead's receipt">Scan the lead's receipt</button></div>
+    <div id="qrWrap" class="hidden" style="margin-top:12px"><div id="qrbox"></div><p class="qrcount" id="qrInfo"></p>
+      <div class="row3"><button class="btn" id="qrPrev" aria-label="Previous code">◀</button><button class="btn" id="qrPause">Pause</button><button class="btn" id="qrNext" aria-label="Next code">▶</button></div></div>
+    <div id="sScanSlot"></div>
+    <p class="muted" id="sStatus"></p>
+    <div class="row" style="margin-top:8px"><button class="btn" id="sFile">Export file</button><button class="btn" id="sMark">Mark all as sent</button></div>
   </div>
   <div class="card"><h2>Lead: collect</h2>
-    <div class="row"><button class="btn primary" id="lScan">Scan QR</button><label class="btn" style="margin:0">Import file<input type="file" id="lFile" accept=".json,application/json" class="hidden" multiple></label></div>
-    <div id="lScanBox" class="scanbox hidden"><video id="lVideo" playsinline muted></video><canvas id="lOverlay"></canvas><div id="lFlash" class="scanflash" role="status" aria-live="assertive"></div></div>
+    <div class="row"><button class="btn primary" id="lScan" data-label="Scan QR">Scan QR</button><label class="btn" style="margin:0">Import file<input type="file" id="lFile" accept=".json,application/json" class="hidden" multiple></label></div>
+    <div id="lScanSlot"><div id="lScanBox" class="scanbox hidden"><video id="lVideo" playsinline muted></video><canvas id="lOverlay"></canvas><div id="lFlash" class="scanflash" role="status" aria-live="assertive"></div></div></div>
+    <div id="lReceipt" class="receipt hidden"><p class="rc-top" id="lRcTop"></p><div id="lRcQr"></div><p class="muted" id="lRcInfo"></p><button class="btn primary wide" id="lRcDone">Done, keep scanning</button></div>
+    <div id="lDevices" class="list" style="margin-top:8px"></div>
+    <button class="btn wide" id="lSeeAll" style="margin-top:8px">See everything collected (Teams)</button>
     <div id="lLog" class="list" style="margin-top:8px"></div>
-    <label for="lPaste">…or paste</label><textarea id="lPaste" placeholder="LBS2:… or exported JSON"></textarea>
+    <label for="lPaste">…or paste</label><textarea id="lPaste" placeholder="LBS3:… codes or exported JSON"></textarea>
     <button class="btn wide" id="lPasteGo">Add pasted</button>
     <p class="muted" id="lStatus"></p>
     <h3 style="margin:14px 0 6px">Foundry import</h3>
@@ -347,7 +384,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "2150501";
+const APP_VERSION = "9ebb9bc";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -574,8 +611,9 @@ function ddInit() {
 }
 
 // ---------- form helpers ----------
+const pretty = v => v == null ? "" : String(v).replace(/-/g, " ");   // "fixed-shooter" shows as "fixed shooter"; the value keeps its dashes
 function fillSelect(sel, values, blank = true) {
-  sel.innerHTML = (blank ? '<option value="">–</option>' : "") + values.map(v => `<option value="${v}">${v}</option>`).join("");
+  sel.innerHTML = (blank ? '<option value="">–</option>' : "") + values.map(v => `<option value="${v}">${pretty(v)}</option>`).join("");
 }
 $$("select[data-enum]").forEach(s => fillSelect(s, CFG.enums[s.dataset.enum]));
 $$("select[data-bool]").forEach(s => s.innerHTML = '<option value="">–</option><option value="true">Yes</option><option value="false">No</option>');
@@ -683,16 +721,93 @@ wireForm("#fPit", "scout_pit_reports"); wireForm("#fBreak", "scout_breakages");
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const teamName = n => (settings().names || {})[n] || "";
 const tl = n => n == null ? "?" : n + (teamName(n) ? " " + esc(teamName(n)) : "");
+// one saved report as a row with sent/unsent and Edit / Delete (the click handler below serves every list)
+function reportLine(table, r, text, unsent) {
+  const id = r[CFG.pk[table]], u = unsent.has(table + "|" + id);
+  return `<div class="item"><span class="txt">${text}</span><span class="acts"><span class="${u ? "muted" : "okc"}">${u ? "unsent" : "sent"}</span><button type="button" class="btn small" data-act="edit" data-t="${table}" data-id="${esc(id)}">Edit</button><button type="button" class="btn small" data-act="del" data-t="${table}" data-id="${esc(id)}">Delete</button></span></div>`;
+}
+
+// ---------- Teams: scouting status per team (how often scouted, what is missing), with every report one tap from Edit.
+// On a scout's phone that is their own work; on the lead's phone it is everything scanned in. Not strategy: no ratings.
+let tFilter = "all";
+const tOpen = new Set();
+function renderTeams() {
+  const s = settings(), ev = s.eventCode, nm = s.names || {}, me = s.scout || "", sch = s.schedule || {}, times = s.times || {}, now = Date.now();
+  const unsent = new Set(store.get("unsent", []));
+  const ofEvent = t => records(t).filter(r => !r.eventCode || r.eventCode === ev);
+  const MR = ofEvent("scout_match_reports"), PR = ofEvent("scout_pit_reports"), BR = ofEvent("scout_breakages");
+  const by = r => r.scout || r.reporter || "";
+  // which scheduled matches have been played: by the clock when there are start times, else up to the last match anyone scouted
+  const lastScouted = MR.reduce((a, r) => Math.max(a, r.matchNumber || 0), 0);
+  const played = n => { const t = new Date(times[n]).getTime(); return isNaN(t) ? n <= lastScouted : t <= now; };
+  const teams = new Set(Object.keys(nm).map(Number));
+  for (const m of Object.values(sch)) m.forEach(t => teams.add(Number(t)));
+  for (const r of [...MR, ...PR, ...BR]) if (r.teamNumber) teams.add(Number(r.teamNumber));
+  const rows = [...teams].filter(n => n > 0).sort((a, b) => a - b).map(n => {
+    const mine = r => r.teamNumber === n;
+    const m = MR.filter(mine), pit = PR.filter(mine), brk = BR.filter(mine);
+    const schedM = Object.keys(sch).map(Number).filter(k => sch[k].map(Number).includes(n)).sort((a, b) => a - b);
+    const playedM = schedM.filter(played), scoutedM = new Set(m.map(r => r.matchNumber));
+    const missing = playedM.filter(k => !scoutedM.has(k));
+    const need = !pit.length || missing.length > 0 || (!schedM.length && !m.length);
+    return {n, name: nm[n] || "", m, pit, brk, schedM, playedM, scoutedM, missing, need, byMe: [...m, ...pit, ...brk].some(r => me && by(r) === me)};
+  });
+  // summary
+  let slots = 0, have = 0;
+  for (const k of Object.keys(sch).map(Number).filter(played)) for (const t of sch[k]) { slots++; if (MR.some(r => r.matchNumber === k && r.teamNumber === Number(t))) have++; }
+  const tile = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
+  $("#tSum").innerHTML = tile(rows.length, "teams") + tile(`${rows.filter(r => r.pit.length).length}/${rows.length}`, "pit scouted") + tile(rows.filter(r => r.need).length, "need scouting")
+    + tile(slots ? `${have}/${slots}` : "–", "matches covered") + tile(MR.length, "match reports") + tile(PR.length, "pit reports") + tile(BR.length, "breakages") + tile(store.get("unsent", []).length, "unsent");
+  $("#tNote").textContent = `Event ${ev}. ` + (Object.keys(times).length ? "Played matches go by the schedule's start times." : Object.keys(sch).length ? `No start times, so matches up to Q${lastScouted} (the last one scouted) count as played.` : "Load the schedule (Settings) to see which matches each team still needs.");
+  // list
+  const q = $("#tQ").value.trim().toLowerCase();
+  const shown = rows.filter(r => (tFilter !== "need" || r.need) && (tFilter !== "mine" || r.byMe) && (!q || String(r.n).includes(q) || r.name.toLowerCase().includes(q)));
+  const chip = (txt, cls = "") => `<span class="chip ${cls}">${esc(txt)}</span>`;
+  const qs = ks => ks.map(k => "Q" + k).join(", ");
+  $("#tList").innerHTML = shown.map(r => {
+    const dupes = [...r.scoutedM].filter(k => r.m.filter(x => x.matchNumber === k).length > 1);
+    const chips = [r.pit.length ? chip(r.pit.length > 1 ? `pit ×${r.pit.length}` : "pit ✓", "ok") : chip("no pit report", "warn"),
+      r.schedM.length && !r.playedM.length ? chip(`${r.schedM.length} match${r.schedM.length === 1 ? "" : "es"} to come`)
+      : r.schedM.length ? chip(`matches ${r.playedM.filter(k => r.scoutedM.has(k)).length}/${r.playedM.length}` + (r.schedM.length > r.playedM.length ? ` · ${r.schedM.length - r.playedM.length} to come` : ""), r.missing.length ? "warn" : "ok")
+        : chip(`${r.scoutedM.size} match${r.scoutedM.size === 1 ? "" : "es"}`, r.m.length ? "ok" : "warn"),
+      r.missing.length ? chip("missing " + qs(r.missing), "warn") : "", dupes.length ? chip("twice in " + qs(dupes)) : "",
+      r.brk.length ? chip(`${r.brk.length} breakage${r.brk.length === 1 ? "" : "s"}`) : ""].join("");
+    const sorted = [...r.m].sort((a, b) => (a.matchNumber || 0) - (b.matchNumber || 0));
+    const body = sorted.map(x => reportLine("scout_match_reports", x, `Q${x.matchNumber} · ${x.hiveScored ?? 0} scored${by(x) ? " · " + esc(by(x)) : ""}`, unsent)).join("")
+      + r.pit.map(x => reportLine("scout_pit_reports", x, `Pit · ${esc([pretty(x.drivetrain), pretty(x.archetype)].filter(Boolean).join(", ") || "no details")}${by(x) ? " · " + esc(by(x)) : ""}`, unsent)).join("")
+      + r.brk.map(x => reportLine("scout_breakages", x, `Breakage${x.matchKey ? " Q" + String(x.matchKey).split("-q").pop() : ""} · sev ${x.severity ?? "?"}${x.component || x.mechanism ? " · " + esc(x.component || x.mechanism) : ""}`, unsent)).join("")
+      || '<p class="muted" style="margin:4px 0">Nothing scouted yet.</p>';
+    const next = r.schedM.find(k => !played(k));
+    return `<details class="trow ${r.need ? "need" : "ok"}" data-team="${r.n}"${tOpen.has(r.n) ? " open" : ""}><summary><span class="tn">${r.n}</span><span class="tname">${esc(r.name)}</span><span class="chips">${chips}</span></summary>`
+      + `<div class="tbody">${next ? `<p class="muted" style="margin:0 0 6px">Next scheduled: Q${next}${times[next] ? " at " + new Date(times[next]).toLocaleTimeString([], {hour: "numeric", minute: "2-digit"}) : ""}.</p>` : ""}<div class="list">${body}</div>`
+      + `<div class="row" style="margin-top:8px"><button type="button" class="btn small" data-tadd="pit" data-team="${r.n}">+ Pit report</button><button type="button" class="btn small" data-tadd="break" data-team="${r.n}">+ Breakage</button></div></div></details>`;
+  }).join("") || `<p class="muted">${rows.length ? "No teams match." : "No teams yet. Load team names or the schedule in Settings, or save a report."}</p>`;
+  // scouts
+  const sc = {};
+  for (const [t, list] of [["m", MR], ["p", PR], ["b", BR]]) for (const r of list) { const k = by(r) || "?"; const e = sc[k] || (sc[k] = {m: 0, p: 0, b: 0, last: ""}); e[t]++; if ((r.createdAt || "") > e.last) e.last = r.createdAt || ""; }
+  $("#tScouts").innerHTML = Object.entries(sc).sort((a, b) => (b[1].m + b[1].p + b[1].b) - (a[1].m + a[1].p + a[1].b)).map(([k, e]) =>
+    `<div class="item"><span class="txt"><b>${esc(k)}</b>${k === me ? " (you)" : ""} · ${e.m} match · ${e.p} pit · ${e.b} breakage</span><span class="muted">${e.last ? "last " + new Date(e.last + "Z").toLocaleTimeString([], {hour: "numeric", minute: "2-digit"}) : ""}</span></div>`).join("")
+    || '<span class="muted">No reports yet.</span>';
+}
+$("#tQ").addEventListener("input", renderTeams);
+$("#tFilt").addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (!b) return; tFilter = b.dataset.f; $$("#tFilt [data-f]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderTeams(); });
+$("#tList").addEventListener("toggle", e => { const d = e.target.closest("details"); if (d) (d.open ? tOpen.add(+d.dataset.team) : tOpen.delete(+d.dataset.team)); }, true);
+$("#tList").addEventListener("click", e => {
+  const b = e.target.closest("[data-tadd]"); if (!b) return;
+  const form = b.dataset.tadd === "pit" ? $("#fPit") : $("#fBreak");
+  if (form.dataset.editId) endEdit(form);
+  $("[name=teamNumber]", form).value = b.dataset.team;
+  $(`#tabs button[data-tab="${b.dataset.tadd === "pit" ? "pit" : "breakage"}"]`).click();
+  form.scrollIntoView({block: "start", behavior: motionOn() ? "smooth" : "auto"});
+});
+
 function renderLists() {
   const unsent = new Set(store.get("unsent", []));
-  const line = (table, r, text) => {
-    const id = r[CFG.pk[table]], u = unsent.has(table + "|" + id);
-    return `<div class="item"><span class="txt">${text}</span><span class="acts"><span class="${u ? "muted" : "okc"}">${u ? "unsent" : "sent"}</span><button type="button" class="btn small" data-act="edit" data-t="${table}" data-id="${esc(id)}">Edit</button><button type="button" class="btn small" data-act="del" data-t="${table}" data-id="${esc(id)}">Delete</button></span></div>`;
-  };
+  const line = (table, r, text) => reportLine(table, r, text, unsent);
   $("#mList").innerHTML = records("scout_match_reports").slice(-30).reverse().map(r => line("scout_match_reports", r, `Q${r.matchNumber} · ${tl(r.teamNumber)} · ${r.hiveScored ?? 0} scored`)).join("") || '<span class="muted">None yet</span>';
-  $("#pitList").innerHTML = records("scout_pit_reports").slice(-30).reverse().map(r => line("scout_pit_reports", r, `${tl(r.teamNumber)} · ${esc(r.archetype || "")}`)).join("") || '<span class="muted">None yet</span>';
+  $("#pitList").innerHTML = records("scout_pit_reports").slice(-30).reverse().map(r => line("scout_pit_reports", r, `${tl(r.teamNumber)} · ${esc(pretty(r.archetype || ""))}`)).join("") || '<span class="muted">None yet</span>';
   $("#breakList").innerHTML = records("scout_breakages").slice(-30).reverse().map(r => line("scout_breakages", r, `${tl(r.teamNumber)} · ${esc(r.component || r.mechanism || "")} · sev ${r.severity ?? "?"}`)).join("") || '<span class="muted">None yet</span>';
-  renderCoverage();
+  renderCoverage(); renderTeams();
 }
 
 // edit / delete a saved report (an edit keeps its id and re-queues it, so a re-send overwrites the lead's copy)
@@ -1197,31 +1312,77 @@ function decodeRec(text) {
   const table = TABLE_CODES[code]; const r = {}; CFG.order[table].forEach((f, i) => r[f] = vals[i]);
   return [table, r];
 }
-function unsentPayloads() {
-  return store.get("unsent", []).map(k => { const [table, id] = k.split("|"); const r = records(table).find(x => x[CFG.pk[table]] === id); return r ? [k, encodeRec(table, r)] : null; }).filter(Boolean);
-}
-let qrList = [], qrIdx = 0;
 function makeQr(text) { const q = qrcode(0, "L"); q.addData(text); q.make(); return q; }
-// A phone camera reads a QR off another phone's screen reliably only up to about version 20 (850 bytes at level L).
-// The raw tap log alone pushes a match report to version 30-40, so it is left out of longer codes: the record
-// already carries the cycle stats computed from it, and Export file keeps the full log.
-const QR_MAX = 850;
-function showQr() {
-  if (!qrList.length) { $("#qrInfo").textContent = "Nothing unsent."; $("#qrbox").innerHTML = ""; return; }
-  let q, note = "", text = qrList[qrIdx][1];
-  if (text.length > QR_MAX) {
-    const [table, id] = qrList[qrIdx][0].split("|");
-    const r = records(table).find(x => x[CFG.pk[table]] === id);
-    if (r && r.cycleLog) { text = encodeRec(table, Object.assign({}, r, {cycleLog: null})); note = " (tap log left out: use Export file for the full record)"; }
+// LBS3: compressed, packed and split, shown as codes that change by themselves; the lead answers with a receipt.
+//   code      "LBS3:<tag>:<part>/<parts>:<data>"   (a message too big for one code is split into numbered parts)
+//   message   "Z" + base64url(deflate(JSON)), or "J" + base64url(JSON) where the browser cannot compress
+//   reports   {k:"r", d:device, s:scout, b:batch, m:index, M:messages in batch, r:[[tableCode, [values in CFG.order]], ...]}
+//   receipt   {k:"a", d:device, ids:[report ids without the "device-" prefix]}   (everything the lead has from that phone)
+// A code of about 650 characters stays near QR version 17, which a phone reads off another phone's screen. Nothing is
+// dropped any more (the tap log goes too); Export file stays the fallback.
+const PART = 650, QR_MS = 1200;
+const b64u = u8 => { let s = ""; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+const unb64u = t => { t = t.replace(/-/g, "+").replace(/_/g, "/"); const b = atob(t + "===".slice((t.length + 3) % 4)), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; };
+async function pack(obj) {
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  if (typeof CompressionStream === "function") {
+    try { return "Z" + b64u(new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream("deflate"))).arrayBuffer())); } catch (e) { /* send it plain */ }
   }
-  try { q = makeQr(text); }
-  catch (e) { $("#qrbox").innerHTML = ""; $("#qrInfo").textContent = "This record is too long for a QR code. Use Export file."; return; }
-  $("#qrbox").innerHTML = q.createSvgTag({cellSize: 4, margin: 2, scalable: true});
-  $("#qrInfo").textContent = `QR ${qrIdx + 1} of ${qrList.length}. The lead scans each one.${note}`;
+  return "J" + b64u(bytes);
 }
-$("#sQr").addEventListener("click", () => { qrList = unsentPayloads(); qrIdx = 0; $("#qrWrap").classList.remove("hidden"); showQr(); });
-$("#qrPrev").addEventListener("click", () => { qrIdx = Math.max(0, qrIdx - 1); showQr(); });
-$("#qrNext").addEventListener("click", () => { qrIdx = Math.min(qrList.length - 1, qrIdx + 1); showQr(); });
+async function unpack(t) {
+  const u = unb64u(t.slice(1));
+  if (t[0] === "J") return JSON.parse(new TextDecoder().decode(u));
+  if (t[0] !== "Z") throw new Error("unknown code");
+  if (typeof DecompressionStream !== "function") throw new Error("old browser");
+  return JSON.parse(await new Response(new Blob([u]).stream().pipeThrough(new DecompressionStream("deflate"))).text());
+}
+const rtag = () => Math.random().toString(36).slice(2, 7).padEnd(5, "0");
+function splitParts(data) { const tag = rtag(), n = Math.max(1, Math.ceil(data.length / PART)); return Array.from({length: n}, (_, i) => `LBS3:${tag}:${i + 1}/${n}:${data.slice(i * PART, (i + 1) * PART)}`); }
+const recRow = (table, r) => [CODE_OF[table], CFG.order[table].map(f => r[f] ?? null)];
+function rowRec([code, vals]) { const table = TABLE_CODES[code]; if (!table || !Array.isArray(vals)) throw new Error("bad report"); const r = {}; CFG.order[table].forEach((f, i) => r[f] = vals[i] ?? null); return [table, r]; }
+function unsentRecords() {
+  return store.get("unsent", []).map(k => { const [table, id] = k.split("|"); const r = (records(table) || []).find(x => x[CFG.pk[table]] === id); return r ? [table, r] : null; }).filter(Boolean);
+}
+// unsent reports -> codes: small reports share a code, a big one is split into numbered parts
+async function buildCodes() {
+  const s = settings(), rows = unsentRecords().map(([t, r]) => recRow(t, r)), groups = [];
+  let cur = [];
+  for (const row of rows) {
+    if (cur.length && (await pack({r: [...cur, row]})).length > PART) { groups.push(cur); cur = []; }
+    cur.push(row);
+  }
+  if (cur.length) groups.push(cur);
+  const b = rtag(), out = [];
+  for (let m = 0; m < groups.length; m++) out.push(...splitParts(await pack({k: "r", d: s.device, s: s.scout || "", b, m, M: groups.length, r: groups[m]})));
+  return {codes: out, reports: rows.length};
+}
+let qrCodes = [], qrIdx = 0, qrTimer = null, qrPaused = false;
+function drawQr() {
+  if (!qrCodes.length) return;
+  let svg = ""; try { svg = makeQr(qrCodes[qrIdx]).createSvgTag({cellSize: 4, margin: 2, scalable: true}); } catch (e) { svg = ""; }
+  $("#qrbox").innerHTML = svg || '<p class="err" style="color:#111">Too long for a code. Use Export file.</p>';
+  $("#qrInfo").textContent = `Code ${qrIdx + 1} of ${qrCodes.length}` + (qrCodes.length > 1 ? (qrPaused ? " · paused" : " · changes by itself") : "");
+}
+function qrCycle() {
+  clearInterval(qrTimer);
+  if (!qrPaused && qrCodes.length > 1) qrTimer = setInterval(() => { qrIdx = (qrIdx + 1) % qrCodes.length; drawQr(); }, QR_MS);
+  $("#qrPause").textContent = qrPaused ? "Play" : "Pause";
+}
+async function showCodes() {
+  const wrap = $("#qrWrap"), st = $("#sStatus");
+  st.textContent = "Preparing the codes…";
+  const {codes, reports} = await buildCodes();
+  qrCodes = codes; qrIdx = 0; qrPaused = false;
+  if (!codes.length) { wrap.classList.add("hidden"); clearInterval(qrTimer); $("#sQr").textContent = "Show codes"; st.innerHTML = '<span class="okc">Nothing to send: the lead has everything from this phone.</span>'; return; }
+  wrap.classList.remove("hidden"); $("#sQr").textContent = "Hide codes"; drawQr(); qrCycle();
+  st.textContent = `${reports} unsent report${reports === 1 ? "" : "s"} in ${codes.length} code${codes.length === 1 ? "" : "s"}. Hold still until the lead's phone says ALL READ.`;
+}
+function hideCodes() { clearInterval(qrTimer); qrCodes = []; $("#qrWrap").classList.add("hidden"); $("#sQr").textContent = "Show codes"; }
+$("#sQr").addEventListener("click", () => { if (!$("#qrWrap").classList.contains("hidden")) { hideCodes(); $("#sStatus").textContent = ""; } else showCodes(); });
+$("#qrPause").addEventListener("click", () => { qrPaused = !qrPaused; qrCycle(); drawQr(); });
+$("#qrPrev").addEventListener("click", () => { if (!qrCodes.length) return; qrIdx = (qrIdx - 1 + qrCodes.length) % qrCodes.length; drawQr(); qrCycle(); });
+$("#qrNext").addEventListener("click", () => { if (!qrCodes.length) return; qrIdx = (qrIdx + 1) % qrCodes.length; drawQr(); qrCycle(); });
 function download(name, obj) {
   const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(obj)], {type: "application/json"}));
   a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
@@ -1244,7 +1405,10 @@ function addText(text) {
   text = text.trim(); let added = 0;
   if (text.startsWith("LBSS1:")) { text.split(/\s+/).forEach(addSchedChunk); return; }
   if (text.startsWith("{")) { const b = JSON.parse(text); for (const [t, rows] of Object.entries(b.tables || {})) for (const r of rows) added += ingest(t, r); }
-  else for (const line of text.split(/\s+/).filter(Boolean)) { const [t, r] = decodeRec(line); added += ingest(t, r); }
+  else for (const line of text.split(/\s+/).filter(Boolean)) {
+    if (line.startsWith("LBS3:")) { handleLbs3(line).catch(() => { $("#lStatus").innerHTML = '<span class="err">Could not read a pasted code.</span>'; }); continue; }
+    const [t, r] = decodeRec(line); added += ingest(t, r);
+  }
   seen += added; $("#lStatus").textContent = `${seen} new records collected this session.`; renderLists();
 }
 $("#lPasteGo").addEventListener("click", () => { try { addText($("#lPaste").value); $("#lPaste").value = ""; } catch (e) { $("#lStatus").innerHTML = `<span class="err">${/older version/.test(e.message || "") ? esc(e.message) : "Could not read that."}</span>`; } });
@@ -1275,15 +1439,105 @@ function logScan(kind, text) {
   const word = {ok: "new", dup: "already had", upd: "updated", bad: "not read"};
   $("#lLog").innerHTML = scanLog.map(([k, t, at]) => `<div class="item"><span>${esc(t)}</span><span class="${k === "bad" ? "err" : k === "dup" ? "muted" : "okc"}">${word[k]} · ${at}</span></div>`).join("");
 }
+// ---- LBS3 reading (lead: reports in; scout: the lead's receipt)
+const p3 = {}, done3 = new Set(), batches = {};
+let receiptFor = null, rcTimer = null;
+async function handleLbs3(raw) {
+  const m = raw.match(/^LBS3:([a-z0-9]+):(\d+)\/(\d+):(.*)$/i); if (!m) throw new Error("bad code");
+  const [, tag, i, n, data] = m;
+  if (done3.has(tag)) return;   // the same code comes round again while the codes cycle
+  const e = p3[tag] || (p3[tag] = {n: +n, got: {}}); e.got[+i] = data;
+  const have = Object.keys(e.got).length;
+  if (have < e.n) { const st = scanStatus(); st.textContent = `Long report: part ${have} of ${e.n} read. Keep pointing.`; return; }
+  const msg = await unpack(Array.from({length: e.n}, (_, k) => e.got[k + 1]).join(""));
+  delete p3[tag]; done3.add(tag);
+  if (msg.k === "r") gotReports(msg); else if (msg.k === "a") gotReceipt(msg); else throw new Error("bad code");
+}
+const scanStatus = () => scanBtn && scanBtn.id === "sReceipt" ? $("#sStatus") : $("#lStatus");
+const whoOf = (sc, d) => sc ? sc.toUpperCase() : "phone " + d;
+function gotReports(msg) {
+  let neu = 0, upd = 0, dup = 0, first = null;
+  for (const row of msg.r || []) {
+    const [t, r] = rowRec(row), pk = CFG.pk[t], prev = records(t).find(x => x[pk] === r[pk]);
+    const kind = !prev ? "ok" : JSON.stringify(prev) === JSON.stringify(r) ? "dup" : "upd";
+    if (kind === "ok") neu++; else if (kind === "upd") upd++; else dup++;
+    ingest(t, r); if (!first) first = [t, r];
+    const [big, sub] = recLabel(t, r); logScan(kind, big + " · " + sub);
+  }
+  seen += neu;
+  const key = msg.d + "." + msg.b, B = batches[key] || (batches[key] = {d: msg.d, s: msg.s, M: msg.M, got: new Set(), shown: false, at: Date.now()});
+  B.got.add(msg.m); B.at = Date.now();
+  const who = whoOf(msg.s, msg.d), all = B.got.size >= B.M, n = neu + upd + dup;
+  const [big] = first ? recLabel(...first) : ["–"];
+  flash(neu || upd ? "ok" : "dup", all ? `ALL READ FROM ${who}` : `${who} · CODE ${B.got.size} OF ${B.M}`,
+    n === 1 ? big : `${n} reports`, [neu && `${neu} new`, upd && `${upd} updated`, dup && `${dup} already had`].filter(Boolean).join(", "));
+  $("#lStatus").textContent = `${seen} new reports collected this session.`;
+  renderDevices(); renderLists();
+  if (all && !B.shown) { B.shown = true; setTimeout(() => showReceipt(msg.d, who, true), 1100); }
+}
+function receiptIds(d) {
+  const ids = [];
+  for (const t of Object.values(TABLE_CODES)) for (const r of records(t)) { const id = String(r[CFG.pk[t]] || ""); if (id.startsWith(d + "-")) ids.push(id.slice(d.length + 1)); }
+  return ids;
+}
+async function showReceipt(d, who, auto) {
+  const ids = receiptIds(d), codes = splitParts(await pack({k: "a", d, ids}));
+  receiptFor = d; clearInterval(rcTimer);
+  $("#lRcTop").textContent = auto ? `All read from ${who}. Turn this screen to their phone.` : `Receipt for ${who}`;
+  let i = 0;
+  const draw = () => {
+    $("#lRcQr").innerHTML = makeQr(codes[i]).createSvgTag({cellSize: 4, margin: 2, scalable: true});
+    $("#lRcInfo").textContent = `${ids.length} report${ids.length === 1 ? "" : "s"} from ${who} on this phone. On their phone: Sync → Scan the lead's receipt.` + (codes.length > 1 ? ` Code ${i + 1} of ${codes.length}.` : "");
+    i = (i + 1) % codes.length;
+  };
+  draw(); if (codes.length > 1) rcTimer = setInterval(draw, QR_MS);
+  $("#lReceipt").classList.remove("hidden"); $("#lScanBox").classList.add("paused");
+  $("#lReceipt").scrollIntoView({block: "center", behavior: motionOn() ? "smooth" : "auto"});
+}
+function hideReceipt() { clearInterval(rcTimer); receiptFor = null; $("#lReceipt").classList.add("hidden"); $("#lScanBox").classList.remove("paused"); }
+$("#lRcDone").addEventListener("click", hideReceipt);
+function renderDevices() {
+  const last = {};
+  for (const B of Object.values(batches)) if (!last[B.d] || B.at > last[B.d].at) last[B.d] = B;
+  $("#lDevices").innerHTML = Object.values(last).sort((a, b) => b.at - a.at).map(B => {
+    const who = whoOf(B.s, B.d), all = B.got.size >= B.M;
+    return `<div class="item"><span class="txt"><b>${esc(who)}</b> · ${all ? "all codes read" : `${B.got.size} of ${B.M} codes read`} · ${receiptIds(B.d).length} reports</span>`
+      + `<span class="acts"><button type="button" class="btn small" data-rc="${esc(B.d)}" data-who="${esc(who)}">Show receipt</button></span></div>`;
+  }).join("");
+}
+$("#lDevices").addEventListener("click", e => { const b = e.target.closest("[data-rc]"); if (b) showReceipt(b.dataset.rc, b.dataset.who, false); });
+$("#lSeeAll").addEventListener("click", () => { $('#tabs button[data-tab="teams"]').click(); scrollTo({top: 0}); });
+// scout side: the lead's receipt marks exactly what the lead has as sent
+function gotReceipt(msg) {
+  const s = settings();
+  if (msg.d !== s.device) { flash("bad", "ANOTHER PHONE'S RECEIPT", "Not for this phone", "ask the lead for yours"); logScan("bad", "receipt for another phone"); return; }
+  const got = new Set(msg.ids || []), before = store.get("unsent", []);
+  const left = before.filter(k => { const id = k.split("|")[1] || ""; return !(id.startsWith(s.device + "-") && got.has(id.slice(s.device.length + 1))); });
+  store.set("unsent", left); renderHeader(); renderLists();
+  const marked = before.length - left.length;
+  flash("ok", "RECEIPT READ", `${marked} marked sent`, left.length ? `${left.length} still to send` : "everything is sent");
+  $("#sStatus").innerHTML = left.length ? esc(`${marked} marked sent. ${left.length} the lead does not have yet: show the codes again.`) : '<span class="okc">Everything is sent. The lead has all your reports.</span>';
+  setTimeout(() => { if (scanStream && scanBtn && scanBtn.id === "sReceipt") toggleScan(scanBtn, $("#sScanSlot")); }, 1500);
+  if (!$("#qrWrap").classList.contains("hidden")) { if (left.length) showCodes(); else hideCodes(); }
+}
 // one scanned code: store it and say clearly what it was
 function handleScan(raw) {
-  const st = $("#lStatus");
+  if (receiptFor) return;   // the lead's receipt is on screen: not reading
+  const st = scanStatus();
+  if (raw.startsWith("LBS3:")) {
+    handleLbs3(raw).catch(e => {
+      const old = e.message === "old browser";
+      flash("bad", old ? "BROWSER TOO OLD" : "COULD NOT READ", old ? "Update this phone" : "Show it again", old ? "update the browser, or import a file" : "or import a file");
+      logScan("bad", old ? "browser cannot unpack codes" : "unreadable code");
+    });
+    return;
+  }
   if (raw.startsWith("LBSS1:")) {
     const m = raw.match(/^LBSS1:(\d+)\/(\d+):/); addSchedChunk(raw);
     if (m) flash("ok", "SCHEDULE", `Part ${m[1]} of ${m[2]}`, "keep pointing until every part is read");
     return;
   }
-  if (!/^LBS\d+:/.test(raw)) { flash("bad", "NOT A SCOUT CODE", "Wrong QR code", "show the code from Sync → Show QR codes"); logScan("bad", "other QR code"); return; }
+  if (!/^LBS\d+:/.test(raw)) { flash("bad", "NOT A SCOUT CODE", "Wrong QR code", "show the codes from Sync → Show codes"); logScan("bad", "other QR code"); return; }
   let t, r;
   try { [t, r] = decodeRec(raw); }
   catch (e) {
@@ -1300,9 +1554,16 @@ function handleScan(raw) {
   logScan(kind, big + " · " + sub);
   st.textContent = `${seen} new records collected this session.`; renderLists();
 }
-$("#lScan").addEventListener("click", async () => {
-  const v = $("#lVideo"), box = $("#lScanBox"), ov = $("#lOverlay"), st = $("#lStatus");
-  if (scanStream) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; box.classList.add("hidden"); $("#lScan").textContent = "Scan QR"; return; }
+let scanBtn = null;
+async function toggleScan(btn, slot) {
+  const v = $("#lVideo"), box = $("#lScanBox"), ov = $("#lOverlay");
+  if (scanStream) {
+    scanStream.getTracks().forEach(t => t.stop()); scanStream = null; box.classList.add("hidden");
+    const was = scanBtn; if (scanBtn) scanBtn.textContent = scanBtn.dataset.label; scanBtn = null;
+    if (was === btn) return;   // the other button: switch the camera over
+  }
+  slot.append(box); scanBtn = btn;
+  const st = scanStatus();
   try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); audio.resume(); } catch (e) { audio = null; }
   // Chrome's built-in reader on Android comes from Google Play services. On some phones it finds nothing, with no
   // error, while the camera app reads the same code, so every frame it misses also goes through the bundled jsQR.
@@ -1317,7 +1578,7 @@ $("#lScan").addEventListener("click", async () => {
   try { if (((track.getCapabilities && track.getCapabilities().focusMode) || []).includes("continuous")) await track.applyConstraints({advanced: [{focusMode: "continuous"}]}); } catch (e) { /* focus stays as the camera chose */ }
   try { v.srcObject = scanStream; box.classList.remove("hidden"); await v.play(); }
   catch (e) { scanStream.getTracks().forEach(t => t.stop()); scanStream = null; box.classList.add("hidden"); st.innerHTML = '<span class="err">The camera did not start. Try again, or import a file.</span>'; return; }
-  $("#lScan").textContent = "Stop scanning";
+  btn.textContent = "Stop scanning";
   st.textContent = `Scanning (camera ${v.videoWidth}×${v.videoHeight}, reader: ${det ? "built-in + backup" : "backup"}). Keep the code inside the square.`;
   const cv = document.createElement("canvas"), cx = cv.getContext("2d", {willReadFrequently: true}), oc = ov.getContext("2d");
   const square = () => { const s = Math.min(v.videoWidth, v.videoHeight); return [(v.videoWidth - s) / 2, (v.videoHeight - s) / 2, s]; };
@@ -1366,7 +1627,9 @@ $("#lScan").addEventListener("click", async () => {
     requestAnimationFrame(loop);
   };
   loop();
-});
+}
+$("#lScan").addEventListener("click", () => toggleScan($("#lScan"), $("#lScanSlot")));
+$("#sReceipt").addEventListener("click", () => toggleScan($("#sReceipt"), $("#sScanSlot")));
 
 // ---------- schedule import / share ----------
 // text: lines "match,red1,red2,blue1,blue2" plus optional "number,name" lines, or a lebob-schedule/1 JSON file
