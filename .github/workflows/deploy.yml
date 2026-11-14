@@ -4,18 +4,42 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  # Event days: refresh the scout app's match schedule (scout/schedule/) every 10 minutes. Runs only while the
+  # repo variable SCHEDULE_EVENTS is set (e.g. "AUPEQ"); clear it after the event to stop.
+  schedule:
+    - cron: "*/10 * * * *"
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
+  # timed runs only: has any published schedule changed? (no change = no deploy)
+  check:
+    if: github.event_name == 'schedule' && vars.SCHEDULE_EVENTS != ''
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.sched.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Compare FIRST API schedules with the live site
+        id: sched
+        env:
+          SCHEDULE_EVENTS: ${{ vars.SCHEDULE_EVENTS }}
+          FTC_API_USER: ${{ secrets.FTC_API_USER }}
+          FTC_API_TOKEN: ${{ secrets.FTC_API_TOKEN }}
+        run: python3 scripts/publish_schedule.py "$RUNNER_TEMP/schedule"
+
   deploy:
+    needs: check
+    if: always() && (github.event_name != 'schedule' || needs.check.outputs.changed == 'true')
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -23,6 +47,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Fetch match schedules from the FIRST API
+        env:
+          SCHEDULE_EVENTS: ${{ vars.SCHEDULE_EVENTS }}
+          FTC_API_USER: ${{ secrets.FTC_API_USER }}
+          FTC_API_TOKEN: ${{ secrets.FTC_API_TOKEN }}
+        run: python3 scripts/publish_schedule.py scout/schedule
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

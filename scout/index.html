@@ -83,6 +83,7 @@ video{width:100%;border-radius:12px;background:#000}
 .tl .edit{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}.tl .edit label{margin:0}.tl .edit .row{grid-column:1/-1}
 .tlwrap.fs{position:fixed;inset:0;z-index:100;background:var(--bg);padding:10px;overflow:auto;margin:0}.tlwrap.fs #tlClose{display:inline-flex}.tlwrap.fs #tlOpen{display:none}.sum .tlwrap.fs .tlscroll svg{width:max(100%,1700px)}
 #startField{margin-top:6px}#startField svg{width:100%;max-width:440px;height:auto;display:block;touch-action:manipulation;border-radius:10px}#startField text{font-family:system-ui,sans-serif;pointer-events:none}
+.stepper{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;gap:6px;align-items:stretch}.stepper .btn{min-height:44px;padding:0;font-size:22px;line-height:1}.stepper input{text-align:center;padding:10px 4px;-moz-appearance:textfield}.stepper input::-webkit-inner-spin-button,.stepper input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 </style>
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"></head>
 <body>
@@ -190,11 +191,11 @@ video{width:100%;border-radius:12px;background:#000}
   <label>Robot archetype</label><select name="archetype" data-enum="ARCHETYPES"></select>
   <div class="row3"><div><label>HIVE</label><select name="canHive" data-bool></select></div><div><label>FLOWER</label><select name="canFlower" data-bool></select></div><div><label>NECTAR</label><select name="canNectar" data-bool></select></div></div>
   <div class="row3"><div><label>Floor intake</label><select name="canFloorIntake" data-bool></select></div><div><label>FLOWER intake</label><select name="canFlowerIntake" data-bool></select></div><div><label>Plays defence</label><select name="canDefend" data-bool></select></div></div>
-  <div class="row3"><div><label>AUTO leave</label><select name="autoLeave" data-bool></select></div><div><label>AUTO park</label><select name="autoPark" data-bool></select></div><div><label>AUTO TIPS claimed</label><input name="autoTipsClaimed" type="number" step="0.5" inputmode="decimal"></div></div>
+  <div class="row"><div><label>AUTO leave</label><select name="autoLeave" data-bool></select></div><div><label>AUTO park</label><select name="autoPark" data-bool></select></div></div>
+  <div class="row"><div><label>AUTO TIPS claimed</label><input name="autoTipsClaimed" type="number" step="0.5" inputmode="decimal" data-step="0.5"></div><div><label>Claimed TIPS / match</label><input name="claimedTipsPerMatch" type="number" step="0.5" inputmode="decimal" data-step="0.5"></div></div>
   <label>AUTO routines they have</label><input name="autoRoutines" placeholder="e.g. 4-ball near, park-only">
-  <div class="row"><div><label>Preferred start</label><select name="preferredStart" data-enum="START_POSITIONS"></select></div><div><label>Claimed cycle (s)</label><input name="claimedCycleSeconds" type="number" inputmode="decimal"></div></div>
-  <label>Claimed TIPS / match</label><input name="claimedTipsPerMatch" type="number" step="0.5" inputmode="decimal">
-  <div class="row"><div><label>Height (in)</label><input name="heightInches" type="number" inputmode="decimal"></div><div><label>Weight (kg)</label><input name="weightKg" type="number" inputmode="decimal"></div></div>
+  <div class="row"><div><label>Preferred start</label><select name="preferredStart" data-enum="START_POSITIONS"></select></div><div><label>Claimed cycle (s)</label><input name="claimedCycleSeconds" type="number" inputmode="decimal" data-step="1"></div></div>
+    <div class="row"><div><label>Height (in)</label><input name="heightInches" type="number" inputmode="decimal" data-step="1"></div><div><label>Weight (kg)</label><input name="weightKg" type="number" inputmode="decimal" data-step="0.5"></div></div>
   <label>Known issues</label><input name="knownIssues"><label>Notes</label><textarea name="notes"></textarea>
   <button class="btn primary wide" style="margin-top:12px">Save pit report</button></form>
   <div class="card"><h2>Saved</h2><div class="list" id="pitList"></div></div></section>
@@ -207,8 +208,8 @@ video{width:100%;border-radius:12px;background:#000}
   <div class="row"><div><label>Failure type</label><select name="failureType" data-enum="FAILURE_TYPES"></select></div><div><label>Severity</label><select name="severity"><option value="0">0 no effect</option><option value="1">1 brief, self-recovered</option><option value="2">2 reduced / lost cycles</option><option value="3">3 unavailable for a while</option><option value="4">4 immobilised / match over</option></select></div></div>
   <label>Symptoms (what you saw)</label><input name="symptoms"><label>Robot was doing…</label><input name="actionBefore">
   <div class="row"><div><label>Suspected cause</label><select name="cause" data-enum="CAUSES"></select></div><div><label>Confidence</label><select name="causeConfidence" data-enum="CONFIDENCE"></select></div></div>
-  <div class="row3"><div><label>Seconds lost</label><input name="lostSeconds" type="number" inputmode="numeric"></div><div><label>Recovered</label><select name="recovered" data-bool></select></div><div><label>Repair min</label><input name="repairMinutes" type="number" inputmode="numeric"></div></div>
-  <div class="row"><div><label>Happened before</label><select name="happenedBefore" data-bool></select></div><div><label>Recurrence</label><select name="recurrence"><option>unknown</option><option>low</option><option>medium</option><option>high</option></select></div></div>
+  <div class="row"><div><label>Seconds lost</label><input name="lostSeconds" type="number" inputmode="numeric" data-step="5"></div><div><label>Repair min</label><input name="repairMinutes" type="number" inputmode="numeric" data-step="5"></div></div>
+  <div class="row3"><div><label>Recovered</label><select name="recovered" data-bool></select></div><div><label>Seen before</label><select name="happenedBefore" data-bool></select></div><div><label>Recurrence</label><select name="recurrence"><option>unknown</option><option>low</option><option>medium</option><option>high</option></select></div></div>
   <label>Fix applied</label><input name="fix"><label>Spare used</label><input name="spareUsed"><label>Evidence (photo name / video timestamp)</label><input name="evidence">
   <button class="btn primary wide" style="margin-top:12px">Save breakage</button></form>
   <div class="card"><h2>Saved</h2><div class="list" id="breakList"></div></div></section>
@@ -246,6 +247,8 @@ video{width:100%;border-radius:12px;background:#000}
   <div class="row" style="margin-top:8px"><label class="btn" style="margin:0">Import schedule file<input type="file" id="cSchedFile" accept=".json,.txt,.csv,application/json,text/plain" class="hidden"></label><button type="button" class="btn" id="cSchedQr">Share by QR</button></div>
   <div id="schedQr" class="hidden" style="margin-top:12px"><div id="schedQrBox"></div><p class="muted" id="schedQrInfo"></p></div>
   <p class="muted" id="cSchedInfo">To receive a schedule by QR, use Sync → Scan QR.</p>
+  <button type="button" class="btn wide" id="cWebSched">Check for the online schedule</button>
+  <p class="muted" id="cWebInfo"></p>
   <button class="btn primary wide" id="cSave">Save settings</button>
   <p class="muted" id="cInfo"></p>
   <p class="muted" id="cStore"></p>
@@ -262,7 +265,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "dc64a06";
+const APP_VERSION = "7a434a6";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -372,6 +375,15 @@ function ensureScout() {
     alert("Use 2 to 4 letters, like AN.");
   }
 }
+// − / + buttons round a number box (data-step): quicker than the phone keyboard; the box still takes typing
+$$("input[data-step]").forEach(inp => {
+  const what = inp.parentElement.querySelector("label")?.textContent || "", box = document.createElement("div"); box.className = "stepper"; inp.replaceWith(box);
+  inp.step = "any";   // without it the browser refuses a decimal like 52.5 kg and silently blocks the save
+  const step = Number(inp.dataset.step), mk = (d, t) => { const b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = t;
+    b.setAttribute("aria-label", (d > 0 ? "Increase " : "Decrease ") + what);
+    b.addEventListener("click", () => { const v = Math.max(0, Math.round(((parseFloat(inp.value) || 0) + d * step) * 100) / 100); inp.value = v; }); return b; };
+  box.append(mk(-1, "−"), inp, mk(1, "+"));
+});
 function wireForm(id, table, after) {
   $(id).addEventListener("submit", e => {
     e.preventDefault();
@@ -1067,7 +1079,7 @@ function parseSchedule(text) {
 }
 function applySchedule(p) {
   const s = settings();
-  s.schedule = p.schedule; if (Object.keys(p.names).length) s.names = Object.assign({}, s.names || {}, p.names);
+  s.schedule = p.schedule; s.schedWeb = null;   // typed, file or QR: no longer follows the online copy if (Object.keys(p.names).length) s.names = Object.assign({}, s.names || {}, p.names);
   if (p.event) s.eventCode = String(p.event).toUpperCase();
   saveSettings(s); loadSettingsForm(); renderLists(); suggestTeam();
   return `Imported ${Object.keys(p.schedule).length} matches and ${Object.keys(p.names).length} team names for ${s.eventCode}.`;
@@ -1115,10 +1127,52 @@ function addSchedChunk(txt) {
 function loadSettingsForm() { const s = settings(); $("#cNames").value = Object.entries(s.names || {}).map(([k, v]) => k + "," + v).join("\n"); $("#cEvent").value = s.eventCode; $("#cScout").value = s.scout; $("#cSched").value = Object.entries(s.schedule).map(([k, v]) => [k, ...v].join(",")).join("\n"); $("#cInfo").textContent = `Device id ${s.device} · app version ${APP_VERSION}`; }
 $("#cSave").addEventListener("click", () => {
   const s = settings(); s.eventCode = ($("#cEvent").value || "AUPEQ").toUpperCase().trim(); s.scout = $("#cScout").value.toUpperCase().trim().slice(0, 4);
+  const before = JSON.stringify(s.schedule);
   s.schedule = {}; for (const line of $("#cSched").value.split(/\n/)) { const p = line.split(/[,\s]+/).map(Number).filter(n => !isNaN(n)); if (p.length >= 5) s.schedule[p[0]] = p.slice(1, 5); }
+  if (JSON.stringify(s.schedule) !== before) s.schedWeb = null;   // edited by hand: stop replacing it with the online copy
   s.names = {}; for (const line of $("#cNames").value.split(/\n/)) { const m = line.match(/^\s*(\d+)\s*[,\t]\s*(.+?)\s*$/); if (m) s.names[Number(m[1])] = m[2]; }
+  const evChanged = s.eventCode !== settings().eventCode;
   saveSettings(s); renderLists(); suggestTeam(); $("#cInfo").textContent = `Saved. ${Object.keys(s.schedule).length} scheduled matches. Device id ${s.device}`;
+  if (evChanged) webSchedule(false);
 });
+// ---- online schedule: lebob.com.au/scout/schedule/<EVENT>.json, published from the FIRST API by the website's deploy
+// workflow. Used when the phone has signal; QR, file and typed schedules still work offline. It replaces the schedule
+// only when there is none yet or the current one came from here, so a hand-fixed schedule is never overwritten.
+let webOffer = null;
+async function webSchedule(manual) {
+  const s = settings(), info = $("#cWebInfo"), code = s.eventCode;
+  if (!navigator.onLine && !manual) return;
+  let j;
+  try {
+    const r = await fetch(`./schedule/${encodeURIComponent(code)}.json`, {cache: "no-store"});
+    if (!r.ok) { if (manual) info.textContent = `No online schedule for ${code} yet. It appears once FIRST publishes it.`; return; }
+    j = await r.json();
+  } catch (e) { if (manual) info.textContent = "Could not reach lebob.com.au. Check the signal, or use QR or a file."; return; }
+  if (String(j.event || "").toUpperCase() !== code) return;
+  const sched = {}, names = {};
+  for (const [k, v] of Object.entries(j.matches || {})) if (Array.isArray(v) && v.length === 4 && v.every(n => Number(n) > 0)) sched[Number(k)] = v.map(Number);
+  for (const [k, v] of Object.entries(j.names || {})) if (Number(k) > 0 && v) names[Number(k)] = String(v);
+  const cur = settings(), n = Object.keys(sched).length, when = j.updatedAt ? ` (updated ${new Date(j.updatedAt).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"})})` : "";
+  const oldNames = JSON.stringify(cur.names || {});
+  cur.names = Object.assign({}, cur.names || {}, names);   // names only ever add
+  const same = JSON.stringify(sched) === JSON.stringify(cur.schedule);
+  let changed = JSON.stringify(cur.names) !== oldNames;
+  webOffer = null;
+  if (n && !same && (!Object.keys(cur.schedule).length || cur.schedWeb)) { cur.schedule = sched; cur.schedWeb = j.updatedAt || "yes"; changed = true; }
+  else if (n && !same) webOffer = {sched, at: j.updatedAt || "yes"};
+  if (changed) { saveSettings(cur); loadSettingsForm(); renderLists(); suggestTeam(); }   // untouched otherwise: never clobber a half-typed Settings form
+  info.innerHTML = !n ? esc(`Online: ${Object.keys(names).length} team names for ${code}, no match schedule yet${when}.`)
+    : webOffer ? esc(`An online schedule with ${n} matches is available${when}. Yours was changed by hand, so it was kept.`) + ' <button type="button" class="btn small" id="cWebUse">Use the online one</button>'
+    : esc(`Schedule: ${n} matches from lebob.com.au${when}.`);
+}
+$("#cWebSched").addEventListener("click", () => webSchedule(true));
+$("#cWebInfo").addEventListener("click", e => {
+  if (!e.target.closest("#cWebUse") || !webOffer) return;
+  const s = settings(); s.schedule = webOffer.sched; s.schedWeb = webOffer.at; webOffer = null;
+  saveSettings(s); loadSettingsForm(); renderLists(); suggestTeam(); $("#cWebInfo").textContent = `Using the online schedule: ${Object.keys(s.schedule).length} matches.`;
+});
+addEventListener("online", () => webSchedule(false));
+setInterval(() => webSchedule(false), 10 * 60 * 1000);
 $("#cWipe").addEventListener("click", () => { if (confirm("Delete ALL scouting data on this phone? Export first if unsure.")) { try { Object.keys(localStorage).filter(k => k.startsWith("lbs:t:") || k === "lbs:unsent").forEach(k => localStorage.removeItem(k)); } catch (e) {} for (const k of Object.keys(mem)) if (k.startsWith("t:") || k === "unsent") delete mem[k];
   if (M) { clearInterval(timerId); M = null; lastPersist = ""; tlSel = null; tlEdit = null; $("#mLive").classList.add("hidden"); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden"); }
   store.set("live", null); renderHeader(); renderLists(); } });
@@ -1143,7 +1197,7 @@ if (!store.get("settings", null)) saveSettings(settings());
   $("#mLive").classList.remove("hidden"); timerId = setInterval(tick, 200); tick();
   lastAction(`Resumed Q${M.num} · ${M.team}`);
 })();
-loadSettingsForm(); renderHeader(); renderLists(); suggestTeam();
+loadSettingsForm(); renderHeader(); renderLists(); suggestTeam(); webSchedule(false);
 (async function keepStorage() {
   const el = $("#cStore"), sto = navigator.storage;
   if (!sto || !sto.persist) { el.textContent = "Storage: this browser cannot promise to keep the data. Send reports to the lead often."; return; }
