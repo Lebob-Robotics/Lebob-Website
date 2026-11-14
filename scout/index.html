@@ -248,6 +248,7 @@ video{width:100%;border-radius:12px;background:#000}
   <p class="muted" id="cSchedInfo">To receive a schedule by QR, use Sync → Scan QR.</p>
   <button class="btn primary wide" id="cSave">Save settings</button>
   <p class="muted" id="cInfo"></p>
+  <p class="muted" id="cStore"></p>
   <button class="btn wide" id="cVib" style="margin-top:16px">Test vibration</button>
   <p class="muted" id="cVibInfo"></p>
   <button class="btn wide" id="cWipe" style="margin-top:16px">Delete all data on this phone</button>
@@ -261,7 +262,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "74e34c3";
+const APP_VERSION = "dc64a06";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -360,9 +361,21 @@ function formRecord(form, table) {
   rec[CFG.pk[table]] = `${s.device}-${uid().slice(0, 10)}`;
   return rec;
 }
+// every report says who wrote it: ask for initials the first time they are needed (kept in Settings after that)
+function ensureScout() {
+  const s = settings(); if (s.scout) return true;
+  for (;;) {
+    const v = prompt("Your initials first (2-4 letters, no full names). They go on every report from this phone.", "");
+    if (v === null) return false;
+    const ini = v.toUpperCase().replace(/[^A-Z]/g, "");
+    if (ini.length >= 2 && ini.length <= 4) { s.scout = ini; saveSettings(s); loadSettingsForm(); return true; }
+    alert("Use 2 to 4 letters, like AN.");
+  }
+}
 function wireForm(id, table, after) {
   $(id).addEventListener("submit", e => {
     e.preventDefault();
+    if (!ensureScout()) return;
     const rec = formRecord(e.target, table);
     if (table === "scout_breakages" && rec.matchNumber) rec.matchKey = `${settings().eventCode}-q${rec.matchNumber}`;
     delete rec.matchNumber;
@@ -592,6 +605,7 @@ $("#mTeam").addEventListener("input", () => {
 $("#mGo").addEventListener("click", () => {
   const num = Number($("#mNum").value), team = Number($("#mTeam").value), al = $('[data-alliance][aria-pressed="true"]');
   if (!num || !team || !al) { $("#mHint").innerHTML = '<span class="err">Match #, team # and alliance are needed.</span>'; return; }
+  if (!ensureScout()) { $("#mHint").innerHTML = '<span class="err">Add your initials to start (Settings → Scout initials).</span>'; return; }
   const sch0 = settings().schedule[num];
   if (sch0) {
     const i = sch0.indexOf(team), exp = i < 0 ? null : i < 2 ? "RED" : "BLUE";
@@ -1105,7 +1119,9 @@ $("#cSave").addEventListener("click", () => {
   s.names = {}; for (const line of $("#cNames").value.split(/\n/)) { const m = line.match(/^\s*(\d+)\s*[,\t]\s*(.+?)\s*$/); if (m) s.names[Number(m[1])] = m[2]; }
   saveSettings(s); renderLists(); suggestTeam(); $("#cInfo").textContent = `Saved. ${Object.keys(s.schedule).length} scheduled matches. Device id ${s.device}`;
 });
-$("#cWipe").addEventListener("click", () => { if (confirm("Delete ALL scouting data on this phone? Export first if unsure.")) { try { Object.keys(localStorage).filter(k => k.startsWith("lbs:t:") || k === "lbs:unsent").forEach(k => localStorage.removeItem(k)); } catch (e) {} for (const k of Object.keys(mem)) if (k.startsWith("t:") || k === "unsent") delete mem[k]; renderHeader(); renderLists(); } });
+$("#cWipe").addEventListener("click", () => { if (confirm("Delete ALL scouting data on this phone? Export first if unsure.")) { try { Object.keys(localStorage).filter(k => k.startsWith("lbs:t:") || k === "lbs:unsent").forEach(k => localStorage.removeItem(k)); } catch (e) {} for (const k of Object.keys(mem)) if (k.startsWith("t:") || k === "unsent") delete mem[k];
+  if (M) { clearInterval(timerId); M = null; lastPersist = ""; tlSel = null; tlEdit = null; $("#mLive").classList.add("hidden"); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden"); }
+  store.set("live", null); renderHeader(); renderLists(); } });
 $("#cVib").addEventListener("click", () => {
   const el = $("#cVibInfo");
   if (!CAN_VIBRATE) { el.innerHTML = '<span class="err">This browser cannot vibrate (Firefox removed vibration in 2024; iPhones never had it). Use Chrome or Samsung Internet on Android. Visual feedback still works.</span>'; return; }
@@ -1128,6 +1144,14 @@ if (!store.get("settings", null)) saveSettings(settings());
   lastAction(`Resumed Q${M.num} · ${M.team}`);
 })();
 loadSettingsForm(); renderHeader(); renderLists(); suggestTeam();
+(async function keepStorage() {
+  const el = $("#cStore"), sto = navigator.storage;
+  if (!sto || !sto.persist) { el.textContent = "Storage: this browser cannot promise to keep the data. Send reports to the lead often."; return; }
+  const say = kept => el.textContent = kept ? "Storage: kept (the browser will not clear these reports to free space)."
+    : "Storage: may be cleared if the phone runs low on space. Install the app (Add to Home screen) and send reports to the lead often.";
+  say(false);   // until the browser answers (Firefox asks the user first)
+  try { say(await sto.persisted() || await sto.persist()); } catch (e) { /* keeps the warning */ }
+})();
 
 try { const t = sessionStorage.getItem("lbs:tab"); if (t) $(`#tabs button[data-tab="${t}"]`)?.click(); } catch (e) {}
 </script>
