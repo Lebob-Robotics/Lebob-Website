@@ -97,6 +97,7 @@ header{padding:10px 16px;gap:12px}
 .brand img{width:30px;height:auto;image-rendering:pixelated;opacity:1}
 .hdrmeta,header .pill{font:500 12px/1.2 'IBM Plex Mono',ui-monospace,Menlo,monospace;color:var(--muted);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 header .thbtn{border-radius:4px}
+header .pill{flex:0 0 auto;overflow:visible}.hdrmeta{flex:1 1 auto}
 nav{gap:4px;padding:8px 16px}
 nav button{border-radius:4px;background:transparent;border-color:var(--line);color:var(--fg);font:500 14px/1 'IBM Plex Sans',system-ui,sans-serif;padding:10px 12px}
 nav button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
@@ -124,6 +125,43 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 .err::before{content:"";display:inline-block;width:8px;height:8px;background:var(--red);margin-right:8px;vertical-align:1px}
 @keyframes bump{0%{transform:scale(1.6);color:var(--label)}100%{transform:scale(1)}}
 .editnote{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--accent);background:var(--panel2);color:var(--fg-dark);font-size:14px}
+/* themed dropdowns */
+.dd-native{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;height:1px!important;padding:0!important;border:0!important;margin:0!important}
+.dd-wrap{position:relative}
+.dd-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:8px;text-align:left;font:inherit;color:var(--fg-dark);background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:9px 34px 9px 10px;position:relative;cursor:pointer;touch-action:manipulation}
+.dd-btn>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dd-btn::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg)}
+.dd-btn[aria-expanded="true"]{border-color:var(--fg-dark)}.dd-btn[aria-expanded="true"]::after{transform:translateY(-25%) rotate(225deg)}
+.dd-btn:hover{background:var(--hover)}.dd-btn:disabled{opacity:.5}
+.dd-btn .dd-s{color:var(--muted);font-weight:400}.dd-ph{color:var(--muted)}
+.dd-tag{flex:0 0 auto;font:500 11px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase;padding:4px 6px;border-radius:3px;color:#fff}
+.dd-tag.redA{background:var(--red)}.dd-tag.blueA{background:var(--blue)}
+.dd-back{position:fixed;inset:0;z-index:200}.dd-back.sheet{background:rgba(0,0,0,.5)}
+.dd-panel{position:fixed;z-index:201;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 32px rgba(0,0,0,.35);overflow:hidden}
+.dd-panel.sheet{left:0;right:0;bottom:0;max-height:min(72vh,560px);border-radius:8px 8px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom)}
+.dd-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font:500 13px/1.3 'IBM Plex Mono',ui-monospace,monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--label)}
+.dd-q{margin:8px;width:calc(100% - 16px)}
+.dd-list{overflow-y:auto;overscroll-behavior:contain;padding:4px 0}
+.dd-opt{display:flex;align-items:baseline;gap:10px;width:100%;min-height:44px;padding:10px 16px 10px 14px;border:0;border-left:4px solid transparent;background:none;color:var(--fg-dark);font:inherit;text-align:left;cursor:pointer}
+.dd-opt:hover,.dd-opt:focus-visible{background:var(--hover);outline:0}
+.dd-opt[aria-selected="true"]{border-left-color:var(--accent);background:var(--panel2);font-weight:600}
+.dd-opt[aria-selected="true"]::after{content:"✓";margin-left:auto;color:var(--fg-dark)}
+.dd-opt .dd-l{font-variant-numeric:tabular-nums}.dd-opt .dd-s{color:var(--muted);font-size:14px;font-weight:400}
+.dd-opt.redA .dd-l::before,.dd-opt.blueA .dd-l::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;vertical-align:1px;background:var(--red)}.dd-opt.blueA .dd-l::before{background:var(--blue)}
+.dd-none{padding:12px 16px;margin:0}
+.dd-foot{padding:8px;border-top:1px solid var(--line);display:flex;justify-content:flex-end}
+/* motion: tab changes slide in from the tab's side; dropdowns drop or rise; all off with Settings → Animations */
+@keyframes tabInR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes tabInL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+@keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@keyframes ddUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes sheetIn{from{transform:translateY(100%)}to{transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+section.tab-in-r{animation:tabInR .22s cubic-bezier(.2,.7,.2,1)}section.tab-in-l{animation:tabInL .22s cubic-bezier(.2,.7,.2,1)}
+.dd-panel{animation:ddIn .14s ease-out}.dd-panel.up{animation-name:ddUp}.dd-panel.sheet{animation:sheetIn .22s cubic-bezier(.2,.7,.2,1)}.dd-back.sheet{animation:fadeIn .2s}
+.dd-panel.out{opacity:0;transition:opacity .14s}.dd-panel.sheet.out{opacity:1;transform:translateY(100%);transition:transform .15s ease-in}.dd-back.out{opacity:0;transition:opacity .15s}
+nav button{transition:background-color .2s,color .2s,border-color .2s,transform .07s}
+:root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{animation:none!important;transition:none!important}
 .foot-brand{margin:28px 0 0;padding-top:20px;background-image:repeating-linear-gradient(90deg,var(--accent) 0 8px,transparent 8px 16px);background-size:100% 8px;background-repeat:no-repeat;font:500 12px/1.4 'IBM Plex Mono',ui-monospace,Menlo,monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
 </style>
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./favicon-32.png" sizes="32x32" type="image/png"><link rel="icon" href="./icon-192.png" sizes="192x192" type="image/png"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Scout"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"></head>
@@ -281,6 +319,8 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 <section id="tab-settings"><div class="card"><h2>This phone</h2>
   <label>Appearance</label>
   <div class="seg" id="cTheme"><button type="button" class="btn" data-th="system" aria-pressed="false">System</button><button type="button" class="btn" data-th="light" aria-pressed="false">Light</button><button type="button" class="btn" data-th="dark" aria-pressed="false">Dark</button></div>
+  <label>Animations (tab changes, lists)</label>
+  <div class="seg" id="cMotion"><button type="button" class="btn" data-mo="on" aria-pressed="false">On</button><button type="button" class="btn" data-mo="off" aria-pressed="false">Off</button></div>
   <label for="cEvent">Event code</label><input id="cEvent" placeholder="AUPEQ" autocapitalize="characters">
   <label for="cScout">Scout initials (no full names)</label><input id="cScout" maxlength="4" autocapitalize="characters">
   <label for="cSched">Schedule (optional): paste lines "match,red1,red2,blue1,blue2"</label><textarea id="cSched" placeholder="1,1234,5678,9012,3456"></textarea>
@@ -307,7 +347,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"}};
-const APP_VERSION = "639f8dc";
+const APP_VERSION = "2150501";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -319,7 +359,7 @@ const store = {
   set(k, v) { mem[k] = v; try { localStorage.setItem("lbs:" + k, JSON.stringify(v)); } catch (e) {} }
 };
 const settings = () => store.get("settings", {eventCode: "AUPEQ", scout: "", device: uid().slice(0, 6), schedule: {}});
-function saveSettings(s) { store.set("settings", s); renderHeader(); }
+function saveSettings(s) { store.set("settings", s); renderHeader(); ddRefresh(); }
 function uid() { return (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)).replace(/-/g, ""); }
 function nowIso() { return new Date().toISOString().slice(0, 19); }
 function records(table) { return store.get("t:" + table, []); }
@@ -342,6 +382,14 @@ function applyTheme() {
   b.setAttribute("aria-label", now === "dark" ? "Switch to light mode" : "Switch to dark mode"); b.title = b.getAttribute("aria-label");
   $('meta[name="theme-color"]').setAttribute("content", getComputedStyle(root).getPropertyValue("--bg").trim() || "#121316");
 }
+// animations: per phone; default follows the phone's "reduce motion" setting
+const motionOn = () => store.get("motion", matchMedia("(prefers-reduced-motion: reduce)").matches ? "off" : "on") !== "off";
+function applyMotion() {
+  document.documentElement.dataset.motion = motionOn() ? "on" : "off";
+  $$("#cMotion [data-mo]").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.mo === "on") === motionOn())));
+}
+$("#cMotion").addEventListener("click", e => { const b = e.target.closest("[data-mo]"); if (b) { store.set("motion", b.dataset.mo); applyMotion(); } });
+applyMotion();
 function setTheme(t) { store.set("theme", t); applyTheme(); redrawSvgs(); }
 // colours for the drawn SVGs (field diagram, match timeline): presentation attributes cannot use CSS variables
 const SVGC = {
@@ -363,11 +411,167 @@ function renderHeader() {
   $("#hdrEvent").textContent = s.eventCode + (s.scout ? " · " + s.scout : "");
   $("#hdrQueue").textContent = store.get("unsent", []).length + " unsent";
 }
+const TAB_ORDER = $$("#tabs button").map(x => x.dataset.tab);
 $$("#tabs button").forEach(b => b.addEventListener("click", () => {
+  const from = TAB_ORDER.indexOf(($('#tabs button[aria-current="true"]') || {dataset: {}}).dataset.tab), to = TAB_ORDER.indexOf(b.dataset.tab);
   $$("#tabs button").forEach(x => x.setAttribute("aria-current", x === b ? "true" : "false"));
   $$("main section").forEach(sec => sec.classList.toggle("on", sec.id === "tab-" + b.dataset.tab));
+  const sec = $("#tab-" + b.dataset.tab); sec.classList.remove("tab-in-l", "tab-in-r");
+  if (motionOn() && from >= 0 && from !== to) { void sec.offsetWidth; sec.classList.add(to > from ? "tab-in-r" : "tab-in-l"); }
+  try { b.scrollIntoView({block: "nearest", inline: "nearest", behavior: motionOn() ? "smooth" : "auto"}); } catch (e) {}
   try { sessionStorage.setItem("lbs:tab", b.dataset.tab); } catch (e) {}
 }));
+
+// ---------- themed dropdowns ----------
+// Every <select> gets a button and a list drawn in the app's style: a sheet from the bottom on a phone, a panel under
+// the button on a computer. The native <select> stays in the page, hidden, and keeps the value, so every form and every
+// line that reads or sets it works as before. Team number boxes get the same list once team names are loaded.
+const ddMobile = () => matchMedia("(max-width: 640px), (pointer: coarse)").matches;
+let ddCur = null;
+function ddWatch(el, cb) {   // cb runs whenever code sets the value, the user changes it, or the form resets
+  const proto = el instanceof HTMLSelectElement ? HTMLSelectElement.prototype : HTMLInputElement.prototype;
+  for (const k of ["value", "selectedIndex"]) {
+    const d = Object.getOwnPropertyDescriptor(proto, k); if (!d || !d.set) continue;
+    Object.defineProperty(el, k, {configurable: true, get() { return d.get.call(this); }, set(v) { d.set.call(this, v); cb(); }});
+  }
+  el.addEventListener("change", cb); el.addEventListener("input", cb);
+  if (el.form) el.form.addEventListener("reset", () => setTimeout(cb, 0));
+}
+function ddLabel(el) {
+  const l = (el.id && document.querySelector(`label[for="${el.id}"]`)) || (el.parentElement && el.parentElement.querySelector("label"));
+  return l ? l.textContent.trim() : "Choose";
+}
+function ddClose(refocus) {
+  if (!ddCur) return; const c = ddCur; ddCur = null;
+  c.anchor.setAttribute("aria-expanded", "false");
+  removeEventListener("keydown", c.onKey, true); removeEventListener("resize", c.onAway); document.removeEventListener("scroll", c.onScroll, true);
+  if (motionOn()) { c.panel.classList.add("out"); c.back.classList.add("out"); setTimeout(() => { c.panel.remove(); c.back.remove(); }, 150); }
+  else { c.panel.remove(); c.back.remove(); }
+  if (refocus) c.anchor.focus({preventScroll: true});
+}
+// items: [{value, label, sub, cls, selected}]; o: {title, multi, search, placeholder, extra(text), onPick(value, on)}
+function ddOpen(anchor, items, o) {
+  ddClose(false);
+  const mobile = ddMobile(), back = document.createElement("div"), panel = document.createElement("div");
+  back.className = "dd-back" + (mobile ? " sheet" : ""); panel.className = "dd-panel" + (mobile ? " sheet" : "");
+  panel.setAttribute("role", "dialog"); panel.setAttribute("aria-label", o.title || "Choose");
+  panel.innerHTML = (mobile ? `<div class="dd-head"><span>${esc(o.title || "Choose")}</span><button type="button" class="btn small dd-x">${o.multi ? "Done" : "Close"}</button></div>` : "")
+    + (o.search ? `<input class="dd-q" type="search" placeholder="${esc(o.placeholder || "Search")}" autocomplete="off" aria-label="${esc(o.placeholder || "Search")}">` : "")
+    + `<div class="dd-list" role="listbox" aria-label="${esc(o.title || "Choose")}"${o.multi ? ' aria-multiselectable="true"' : ""}></div>`
+    + (o.multi && !mobile ? `<div class="dd-foot"><button type="button" class="btn small dd-x">Done</button></div>` : "");
+  const list = $(".dd-list", panel), q = $(".dd-q", panel);
+  let shown = items;
+  const draw = () => {
+    const t = q ? q.value.trim().toLowerCase() : "";
+    shown = t ? items.filter(it => `${it.label} ${it.sub || ""}`.toLowerCase().includes(t)) : items;
+    const ex = o.extra && t ? o.extra(t) : null; if (ex) shown = [...shown, ex];
+    list.innerHTML = shown.map((it, i) => `<button type="button" class="dd-opt ${it.cls || ""}" role="option" aria-selected="${!!it.selected}" data-i="${i}">`
+      + `<span class="dd-l">${esc(it.label)}</span>${it.sub ? `<span class="dd-s">${esc(it.sub)}</span>` : ""}</button>`).join("")
+      || '<p class="muted dd-none">Nothing matches.</p>';
+  };
+  draw(); if (q) q.addEventListener("input", draw);
+  list.addEventListener("click", e => {
+    const b = e.target.closest(".dd-opt"); if (!b) return;
+    const it = shown[+b.dataset.i];
+    if (o.multi) { it.selected = !it.selected; b.setAttribute("aria-selected", String(it.selected)); o.onPick(it.value, it.selected); }
+    else { o.onPick(it.value, true); ddClose(true); }
+  });
+  panel.addEventListener("click", e => { if (e.target.closest(".dd-x")) ddClose(true); });
+  back.addEventListener("click", () => ddClose(true));
+  document.body.append(back, panel);
+  if (!mobile) {   // under the button, or above it when there is more room there
+    const r = anchor.getBoundingClientRect(), below = innerHeight - r.bottom - 12, above = r.top - 12, up = below < 240 && above > below, w = Math.max(r.width, 240);
+    panel.style.left = Math.max(8, Math.min(r.left, innerWidth - w - 8)) + "px"; panel.style.width = w + "px";
+    panel.style.maxHeight = Math.max(160, Math.min(380, up ? above : below)) + "px";
+    if (up) { panel.style.bottom = (innerHeight - r.top + 4) + "px"; panel.classList.add("up"); } else panel.style.top = (r.bottom + 4) + "px";
+  }
+  anchor.setAttribute("aria-expanded", "true");
+  const onKey = e => {
+    if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); ddClose(true); return; }
+    if (e.key === "Tab") { ddClose(false); return; }
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault(); const os = $$(".dd-opt", list); if (!os.length) return;
+      let i = os.indexOf(document.activeElement);
+      i = i < 0 ? (e.key === "ArrowDown" ? 0 : os.length - 1) : Math.max(0, Math.min(os.length - 1, i + (e.key === "ArrowDown" ? 1 : -1)));
+      os[i].focus(); os[i].scrollIntoView({block: "nearest"});
+    } else if (e.key === "Enter" && document.activeElement === q) { e.preventDefault(); const f = $(".dd-opt", list); if (f) f.click(); }
+  };
+  const onAway = () => ddClose(false), onScroll = e => { if (!panel.contains(e.target)) ddClose(false); };
+  addEventListener("keydown", onKey, true);
+  if (!mobile) { addEventListener("resize", onAway); document.addEventListener("scroll", onScroll, true); }   // a phone keyboard resizes the page: keep the sheet open
+  ddCur = {panel, back, anchor, onKey, onAway, onScroll};
+  const chosen = $('[aria-selected="true"]', list);
+  if (q && !mobile) q.focus(); else (chosen || $(".dd-opt", list) || panel).focus();   // on a phone, no keyboard until they tap the search box
+  if (chosen) chosen.scrollIntoView({block: "nearest"});
+}
+function ddSelect(sel) {
+  if (sel.dataset.dd) return; sel.dataset.dd = "1";
+  const btn = document.createElement("button"); btn.type = "button"; btn.className = "dd-btn";
+  btn.setAttribute("aria-haspopup", "listbox"); btn.setAttribute("aria-expanded", "false");
+  sel.classList.add("dd-native"); sel.tabIndex = -1; sel.setAttribute("aria-hidden", "true"); sel.after(btn);
+  const sync = () => {
+    const on = [...sel.options].filter(x => x.selected && x.value !== "");
+    const txt = sel.multiple ? on.map(x => x.textContent).join(", ") : (sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : "");
+    btn.innerHTML = `<span>${esc(txt || "–")}</span>`;
+    btn.classList.toggle("hidden", sel.classList.contains("hidden")); btn.disabled = sel.disabled;
+    btn.setAttribute("aria-label", `${ddLabel(sel)}: ${txt || "not set"}`);
+  };
+  ddWatch(sel, sync);
+  new MutationObserver(sync).observe(sel, {childList: true, subtree: true, attributes: true, attributeFilter: ["class", "disabled"]});
+  sel.addEventListener("focus", () => btn.focus());
+  btn.addEventListener("click", () => ddOpen(btn, [...sel.options].map(x => ({value: x.value, label: x.textContent, selected: x.selected})), {
+    title: ddLabel(sel), multi: sel.multiple, search: sel.options.length > 12,
+    onPick: (v, on) => {
+      if (sel.multiple) { const x = [...sel.options].find(y => y.value === v); if (x) x.selected = on; } else sel.value = v;
+      sel.dispatchEvent(new Event("change", {bubbles: true})); sync();
+    }}));
+  sync();
+}
+// team boxes: "number · name" from the names in Settings (or the online schedule). A number that is not on the list
+// still works: type it in the search box and pick "use this number". With no names loaded, the plain number box stays.
+const TEAM_PICKERS = [];
+function ddRefresh() { try { TEAM_PICKERS.forEach(f => f()); } catch (e) { /* not set up yet */ } }
+const allTeams = () => {
+  const nm = settings().names || {}, ks = Object.keys(nm).map(Number).filter(n => n > 0).sort((a, b) => a - b);
+  return ks.length ? ks.map(n => ({value: String(n), label: String(n), sub: nm[n]})) : null;
+};
+const slotTeams = (sch, keep) => sch.map((t, i) => ({value: String(t), label: String(t), slot: (i < 2 ? "Red " : "Blue ") + (i % 2 + 1), cls: i < 2 ? "redA" : "blueA", sub: [teamName(t), (i < 2 ? "Red " : "Blue ") + (i % 2 + 1)].filter(Boolean).join(" · ")})).filter((x, i) => keep(i));
+function ddTeam(inp, source) {
+  const title = ddLabel(inp), wrap = document.createElement("div"); wrap.className = "dd-wrap";
+  inp.replaceWith(wrap); wrap.append(inp);
+  const btn = document.createElement("button"); btn.type = "button"; btn.className = "dd-btn dd-team";
+  btn.setAttribute("aria-haspopup", "listbox"); btn.setAttribute("aria-expanded", "false"); wrap.append(btn);
+  const sync = () => {
+    const list = source(), on = !!(list && list.length), v = inp.value;
+    inp.classList.toggle("dd-native", on); inp.tabIndex = on ? -1 : 0; btn.classList.toggle("hidden", !on);
+    if (!on) return;
+    const it = list.find(x => x.value === v), name = v ? teamName(Number(v)) : "";
+    btn.innerHTML = v ? `<span><b>${esc(v)}</b>${name ? ` <span class="dd-s">${esc(name)}</span>` : ""}</span>${it && it.slot ? `<small class="dd-tag ${it.cls}">${esc(it.slot)}</small>` : ""}`
+      : '<span class="dd-ph">Pick a team</span>';
+    btn.setAttribute("aria-label", `${title}: ${v ? v + (name ? " " + name : "") : "not set"}`);
+  };
+  ddWatch(inp, sync); TEAM_PICKERS.push(sync);
+  inp.addEventListener("focus", () => { if (!btn.classList.contains("hidden")) btn.focus(); });
+  btn.addEventListener("click", () => {
+    const list = source() || [], v = inp.value;
+    ddOpen(btn, list.map(x => Object.assign({}, x, {selected: x.value === v})), {
+      title, search: true, placeholder: "Team number or name",
+      extra: t => /^\d{1,6}$/.test(t) && !list.some(x => x.value === t) ? {value: t, label: t, sub: teamName(Number(t)) || "use this number"} : null,
+      onPick: val => { inp.value = val; inp.dispatchEvent(new Event("input", {bubbles: true})); inp.dispatchEvent(new Event("change", {bubbles: true})); }});
+  });
+  sync();
+}
+function ddInit() {
+  $$("select").forEach(ddSelect);
+  new MutationObserver(ms => { for (const m of ms) for (const n of m.addedNodes) if (n.nodeType === 1) (n.tagName === "SELECT" ? [n] : n.querySelectorAll("select")).forEach(ddSelect); })
+    .observe(document.body, {childList: true, subtree: true});   // the timeline editor builds its selects later
+  // match setup: the four teams in that match when the schedule has it; otherwise every named team
+  ddTeam($("#mTeam"), () => { const sch = settings().schedule[$("#mNum").value]; return sch ? slotTeams(sch, () => true) : allTeams(); });
+  ddTeam($("#fPit [name=teamNumber]"), allTeams);
+  ddTeam($("#fBreak [name=teamNumber]"), allTeams);
+  // defended team: the other alliance in this match first
+  ddTeam($("#pDefTarget"), () => { const sch = M && settings().schedule[M.num]; return sch ? slotTeams(sch, i => (i < 2) !== (M.alliance === "RED")) : allTeams(); });
+}
 
 // ---------- form helpers ----------
 function fillSelect(sel, values, blank = true) {
@@ -544,7 +748,7 @@ function renderCoverage() {
 $("#covGaps").addEventListener("change", renderCoverage);
 $("#covGrid").addEventListener("click", e => {
   const c = e.target.closest("[data-cm]"); if (!c || (M && !M.ended)) return;
-  $("#mNum").value = c.dataset.cm; $("#mTeam").value = c.dataset.ct;
+  mAuto = false; $("#mNum").value = c.dataset.cm; $("#mTeam").value = c.dataset.ct;
   $("#mNum").dispatchEvent(new Event("input")); $("#mTeam").dispatchEvent(new Event("input"));
   $('#tabs button[data-tab="match"]').click();
 });
@@ -649,7 +853,17 @@ document.addEventListener("click", () => setTimeout(drawStart, 0));
 drawStart();
 
 // once a schedule is loaded the match number is a dropdown; "Other…" brings the number box back (replays, practice)
+// with start times: the first match that has not started more than 2.5 min ago (a scout sets up just before it runs)
+function matchByTime(nums) {
+  const t = settings().times || {}, now = Date.now();
+  const timed = nums.map(n => [n, new Date(t[n]).getTime()]).filter(([, ms]) => !isNaN(ms));
+  if (!timed.length) return null;
+  const up = timed.find(([, ms]) => ms >= now - 150000);
+  return up ? up[0] : timed[timed.length - 1][0];
+}
+let mAuto = true;   // the match number was filled in by the app, not chosen by the scout
 function nextMatch(nums) {
+  const byTime = matchByTime(nums); if (byTime != null) return byTime;
   const s = settings(), mine = records("scout_match_reports").filter(r => r.eventCode === s.eventCode && (!s.scout || r.scout === s.scout)).map(r => r.matchNumber);
   const last = mine.length ? Math.max(...mine) : 0;
   return nums.find(n => n > last) ?? nums[0];
@@ -658,26 +872,29 @@ function syncMatchSel() {
   const nums = Object.keys(settings().schedule).map(Number).sort((a, b) => a - b), sel = $("#mSel"), inp = $("#mNum");
   if (!nums.length) { sel.classList.add("hidden"); inp.classList.remove("hidden"); return; }
   if (sel.dataset.sig !== nums.join()) { sel.innerHTML = nums.map(n => `<option value="${n}">Q${n}</option>`).join("") + '<option value="">Other…</option>'; sel.dataset.sig = nums.join(); }
-  if (inp.value === "" && sel.dataset.other !== "1") inp.value = nextMatch(nums);
+  if (inp.value === "" && sel.dataset.other !== "1") { inp.value = nextMatch(nums); mAuto = true; }
   const inSch = nums.includes(Number(inp.value)), other = sel.dataset.other === "1" || !inSch;
   sel.classList.remove("hidden"); sel.value = inSch && !other ? inp.value : "";
   inp.classList.toggle("hidden", !other);
 }
 $("#mSel").addEventListener("change", e => {
-  const v = e.target.value; e.target.dataset.other = v === "" ? "1" : "";
+  const v = e.target.value; e.target.dataset.other = v === "" ? "1" : ""; mAuto = false;
   $("#mNum").value = v; $("#mTeam").value = ""; suggestTeam();
 });
 function suggestTeam() {
   syncMatchSel();
   const s = settings(), n = $("#mNum").value, sch = s.schedule[n], box = $("#mPick"), nm = s.names || {}, t = Number($("#mTeam").value);
   if (!sch) {
-    box.classList.add("hidden"); box.innerHTML = "";
+    box.classList.add("hidden"); box.innerHTML = ""; ddRefresh();
     let h = n && Object.keys(s.schedule).length ? `Q${n} is not in the schedule.` : "";
     if (nm[t]) h += (h ? " " : "") + `${t} = ${nm[t]}`;
     $("#mHint").textContent = h; return;
   }
   box.innerHTML = sch.map((tm, i) => `<button type="button" class="btn ${i < 2 ? "redA" : "blueA"}" data-pick="${i}" aria-pressed="${tm === t}">${tm}<small>${esc(nm[tm] || (i < 2 ? "Red " : "Blue ") + (i % 2 + 1))}</small></button>`).join("");
-  box.classList.remove("hidden"); $("#mHint").textContent = "";
+  box.classList.remove("hidden");
+  const at = new Date((s.times || {})[n]);
+  $("#mHint").textContent = isNaN(at) ? "" : `Q${n} is scheduled for ${at.toLocaleTimeString([], {hour: "numeric", minute: "2-digit"})}${mAuto ? " (picked from the time; change it if the event is running late)" : ""}.`;
+  ddRefresh();
 }
 $("#mPick").addEventListener("click", e => {
   const b = e.target.closest("[data-pick]"), sch = settings().schedule[$("#mNum").value]; if (!b || !sch) return;
@@ -686,7 +903,13 @@ $("#mPick").addEventListener("click", e => {
   $$("[data-alliance]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.alliance === (i < 2 ? "RED" : "BLUE"))));
   suggestTeam();
 });
-$("#mNum").addEventListener("input", suggestTeam);
+$("#mNum").addEventListener("input", e => { if (e.isTrusted) mAuto = false; suggestTeam(); });
+// keep the time-picked match current while the scout waits on the setup screen (stops once they choose a match or team)
+setInterval(() => {
+  if (M || !mAuto || $("#mTeam").value || $("#mSetup").classList.contains("hidden")) return;
+  const nums = Object.keys(settings().schedule).map(Number).sort((a, b) => a - b), n = matchByTime(nums);
+  if (n != null && String(n) !== $("#mNum").value) { $("#mNum").value = n; suggestTeam(); }
+}, 20000);
 $("#mTeam").addEventListener("input", suggestTeam);
 $("#mTeam").addEventListener("input", () => {
   const sch = settings().schedule[$("#mNum").value], t = Number($("#mTeam").value);
@@ -922,10 +1145,16 @@ function endMatch() {
   if (M.def != null) { M.defSec += elapsed() - M.def; M.def = null; }
   if (M.defd != null) { M.defdSec += elapsed() - M.defd; M.defd = null; }
   $("#mLive").classList.add("hidden"); $("#mPost").classList.remove("hidden");
-  renderSummary(); setPiece(); $("#pDefTarget").value = ""; $$("#pDefEff button, #pSkill button").forEach(b => b.setAttribute("aria-pressed", "false"));
+  renderSummary(); setPiece(); $("#pDefTarget").value = ""; ddRefresh(); $$("#pDefEff button, #pSkill button").forEach(b => b.setAttribute("aria-pressed", "false"));
   persistM();
 }
-function resetMatch() { startV = null; $("#mStartV").value = ""; $("#mStart").value = ""; startSig = ""; M = null; lastPersist = ""; store.set("live", null); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden"); $("#mNum").value = Number($("#mNum").value || 0) + 1; $("#mTeam").value = ""; suggestTeam(); }
+function resetMatch() { startV = null; $("#mStartV").value = ""; $("#mStart").value = ""; startSig = ""; M = null; lastPersist = ""; store.set("live", null); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden");
+  const timed = matchByTime(Object.keys(settings().schedule).map(Number).sort((a, b) => a - b)) != null;
+  mAuto = true; $("#mSel").dataset.other = ""; $("#mNum").value = timed ? "" : Number($("#mNum").value || 0) + 1; $("#mTeam").value = "";
+  ["#pAutoPath", "#pDefTarget", "#pFoulTypes", "#pCoord", "#pNotes", "#pZone", "#pDefType", "#pReact", "#pSide", "#pChanged"].forEach(id => { $(id).value = ""; });
+  $$("#pZones option").forEach(o => { o.selected = false; }); $("#pZones").dispatchEvent(new Event("change"));
+  $$("#pDefEff button, #pSkill button").forEach(b => b.setAttribute("aria-pressed", "false"));
+  suggestTeam(); }
 $("#pDiscard").addEventListener("click", () => { if (confirm("Discard this match report?")) resetMatch(); });
 $("#pSave").addEventListener("click", () => {
   const s = settings(), c = counts(), tbl = "scout_match_reports";
@@ -1142,11 +1371,12 @@ $("#lScan").addEventListener("click", async () => {
 // ---------- schedule import / share ----------
 // text: lines "match,red1,red2,blue1,blue2" plus optional "number,name" lines, or a lebob-schedule/1 JSON file
 function parseSchedule(text) {
-  text = text.trim(); const out = {schedule: {}, names: {}, event: null};
+  text = text.trim(); const out = {schedule: {}, names: {}, times: {}, event: null};
   if (text.startsWith("{")) {
     const j = JSON.parse(text); out.event = j.event || j.e || null;
     for (const [k, v] of Object.entries(j.matches || j.m || {})) if (Array.isArray(v) && v.length >= 4) out.schedule[Number(k)] = v.slice(0, 4).map(Number);
     for (const [k, v] of Object.entries(j.names || j.n || {})) out.names[Number(k)] = String(v);
+    for (const [k, v] of Object.entries(j.times || j.t || {})) if (out.schedule[Number(k)] && !isNaN(new Date(v))) out.times[Number(k)] = String(v);
   } else for (const line of text.split(/\r?\n/)) {
     const cells = line.split(/[,\t;]/).map(x => x.trim()), nums = cells.map(Number);
     if (cells.length >= 5 && nums.slice(0, 5).every(n => Number.isFinite(n) && n > 0)) out.schedule[nums[0]] = nums.slice(1, 5);
@@ -1157,7 +1387,9 @@ function parseSchedule(text) {
 }
 function applySchedule(p) {
   const s = settings();
-  s.schedule = p.schedule; s.schedWeb = null;   // typed, file or QR: no longer follows the online copy if (Object.keys(p.names).length) s.names = Object.assign({}, s.names || {}, p.names);
+  s.schedule = p.schedule; s.schedWeb = null;   // typed, file or QR: no longer follows the online copy
+  s.times = p.times || {};
+  if (Object.keys(p.names).length) s.names = Object.assign({}, s.names || {}, p.names);
   if (p.event) s.eventCode = String(p.event).toUpperCase();
   saveSettings(s); loadSettingsForm(); renderLists(); suggestTeam();
   return `Imported ${Object.keys(p.schedule).length} matches and ${Object.keys(p.names).length} team names for ${s.eventCode}.`;
@@ -1170,7 +1402,7 @@ $("#cSchedFile").addEventListener("change", async e => {
 });
 // share by QR: the schedule is split into short QR codes that cycle on screen; the other phone reads them via Sync → Scan QR
 function schedChunks() {
-  const s = settings(), j = {e: s.eventCode, m: s.schedule, n: s.names || {}};
+  const s = settings(), j = {e: s.eventCode, m: s.schedule, n: s.names || {}, t: s.times || {}};
   const b = btoa(unescape(encodeURIComponent(JSON.stringify(j)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   const parts = b.match(/.{1,300}/g) || [];
   return parts.map((p, i) => `LBSS1:${i + 1}/${parts.length}:${p}`);
@@ -1227,8 +1459,9 @@ async function webSchedule(manual) {
     j = await r.json();
   } catch (e) { if (manual) info.textContent = "Could not reach lebob.com.au. Check the signal, or use QR or a file."; return; }
   if (String(j.event || "").toUpperCase() !== code) return;
-  const sched = {}, names = {};
+  const sched = {}, names = {}, times = {};
   for (const [k, v] of Object.entries(j.matches || {})) if (Array.isArray(v) && v.length === 4 && v.every(n => Number(n) > 0)) sched[Number(k)] = v.map(Number);
+  for (const [k, v] of Object.entries(j.times || {})) if (sched[Number(k)] && !isNaN(new Date(v))) times[Number(k)] = String(v);
   for (const [k, v] of Object.entries(j.names || {})) if (Number(k) > 0 && v) names[Number(k)] = String(v);
   const cur = settings(), n = Object.keys(sched).length, when = j.updatedAt ? ` (updated ${new Date(j.updatedAt).toLocaleString([], {weekday: "short", hour: "numeric", minute: "2-digit"})})` : "";
   const oldNames = JSON.stringify(cur.names || {});
@@ -1236,8 +1469,9 @@ async function webSchedule(manual) {
   const same = JSON.stringify(sched) === JSON.stringify(cur.schedule);
   let changed = JSON.stringify(cur.names) !== oldNames;
   webOffer = null;
-  if (n && !same && (!Object.keys(cur.schedule).length || cur.schedWeb)) { cur.schedule = sched; cur.schedWeb = j.updatedAt || "yes"; changed = true; }
-  else if (n && !same) webOffer = {sched, at: j.updatedAt || "yes"};
+  if (n && !same && (!Object.keys(cur.schedule).length || cur.schedWeb)) { cur.schedule = sched; cur.times = times; cur.schedWeb = j.updatedAt || "yes"; changed = true; }
+  else if (n && !same) webOffer = {sched, times, at: j.updatedAt || "yes"};
+  else if (n && same && cur.schedWeb && JSON.stringify(times) !== JSON.stringify(cur.times || {})) { cur.times = times; changed = true; }   // FIRST moved the start times
   if (changed) { saveSettings(cur); loadSettingsForm(); renderLists(); suggestTeam(); }   // untouched otherwise: never clobber a half-typed Settings form
   info.innerHTML = !n ? esc(`Online: ${Object.keys(names).length} team names for ${code}, no match schedule yet${when}.`)
     : webOffer ? esc(`An online schedule with ${n} matches is available${when}. Yours was changed by hand, so it was kept.`) + ' <button type="button" class="btn small" id="cWebUse">Use the online one</button>'
@@ -1246,7 +1480,7 @@ async function webSchedule(manual) {
 $("#cWebSched").addEventListener("click", () => webSchedule(true));
 $("#cWebInfo").addEventListener("click", e => {
   if (!e.target.closest("#cWebUse") || !webOffer) return;
-  const s = settings(); s.schedule = webOffer.sched; s.schedWeb = webOffer.at; webOffer = null;
+  const s = settings(); s.schedule = webOffer.sched; s.times = webOffer.times || {}; s.schedWeb = webOffer.at; webOffer = null;
   saveSettings(s); loadSettingsForm(); renderLists(); suggestTeam(); $("#cWebInfo").textContent = `Using the online schedule: ${Object.keys(s.schedule).length} matches.`;
 });
 addEventListener("online", () => webSchedule(false));
@@ -1277,6 +1511,7 @@ if (!store.get("settings", null)) saveSettings(settings());
 })();
 loadSettingsForm(); renderHeader(); renderLists(); suggestTeam(); webSchedule(false);
 $("#ftVer").textContent = "v" + APP_VERSION;
+ddInit(); ddRefresh();
 (async function keepStorage() {
   const el = $("#cStore"), sto = navigator.storage;
   if (!sto || !sto.persist) { el.textContent = "Storage: this browser cannot promise to keep the data. Send reports to the lead often."; return; }
