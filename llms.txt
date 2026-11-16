@@ -8,11 +8,14 @@
 > its own ABN. In
 > the 2025/26 UNEARTHED season it won the FIRST LEGO League National Championship
 > West at Curtin University and went on to the Korea Open Invitational in Jeonju,
-> South Korea, where its innovation project SoftSense won a prize. Its current
-> build is the 2026-27 FIRST Tech Challenge BIOBUZZ robot.
+> South Korea, where its innovation project SoftSense won a prize. In the 2026-27
+> FIRST Tech Challenge BIOBUZZ season its robot, Shelob, won the Inspire Award and
+> the Winning Alliance at the Western Australia Qualifier on 15 November 2026,
+> topping the event on advancement points to qualify for the FIRST Tech Challenge
+> Australia Championship.
 
-The team publishes its work. All eight competition documents from the 2025/26 season
-are readable in full as HTML on this site, alongside the original PDFs, and the
+The team publishes its work. All eight competition documents from the 2025/26 season,
+and the 2026 FTC WA Qualifier portfolio, are readable in full as HTML on this site, alongside the original PDFs, and the
 engineering work behind SoftSense is open source.
 
 ## Key facts
@@ -21,7 +24,6 @@ engineering work behind SoftSense is open source.
 - Location: Perth, Western Australia, Australia.
 - Organisation: Lebob Robotics, an unincorporated not-for-profit association started and run by the students. Lebob is NOT a school team and has no parent school, club or host organisation.
 - School attended by members: most members attend Perth Modern School. The school teaches the students. It does not run the team.
-- Members: eight students, plus two mentors, Jade and Kaelie.
 - FIRST Tech Challenge team number: 29550. Current season: BIOBUZZ, 2026-27.
 - FIRST LEGO League team number: 3236.
 - Korea Open Invitational 2026 entry code: KOI34.
@@ -32,7 +34,10 @@ engineering work behind SoftSense is open source.
 
 - Programme: FIRST Tech Challenge, team 29550.
 - Game: BIOBUZZ, 2026-27 season.
-- Status: robot build and documentation in progress. The team publishes season material on this site and in the Lebob-Robotics GitHub organisation as it is produced.
+- Robot: Shelob. Mecanum drivebase, full-width intake with vector wheels, S shaped ball path and a hooded shooter that aims on the move using odometry and a precalculated shot table.
+- 15 November 2026, FIRST Tech Challenge Western Australia Qualifier, Peter Carnley Anglican Community School, Perth. Inspire Award. Winning Alliance, as first pick for team 37615 Hive Tide (3-0 in playoffs). 5th of 15 after qualification. Highest advancement points at the event, 132 (judging 60, playoff 40, alliance selection 20, qualification 12), and the first team to advance to the Australia Championship. Official results: https://ftc-events.firstinspires.org/2026/team/29550 and advancement: https://ftc-events.firstinspires.org/2026/AUPEQ/advancementpoints
+- 5 to 6 December 2026, FIRST Tech Challenge Australia Championship, Macquarie University, Sydney, NSW. Qualified.
+- The team publishes season material on this site and in the Lebob-Robotics GitHub organisation as it is produced.
 
 ## Season results, 2025/26 UNEARTHED
 
@@ -42,15 +47,18 @@ engineering work behind SoftSense is open source.
 
 ## Pages
 
-- [About Lebob](https://lebob.com.au/about/): the definitive description of the team. Team numbers, roster, mentors, how the team is organised as an independent not-for-profit, the full results table, and how the team works.
+- [About Lebob](https://lebob.com.au/about/): the definitive description of the team. Team numbers, how the team is organised as an independent not-for-profit, the full results table, and how the team works.
 - [SoftSense](https://lebob.com.au/projects/softsense/): the technical writeup of the innovation project. A self sensing soft gripper for ROV manipulator arms that reads grip force from motor current instead of a fingertip sensor. Fin Ray TPU fingers, a flooded printed drivetrain, crosshatch grip texture, materials, FEA campaigns, bench results and operating boundaries.
 - [Documentation library](https://lebob.com.au/docs/): every document the team has produced, organised by season.
+- [FTC 2026-27 BIOBUZZ season](https://lebob.com.au/docs/ftc-2026-2027/): the team's FIRST Tech Challenge documents for the current season.
 - [FLL 2025/26 UNEARTHED season](https://lebob.com.au/docs/fll-2025-2026/): all eight season documents, grouped by competition stage.
 - [Media gallery](https://lebob.com.au/media/): photographs from the season.
 - [Sponsors](https://lebob.com.au/sponsors/): Platinum Sponsor Palantir Technologies, Gold Sponsor WA Robotics Education, Silver Sponsor DNA Racing, and six Founding Supporters.
 - [How to sponsor](https://lebob.com.au/sponsors/how-to/): five sponsorship tiers from $500, plus in kind support.
 
 ## Season documents, full text
+
+- [WA Qualifier Portfolio](https://lebob.com.au/docs/ftc-2026-2027/wa-qualifier-portfolio/): the FTC 2026-27 engineering portfolio that won the Inspire Award. Team, finance, outreach and mentoring, planning, the Mark 1 to Mark 3 design history of Shelob, drivebase, intake, shooter, drivetrain, software, electrical, and the Palantir AIP Foundry scouting pipeline.
 
 - [Regionals Innovation Documentation](https://lebob.com.au/docs/fll-2025-2026/regionals-innovation-documentation/): the first innovation writeup. The underwater archaeology problem, the research behind it, and the CTD 4000 manipulator concept.
 - [Nationals General Documentation](https://lebob.com.au/docs/fll-2025-2026/nationals-general-documentation/): fifteen weeks of session notes plus the post regionals run testing log.

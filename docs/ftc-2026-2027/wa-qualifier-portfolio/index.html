@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WA Qualifier Portfolio · FTC 2026&ndash;2027 · Lebob</title>
+  <meta name="description" content="The engineering portfolio Lebob, FTC team 29550, took to the 2026 Western Australia Qualifier, where it won the Inspire Award and the Winning Alliance. Shelob, the BIOBUZZ robot, page by page.">
+  <link rel="canonical" href="https://lebob.com.au/docs/ftc-2026-2027/wa-qualifier-portfolio/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Lebob">
+  <meta property="og:title" content="WA Qualifier Portfolio · FTC 2026&ndash;2027 · Lebob">
+  <meta property="og:description" content="The engineering portfolio Lebob, FTC team 29550, took to the 2026 Western Australia Qualifier, where it won the Inspire Award and the Winning Alliance. Shelob, the BIOBUZZ robot, page by page.">
+  <meta property="og:url" content="https://lebob.com.au/docs/ftc-2026-2027/wa-qualifier-portfolio/">
+  <meta property="og:image" content="https://lebob.com.au/img/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_AU">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/ibm-plex-sans-var-latin.woff2">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1a1b1e; --surface: #242529; --fg: #c8c9c2; --fg-dark: #e5e6e0;
+      --muted: #8a8b83; --border: #36373c; --border-light: #2d2e33;
+      --accent: #FFF200; --accent-bright: #FFF200; --accent-light: rgba(255, 242, 0, 0.1); --red: #ED1C24;
+      --placeholder: #606158; --cta-bg: #e5e6e0; --hover-bg: #28292e;
+      --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+      --radius: 4px; --radius-md: 6px; --radius-pill: 9999px;
+    }
+    .nav-cta { color: #1a1b1e !important; }
+    .nav-cta:hover { background: var(--accent); color: #000 !important; }
+    img { opacity: 0.92; }
+    /* The brand mark is flat colour, not a photo: 0.92 shifts #FFF200 off spec. */
+    .nav-brand img, .hero-logo { opacity: 1; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); font-size: 16px; line-height: 1.5; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; }
+    a { color: var(--fg-dark); text-decoration: none; }
+    a:hover { color: var(--accent); }
+    img { display: block; max-width: 100%; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-brand img { width: 36px; height: 36px; object-fit: contain; }
+    .nav-brand span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; color: var(--fg-dark); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 15px; font-weight: 600; color: var(--fg-dark); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { display: inline-flex; align-items: center; padding: 8px 16px; background: var(--cta-bg); color: #1a1b1e !important; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; transition: opacity 0.15s; }
+    .nav-cta:hover { background: var(--accent); color: #000 !important; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-hamburger svg { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 99; padding: 24px; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 8px; }
+    .mobile-menu a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; color: var(--fg-dark); border-bottom: 1px solid var(--border); }
+
+    .page-header { padding: clamp(48px, 8vw, 80px) 0 clamp(32px, 5vw, 48px); border-bottom: 1px solid var(--border); }
+    .crumbs {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px; list-style: none;
+    }
+    .crumbs a { color: var(--muted); transition: color 0.15s; }
+    .crumbs a:hover { color: var(--accent); }
+    .crumbs li::after { content: '/'; margin-left: 8px; color: var(--border); }
+    .crumbs li:last-child::after { content: ''; }
+    .crumbs [aria-current] { color: var(--fg); }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--muted); margin-bottom: 16px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .page-label { font-family: var(--font-mono); font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+    .page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--fg-dark); margin-bottom: 12px; }
+    .page-desc { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 560px; }
+
+    /* Search */
+    .search-bar {
+      margin-top: 24px;
+      position: relative;
+      max-width: 400px;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-bar input::placeholder { color: var(--placeholder); }
+    .search-bar input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--placeholder);
+    }
+
+    .docs-content { padding: clamp(32px, 5vw, 56px) 0; }
+
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .doc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--fg-dark);
+    }
+    .doc-section-sub {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-count {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: var(--radius-pill);
+    }
+
+    .doc-list { list-style: none; }
+    .doc-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .doc-item:hover { border-color: var(--accent-bright); background: var(--hover-bg); }
+    .doc-item-link {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; text-decoration: none; color: inherit;
+    }
+    .doc-item-info { flex: 1; }
+    .doc-item-title {
+      font-size: 16px; font-weight: 600; color: var(--fg-dark); margin-bottom: 2px;
+    }
+    .doc-item-meta {
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-item-badge {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent-light);
+      padding: 3px 10px; border-radius: var(--radius-pill);
+      white-space: nowrap;
+    }
+
+    .doc-links {
+      margin-top: 16px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .doc-ext-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); padding: 6px 12px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .doc-ext-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+    .footer { padding: 40px 0 32px; background-image: repeating-linear-gradient(90deg, var(--accent) 0 8px, transparent 8px 16px); background-size: 100% 8px; background-repeat: no-repeat; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-size: 14px; color: var(--muted); }
+    .footer-left a { color: var(--accent); }
+    .footer-left a:hover { text-decoration: underline; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .doc-section { scroll-margin-top: 80px; }
+
+    .no-results {
+      display: none;
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      .doc-item-link { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) { .container { padding: 0 16px; } }
+
+    /* ─── ARTICLE (generated document pages) ─── */
+    .doc-pager {
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .doc-pager a {
+      max-width: 46%; font-size: 15px; line-height: 1.45; color: var(--fg-dark);
+    }
+    .doc-pager a:hover { color: var(--accent); }
+    .doc-pager .lbl {
+      display: block; font-family: var(--font-mono); font-size: 12px;
+      font-weight: 500; color: var(--muted); margin-bottom: 4px;
+    }
+    .doc-pager .next { text-align: right; margin-left: auto; }
+    .doc-article { max-width: 780px; }
+    .doc-article h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700; line-height: 1.25; color: var(--fg-dark);
+      margin: 48px 0 14px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .doc-article h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .doc-article h3 {
+      font-size: 18px; font-weight: 700; color: var(--fg-dark);
+      margin: 30px 0 10px;
+    }
+    .doc-article h4 {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+      margin: 26px 0 8px;
+    }
+    .doc-article p { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 16px; }
+    .doc-article ul, .doc-article ol { margin: 0 0 18px 20px; }
+    .doc-article li { font-size: 16px; line-height: 1.7; color: var(--fg); margin-bottom: 7px; }
+    .doc-article strong { color: var(--fg-dark); font-weight: 700; }
+    .doc-article a { color: var(--accent); }
+    .doc-article a:hover { text-decoration: underline; }
+    .doc-article blockquote {
+      margin: 20px 0; padding: 4px 0 4px 20px;
+      border-left: 2px solid var(--accent);
+      font-size: 17px; line-height: 1.6; color: var(--fg-dark);
+    }
+    .doc-article blockquote cite {
+      display: block; margin-top: 8px; font-style: normal;
+      font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+    }
+    .doc-table-wrap { overflow-x: auto; margin: 0 0 22px; }
+    .doc-article table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    .doc-article th, .doc-article td {
+      border: 1px solid var(--border); padding: 8px 12px;
+      text-align: left; vertical-align: top; line-height: 1.5;
+    }
+    .doc-article th {
+      background: var(--surface); color: var(--fg-dark);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .doc-article td { color: var(--fg); }
+    .doc-figure { margin: 26px 0; }
+    .doc-figure img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-figure figcaption {
+      margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--muted);
+    }
+    .doc-figure figcaption b { color: var(--accent); font-weight: 500; font-family: var(--font-mono); font-size: 13px; }
+    .doc-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 20px; padding: 10px 16px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--fg-dark);
+    }
+    .doc-download:hover { border-color: var(--accent-bright); color: var(--accent); }
+    .doc-download .size { color: var(--muted); }
+    .doc-toc {
+      margin: 28px 0 0; padding: 20px 22px;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .doc-toc h2 {
+      margin: 0 0 10px; padding: 0; border: none;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
+    }
+    .doc-toc ol { margin: 0 0 0 18px; }
+    .doc-toc li { font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+    .doc-toc a { color: var(--fg); }
+    .doc-toc a:hover { color: var(--accent); }
+    .slide {
+      margin: 0 0 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .slide:last-child { border-bottom: none; }
+    .slide-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .slide img {
+      width: 100%; height: auto; display: block;
+      border: 1px solid var(--border); border-radius: var(--radius);
+    }
+    .slide figcaption { margin-top: 12px; font-size: 15px; line-height: 1.65; color: var(--fg); }
+    .slide figcaption p { margin-bottom: 10px; }
+    @media (max-width: 768px) {
+      .doc-article h2 { margin-top: 36px; }
+    }
+    .slide figcaption h3 { margin: 18px 0 8px; font-size: 17px; }
+    .slide figcaption h3:first-child { margin-top: 0; }
+    .slide figcaption ul, .slide figcaption ol { margin: 0 0 12px 20px; }
+    .slide figcaption li { font-size: 15px; line-height: 1.65; }
+    .slide { scroll-margin-top: 80px; }
+  </style>
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/logo/lebob-mark-primary.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#1a1b1e">
+  <link rel="stylesheet" href="/polish.css">
+  <script src="/polish.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lebob.com.au/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Docs",
+        "item": "https://lebob.com.au/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "FTC 2026–2027 BIOBUZZ",
+        "item": "https://lebob.com.au/docs/ftc-2026-2027/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "WA Qualifier Portfolio",
+        "item": "https://lebob.com.au/docs/ftc-2026-2027/wa-qualifier-portfolio/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "datePublished": "2026-11-15",
+    "dateModified": "2026-11-16",
+    "headline": "WA Qualifier Portfolio",
+    "name": "WA Qualifier Portfolio",
+    "description": "The engineering portfolio Lebob, FTC team 29550, took to the 2026 Western Australia Qualifier, where it won the Inspire Award and the Winning Alliance. Shelob, the BIOBUZZ robot, page by page.",
+    "url": "https://lebob.com.au/docs/ftc-2026-2027/wa-qualifier-portfolio/",
+    "inLanguage": "en-AU",
+    "author": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Lebob",
+      "url": "https://lebob.com.au/"
+    },
+    "isPartOf": {
+      "@type": "CollectionPage",
+      "name": "FTC 2026–2027 BIOBUZZ",
+      "url": "https://lebob.com.au/docs/ftc-2026-2027/"
+    },
+    "associatedMedia": {
+      "@type": "MediaObject",
+      "contentUrl": "https://lebob.com.au/files/ftc-2026-2027/wa-qualifier-portfolio.pdf",
+      "encodingFormat": "application/pdf",
+      "name": "WA Qualifier Portfolio (PDF)",
+      "contentSize": "12.9 MB"
+    },
+    "image": "https://lebob.com.au/img/docs/wa-qualifier-portfolio/page-01.webp"
+  }
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-brand"><img src="/logo/lebob-mark-primary.svg" alt="" width="88" height="90" decoding="async"><span>Lebob</span></a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+        <li><a href="/sponsors/how-to/" class="nav-cta">Sponsor Lebob</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/">Home</a>
+    <a href="/about/">About</a><a href="/media/">Media</a><a href="/docs/">Docs</a>
+    <a href="/sponsors/">Sponsors</a><a href="/sponsors/how-to/">Sponsor Lebob</a>
+  </div>
+
+  <header class="page-header">
+    <div class="container">
+      <nav aria-label="Breadcrumb">
+        <ol class="crumbs"><li><a href="/">Home</a></li><li><a href="/docs/">Docs</a></li><li><a href="/docs/ftc-2026-2027/">FTC 2026–27</a></li><li><span aria-current="page">WA Qualifier Portfolio</span></li></ol>
+      </nav>
+      <div class="page-label">WA Qualifier · FTC BIOBUZZ 2026</div>
+      <h1 class="page-title">WA Qualifier Portfolio</h1>
+      <p class="page-desc">The engineering portfolio for Shelob, our BIOBUZZ robot. We took it to the Western Australia Qualifier on 15 November 2026 and won the Inspire Award and the Winning Alliance, qualifying for the Australia Championship.</p>
+      <a href="/files/ftc-2026-2027/wa-qualifier-portfolio.pdf" class="doc-download">Download the original PDF <span class="size">12.9 MB</span></a>
+      <nav class="doc-toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#result">The result</a></li>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#finance">Finance</a></li>
+          <li><a href="#outreach">Outreach</a></li>
+          <li><a href="#sustain">Sustain</a></li>
+          <li><a href="#experts">Experts</a></li>
+          <li><a href="#planning">Planning</a></li>
+          <li><a href="#designing">Designing</a></li>
+          <li><a href="#shelob">Shelob, Mark 1 to Mark 3</a></li>
+          <li><a href="#drivebase">Drivebase</a></li>
+          <li><a href="#intake">Intake</a></li>
+          <li><a href="#shooter">Shooter</a></li>
+          <li><a href="#drivetrain">Drivetrain</a></li>
+          <li><a href="#software">Software</a></li>
+          <li><a href="#autonomous-electrical">Autonomous and electrical</a></li>
+          <li><a href="#foundry-scouting">AIP Foundry and Scouting App</a></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="doc-article">
+        <h2 id="result">The result</h2>
+        <p>We took this portfolio and our robot, Shelob, to the FIRST Tech Challenge <strong>Western Australia Qualifier</strong> at Peter Carnley Anglican Community School in Perth on 15 November 2026. It was our first FTC event of the BIOBUZZ season.</p>
+        <ul>
+          <li><strong>Inspire Award</strong> winner, the top judged award in FIRST Tech Challenge.</li>
+          <li><strong>Winning Alliance</strong>, as first pick for team 37615 Hive Tide. We won all three playoff matches, 159 to 30, 169 to 68 and 132 to 86 in the final.</li>
+          <li>Ranked 5th of 15 after qualification, with a 3&ndash;2 record. Overall record 6&ndash;2&ndash;0.</li>
+          <li><strong>First on advancement points</strong>, with 132: 60 for judging, 40 for playoffs, 20 for alliance selection and 12 for qualification. That made us the first team to advance from the event to the FIRST Tech Challenge <strong>Australia Championship</strong> at Macquarie University on 5 and 6 December 2026.</li>
+        </ul>
+        <p>Official results are on <a href="https://ftc-events.firstinspires.org/2026/team/29550" target="_blank" rel="noopener">FIRST Tech Challenge Events</a>, and the advancement points are in the <a href="https://ftc-events.firstinspires.org/2026/AUPEQ/advancementpoints" target="_blank" rel="noopener">event advancement report</a>.</p>
+
+        <h2 id="portfolio">The portfolio</h2>
+        <p>Every page is reproduced as an image, followed by the text that appears on it.</p>
+
+        <figure class="slide" id="page-1">
+          <div class="slide-num">Page 1 of 16 · Cover</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-01.webp" alt="Portfolio cover: Lebob 29550 presents Shelob, BIOBUZZ 2026 to 2027, WA Qualifier, powered by Palantir, WARES and DNA Racing" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption><p>Lebob 29550 presents <strong>Shelob</strong>. BIOBUZZ 2026&ndash;2027, WA Qualifier. Powered by Palantir, WARES and DNA Racing.</p></figcaption>
+        </figure>
+
+        <figure class="slide" id="introduction">
+          <div class="slide-num">Page 2 of 16 · 01 Introduction</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-02.webp" alt="Introduction page with the team description, a labelled team photo and the Lebob wiki" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Who is Team Lebob?</h3>
+            <p>Lebob is an independent, not-for-profit robotics team based in Perth, Western Australia. Lebob competes in FIRST Tech Challenge as team #29550, with our team competing in our 1st FTC event. Lebob is not a school team but most of our members attend Perth Modern School. We started Lebob ourselves and run it under Lebob Robotics, an unincorporated not-for-profit association with its own ABN. Lebob enters competitions independently and raises our own sponsorship.</p>
+            <p>Lebob is entirely student-led, with members leading and managing meetings, projects, and team goals. This structure encourages leadership, personal growth, and accountability within Lebob. Our mentors help with providing expertise, discovering them through engineering endeavours and connections.</p>
+            <h3>Our team</h3>
+            <p>Students: Andre, Choon Kai, Eason, Chris, Leo, Sean, Aahaan, Kingsley, Oliver, Subesh, Henry and Ethan. Mentors: Marco Nijman and Harry.</p>
+            <p>A unique feature of our team is the mascot, Lebob, featuring in a fantastical cinematic universe. An entire wiki fandom consists of foretelling facts and concepts related to the characters that live within this universe. All the characters within this website reflect the creativity and fun exploration of our team! Lebob even has a movie!</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="finance">
+          <div class="slide-num">Page 3 of 16 · 02 Finance</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-03.webp" alt="Finance page with the summary team budget table, sponsorship tier cards and sponsor logos" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Summary of team budget</h3>
+            <p>The budget table covers registration, the robot build, field elements, consumables, workshop, marketing, software, team support and an outreach schools programme, with estimated and actual costs for each line.</p>
+            <h3>Spending</h3>
+            <p>Lebob has made sure to carefully budget our allocated and sponsored earnings in order to inform our sponsors and track spending. This allows us to know where significant costs go and where we can further distribute money to improve our robot and help provide outreach.</p>
+            <h3>Sponsors</h3>
+            <p>Our team is very thankful for our gracious sponsors. We secured these sponsors through the hard work of our team members. We have achieved these sponsors through making connections at outreach events, emailing, and developing an extensive sponsorship packet. Our sponsors recognise the passion and drive our team has!</p>
+            <h3>Sponsorship tier list</h3>
+            <p>Our team developed many sponsorship packages, using a tier list to determine the perks for our sponsors. This gives our sponsors a clear vision of what they will receive by supporting us. The <a href="/sponsors/how-to/">current tiers</a> are on this site.</p>
+            <h3>Team contribution</h3>
+            <p>Other than externally provided funds, members of our team assist our progress through indirect cash spending on 3D prints, personal machinery and equipment.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="outreach">
+          <div class="slide-num">Page 4 of 16 · 03 Outreach</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-04.webp" alt="Outreach page with photos of the Perth Royal Show robotics stall, the school showcase and the team GitHub" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Perth Royal Show</h3>
+            <p>Five of the Lebob members involved themselves at a robotics stall at the annual Perth Royal Show. This was done as part of an initiative with Curtin University, who partnered with the Department of Primary Industries and Regional Development (DPIRD) and Murdoch University to inspire those coming to the stall to do robotics, with a free robot driving session.</p>
+            <p>This day helped the next generation of students and children participate in simple robotics and gain insight into its variety of opportunities and depth which they can partake in, including all ages. Although it didn&rsquo;t directly influence our FTC robot and chances of winning, it meant that we could help others discover untouched career opportunities and personal interests.</p>
+            <h3>School showcase</h3>
+            <p>Another initiative by Lebob was a robot showcase at Perth Modern School. With permission from teachers, we organised a session for Year 7 students to introduce them to STEM by showcasing one of our FRC robots. Students were given the opportunity to drive the robot in a classroom environment and interact with the team by asking questions about its mechanisms, engineering decisions and design process. This provided students with a workshop style introduction to robotics while encouraging their engagement in robotics and showcasing the opportunities available through FIRST programs.</p>
+            <h3>GitHub open source</h3>
+            <p>As part of a plan to support and encourage other robotics teams, Team Lebob maintains an open source <a href="https://github.com/Lebob-Robotics" target="_blank" rel="noopener">GitHub repository</a> where anyone can access our FIRST competition resources, documentation and code. By making these materials publicly available, we aim to help upcoming teams get started, learn from our previous experiences and understand how we structure our programming and competition preparation. We believe that sharing our knowledge and resources helps strengthen the wider robotics community and makes STEM more accessible to everyone.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="sustain">
+          <div class="slide-num">Page 5 of 16 · 04 Sustain</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-05.webp" alt="Sustain page covering the Leboblets FLL team, mentoring at Aquinas College and the planned Kwinana schools programme" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Mentoring FIRST teams</h3>
+            <p>Lebob not only competes in FIRST competitions, but also mentors future teams to continue our legacy. Meet Leboblets, a team Lebob mentors and supports throughout their journey in FIRST. They are currently competing in FIRST LEGO League in the 2026/27 BIOGLOW season.</p>
+            <p>Lebob does not directly complete the season for Leboblets, but rather supports them through our extensive experience by providing feedback and judging analysis we have come across through several years of competing. By starting Leboblets, we have helped introduce them to STEM and encouraged this through the facilitation of FIRST.</p>
+            <p>Furthermore, Lebob members provide mentorships voluntarily to teams at Aquinas College. Providing them with Lebob&rsquo;s resources has allowed them to prepare for their FLL competitions this year.</p>
+            <h3>Kwinana school program</h3>
+            <p>Team Lebob aims to establish a long term outreach program within the Kwinana community, focusing on introducing school students to the fundamentals of robotics through interactive workshops, robot demonstrations and hands on activities. We hope to inspire younger generations to explore engineering and develop an interest in STEM beyond the classroom.</p>
+            <p>By collaborating with local schools, we plan to introduce students to FIRST programs, including FIRST LEGO League (FLL) and FIRST Tech Challenge (FTC). Through mentorship and ongoing support, we aim to help schools establish their own robotics initiatives, creating opportunities for students to develop technical skills and problem-solving abilities.</p>
+            <p>By making robotics accessible to students from diverse backgrounds, we aim to encourage greater participation in STEM and build stronger connections between young people, educators, and engineering professionals.</p>
+            <p>Our long term vision is to create a sustainable cycle of STEM education. By establishing community partnerships and supporting the growth of FIRST programs, we hope to contribute to the robotics community and a strong future for engineering in Kwinana and eventually the entirety of Western Australia.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="experts">
+          <div class="slide-num">Page 6 of 16 · 05 Experts</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-06.webp" alt="Experts page with photos of the meeting with Palantir and design reviews with Curtin engineers" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Palantir</h3>
+            <p>A major accomplishment in the season was the meeting with Palantir employees, receiving the opportunity to communicate and learn from their experience in the AI industry and knowledge in software. Initially we began with the decisions we need to make at the WA Qualifier, with which matches matter most for our ranking point goals, what score we need, and which alliance partner categories complement our robot&rsquo;s strengths.</p>
+            <p>For each match, we want to compare the teams&rsquo; autonomous plans and scoring, teleop output, consistency and reliability, and then use that evidence to estimate the likely score and win chance. Page 16 covers the development of the Foundry and Scouting App which assists us with the goals established in this session.</p>
+            <h3>Curtin engineers</h3>
+            <p>Throughout our development, we sought guidance from Curtin professionals to ensure that our engineering decisions remained practical and aligned with our competition goals. Their involvement extended beyond simply providing technical advice, as they regularly reviewed our designs, questioned our assumptions and offered valuable feedback on potential improvements.</p>
+            <p>They also helped us monitor our development timeline, identify priorities and ensure that we remained on track to meet important milestones before the regionals competition. By incorporating their feedback into our development process, we were able to make more informed decisions, use our limited time more effectively and maintain a clearer direction throughout the season.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="planning">
+          <div class="slide-num">Page 7 of 16 · 06 Planning</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-07.webp" alt="Planning page with the need, want and don't task list, the cycle time analysis and the brainstorm outcome" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Season groundwork</h3>
+            <p>During our first sessions, we listed out all processes in the game, such as scoring, intaking, and parking. Then, we discussed and chose as a team which tasks were essential, preferred, and unnecessary (Need, Want, and Don&rsquo;t). This narrowed our scope and established what tasks to focus on within our limited timeframe. Afterwards, we made a hierarchy of the remaining &ldquo;want&rdquo; tasks, allowing us to focus on the more important mechanisms first. To make the tasks more specific, we added Key Performance Indicators for every task, creating a way to measure success in the future.</p>
+            <p><strong>Cycle time analysis:</strong> our target was approximately 13 total cycles, achieving 7 tips and obtaining 2 ranking points. The proposed breakdown was 11 cycles during teleop, 5.5 seconds to collect fuel, 2 seconds to return and place, 1.5 seconds to align and 1 second to shoot, giving a target of 10 seconds per cycle.</p>
+            <p>The team then split up into smaller groups and brainstormed mechanisms to incorporate. Once finished, we pooled our ideas, extracted the key strengths and merged them together to create the ideal robot. This led to several healthy debates on intake types, drive base shapes, shooters, and storing possibilities. Although we didn&rsquo;t lock in the final design, we were able to eliminate possibilities that either wouldn&rsquo;t work well or were not worth the time.</p>
+            <h3>Nectar and pollen, or purely pollen?</h3>
+            <p>We split into two halves, discussing between ourselves. Both teams decided to get rid of nectar indexing and chose to be a fast pollen launching robot. This is because being really good at one task is better than being decent at multiple.</p>
+            <p><strong>Summary:</strong> pollen-shooting robot, ground intake, not prioritising the flower, speed-focused autonomous routine, mecanum drive, potential two-wide pollen shooter.</p>
+            <p><strong>Possible post-Regionals development:</strong> potentially for Nationals, the team may add a pick and place mechanism for nectar, depending on time, performance and strategic value.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="designing">
+          <div class="slide-num">Page 8 of 16 · 07 Designing</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-08.webp" alt="Designing page comparing mecanum and swerve drivetrains and other mechanism choices" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Comparison of mechanisms</h3>
+            <p>As our designing progressed, we became more focused on evaluating the practicality of different mechanisms rather than simply their potential performance. We considered factors such as reliability, complexity and how each mechanism contributed to our competition strategy.</p>
+            <p>One major discussion involved choosing between a single lane and double lane pollen shooter. Although a double lane design could potentially increase shooting speed and decrease indexing area, it also introduced greater complexity, maintenance and potential reliability issues. We ultimately selected a single lane hooded shooter because it offered greater accuracy, consistency and simplicity within our timeframe.</p>
+            <p>We also explored improvements to our intake system, including the use of vector wheels to improve pollen collection. Additionally, we considered a ramp mechanism that could prevent pollen from spilling out while potentially obstructing opponents&rsquo; shooting paths. This encouraged us to think beyond individual functions and consider how mechanisms could serve multiple purposes in the competition.</p>
+            <p>Our drivetrain concepts also evolved as we considered the advantages and disadvantages of mecanum and swerve drive. We recognised the trade offs between manoeuvrability, mechanical complexity and reliability, placing greater importance on developing a stable and effective system rather than introducing unnecessary features.</p>
+            <h3>Mecanum</h3>
+            <p><strong>Advantages:</strong> compared to other drives and linkages, mecanum is relatively straightforward to design and can be bought off the shelf. Four independently powered mecanum wheels let the robot slide sideways, move diagonally, and spin simultaneously. It allows the robot to strafe without having to do multi-point turns.</p>
+            <p><strong>Disadvantages:</strong> with a mecanum drive, there is an increased risk of slipping. Due to the slipping, other drives with high traction can easily push the robot.</p>
+            <h3>Swerve</h3>
+            <p><strong>Advantages:</strong> uncompromised pushing power (high traction), which provides high resistance against friendly shoving. It allows the robot to drive in any direction while translating. Swerve doesn&rsquo;t have heavy drifting, and the solid grip of swerve traction wheels gives more consistent wheel encoder feedback.</p>
+            <p><strong>Disadvantages:</strong> a major limit of swerve in FTC is the motor limit of 8, as typical swerve systems require 8 motors and 8 servos (4 for driving and 4 for rotation). Fitting 4 swerve bevel gears can also be difficult within the robot size limit. A swerve drive is complicated to create and program.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="shelob">
+          <div class="slide-num">Page 9 of 16 · 08 Shelob</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-09.webp" alt="CAD renders of the Mark 1 drivebase, the Mark 2 prototype and the Mark 3 robot Shelob" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <p>Ideate, design, build, test.</p>
+            <h3>Mark 1</h3>
+            <p>Prior to the season, we started modelling a basic drivebase on Onshape, allowing us to test new wheels, and connect it to a controller to check whether every component was functioning properly. The Mark 1 robot was far from perfect, with minimal wire management and lots of tape, but provided us with a good base to configure our components and determine relative movement.</p>
+            <h3>Mark 2</h3>
+            <p>For our Mark 2 robot, we modelled an intake and shooter with cardboard plates. This allowed us to test out different materials and mechanisms to improve on. We found that the intake could&rsquo;ve been widened and the shooter could only shoot from one position on the field. We also tested the motors to experiment with different speeds and roller sizes. Also, this design provided us with the necessary testing for our indexing with the S shape design of the ball path.</p>
+            <h3>Mark 3</h3>
+            <p>Our Mark 3 robot is the final iteration which we will use for the regionals FTC competition. It includes machine cut sections of metal for our drivetrain and better material components for structural integrity. We also improved the intake by making it the full width of the robot, and created a mechanism to rotate the angle of the shooter, allowing us to shoot from almost any position on the game field. We also incorporated a flower pollen ramp for another access to pollen. A key part of the Mark 2 we kept was the ball path.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="drivebase">
+          <div class="slide-num">Page 10 of 16 · 09 Drivebase</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-10.webp" alt="Drivebase page showing the custom machined chassis, battery hinge door, gear and pulley system and odometry pod" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <p>Labelled features: custom machined chassis, battery hinge door, gear and pulley system for the wheels, odometry pod, and a CAD FeatureScript including calculations for various belts and pulleys across the build.</p>
+            <p>Our Mark 1 robot was purely a drivebase without consideration of the other systems, allowing us to test our wheels. The Mark 2 drivebase had roughly the right parameters and wheel locations, however we did not have pocketing and proper spacers, which reduced its structural integrity and made it harder to wire.</p>
+            <p>Pocketing was used on the drivebase plates to remove excess material and decrease weight. This makes our robot faster and lighter. We made the mistake of not having a solid channel through the middle of the robot, which caused the ball to get stuck inside the pocketing of the bottom plate. To fix this, we added a long plastic sheet, allowing the ball to move through smoothly. For our wheels, we calculated the optimal belt and pulley ratios for the right balance between speed and torque.</p>
+            <p>We also made sure that the drivebase pocketing and extruding screws did not interfere with other subsystems. For example, we left a large gap in the middle for the indexer to fit and checked that everything fit correctly before building the robot.</p>
+            <p>We added a hinge inside the robot rear to make the battery more accessible for use and safer from other robots and hitting walls.</p>
+            <p>Furthermore, an odometry pod was mounted below the motors and connected to an omni wheel. This allowed us to calculate the shooting angle needed to score in the hive from almost any angle, as well as generally improving auto accuracy.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="intake">
+          <div class="slide-num">Page 11 of 16 · 10 Intake</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-11.webp" alt="Intake page showing the Mark 2 intake, the rubber intake wheels, vector wheels and the pollen flower ramp" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <p>For our first intake, we had a skinny channel with rubber rollers and 3D printed guides for the balls. We found that it was extremely difficult to align the pollen to pick it up, so we tackled this problem by widening the intake to the full length of the drivebase.</p>
+            <p>However, another problem arose from this: having a wider intake caused the balls to often get stuck on void space at the side of the previous rubber rollers. To fix this, we switched our outer rollers for small vector wheels, which guide the balls towards the middle ball path for indexing.</p>
+            <h3>Pollen flower ramp</h3>
+            <p>A feature of our intake was an additional pollen ramp as an alternative source of pollen that we could use for faster cycle times or as a backup, which would lead to more match points and an overall better chance at winning. By driving into the flowers, the ramp tilts in a way so that the pollen drops down and slides right into our intake. The final ramp is lifted by a servo.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="shooter">
+          <div class="slide-num">Page 12 of 16 · 11 Shooter</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-12.webp" alt="Shooter page showing the moveable hood, S shaped ball path, feeder wheel and 1 to 13.5 hood gear ratio" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <p>Labelled features: moveable hood, ball path, feeder wheel, rubber indexing wheels, rollers, a 1:13.5 hood gear ratio and a bore encoder to measure rotation of the hood.</p>
+            <h3>Mark 2 shooter and index</h3>
+            <p>Our ball path starts with grey rollers that carry the ball up our &lsquo;S&rsquo; shaped curve. In the middle of the curve, we have a feeder wheel that rotates in the opposite direction, preventing shooting while the robot is still driving around. When we need to shoot, the feeder wheel spins the other direction, allowing the pollen to continue. However, one major issue we encountered was excess compression of the pollen near the top. This led to motors stalling and pollen getting damaged in an attempt to spew out the balls. We fixed this by redesigning the hood and adding a flywheel.</p>
+            <h3>Mark 3</h3>
+            <p>Indexing for Mark 3 (Shelob) consisted of a channel approximately 1.5 pollen widths wide that narrows to 1.1 pollen widths at the top. We incorporated railing to stop the pollen from interacting with the pulley system within the intake.</p>
+            <p>The ball path shape was kept similar from Mark 2 to Mark 3. One change was that we incorporated a hood and lowered the height of the shooter, so we have a smaller ball path. The main idea of the ball path was to maintain contact with the pollen throughout the entire robot through rollers.</p>
+            <p>Team Lebob used an encoder to track and adjust the shooter hood so we can have a reliable and consistent launch angle. The encoder allows us to adjust shooting by providing us with data to find how much power we should use for each angle, allowing the robot to shoot from multiple different positions.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="drivetrain">
+          <div class="slide-num">Page 13 of 16 · 12 Drivetrain</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-13.webp" alt="Drivetrain page showing the 16 to 72 tooth gear reduction, 45 degree mecanum rollers and chassis layout" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <p>Labelled features: rollers mounted at a 45&deg; angle, free spinning omni wheels that allow strafing, and a 16T:72T gear ratio.</p>
+            <p>An important aspect of our drivetrain was transferring power from the motors to the wheels efficiently. We incorporated a geared transmission system, allowing the motors to drive the wheels while maintaining a compact arrangement within the chassis. The positioning of these components was carefully considered to accommodate the drivetrain hardware without interfering with the surrounding mechanisms.</p>
+            <p>We also considered motor efficiency when selecting our components, eventually opting for bare motors for the drivetrain. This decision was intended to improve the efficiency of our powertrain while maintaining the performance required for competition. Integrating the motors and gearing within the chassis required careful consideration of mounting positions, alignment and available space.</p>
+            <p>The drivetrain transfers power from the motors through geared transmissions to the wheel axles. The gear reduction provides the torque needed to accelerate and turn the robot, while independent motor control lets us adjust each wheel&rsquo;s speed. We tested the system under load and tuned the gearing and control settings for reliable movement.</p>
+            <p>The arrangement of the drivetrain components allowed us to integrate the power transmission system into the overall chassis design, creating a compact assembly that could support the robot&rsquo;s movement and manoeuvrability.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="software">
+          <div class="slide-num">Page 14 of 16 · 13 Software</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-14.webp" alt="Software page with the teleop controller map, odometry and camera mounts, beam break and the shoot on the move flow" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Teleop controls</h3>
+            <p>Drive with odometry (direction aware), aim and shoot, intake and index, run shooter at 100% speed, toggle shooter or blue alliance, eject or red alliance, aim override, and reset robot heading.</p>
+            <h3>Code</h3>
+            <p>Java (Gradle) using FTCRobotController, ordered into subsystems, util and hardware, with a structure similar to FRC programming.</p>
+            <h3>Odometry</h3>
+            <p>We use a combination of both cameras and Pinpoint so that our robot knows where it is at all times. The cameras are mounted on the back of the robot.</p>
+            <h3>Beam break</h3>
+            <p>The beam break is located between the intake and indexer. It is placed there so we can tell when we have 4 balls, and it ensures that the shooter never tries to launch pollen before the flywheel reaches target RPM, preventing missed or short shots.</p>
+            <h3>Shoot on the move</h3>
+            <p>Lebob uses a precalculated table to determine hood angle and shooter RPM quickly based on where the hive is.</p>
+            <ol>
+              <li>By simulating the physics of the ball after being shot, we could predict its trajectory based on different hood angles and shooter RPM values. This simulation used values from CAD, BIOBUZZ documentation and practical testing, for example air resistance.</li>
+              <li>The code evaluates possible robot positions and velocities, trying hood angles and shooter RPMs to test whether the shot is successful. It groups shots with similar inputs to establish a tolerance, allowing for slight variations in hood angle or RPM while still achieving a successful shot. It then determines the best shot and puts it into the precalculated table.</li>
+              <li>The robot uses odometry and vision to determine its position and velocity. Then it uses the precalculated table to determine the optimal hood angle and shooter RPM, interpolating between nearby values if needed. If there is a valid shot it will then attempt a shot.</li>
+              <li>The robot continuously references the precalculated table to adjust the shooter RPM and hood angle. Once the RPM is within approximately 50 of the target and the hood angle is within 2 degrees, it activates the indexer to begin shooting. It also adjusts its rotation to oppose its tangent velocity, compensating for sideways movement so the ball maintains its intended trajectory into the hive. The driver retains control of the robot&rsquo;s movement while the shooting system automatically adjusts to the required settings.</li>
+            </ol>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="autonomous-electrical">
+          <div class="slide-num">Page 15 of 16 · 14 Software and Electrical</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-15.webp" alt="Autonomous, tuning controls and electrical wiring page showing the REV Control Hub, battery, motors and sensors" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>Autonomous</h3>
+            <p>We decided to have multiple autos that can be picked based on our situation. We have two types, a push auto and a scoring auto. These are programmed in code using Pedro Pathing.</p>
+            <h3>Tuning controls</h3>
+            <p>When tuning our shooter, we implemented a different version of the code to allow for faster and more efficient tuning. The code uses odometry to automatically go to shot locations and shoots balls one at a time, and a human observer provides feedback using controller buttons to adjust the shot.</p>
+            <p>Controls: toggle between forward and backward shot tuning; restart, reset or continue the tuning session; next location; last shot bounced out; release for last shot in, or hold with the D-pad for a miss. While holding square, up and down mark a miss as long or short, and left and right mark it as left or right.</p>
+            <h3>Electrical</h3>
+            <p>Labelled parts: 12V battery, Floodgate power switch, REV Control Hub, port pair, 3.5mm bullet adapter, encoder cable, motor and super servo.</p>
+            <p><strong>Beam break.</strong> We used a beam break sensor to prevent over possession and count how many balls the robot has.</p>
+            <p><strong>Cameras.</strong> The cameras wire into the Control Hub&rsquo;s USB ports. Initially we used the USB cable to connect the Control and Expansion Hub, so we switched to the RS485 ports to free the USB ports for both our cameras.</p>
+            <p><strong>Pinpoint.</strong> The two odometry pods for the x and y axis are connected to the Pinpoint IMU, and the IMU connects to the REV hub&rsquo;s I2C port.</p>
+            <p><strong>Hub wiring.</strong> The hubs are connected to each other with a 3 pin wire on the RS485 to improve robustness of the connection during the match.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" id="foundry-scouting">
+          <div class="slide-num">Page 16 of 16 · 15 AIP Foundry and Scouting App</div>
+          <img src="/img/docs/wa-qualifier-portfolio/page-16.webp" alt="AIP Foundry and Scouting App page with screenshots of the Foundry ontology and the scouting workflow" width="1200" height="1698" loading="lazy" decoding="async">
+          <figcaption>
+            <h3>AIP Foundry</h3>
+            <p>An API Foundry is a developer friendly REST (Representational State Transfer) API that allows external scripts, tools, and non-Foundry applications to programmatically interact with and build upon Palantir&rsquo;s Foundry platform.</p>
+            <p>Our plan is to use the official FIRST API for team and match information, then add our own scouting data such as autonomous paths and consistency, scoring and cycle times, preferred routes or zones, reliability, defence, penalties and breakdowns. These insights can help us decide how to use our robot and work with our alliance partner.</p>
+            <p>A key distinction to note is that Foundry supports our decision making but it doesn&rsquo;t control the robot, and the team ultimately makes the final strategy choices. We prefer to make and understand our own calculations rather than rely on an imported rating as a black box.</p>
+            <p><strong>Intended workflow:</strong> import and check competition data; enter scouting observations; link data to teams and matches; calculate useful summaries; display the results in the app&rsquo;s match cards and event views.</p>
+            <h3>Scouting App</h3>
+            <p><a href="/scout/">Lebob Scout</a> is an offline, phone friendly app for collecting match, pit and robot breakage scouting data at events, then bringing reports together for analysis and strategy in Foundry.</p>
+            <p>Scouts enter reports on their devices, and the lead device can collect them. The current Foundry handoff is by exporting a JSON file from the lead&rsquo;s phone and importing it on a laptop.</p>
+            <ul>
+              <li><strong>Match scouting:</strong> logs match and team details, start position, autonomous and teleop actions, scoring and misses, defence, fouls, breakdowns and endgame. It also has a post-match form for observations and notes for the future.</li>
+              <li><strong>Pit scouting:</strong> records robot capabilities, drivetrain, autonomous claims, dimensions, issues and other pit observations.</li>
+              <li><strong>Breakage tracking:</strong> captures failures, severity of the issue, suspected causes, recovery and repairs.</li>
+              <li><strong>Coverage:</strong> compares the schedule with saved match reports and flags missing or duplicate entries.</li>
+            </ul>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-left">© 2025–2026 Lebob · FTC &amp; FLL Robotics Team · <a href="mailto:team@lebob.com.au">team@lebob.com.au</a><br><a href="https://abr.business.gov.au/ABN/View?abn=41535175584" target="_blank" rel="noopener">ABN 41 535 175 584</a> · Perth, Western Australia</div>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About</a></li><li><a href="/media/">Media</a></li>
+        <li><a href="/docs/">Docs</a></li><li><a href="/sponsors/">Sponsors</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  </script>
+</body>
+</html>
