@@ -126,7 +126,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 @keyframes bump{0%{transform:scale(1.6);color:var(--label)}100%{transform:scale(1)}}
 .pithint{margin:-4px 0 8px;padding:8px 10px;border-left:4px solid var(--warn);background:var(--panel2);color:var(--fg-dark);font-size:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}.pithint.hidden{display:none}
 /* live pad */
-.pad{margin-top:8px}
+.pad{margin-top:8px}.pad [data-k]{touch-action:pan-y}.pad [data-k].swipe{transform:translateX(-10px);opacity:.75;transition:transform .12s,opacity .12s}
 .psec{margin:0 0 10px}.psec h3{font:500 12px/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.06em;color:var(--label);margin:0 0 6px}
 .pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.pgrid .btn{min-height:56px;font-size:15px}
 #bTPark{grid-column:1/-1;min-height:64px;font-size:17px}
@@ -276,7 +276,7 @@ nav button{transition:background-color .2s,color .2s,border-color .2s,transform 
   </div>
   <div class="card hidden" id="mLive">
     <div class="timer"><span class="phase" id="mPhase">AUTO</span><span class="clock" id="mClock">0:30</span><button class="btn small" id="mUndo">Undo</button></div>
-    <p class="lastev" id="mLast" aria-live="polite">Tap a button each time the robot does something.</p>
+    <p class="lastev" id="mLast" aria-live="polite">Tap a button each time the robot does something. Swipe left on a button to take one off.</p>
     <div class="pad">
       <div class="psec" id="secPeriod"><h3 id="secPeriodT">AUTO</h3>
         <div class="pgrid">
@@ -458,7 +458,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string","robotSpeed":"integer","teleopShotSpots":"string","autoPathPoints":"string","autoShotSpots":"string","teleopZones":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes","robotSpeed","teleopShotSpots","autoPathPoints","autoShotSpots","teleopZones"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"},"points":{"LEAVE":3,"AUTO_PARK":5,"TELEOP_PARK":5,"HIVE_TIP":20,"TIP_THRESHOLD_ESTIMATE":7.5,"GARDEN_ELEMENT":1,"OWNED_FLOWER_ELEMENT":2,"MINOR_FOUL":5,"MAJOR_FOUL":20}};
-const APP_VERSION = "9429c28";
+const APP_VERSION = "5b3c554";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -1357,8 +1357,43 @@ function lastAction(text) {
   el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
 }
 function log(ev, piece) { if (!M) return; const t = Math.round(elapsed() * 10) / 10; M.log.push(piece ? [t, ev, piece] : [t, ev]); tick(); lastAction("✓ " + (LABEL[ev] || ev) + (piece ? " " + piece.toUpperCase() : "")); }
+// swipe LEFT on a counting button = take one off it: removes that button's latest tap in the current period
+// (same window as its count), so cycle times and totals stay consistent with the tap log
+const SWIPE_PX = 40;
+let swipeFrom = null, swallowClick = false;
+function unTap(b) {
+  const k = b.dataset.k, m = padMap(k, padPeriod); if (!M || !m) return;
+  const [ev, piece] = m, from = padPeriod === "auto" || PAD[k].all || PAD[k].end ? 0 : AUTO + TRANS, to = padPeriod === "auto" ? AUTO + TRANS : Infinity;
+  for (let i = M.log.length - 1; i >= 0; i--) {
+    const [t, e, pc] = M.log[i];
+    if (e === ev && (!piece || pc === piece) && t >= from && t < to) {
+      M.log.splice(i, 1);
+      if (ev === "minor") M.minor = Math.max(0, M.minor - 1); else if (ev === "major") M.major = Math.max(0, M.major - 1);
+      buzz([15, 40, 15]); tick(); lastAction("− Took one off: " + (LABEL[ev] || ev) + (piece ? " " + piece.toUpperCase() : ""));
+      return;
+    }
+  }
+  lastAction("Nothing to take off: " + (LABEL[ev] || ev) + " is 0");
+}
+$$(".pad [data-k]").forEach(b => {
+  b.addEventListener("pointerdown", e => { swallowClick = false; swipeFrom = {b, x: e.clientX, y: e.clientY, id: e.pointerId}; }, {passive: true});
+  b.addEventListener("pointermove", e => {
+    if (!swipeFrom || swipeFrom.b !== b || swipeFrom.id !== e.pointerId) return;
+    const dx = e.clientX - swipeFrom.x, dy = e.clientY - swipeFrom.y;
+    b.classList.toggle("swipe", dx < -SWIPE_PX / 2 && Math.abs(dx) > Math.abs(dy));
+  }, {passive: true});
+  const end = e => {
+    if (!swipeFrom || swipeFrom.b !== b || swipeFrom.id !== e.pointerId) return;
+    const dx = e.clientX - swipeFrom.x, dy = e.clientY - swipeFrom.y; swipeFrom = null; b.classList.remove("swipe");
+    if (Math.hypot(dx, dy) > SWIPE_PX) swallowClick = true;   // a long drag is never also a tap
+    if (e.type === "pointerup" && dx < -SWIPE_PX && Math.abs(dx) > 1.5 * Math.abs(dy)) unTap(b);
+  };
+  b.addEventListener("pointerup", end); b.addEventListener("pointercancel", end);
+  b.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") end(e); });
+});
 $$(".pad [data-k]").forEach(b => b.addEventListener("click", () => {
   if (!M) return;
+  if (swallowClick) { swallowClick = false; return; }   // the click a drag ends with is not a tap
   const m = padMap(b.dataset.k, padPeriod); if (!m) return;
   if (m[0] === "minor") M.minor++; else if (m[0] === "major") M.major++;
   log(m[0], m[1]);
