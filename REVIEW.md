@@ -508,3 +508,36 @@ offered only a WebP favicon, which several browsers ignore.
    sponsors to link to lebob.com.au from their own sites. A Wikidata item for the team
    would also help models resolve "Lebob" to the right entity.
 3. **The award name from Jeonju**, still the one factual gap on the site.
+
+---
+
+## Events structured data (Search Console WNC-10030322)
+
+Search Console flagged the three `SportsEvent` entries nested under the organisation
+on `/about/` for five missing non-critical fields: `organizer`, `eventStatus`,
+`description`, `offers` and `image`. Four of the five are now filled in, plus
+`eventAttendanceMode`, `endDate` and `competitor`, which Google also reads on events.
+
+**`offers` is deliberately not present.** Lebob competed at these tournaments, it did
+not run or sell entry to them, so there is no offer to describe. Publishing an
+admission price we cannot verify would be worse than the warning. Search Console will
+keep listing "Missing field offers" as a non-critical suggestion on this page. That is
+the correct end state, not an outstanding fix.
+
+**Two things a human should confirm or improve:**
+
+1. **Organiser names.** The two Western Australian events are attributed to **FIRST
+   Australia**, the operational partner that delivers FIRST LEGO League nationally, and
+   the Jeonju event to **FIRST Korea**. The FIRST Australia attribution is safe. The
+   FIRST Korea one is from general knowledge of who hosts the Korea Open Invitational,
+   not from anything in our own records, and no URL is claimed for it. Correct the name
+   if the Korea Open paperwork says otherwise.
+2. **The event images are the generic site card**, `/img/og-default.jpg`, for all three
+   events. None of the ten gallery photographs can be tied to a specific tournament
+   from what is recorded on the site, and Google reads `image` as a picture *of that
+   event*. If someone can say which photograph came from which day, swap the specific
+   photo in. A 16:9, 4:3 or 1:1 crop is what Google asks for.
+
+`addressLocality` for the National Championship West was also corrected from Perth to
+**Bentley**, with postcode 6102, which is where Curtin's campus actually sits. Aquinas
+College gained postcode 6152.
