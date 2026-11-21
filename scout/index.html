@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1a1b1e">
 <title>Lebob Scout</title>
-<script>try{var t=JSON.parse(localStorage.getItem("lbsp:theme"));if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
+<script>try{var t=JSON.parse(localStorage.getItem("lbs:theme"));if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
 /* lebob.com.au site tokens (dark). Brand colours: yellow #FFF200, red #ED1C24 (red fills shapes, never body text).
    Light: yellow fills only (1.2:1 on white), so labels and focus rings go dark. Blue is the BLUE alliance, not brand. */
@@ -458,7 +458,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 <script>
 "use strict";
 const CFG = {"enums":{"ARCHETYPES":["fixed-shooter","dual-adjustable-shooter","shooter-flower-hybrid","flower-specialist","turret-shooter","catapult-drum","pusher-defender","unknown"],"DRIVETRAINS":["mecanum","tank-traction","swerve","x-drive-omni","other","unknown"],"START_POSITIONS":["near-wall","far-wall","audience-side","rear-side","unknown"],"FIELD_ZONES":["own-loading-zone","own-half","centre-hive","opp-half","opp-loading-zone","garden","red-flower","blue-flower","audience-flower","scoring-flower","unknown"],"DEFENCE_TYPES":["block-shooting-lane","block-intake","body-on-robot","park-denial","flower-denial","none"],"DEFENCE_REACTIONS":["reroutes","pushes-through","stalls","not-defended"],"FAILURE_TYPES":["cracked-bent","loose-disconnected","jammed","slipped","overheated","sensor-software","brownout-disconnect","immobilised","tipped-over","other"],"CAUSES":["impact","overload","snag","wear","assembly","electrical","code","unknown"],"CONFIDENCE":["confirmed","likely","speculative"],"PHASES":["auto","teleop","endgame","pit","practice"]},"fields":{"scout_match_reports":{"reportId":"string","eventCode":"string","matchKey":"string","matchNumber":"integer","teamNumber":"integer","alliance":"string","scout":"string","source":"string","createdAt":"timestamp","startPosition":"string","startWallPos":"integer","autoLeave":"boolean","autoPath":"string","autoScoreZone":"string","autoLaunched":"integer","autoScored":"integer","autoPark":"boolean","autoWorkedAsPlanned":"boolean","pieceType":"string","hiveScored":"integer","hiveMissed":"integer","autoGardenIntakes":"integer","autoFlowerIntakes":"integer","cycles":"integer","cycleSecondsMedian":"double","intakeSecondsMedian":"double","travelSecondsMedian":"double","shootSecondsMedian":"double","flowerIntake":"boolean","groundIntakes":"integer","flowerIntakes":"integer","scoreZone":"string","preferredZones":"string","gardenPlaced":"integer","teleopPark":"boolean","flowerNectarPlaced":"integer","flowerPollenPlaced":"integer","endgameStartRemaining":"integer","defenceSeconds":"integer","defenceType":"string","defenceTarget":"integer","defenceEffect":"integer","defenceFoulsDrawn":"integer","defendedSeconds":"integer","defenceReaction":"string","changedPlanWhenBlocked":"boolean","minorFouls":"integer","majorFouls":"integer","foulTypes":"string","brokeDown":"boolean","disconnectSeconds":"integer","driverSkill":"integer","sideOfField":"string","coordinationNote":"string","cycleLog":"string","notes":"string","robotSpeed":"integer","teleopShotSpots":"string","autoPathPoints":"string","autoShotSpots":"string","teleopZones":"string"},"scout_pit_reports":{"pitReportId":"string","eventCode":"string","teamNumber":"integer","scout":"string","createdAt":"timestamp","archetype":"string","drivetrain":"string","canHive":"boolean","canFlower":"boolean","canFlowerIntake":"boolean","canFloorIntake":"boolean","canDefend":"boolean","canNectar":"boolean","autoLeave":"boolean","autoPark":"boolean","autoTipsClaimed":"double","autoRoutines":"string","preferredStart":"string","claimedCycleSeconds":"double","claimedTipsPerMatch":"double","heightInches":"double","weightKg":"double","sparesCritical":"boolean","sparesNotes":"string","knownIssues":"string","notes":"string"},"scout_breakages":{"breakageId":"string","eventCode":"string","teamNumber":"integer","matchKey":"string","phase":"string","fieldLocation":"string","mechanism":"string","component":"string","failureType":"string","symptoms":"string","actionBefore":"string","cause":"string","causeConfidence":"string","severity":"integer","lostSeconds":"integer","recovered":"boolean","estimatedRecoveryMinutes":"integer","repairMinutes":"integer","fix":"string","spareUsed":"string","happenedBefore":"boolean","recurrence":"string","fixHeld":"boolean","evidence":"string","reporter":"string","createdAt":"timestamp"}},"order":{"scout_match_reports":["reportId","eventCode","matchKey","matchNumber","teamNumber","alliance","scout","source","createdAt","startPosition","startWallPos","autoLeave","autoPath","autoScoreZone","autoLaunched","autoScored","autoPark","autoWorkedAsPlanned","pieceType","hiveScored","hiveMissed","autoGardenIntakes","autoFlowerIntakes","cycles","cycleSecondsMedian","intakeSecondsMedian","travelSecondsMedian","shootSecondsMedian","flowerIntake","groundIntakes","flowerIntakes","scoreZone","preferredZones","gardenPlaced","teleopPark","flowerNectarPlaced","flowerPollenPlaced","endgameStartRemaining","defenceSeconds","defenceType","defenceTarget","defenceEffect","defenceFoulsDrawn","defendedSeconds","defenceReaction","changedPlanWhenBlocked","minorFouls","majorFouls","foulTypes","brokeDown","disconnectSeconds","driverSkill","sideOfField","coordinationNote","cycleLog","notes","robotSpeed","teleopShotSpots","autoPathPoints","autoShotSpots","teleopZones"],"scout_pit_reports":["pitReportId","eventCode","teamNumber","scout","createdAt","archetype","drivetrain","canHive","canFlower","canFlowerIntake","canFloorIntake","canDefend","canNectar","autoLeave","autoPark","autoTipsClaimed","autoRoutines","preferredStart","claimedCycleSeconds","claimedTipsPerMatch","heightInches","weightKg","sparesCritical","sparesNotes","knownIssues","notes"],"scout_breakages":["breakageId","eventCode","teamNumber","matchKey","phase","fieldLocation","mechanism","component","failureType","symptoms","actionBefore","cause","causeConfidence","severity","lostSeconds","recovered","estimatedRecoveryMinutes","repairMinutes","fix","spareUsed","happenedBefore","recurrence","fixHeld","evidence","reporter","createdAt"]},"pk":{"scout_match_reports":"reportId","scout_pit_reports":"pitReportId","scout_breakages":"breakageId"},"points":{"LEAVE":3,"AUTO_PARK":5,"TELEOP_PARK":5,"HIVE_TIP":20,"TIP_THRESHOLD_ESTIMATE":7.5,"GARDEN_ELEMENT":1,"OWNED_FLOWER_ELEMENT":2,"MINOR_FOUL":5,"MAJOR_FOUL":20}};
-const APP_VERSION = "dfa2c0a";
+const APP_VERSION = "9429c28";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const TABLE_CODES = {m: "scout_match_reports", p: "scout_pit_reports", b: "scout_breakages"};
 const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [v, k]));
@@ -466,9 +466,19 @@ const CODE_OF = Object.fromEntries(Object.entries(TABLE_CODES).map(([k, v]) => [
 // ---------- storage (survives private mode by falling back to memory) ----------
 const mem = {};
 const store = {
-  get(k, d) { try { const v = localStorage.getItem("lbsp:" + k); return v == null ? (k in mem ? mem[k] : d) : JSON.parse(v); } catch (e) { return k in mem ? mem[k] : d; } },
-  set(k, v) { mem[k] = v; try { localStorage.setItem("lbsp:" + k, JSON.stringify(v)); } catch (e) {} }
+  get(k, d) { try { const v = localStorage.getItem("lbs:" + k); return v == null ? (k in mem ? mem[k] : d) : JSON.parse(v); } catch (e) { return k in mem ? mem[k] : d; } },
+  set(k, v) { mem[k] = v; try { localStorage.setItem("lbs:" + k, JSON.stringify(v)); } catch (e) {} }
 };
+// one-off: the app at /scout-profile kept its data under "lbsp:" on this same site; fold it into "lbs:" (reports are
+// added, never replaced) so nothing scouted there is lost now that it is the main app
+try {
+  Object.keys(localStorage).filter(k => k.startsWith("lbsp:")).forEach(k => {
+    const to = "lbs:" + k.slice(5), v = JSON.parse(localStorage.getItem(k)), cur = localStorage.getItem(to);
+    if (cur == null) localStorage.setItem(to, JSON.stringify(v));
+    else if (Array.isArray(v)) { const have = JSON.parse(cur), seen = new Set(have.map(r => JSON.stringify(r))); localStorage.setItem(to, JSON.stringify(have.concat(v.filter(r => !seen.has(JSON.stringify(r)))))); }
+    localStorage.removeItem(k);
+  });
+} catch (e) {}
 const settings = () => store.get("settings", {eventCode: "AUPEQ", scout: "", device: uid().slice(0, 6), schedule: {}});
 function saveSettings(s) { store.set("settings", s); renderHeader(); ddRefresh(); }
 function uid() { return (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)).replace(/-/g, ""); }
@@ -530,7 +540,7 @@ $$("#tabs button").forEach(b => b.addEventListener("click", () => {
   const sec = $("#tab-" + b.dataset.tab); sec.classList.remove("tab-in-l", "tab-in-r");
   if (motionOn() && from >= 0 && from !== to) { void sec.offsetWidth; sec.classList.add(to > from ? "tab-in-r" : "tab-in-l"); }
   try { b.scrollIntoView({block: "nearest", inline: "nearest", behavior: motionOn() ? "smooth" : "auto"}); } catch (e) {}
-  try { sessionStorage.setItem("lbsp:tab", b.dataset.tab); } catch (e) {}
+  try { sessionStorage.setItem("lbs:tab", b.dataset.tab); } catch (e) {}
 }));
 
 // ---------- themed dropdowns ----------
@@ -2190,7 +2200,7 @@ $("#cWebInfo").addEventListener("click", e => {
 });
 addEventListener("online", () => webSchedule(false));
 setInterval(() => webSchedule(false), 10 * 60 * 1000);
-$("#cWipe").addEventListener("click", () => { if (confirm("Delete every report on this phone? Export a file first if the lead might not have them all.")) { try { Object.keys(localStorage).filter(k => k.startsWith("lbsp:t:") || k === "lbsp:unsent").forEach(k => localStorage.removeItem(k)); } catch (e) {} for (const k of Object.keys(mem)) if (k.startsWith("t:") || k === "unsent") delete mem[k];
+$("#cWipe").addEventListener("click", () => { if (confirm("Delete every report on this phone? Export a file first if the lead might not have them all.")) { try { Object.keys(localStorage).filter(k => k.startsWith("lbs:t:") || k === "lbs:unsent").forEach(k => localStorage.removeItem(k)); } catch (e) {} for (const k of Object.keys(mem)) if (k.startsWith("t:") || k === "unsent") delete mem[k];
   if (M) { clearInterval(timerId); M = null; lastPersist = ""; tlSel = null; tlEdit = null; $("#mLive").classList.add("hidden"); $("#mPost").classList.add("hidden"); $("#mSetup").classList.remove("hidden"); }
   store.set("live", null); renderHeader(); renderLists(); } });
 $("#cVib").addEventListener("click", () => {
@@ -2225,7 +2235,7 @@ ddInit(); ddRefresh();
   try { say(await sto.persisted() || await sto.persist()); } catch (e) { /* keeps the warning */ }
 })();
 
-try { const t = sessionStorage.getItem("lbsp:tab"); if (t) $(`#tabs button[data-tab="${t}"]`)?.click(); } catch (e) {}
+try { const t = sessionStorage.getItem("lbs:tab"); if (t) $(`#tabs button[data-tab="${t}"]`)?.click(); } catch (e) {}
 </script>
 <script>if('serviceWorker' in navigator){addEventListener('load',()=>{const had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!had||document.getElementById('swUpd'))return;const b=document.createElement('button');b.id='swUpd';b.className='btn primary';b.style.cssText='position:fixed;left:16px;right:16px;top:10px;z-index:50;box-shadow:0 4px 18px rgba(0,0,0,.5)';b.textContent='App updated: tap to reload (finish and save a match first)';b.onclick=()=>location.reload();document.body.appendChild(b);});navigator.serviceWorker.register('./sw.js').then(r=>setInterval(()=>r.update().catch(()=>{}),15*60*1000)).catch(()=>{});});}</script></body>
 </html>
