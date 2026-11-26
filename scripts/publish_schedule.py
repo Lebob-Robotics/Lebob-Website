@@ -1,9 +1,9 @@
-"""Publish FTC match schedules for the scout app: scout/schedule/<EVENT>.json (lebob.com.au/scout/schedule/...).
+"""Publish FTC match schedules for the scout app: old-scout/schedule/<EVENT>.json (lebob.com.au/old-scout/schedule/...).
 
 Run by .github/workflows/deploy.yml before every deploy, and every 10 minutes while the repo variable
 SCHEDULE_EVENTS names events (e.g. "AUPEQ"). The scout app loads the file for its event code when it has signal.
 
-    SCHEDULE_EVENTS=AUPEQ FTC_API_USER=... FTC_API_TOKEN=... python3 scripts/publish_schedule.py scout/schedule
+    SCHEDULE_EVENTS=AUPEQ FTC_API_USER=... FTC_API_TOKEN=... python3 scripts/publish_schedule.py old-scout/schedule
 
 Env: FTC_API_USER / FTC_API_TOKEN (FIRST API credentials, GitHub secrets), SCHEDULE_EVENTS (comma list),
 SEASON (optional; default is the season the current date falls in, e.g. 2026 for Sep 2026 - Aug 2027).
@@ -21,7 +21,7 @@ import urllib.parse
 import urllib.request
 
 API = "https://ftc-api.firstinspires.org/v2.0"
-LIVE = "https://lebob.com.au/scout/schedule"
+LIVE = "https://lebob.com.au/old-scout/schedule"
 STATIONS = ("Red1", "Red2", "Blue1", "Blue2")
 
 
@@ -111,4 +111,4 @@ def main(out):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "scout/schedule")
+    main(sys.argv[1] if len(sys.argv) > 1 else "old-scout/schedule")

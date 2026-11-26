@@ -14,7 +14,7 @@
 @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url('fonts/ibm-plex-sans-var-latin.woff2') format('woff2')}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-mono-400-latin.woff2') format('woff2')}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/ibm-plex-mono-500-latin.woff2') format('woff2')}
-/* lebob.com.au site tokens, matching /scout. Red fills shapes and never sets body text on dark. Blue is the BLUE alliance, not brand. */
+/* lebob.com.au site tokens, matching /old-scout. Red fills shapes and never sets body text on dark. Blue is the BLUE alliance, not brand. */
 :root{--bg:#1a1b1e;--panel:#242529;--panel2:#1f2024;--hover:#28292e;--line:#36373c;--fg:#c8c9c2;--fg-dark:#e5e6e0;--muted:#8a8b83;--accent:#FFF200;--accent-ink:#1a1b1e;--label:#FFF200;--focus:#FFF200;--red:#ED1C24;--blue:#2F7DF6;--ok:#3DCB6C;--warn:#F5A524;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace}
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#f4f4f0;--panel:#ffffff;--panel2:#f4f4f0;--hover:#ebebe6;--line:#d6d6cf;--fg:#2a2b2f;--fg-dark:#1a1b1e;--muted:#5f605a;--label:#1a1b1e;--focus:#1a1b1e}}
 :root[data-theme="light"]{--bg:#f4f4f0;--panel:#ffffff;--panel2:#f4f4f0;--hover:#ebebe6;--line:#d6d6cf;--fg:#2a2b2f;--fg-dark:#1a1b1e;--muted:#5f605a;--label:#1a1b1e;--focus:#1a1b1e}
@@ -112,7 +112,7 @@ const stageName = m => m.stage === 'Q' ? `Qual ${m.number}` : `Playoff ${m.serie
 const yt = (id, t, auto) => `https://www.youtube-nocookie.com/embed/${id}?start=${Math.max(0, Math.floor(t))}${auto ? '&autoplay=1' : ''}&rel=0`;
 const ytOpen = (id, t) => `https://www.youtube.com/watch?v=${id}&t=${Math.max(0, Math.floor(t))}s`;
 
-// Theme toggle (same storage key as /scout so the choice carries across)
+// Theme toggle (same storage key as /old-scout so the choice carries across)
 const thBtn = $('#thBtn');
 function setThIcon(){ const d = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); thBtn.textContent = d === 'light' ? '☾' : '☀'; }
 thBtn.onclick = () => { const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); const nx = cur === 'light' ? 'dark' : 'light'; document.documentElement.dataset.theme = nx; localStorage.setItem('lbs:theme', JSON.stringify(nx)); setThIcon(); };

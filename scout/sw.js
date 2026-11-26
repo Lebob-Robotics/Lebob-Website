@@ -1,1 +1,9 @@
-const C='lebob-scout-5b3c55472d';const F=['./','./index.html','./manifest.webmanifest'];const O=['./apple-touch-icon.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./favicon-32.png','/fonts/ibm-plex-sans-var-latin.woff2','/fonts/ibm-plex-mono-500-latin.woff2'];self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F.map(u=>new Request(u,{cache:'reload'}))).then(()=>Promise.all(O.map(u=>c.add(new Request(u,{cache:'reload'})).catch(()=>{}))))));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x.startsWith('lebob-scout-')).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));});self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;if(new URL(e.request.url).pathname.includes('/schedule/')){e.respondWith(fetch(e.request).then(res=>{if(res.ok){const cp=res.clone();caches.open(C).then(c=>c.put(e.request.url,cp));}return res;}).catch(()=>caches.match(e.request.url).then(r=>r||Response.error())));return;}e.respondWith(caches.open(C).then(c=>c.match(e.request,{ignoreSearch:true})).then(r=>r||fetch(e.request).then(res=>{const cp=res.clone();caches.open(C).then(c=>c.put(e.request,cp));return res;}).catch(()=>caches.match('./index.html'))));});
+// The scout app moved to Foundry and the previous app to /old-scout/. This worker replaces the old one on phones
+// that installed /scout: it clears the old offline copy (lebob-scout-*; /old-scout uses lebob-old-scout-*), unregisters
+// itself and reloads open pages, which then get the redirect from the network.
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', e => e.waitUntil(
+  caches.keys().then(k => Promise.all(k.filter(x => x.startsWith('lebob-scout-')).map(x => caches.delete(x))))
+    .then(() => self.registration.unregister())
+    .then(() => self.clients.matchAll({type: 'window'}))
+    .then(cs => cs.forEach(c => c.navigate('/scout/')))));
