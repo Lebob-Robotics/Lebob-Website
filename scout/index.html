@@ -11,9 +11,8 @@
 </head>
 <body>
 <p>The scout app has moved to <a href="https://lebob-scout-bat5hxlyj3x7fsqq.apps.euw-3.palantirfoundry.co.uk/">Foundry</a>.</p>
-<p>The previous app, with any reports saved on this phone, is at <a href="/old-scout/">lebob.com.au/old-scout</a>.</p>
 <script>
-if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => { if (r.scope.endsWith('/scout/')) r.unregister(); }));
+if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => { if (/\/(old-)?scout\/$/.test(r.scope)) r.unregister(); }));
 location.replace('https://lebob-scout-bat5hxlyj3x7fsqq.apps.euw-3.palantirfoundry.co.uk/');
 </script>
 </body>

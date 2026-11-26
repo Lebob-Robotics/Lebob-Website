@@ -1,1 +1,8 @@
-const C='lebob-old-scout-e66680760a';const F=['./','./index.html','./manifest.webmanifest'];const O=['./apple-touch-icon.png','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./favicon-32.png','/fonts/ibm-plex-sans-var-latin.woff2','/fonts/ibm-plex-mono-500-latin.woff2'];self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F.map(u=>new Request(u,{cache:'reload'}))).then(()=>Promise.all(O.map(u=>c.add(new Request(u,{cache:'reload'})).catch(()=>{}))))));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));});self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;if(new URL(e.request.url).pathname.includes('/schedule/')){e.respondWith(fetch(e.request).then(res=>{if(res.ok){const cp=res.clone();caches.open(C).then(c=>c.put(e.request.url,cp));}return res;}).catch(()=>caches.match(e.request.url).then(r=>r||Response.error())));return;}e.respondWith(caches.open(C).then(c=>c.match(e.request,{ignoreSearch:true})).then(r=>r||fetch(e.request).then(res=>{const cp=res.clone();caches.open(C).then(c=>c.put(e.request,cp));return res;}).catch(()=>caches.match('./index.html'))));});
+// /old-scout was removed. Phones that installed it keep running this worker's cached copy until it is replaced, so this
+// one clears the lebob-old-scout-* caches, unregisters itself and sends open pages to /scout/ (the Foundry app).
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', e => e.waitUntil(
+  caches.keys().then(k => Promise.all(k.filter(x => x.startsWith('lebob-old-scout-')).map(x => caches.delete(x))))
+    .then(() => self.registration.unregister())
+    .then(() => self.clients.matchAll({type: 'window'}))
+    .then(cs => cs.forEach(c => c.navigate('/scout/')))));
