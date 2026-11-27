@@ -1,9 +1,14 @@
 name: Deploy static site to Pages
 
+# Also every 15 minutes, so /strategy carries the latest data and the latest released strategy app.
 on:
   push:
     branches: ["main"]
+  schedule:
+    - cron: "*/15 * * * *"
   workflow_dispatch:
+  repository_dispatch:
+    types: [strategy-updated]
 
 permissions:
   contents: read
@@ -24,6 +29,45 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # /strategy: the public strategy page. The strategy app from the latest Lebob-Scout release, reading a copy of
+      # our Foundry data with scout names blanked (scout-app/scripts/export-public.mjs). Needs the FOUNDRY_TOKEN
+      # secret; if anything here fails, the committed strategy/index.html placeholder is served instead.
+      - name: Check out the strategy app
+        id: app
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          repository: Lebob-Robotics/Lebob-Scout
+          path: _lebob-scout
+          fetch-depth: 0
+      - name: Set up Node
+        if: steps.app.outcome == 'success'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the public strategy page
+        id: strategy
+        if: steps.app.outcome == 'success'
+        continue-on-error: true
+        env:
+          FOUNDRY_TOKEN: ${{ secrets.FOUNDRY_TOKEN }}
+        working-directory: _lebob-scout/scout-app
+        run: |
+          git checkout -q "$(git describe --tags --abbrev=0)"
+          git describe --tags
+          npm ci --no-audit --no-fund
+          npm run build:public
+          node scripts/export-public.mjs dist-public
+      - name: Put it at /strategy
+        if: steps.strategy.outcome == 'success'
+        run: |
+          rm -rf strategy
+          cp -r _lebob-scout/scout-app/dist-public strategy
+      - name: Clean up
+        if: always()
+        run: rm -rf _lebob-scout
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
