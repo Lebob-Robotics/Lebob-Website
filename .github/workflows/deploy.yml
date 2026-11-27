@@ -33,6 +33,17 @@ jobs:
       # /strategy: the public strategy page. The strategy app from the latest Lebob-Scout release, reading a copy of
       # our Foundry data with scout names blanked (scout-app/scripts/export-public.mjs). Needs the FOUNDRY_TOKEN
       # secret; if anything here fails, the committed strategy/index.html placeholder is served instead.
+      - name: Check Foundry access (diagnostic)
+        continue-on-error: true
+        env:
+          FOUNDRY_TOKEN: ${{ secrets.FOUNDRY_TOKEN }}
+        run: |
+          echo "token length: ${#FOUNDRY_TOKEN}"
+          H=https://lebob.euw-3.palantirfoundry.co.uk
+          curl -s -o /dev/null -w "ontology api: %{http_code}\n" -H "Authorization: Bearer $FOUNDRY_TOKEN" "$H/api/v2/ontologies"
+          curl -s -o /tmp/me.txt -w "current user: %{http_code}\n" -H "Authorization: Bearer $FOUNDRY_TOKEN" "$H/api/v2/admin/users/getCurrent"; head -c 300 /tmp/me.txt | sed 's/"username":"[^"]*"/"username":"x"/'; echo
+          curl -s -o /tmp/npm.txt -w "npm registry: %{http_code}\n" -H "Authorization: Bearer $FOUNDRY_TOKEN" "$H/artifacts/api/repositories/ri.artifacts.main.repository.313979a2-1099-457c-bdf0-a619d836c8cf/contents/release/npm/@lebob-scout%2fsdk"; head -c 300 /tmp/npm.txt; echo
+          curl -s https://api.ipify.org; echo
       - name: Check out the strategy app
         id: app
         continue-on-error: true
